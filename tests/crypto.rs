@@ -137,3 +137,23 @@ fn server_hash_uses_java_latin1_not_utf8() {
         server_hash("a?b", &secret, &public_key)
     );
 }
+
+#[test]
+fn rsa_verify_token_capacity_is_checked_before_encryption() {
+    use rsa::{pkcs8::EncodePublicKey, BigUint, RsaPublicKey};
+    // Synthetic public moduli test the wire-size boundary only. They are not
+    // generated identities, private keys, or keys suitable for real security.
+    for bits in [1024usize, 2048, 4096] {
+        let modulus = (BigUint::from(1u8) << (bits - 1)) + BigUint::from(1u8);
+        let key = RsaPublicKey::new(modulus, BigUint::from(65537u32)).unwrap();
+        let der = key.to_public_key_der().unwrap();
+        let capacity = bits / 8 - 11;
+        let response = encryption_response(der.as_bytes(), &vec![0x44; capacity]).unwrap();
+        assert_eq!(response.encrypted_secret.len(), bits / 8);
+        assert_eq!(response.encrypted_verify_token.len(), bits / 8);
+        assert!(matches!(
+            encryption_response(der.as_bytes(), &vec![0x44; capacity + 1]),
+            Err(rustwire_mc::Error::Limit("RSA verify-token plaintext"))
+        ));
+    }
+}

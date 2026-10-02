@@ -8,7 +8,7 @@ use aes::{
 use rand::{rngs::OsRng, RngCore};
 use rsa::{pkcs8::DecodePublicKey, Pkcs1v15Encrypt, RsaPublicKey};
 use sha1::{Digest, Sha1};
-use zeroize::Zeroize;
+use zeroize::{Zeroize, Zeroizing};
 /// Stateful encryptor/decryptor. Debug intentionally omits key material.
 pub struct Cipher {
     cipher: Aes128,
@@ -76,16 +76,23 @@ pub fn encryption_response(
     if key.n().bits() < 1024 || key.n().bits() > 4096 {
         return Err(Error::Invalid("RSA key size"));
     }
-    let mut shared_secret = [0; 16];
-    OsRng.fill_bytes(&mut shared_secret);
+    // Reject a challenge that cannot fit PKCS#1 v1.5 before generating a secret.
+    if verify_token.len() > key.size().saturating_sub(11) {
+        return Err(Error::Limit("RSA verify-token plaintext"));
+    }
+    // The temporary also needs clearing when either encryption operation fails.
+    let mut shared_secret = Zeroizing::new([0; 16]);
+    OsRng
+        .try_fill_bytes(&mut *shared_secret)
+        .map_err(|_| Error::Io(std::io::Error::other("secure random source unavailable")))?;
     let encrypted_secret = key
-        .encrypt(&mut OsRng, Pkcs1v15Encrypt, &shared_secret)
+        .encrypt(&mut OsRng, Pkcs1v15Encrypt, &*shared_secret)
         .map_err(|_| Error::Invalid("RSA encryption"))?;
     let encrypted_verify_token = key
         .encrypt(&mut OsRng, Pkcs1v15Encrypt, verify_token)
         .map_err(|_| Error::Invalid("RSA encryption"))?;
     Ok(EncryptionResponse {
-        shared_secret,
+        shared_secret: *shared_secret,
         encrypted_secret,
         encrypted_verify_token,
     })
