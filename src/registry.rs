@@ -71,10 +71,12 @@ impl RegistryData {
     }
     fn read_payload(r: &mut Reader<'_>, version: Version) -> Result<Self> {
         if version.protocol() < 766 {
-            Ok(Self::Legacy(
-                Nbt::read(r, RootFormat::for_version(version))?
-                    .ok_or(Error::Invalid("missing registry NBT"))?,
-            ))
+            let nbt = Nbt::read(r, RootFormat::for_version(version))?
+                .ok_or(Error::Invalid("missing registry NBT"))?;
+            if !matches!(nbt.root, Tag::Compound(_)) {
+                return Err(Error::Invalid("legacy registry root compound"));
+            }
+            Ok(Self::Legacy(nbt))
         } else {
             let registry = wire::read_identifier(r, version)?;
             let count = r.count(r.limits.max_collection)?;
@@ -100,6 +102,9 @@ impl RegistryData {
         let mut w = Writer::new();
         match self {
             Self::Legacy(n) if version.protocol() < 766 => {
+                if !matches!(n.root, Tag::Compound(_)) {
+                    return Err(Error::Invalid("legacy registry root compound"));
+                }
                 n.write(&mut w, RootFormat::for_version(version), limits)?
             }
             Self::Entries { registry, entries } if version.protocol() >= 766 => {

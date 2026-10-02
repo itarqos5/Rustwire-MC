@@ -1,7 +1,7 @@
 //! Join-game world metadata, separate from login authentication success.
 use crate::{
     codec::{BlockPosition, Reader},
-    nbt::{Nbt, RootFormat},
+    nbt::{Nbt, RootFormat, Tag},
     registry::{DimensionInfo, RegistryStore},
     Error, Limits, Result, Version,
 };
@@ -137,10 +137,12 @@ impl JoinGame {
             world_names.push(r.string(32767)?.into());
         }
         let dimension_codec = if version.protocol() == 763 {
-            Some(
-                Nbt::read(&mut r, RootFormat::Named)?
-                    .ok_or(Error::Invalid("missing legacy dimension registry"))?,
-            )
+            let nbt = Nbt::read(&mut r, RootFormat::Named)?
+                .ok_or(Error::Invalid("missing legacy dimension registry"))?;
+            if !matches!(nbt.root, Tag::Compound(_)) {
+                return Err(Error::Invalid("legacy registry root compound"));
+            }
+            Some(nbt)
         } else {
             None
         };

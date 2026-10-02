@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 313 core tests with all features; 298 applicable core tests without default features
+- 316 core tests with all features; 301 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -521,3 +521,19 @@ was not claimed to be otherwise idle. These are synthetic in-memory codec
 observations, not a claim about real-world chunk distributions, framed/compressed
 network throughput, authentication or other machines. Reproduce the current
 workloads with `cargo bench --locked --no-default-features --bench protocol_workloads`.
+
+## Legacy registry-root correction
+
+A follow-up oracle invoked the actual 763 Join Game and 764–765 configuration
+registry constructors for all 13 NBT root kinds. Only a non-null compound was
+accepted. Rustwire previously allowed other non-End roots at those boundaries;
+the generic legacy RegistryData read/encode paths and the separate 763 Join Game
+reader now reject them. Modern 766+ optional registry-entry NBT remains generic,
+including scalar/list/array roots.
+
+[Original constructor oracle](tools/paper/LegacyRegistryRootOracle.java),
+[39-case facts and artifact hashes](docs/validation/legacy-registry-roots.json),
+and three independent Rust regressions document the boundary. Integrated checks
+passed 316 all-feature tests on stable/Rust1.88.0 and 301 no-default tests, plus
+strict Clippy and formatting. This is a malformed-input correction, with no
+change to valid packet representations.

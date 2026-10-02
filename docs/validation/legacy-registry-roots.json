@@ -1,0 +1,82 @@
+{
+  "format": 1,
+  "date_utc": "2026-10-02",
+  "oracle": "tools/paper/LegacyRegistryRootOracle.java",
+  "oracle_sha256": "74f4111d473a45bfcf1ba278d11948791f4bc8e3b1a43a65fe560d2898b97164",
+  "method": "Original reflection oracle invokes the actual cached 763 Join Game and 764/765 configuration registry packet constructors for independently encoded root types0\u201312. No server/account login.",
+  "finding": "Legacy registry roots require non-null compound NBT. Modern766+ optional entry payloads remain arbitrary non-End NBT.",
+  "records": [
+    {
+      "release": "1.20.1",
+      "protocol": 763,
+      "release_jar_sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+      "oracle_exit": 0,
+      "accepted_root_types": [
+        10
+      ],
+      "rejected_root_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "raw_oracle_output_sha256": "9ea0d729539c434b36d0ab7b8ed5b3c31135de11b2a533b71f6c5cc3b391b052"
+    },
+    {
+      "release": "1.20.2",
+      "protocol": 764,
+      "release_jar_sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+      "oracle_exit": 0,
+      "accepted_root_types": [
+        10
+      ],
+      "rejected_root_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "raw_oracle_output_sha256": "c452867048abe2b240547d984599a503c8fa0324bde4aebdb96fe8060dcdc227"
+    },
+    {
+      "release": "1.20.4",
+      "protocol": 765,
+      "release_jar_sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+      "oracle_exit": 0,
+      "accepted_root_types": [
+        10
+      ],
+      "rejected_root_types": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        11,
+        12
+      ],
+      "raw_oracle_output_sha256": "5c6efa29f9d8436118a4cfceb448dd7a255796da452af158634efdba0f9c4123"
+    }
+  ]
+}
