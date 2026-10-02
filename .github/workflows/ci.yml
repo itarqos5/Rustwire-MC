@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
       - run: cargo test --locked --no-default-features
-      - run: cargo test --locked --no-default-features --example grim_probe
+      - run: cargo test --locked --no-default-features --examples
       - run: cargo test --locked
       - run: cargo test --locked --all-features
-      - run: cargo test --locked --all-features --example grim_probe
+      - run: cargo test --locked --all-features --examples
       - run: cargo check --locked --all-features --examples
   quality:
     runs-on: ubuntu-latest
@@ -25,7 +25,7 @@ jobs:
         with:
           components: rustfmt, clippy
       - run: cargo fmt --all -- --check
-      - run: python3 -m unittest discover -s tools/paper -p "test_validate*.py"
+      - run: python3 -m unittest discover -s tools/paper -p "test_*.py"
       - run: cargo clippy --locked --all-targets --all-features -- -D warnings
       - run: cargo doc --locked --all-features --no-deps
         env:
@@ -37,4 +37,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@1.88.0
       - run: cargo test --locked --all-features
-      - run: cargo test --locked --all-features --example grim_probe
+      - run: cargo test --locked --all-features --examples

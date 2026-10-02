@@ -373,7 +373,7 @@ The isolated increment passed 293 full-feature tests on stable and Rust 1.88.0,
 record standalone block-entity nullability and the exact Paper 1.21.5 biome-buffer
 zero-tail compatibility rule. Encoding emits canonical compact palettes. These
 fixture/source checks are separate from the earlier initial-chunk server matrix;
-fresh streamed-update live verification is still pending. No world cache, numeric
+fresh streamed-update live results are recorded below. No world cache, numeric
 registry-name database or gameplay light simulation is implied.
 
 ## Extended persistent component hashes
@@ -399,3 +399,38 @@ The coherent snapshot passed 301 all-feature tests on stable and Rust 1.88.0,
 286 no-default-feature tests, formatting and strict all-target/all-feature Clippy.
 No runtime dependency was added. HashOps CRC32C remains a synchronization
 checksum, not a cryptographic integrity or authentication mechanism.
+
+## Live streamed-world updates
+
+The same frozen production source `fe7db1fb60ff3a8ceec634c4d3b03e74cdc4bc4b`
+was exercised on all 14 pinned release families. Full chunks, standalone block
+entities, biome replacements, view center, view distance and simulation distance
+passed on every family. Standalone UpdateLight passed on 13: Paper 1.20.4 emitted
+no such packet in the bounded scenario, so its light value/context/roundtrip
+checks remain explicitly unverified. This is an observation gap, not evidence
+of a decoder failure or a claim that all streamed surfaces passed everywhere.
+
+There were 277/280 required check groups, 3,421 received-payload roundtrips
+(2,968 byte-exact and 453 restricted version-specific canonicalizations), and
+zero decode/console errors. Exact assertions include registry-derived dimension
+bounds, packed light-mask/nibble semantics, 1,536 desert biome entries followed
+by exactly 16 plains replacements, embedded/standalone red/glowing/waxed signs,
+and view controls. Deliberate luminous transitions were not value-observed;
+non-overworld dimensions and null NBT sentinels remain fixture-only here.
+
+The [compact report](docs/validation/chunk-update-results.json) preserves each
+distinct observation plus per-version multiplicities, all source/artifact/log
+hashes, original run IDs and transparent cleanup-only reassessments for generated
+Paper remap caches. The full report hash is retained; no game binaries, worlds
+or proprietary implementation text are distributed. All clients/servers exited
+zero, listeners closed, OP lists remained empty and approved EULA copies were
+unchanged. The evidence gate distinguishes generated caches from installed plugins.
+
+Reproduce with `tools/paper/validate_chunk_updates.py --client PATH --source-commit
+COMMIT --source-root FROZEN_SOURCE`, optionally selecting `--versions`. The
+source-root must match the attributed library commit and include the current
+probe/harness; existing approved baseline worlds and pinned artifacts are required.
+Use `summarize_chunk_updates.py --help` for merge/compaction commands. The added
+14 acceptance and six compaction tests bring this checkpoint to 64 Python
+checks. All 16 example unit tests passed in no-default/all-feature modes and on
+Rust 1.88.0; CI now runs every example test and every `test_*.py` harness test.

@@ -203,3 +203,11 @@ roundtrips**, with no decode, raw-gate, value or console failures.
 `19444536` and the common client binary. Entity-attached sounds remain fixture-only;
 ordinary pig sounds used positional packets. These checks do not establish
 rendering, physics or complete coverage of every command parser/tooltip value.
+
+### Streamed-world verification
+
+Fresh real-server checks verified full chunks, block entities, biome replacements
+and view controls on all 14 families. Standalone light updates were verified on
+13; Paper 1.20.4 emitted none in the bounded fixture. The report keeps that gap
+explicit. It records 277/280 check groups and 3,421 received-payload roundtrips;
+[exact evidence and limits](VALIDATION.md#live-streamed-world-updates).
