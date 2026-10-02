@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 55 tests with all features; 42 applicable tests without default features
+- 56 tests with all features; 43 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -54,9 +54,26 @@ The runner uses disposable server configuration (1 GiB heap,2 JVM processors, vi
 
 On the original test host, Java could not resolve some external services directly. The preparation script fetched the exact Mojang download URL embedded by Paper into the expected cache and verified its checksum. Optional public-key/version service lookups failed but did not prevent offline testing. This is not evidence of successful online-account authentication.
 
-## Performance observation
+## Performance observations
 
-`cargo bench --bench codec`, optimized build on this Linux cloud host, decoded 2,000,000 three-byte VarInts in 22.590401 ms, approximately 11.30 ns/op. This is one microbenchmark observation, not an end-to-end throughput claim, comparison with another library or guarantee on other hardware. Network/chunk/auth performance still needs representative application benchmarks. Splitting generated tables into modules improves maintainability; it does not by itself make packet handling faster.
+Same Linux cloud host, optimized builds, two million operations per case:
+
+| Microbenchmark | Before indexed catalog | After indexed catalog |
+|---|---:|---:|
+| Three-byte VarInt decoding | 5.70 ns/op | 5.62 ns/op |
+| Mixed protocol 776 play/clientbound packet-ID lookup | 105.48 ns/op | 5.34 ns/op |
+
+The lookup workload cycles IDs 0–179, including unknown IDs. `Version::packets`
+uses generated state/direction offsets, and ordinary dense packet IDs index
+that group directly; sparse legacy IDs fall back to binary search. The VarInt
+codec was unchanged between these measurements. The earlier first-run VarInt
+observation was 11.30 ns/op, illustrating host/run variability.
+
+Run `cargo bench --bench codec` to repeat. These are microbenchmark observations,
+not end-to-end throughput claims or guarantees on other hardware. Network,
+chunk and authentication performance still need representative application
+benchmarks. Splitting files alone improves maintainability; the indexed lookup
+is the actual runtime change.
 
 ## Not verified
 
