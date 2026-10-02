@@ -18,6 +18,7 @@ pub struct Connection<S> {
     state: State,
     codec: FrameCodec,
     poisoned: bool,
+    world_ready: bool,
     #[cfg(feature = "crypto")]
     encrypt: Option<crate::crypto::Cipher>,
     #[cfg(feature = "crypto")]
@@ -56,6 +57,7 @@ impl<S: Read + Write> Connection<S> {
             state: State::Handshake,
             codec: FrameCodec::new(limits),
             poisoned: false,
+            world_ready: false,
             #[cfg(feature = "crypto")]
             encrypt: None,
             #[cfg(feature = "crypto")]
@@ -242,7 +244,13 @@ impl<S: Read + Write> Connection<S> {
                 self.state = State::Play;
                 Ok(Event::Ready)
             }
+            (State::Play, Some("login")) => {
+                let world = packet::JoinGame::decode(&packet.data, self.version, self.limits())?;
+                self.world_ready = true;
+                Ok(Event::Joined(Box::new(world)))
+            }
             (State::Play, Some("start_configuration")) => {
+                self.world_ready = false;
                 Reader::new(&packet.data, self.limits()).finish()?;
                 self.send(&packet::named(
                     self.version,
@@ -303,6 +311,9 @@ impl<S: Read + Write> Connection<S> {
         }
     }
     pub fn send_settings(&mut self, settings: &ClientSettings) -> Result<()> {
+        if self.state == State::Play && !self.world_ready {
+            return Err(Error::State("wait for Join Game before play settings"));
+        }
         if !matches!(self.state, State::Configuration | State::Play) {
             return Err(Error::State("settings require configuration/play"));
         }
@@ -404,6 +415,7 @@ pub enum Event {
     EncryptionRequested(EncryptionRequest),
     LoginSuccess(LoginSuccess),
     Ready,
+    Joined(Box<packet::JoinGame>),
     Reconfigure,
     KeepAlive(i64),
     Ping(i32),

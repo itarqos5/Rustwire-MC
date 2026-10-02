@@ -479,7 +479,24 @@ impl ChunkData {
         for _ in 0..section_count {
             sections.push(ChunkSection::read(&mut section_reader, version)?);
         }
-        section_reader.finish()?;
+        let padding = section_reader.remaining();
+        // Paper 1.20.1 (protocol763) can over-allocate one byte for each
+        // singleton block palette when computing its section buffer size.
+        // Accept exactly that verified zero-padding pattern, never arbitrary
+        // trailing data or padding on newer protocol families.
+        let singleton_sections = sections
+            .iter()
+            .filter(|s| matches!(s.blocks.palette, Palette::Single(_)))
+            .count();
+        let legacy_padding = version.protocol() == 763
+            && padding.len() == singleton_sections
+            && padding.iter().all(|&b| b == 0);
+        if !padding.is_empty() && !legacy_padding {
+            return Err(Error::TrailingBytes {
+                context: "chunk sections",
+                count: padding.len(),
+            });
+        }
         let count = r.count(limits.max_collection)?;
         let mut block_entities = Vec::new();
         for _ in 0..count {
@@ -496,7 +513,8 @@ impl ChunkData {
             });
         }
         let light = LightData::read(&mut r)?;
-        r.finish()?;
+        r.finish()
+            .map_err(|_| Error::Invalid("trailing chunk packet bytes"))?;
         Ok(Self {
             x,
             z,

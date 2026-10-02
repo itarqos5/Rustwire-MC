@@ -293,3 +293,92 @@ fn negative_threshold_disables_compression() {
         .unwrap();
     assert!(matches!(c.next_event().unwrap(), Event::Compression(None)));
 }
+fn join_game_fixture(v: Version) -> Vec<u8> {
+    let mut w = Writer::new();
+    w.i32(42);
+    w.bool(false);
+    if v.protocol() == 763 {
+        w.u8(1);
+        w.u8(255);
+    }
+    w.var_i32(1);
+    w.string("minecraft:overworld", 32767).unwrap();
+    if v.protocol() == 763 {
+        w.raw(&[10, 0, 0, 0]);
+        w.string("minecraft:overworld", 32767).unwrap();
+        w.string("minecraft:overworld", 32767).unwrap();
+        w.i64(123);
+    }
+    w.var_i32(10);
+    w.var_i32(8);
+    w.var_i32(8);
+    w.bool(false);
+    w.bool(true);
+    if v.protocol() >= 764 {
+        w.bool(false);
+        if v.protocol() < 766 {
+            w.string("minecraft:overworld", 32767).unwrap();
+        } else {
+            w.var_i32(0);
+        }
+        w.string("minecraft:overworld", 32767).unwrap();
+        w.i64(123);
+        w.u8(1);
+        w.u8(255);
+    }
+    w.bool(false);
+    w.bool(true);
+    w.bool(false);
+    w.var_i32(0);
+    if v.protocol() >= 768 {
+        w.var_i32(63);
+    }
+    if v.protocol() >= 776 {
+        w.bool(false);
+    }
+    if v.protocol() >= 766 {
+        w.bool(false);
+    }
+    w.into_inner()
+}
+#[test]
+fn join_game_metadata_all_release_families() {
+    for &v in Version::ALL {
+        let bytes = join_game_fixture(v);
+        let join = packet::JoinGame::decode(&bytes, v, Limits::default()).unwrap();
+        assert_eq!(join.entity_id, 42);
+        assert_eq!(join.spawn.dimension_name, "minecraft:overworld");
+        assert_eq!(join.spawn.previous_game_mode, -1);
+        assert_eq!(join.dimension_codec.is_some(), v.protocol() == 763);
+        assert_eq!(join.online_mode.is_some(), v.protocol() == 776);
+        assert_eq!(join.spawn.sea_level.is_some(), v.protocol() >= 768);
+        for n in 0..bytes.len() {
+            assert!(packet::JoinGame::decode(&bytes[..n], v, Limits::default()).is_err());
+        }
+    }
+}
+#[test]
+fn legacy_settings_wait_for_join_game() {
+    let v = Version::V1_20;
+    let codec = FrameCodec::default();
+    let mut input = codec.encode(&login_success(v)).unwrap();
+    input.extend(
+        codec
+            .encode(&RawPacket::new(
+                packet_id(v, State::Play, Direction::Clientbound, "login"),
+                join_game_fixture(v),
+            ))
+            .unwrap(),
+    );
+    let io = Fragmented {
+        input: std::io::Cursor::new(input),
+        output: vec![],
+    };
+    let mut c = Connection::new(io, v, Limits::default());
+    c.start_login("localhost", 25565, "Rustwire", [0; 16])
+        .unwrap();
+    assert!(matches!(c.next_event().unwrap(), Event::LoginSuccess(_)));
+    assert!(c.send_settings(&packet::ClientSettings::default()).is_err());
+    assert!(matches!(c.next_event().unwrap(), Event::Joined(_)));
+    c.send_settings(&packet::ClientSettings::default()).unwrap();
+}

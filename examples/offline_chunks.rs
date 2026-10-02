@@ -18,7 +18,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let host = &args[1];
     let port = args[2].parse()?;
     let version = args[3].parse()?;
-    let sections = args.get(4).map(|x| x.parse()).transpose()?.unwrap_or(24);
+    let mut sections = args.get(4).map(|x| x.parse()).transpose()?.unwrap_or(24);
     let min_seconds = args
         .get(5)
         .map(|x| x.parse::<u64>())
@@ -42,7 +42,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut chunks = 0;
     let mut loaded = false;
     for _ in 0..100_000 {
-        match c.next_event()? {
+        match c.next_event().map_err(|e| format!("control packet: {e}"))? {
             Event::LoginSuccess(p) => {
                 println!("login {}", p.username);
                 if version.has_configuration() {
@@ -91,18 +91,32 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     loaded = true;
                 }
             }
-            Event::Packet {
-                name: Some("login"),
-                ..
-            } if !version.has_configuration() => {
-                c.send_settings(&ClientSettings::default())?;
+            Event::Joined(mut world) => {
+                if let Some(codec) = world.dimension_codec.take() {
+                    registries.apply(rustwire_mc::registry::RegistryData::Legacy(codec))?;
+                }
+                let dimension = world.spawn.dimension(&registries)?;
+                if args.get(4).is_none() {
+                    sections = dimension.section_count();
+                }
+                println!(
+                    "joined dimension {}: min_y={}, height={}, sections={sections}",
+                    world.spawn.dimension_name, dimension.min_y, dimension.height
+                );
+                if !version.has_configuration() {
+                    c.send_settings(&ClientSettings::default())?;
+                }
             }
             Event::Packet {
                 name: Some("map_chunk"),
                 packet,
                 ..
             } => {
-                let chunk = ChunkData::decode(&packet.data, version, sections, limits)?;
+                if let Ok(path) = std::env::var("RUSTWIRE_CAPTURE_CHUNK") {
+                    std::fs::write(path, &packet.data)?;
+                }
+                let chunk = ChunkData::decode(&packet.data, version, sections, limits)
+                    .map_err(|e| format!("chunk packet: {e} ({} bytes)", packet.data.len()))?;
                 chunks += 1;
                 println!(
                     "chunk {},{}: {} sections; first block ID {:?}",

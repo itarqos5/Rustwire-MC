@@ -326,3 +326,35 @@ fn heightmap_nine_bit_no_span_storage() {
     map.data.pop();
     assert!(map.heights(384).is_err());
 }
+#[test]
+fn paper_1201_exact_singleton_zero_padding_regression() {
+    fn padded(version: Version, padding: &[u8]) -> (ChunkData, Vec<u8>) {
+        let mut c = chunk(version);
+        c.sections = vec![c.sections[0].clone(); 24];
+        let original = c.encode(version, Limits::default()).unwrap();
+        let mut r = Reader::new(&original, Limits::default());
+        r.i32().unwrap();
+        r.i32().unwrap();
+        Nbt::read(&mut r, RootFormat::for_version(version)).unwrap();
+        let offset = r.position();
+        let sections = r.bytes(1_000_000).unwrap();
+        let mut w = Writer::new();
+        w.raw(&original[..offset]);
+        w.var_i32((sections.len() + padding.len()) as i32);
+        w.raw(sections);
+        w.raw(padding);
+        w.raw(r.remaining());
+        (c, w.into_inner())
+    }
+    let (expected, bytes) = padded(Version::V1_20, &[0; 24]);
+    assert_eq!(
+        ChunkData::decode(&bytes, Version::V1_20, 24, Limits::default()).unwrap(),
+        expected
+    );
+    for padding in [vec![0; 23], vec![0; 25], vec![1; 24]] {
+        let (_, bytes) = padded(Version::V1_20, &padding);
+        assert!(ChunkData::decode(&bytes, Version::V1_20, 24, Limits::default()).is_err());
+    }
+    let (_, bytes) = padded(Version::V1_20_2, &[0; 24]);
+    assert!(ChunkData::decode(&bytes, Version::V1_20_2, 24, Limits::default()).is_err());
+}
