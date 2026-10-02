@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 340 core tests with all features; 301 applicable core tests without default features
+- 367 core tests with all features; 328 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -575,3 +575,26 @@ No production authentication behavior, timeout or rejection gate was weakened.
 is retained. This portability increment passed 340 all-feature tests locally on
 stable/Rust1.88.0 and strict Clippy. The exact replacement commit's multi-platform
 CI must still be checked before treating that external failure as resolved.
+
+## Scoreboard and overlay packet codecs
+
+Seven directed packet families now have typed codecs: objective, display slot,
+score update, score reset (765+), teams, boss bars and player-list header/footer.
+The optional dispatcher exposes ScoreboardPacket and OverlayPacket groups.
+Twenty-five wire tests plus two dispatcher regressions cover available packets
+across all 14 release families, truncation, mutations, transactional reads/writes,
+aggregate budgets and version-dependent fields.
+
+Independent cached release APIs provide 762 scoreboard packet probes, 560 domain
+probes/2,137 assertions and 896 boss/header-footer checks. The [scoreboard audit](docs/scoreboard-wire-audit.md)
+and [overlay audit](docs/overlay-wire-audit.md) retain original oracle/reproduction
+links. Important verified boundaries include display slots at 764; text NBT,
+number formats and reset packets at 765; numeric team rules at 770; and reordered
+team parameters with optional color at 776. Genuine wire domains and verified
+fallback IDs are preserved without inventing gameplay clamps. Reserved flags
+are intentionally retained even where the official encoder canonicalizes them.
+
+The integrated snapshot passed 367 all-feature tests on stable/Rust1.88.0,
+328 no-default tests, strict Clippy and 91 Python verifier tests. These checks
+verify wire/API behavior; live command-driven scoreboard/overlay traffic is
+still pending and no renderer or scoreboard state machine is implied.

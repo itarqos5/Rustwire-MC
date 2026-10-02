@@ -312,7 +312,7 @@ The original [RegistryTagsOracle.java](tools/paper/RegistryTagsOracle.java)
 uses cached public packet APIs/reflection to check canonical registry/tag bodies,
 last-key-wins duplicate maps, default namespace aliases, the protocol775 namespace
 boundary, and modern optional scalar NBT entries. [Per-release facts and artifact
-hashes](docs/validation/registry-tags-oracle.json) retain all14 results. These
+hashes](docs/validation/registry-tags-oracle.json) retain all 14 results. These
 checks do not log into an account, start a server or distribute game implementation
 text. Syntactic identifiers do not supply missing static registry-name data.
 
@@ -329,3 +329,13 @@ app approval or require a client secret in Rustwire's device flow. Minecraft
 profile/session fixtures validate this library's HTTP contract without asserting
 live account interoperability. No real credentials or borrowed application IDs
 are used by the tests.
+
+## Scoreboard and player overlay wire facts
+
+Original Java API oracles and bounded Python verifiers independently check
+scoreboard/team and boss-bar/header/footer serializers in all 14 cached releases.
+The [scoreboard report](docs/scoreboard-wire-audit.md) and
+[overlay report](docs/overlay-wire-audit.md) link per-artifact hashes, exact
+version boundaries and fallback/strict-enum distinctions. Domain probes distinguish
+wire representability from valid gameplay/UI choices. Only original oracle code
+and protocol facts are distributed.

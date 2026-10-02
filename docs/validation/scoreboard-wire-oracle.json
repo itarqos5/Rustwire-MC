@@ -1,0 +1,506 @@
+{
+  "format_version": 1,
+  "generated_at": "2026-10-02T22:43:32.840938+00:00",
+  "method": "Original Java API probes plus Python acceptance/domain assertions; cached Paper releases only.",
+  "java_version": "openjdk 25.0.4.1 2026-08-18 LTS",
+  "sources_sha256": {
+    "tools/paper/ScoreboardDomainOracle.java": "02dd5f0c7f28d9bd91c7e000deb4ba639dea321e8cb67febf7f2d9d0335872aa",
+    "tools/paper/ScoreboardPacketOracle.java": "817af0d4645f82a9d8df2996728b69528aa681f3461d8c3164cc30b860516bec",
+    "tools/paper/validate_scoreboard_oracles.py": "cd2f77a7c3f454467280ea82bb938b3155131f63f024e7454dddfb269084f471"
+  },
+  "scope": "Protocols763..776; observational Java output is checked by this driver. No live gameplay claim.",
+  "boundaries": {
+    "764": "Display slot changes signed byte -> VarInt enum ID; invalid IDs normalize to LIST0.",
+    "765": "Components JSON -> anonymous NBT; number formats, score display, distinct reset packet added.",
+    "770": "Team visibility/collision UTF strings -> VarInt IDs; invalid IDs normalize to ALWAYS0.",
+    "776": "Team parameters reorder to display,prefix,suffix,visibility,collision,optional color,flags."
+  },
+  "observed_domains": {
+    "display_slot": "763 full signed byte; 764+ canonical IDs0..18, invalid IDs ->0.",
+    "render_type": "0 INTEGER,1 HEARTS; invalid ordinals reject.",
+    "raw_headers_flags": "Unknown objective/team action bytes and all flag bits retained.",
+    "team_color": "763..775 ChatFormatting0..21, including RESET21; 776 optional TeamColor0..15, invalid IDs ->0.",
+    "legacy_rules": "Unknown visibility/collision strings retained; explicit legacy visibility length40 accepted,41 rejected.",
+    "number_format": "0 blank,1 compound-root style,2 component;3 rejects. Style null/byte/string/list roots reject.",
+    "strings": "32767 ASCII units accepted,32768 rejected for ordinary UTF and four scoreboard name/entry fields.",
+    "score_reset": "Signed i32 score values accepted; modern reset null and present-empty objective remain distinct."
+  },
+  "gaps": [
+    "API decoder/domain probes only: no server startup, account, world, live client exchange, rendering, or Rust codec comparison.",
+    "No packet encoder byte-equality oracle; ordinary UTF writer limits are separately exercised.",
+    "Not exhaustive malformed/truncated/oversized payload, Unicode, NBT nesting, style-field, or player-list tests.",
+    "No full create/update team packet fixture: nested Parameters is decoded directly; outer unknown/removal/join modes are exercised.",
+    "No packet test for absent 776 optional color, all canonical rule IDs, or collision string length; serializer inspection supplements these facts.",
+    "Paper's encoder collision-configuration patch is outside these stored-field decoder probes.",
+    "Java API normalization differs from lossless raw-wire preservation; the summary documents canonical/fallback behavior, not a Rust decoder mandate."
+  ],
+  "results": [
+    {
+      "protocol": 763,
+      "release": "1.20.1",
+      "profile": "byte_slot_json",
+      "jar": {
+        "workspace_relative_path": "servers/1.20.1/versions/1.20.1/paper-1.20.1.jar",
+        "sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+        "dependency_jar_count": 114
+      },
+      "schema": {
+        "version": "1.20",
+        "sha256": "3b4fb2620f5d08927f94509ae028b475f7ef3bf2e7eb987af499d3ad632765ad",
+        "packet_ids": {
+          "scoreboard_display_objective": 81,
+          "scoreboard_objective": 88,
+          "teams": 90,
+          "scoreboard_score": 91
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 18,
+        "assertions": 19
+      },
+      "packet": {
+        "probes": 46,
+        "accepted": 35,
+        "expected_rejections": 11,
+        "assertions": 94
+      },
+      "passed": true
+    },
+    {
+      "protocol": 764,
+      "release": "1.20.2",
+      "profile": "enum_slot_json",
+      "jar": {
+        "workspace_relative_path": "servers/1.20.2/versions/1.20.2/paper-1.20.2.jar",
+        "sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+        "dependency_jar_count": 90
+      },
+      "schema": {
+        "version": "1.20.2",
+        "sha256": "e038fd10ee94a8395062034e6ad8aff6c989e7206b74906c3a04daebc7c004fc",
+        "packet_ids": {
+          "scoreboard_display_objective": 83,
+          "scoreboard_objective": 90,
+          "teams": 92,
+          "scoreboard_score": 93
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 46,
+        "accepted": 35,
+        "expected_rejections": 11,
+        "assertions": 94
+      },
+      "passed": true
+    },
+    {
+      "protocol": 765,
+      "release": "1.20.4",
+      "profile": "nbt_string_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.20.4/versions/1.20.4/paper-1.20.4.jar",
+        "sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+        "dependency_jar_count": 92
+      },
+      "schema": {
+        "version": "1.20.3",
+        "sha256": "ea8e6d9712cd0d8122c7830a6bd23f91251b4cd5c4526486a0ac4c7f7784ed52",
+        "packet_ids": {
+          "reset_score": 66,
+          "scoreboard_display_objective": 85,
+          "scoreboard_objective": 92,
+          "teams": 94,
+          "scoreboard_score": 95
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 57,
+        "accepted": 43,
+        "expected_rejections": 14,
+        "assertions": 116
+      },
+      "passed": true
+    },
+    {
+      "protocol": 766,
+      "release": "1.20.6",
+      "profile": "nbt_string_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.20.6/versions/1.20.6/paper-1.20.6.jar",
+        "sha256": "07349f2a63fe23db4e5edd5ad44f0359f700f67f4afad8272ac2cfaf5f6fc1d7",
+        "dependency_jar_count": 100
+      },
+      "schema": {
+        "version": "1.20.5",
+        "sha256": "4204f6f1d4f5aa7ab0936fe0cb78fac3d249a06e534e4903d1937614667be241",
+        "packet_ids": {
+          "reset_score": 68,
+          "scoreboard_display_objective": 87,
+          "scoreboard_objective": 94,
+          "teams": 96,
+          "scoreboard_score": 97
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 57,
+        "accepted": 43,
+        "expected_rejections": 14,
+        "assertions": 116
+      },
+      "passed": true
+    },
+    {
+      "protocol": 767,
+      "release": "1.21.1",
+      "profile": "nbt_string_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.1/versions/1.21.1/paper-1.21.1.jar",
+        "sha256": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+        "dependency_jar_count": 103
+      },
+      "schema": {
+        "version": "1.21.1",
+        "sha256": "1f5f23d1d1425a12d1b46d78dbc2b79038ea456cc1be11c942a79bebd8d3f43a",
+        "packet_ids": {
+          "reset_score": 68,
+          "scoreboard_display_objective": 87,
+          "scoreboard_objective": 94,
+          "teams": 96,
+          "scoreboard_score": 97
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 57,
+        "accepted": 43,
+        "expected_rejections": 14,
+        "assertions": 116
+      },
+      "passed": true
+    },
+    {
+      "protocol": 768,
+      "release": "1.21.3",
+      "profile": "nbt_string_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.3/versions/1.21.3/paper-1.21.3.jar",
+        "sha256": "2f7bffaf0ab60e4e8e3167709e25bf3add7fed7741268fd54cc655b5eb849e63",
+        "dependency_jar_count": 116
+      },
+      "schema": {
+        "version": "1.21.3",
+        "sha256": "94b9c562df3be925c12615041281d9f492c69f3fee10038787fdeb312a65c575",
+        "packet_ids": {
+          "reset_score": 73,
+          "scoreboard_display_objective": 92,
+          "scoreboard_objective": 100,
+          "teams": 103,
+          "scoreboard_score": 104
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 57,
+        "accepted": 43,
+        "expected_rejections": 14,
+        "assertions": 116
+      },
+      "passed": true
+    },
+    {
+      "protocol": 769,
+      "release": "1.21.4",
+      "profile": "nbt_string_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.4/versions/1.21.4/paper-1.21.4.jar",
+        "sha256": "9cd431f4b77d66a3bd565c01720dae617843684a363c4d9ad2eab590f8450819",
+        "dependency_jar_count": 119
+      },
+      "schema": {
+        "version": "1.21.4",
+        "sha256": "43936c5220a43b638b73ffd8165bccb3db7fe8dd0d54049072eb21fa5b9614ea",
+        "packet_ids": {
+          "reset_score": 73,
+          "scoreboard_display_objective": 92,
+          "scoreboard_objective": 100,
+          "teams": 103,
+          "scoreboard_score": 104
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 29,
+        "assertions": 30
+      },
+      "packet": {
+        "probes": 57,
+        "accepted": 43,
+        "expected_rejections": 14,
+        "assertions": 116
+      },
+      "passed": true
+    },
+    {
+      "protocol": 770,
+      "release": "1.21.5",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.5/versions/1.21.5/paper-1.21.5.jar",
+        "sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+        "dependency_jar_count": 119
+      },
+      "schema": {
+        "version": "1.21.5",
+        "sha256": "96434702de4e203d84baf092aa500c7ba4ca2af95edfc6f339a982b61cbb0777",
+        "packet_ids": {
+          "reset_score": 72,
+          "scoreboard_display_objective": 91,
+          "scoreboard_objective": 99,
+          "teams": 102,
+          "scoreboard_score": 103
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 771,
+      "release": "1.21.6",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.6/versions/1.21.6/paper-1.21.6.jar",
+        "sha256": "80671afc8efae94785497531fd43a2dd171d2a45b7206f37d57013cf4dd5d5e6",
+        "dependency_jar_count": 119
+      },
+      "schema": {
+        "version": "1.21.6",
+        "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+        "packet_ids": {
+          "reset_score": 72,
+          "scoreboard_display_objective": 91,
+          "scoreboard_objective": 99,
+          "teams": 102,
+          "scoreboard_score": 103
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 772,
+      "release": "1.21.8",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.8/versions/1.21.8/paper-1.21.8.jar",
+        "sha256": "c64fb7dbc95cd15aa0b7460a5b1e117eef5ee91c4e6fa7a8f1fe6487b6c31507",
+        "dependency_jar_count": 119
+      },
+      "schema": {
+        "version": "1.21.8",
+        "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+        "packet_ids": {
+          "reset_score": 72,
+          "scoreboard_display_objective": 91,
+          "scoreboard_objective": 99,
+          "teams": 102,
+          "scoreboard_score": 103
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 773,
+      "release": "1.21.10",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.10/versions/1.21.10/paper-1.21.10.jar",
+        "sha256": "8163aae3da901af7c4bf910cd8f27f5b28f02f2a7a572122f70f34c941f09cea",
+        "dependency_jar_count": 121
+      },
+      "schema": {
+        "version": "1.21.9",
+        "sha256": "f8ab7f079607267e5cbdd166d943fcf1ea77b87fa494cbc39737665a8d90aeb6",
+        "packet_ids": {
+          "reset_score": 77,
+          "scoreboard_display_objective": 96,
+          "scoreboard_objective": 104,
+          "teams": 107,
+          "scoreboard_score": 108
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 774,
+      "release": "1.21.11",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/1.21.11/versions/1.21.11/paper-1.21.11.jar",
+        "sha256": "3a73f0cc4020a5eb45629a67629b14263331c68de45552f8505df8060fa8ed43",
+        "dependency_jar_count": 114
+      },
+      "schema": {
+        "version": "1.21.11",
+        "sha256": "34d280120eef9090c66abc502d43d5305ffa2f592c1d2b0eb7a96b71048b81f7",
+        "packet_ids": {
+          "reset_score": 77,
+          "scoreboard_display_objective": 96,
+          "scoreboard_objective": 104,
+          "teams": 107,
+          "scoreboard_score": 108
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 775,
+      "release": "26.1.2",
+      "profile": "nbt_numeric_rules",
+      "jar": {
+        "workspace_relative_path": "servers/26.1.2/versions/26.1.2/paper-26.1.2.jar",
+        "sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+        "dependency_jar_count": 104
+      },
+      "schema": {
+        "version": "26.1",
+        "sha256": "a5fda872e2d425d1f35a8ab7e042148f4944ac1a7f0c3c5380b64b06d383bc0d",
+        "packet_ids": {
+          "reset_score": 79,
+          "scoreboard_display_objective": 98,
+          "scoreboard_objective": 106,
+          "teams": 109,
+          "scoreboard_score": 110
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 51,
+        "assertions": 52
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 42,
+        "expected_rejections": 13,
+        "assertions": 113
+      },
+      "passed": true
+    },
+    {
+      "protocol": 776,
+      "release": "26.2",
+      "profile": "nbt_optional_color_reordered",
+      "jar": {
+        "workspace_relative_path": "servers/26.2/versions/26.2/paper-26.2.jar",
+        "sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+        "dependency_jar_count": 103
+      },
+      "schema": {
+        "version": "26.2",
+        "sha256": "fef8c96e9a25905f692b8e1129ab1d331922f4ce41909a56537a4331fff30430",
+        "packet_ids": {
+          "reset_score": 79,
+          "scoreboard_display_objective": 98,
+          "scoreboard_objective": 106,
+          "teams": 109,
+          "scoreboard_score": 110
+        },
+        "locally_verified": true
+      },
+      "domain": {
+        "probes": 62,
+        "assertions": 63
+      },
+      "packet": {
+        "probes": 55,
+        "accepted": 44,
+        "expected_rejections": 11,
+        "assertions": 117
+      },
+      "passed": true
+    }
+  ],
+  "totals": {
+    "releases": 14,
+    "domain_probes": 560,
+    "packet_probes": 762,
+    "assertions": 2137,
+    "passed": true
+  }
+}

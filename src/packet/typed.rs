@@ -89,7 +89,14 @@ pub enum ChunkUpdatePacket {
     SimulationDistance(super::chunk_updates::SimulationDistance),
 }
 #[derive(Debug, Clone, PartialEq)]
+pub enum OverlayPacket {
+    BossBar(super::overlay::BossBar),
+    PlayerList(super::overlay::PlayerListHeaderFooter),
+}
+#[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Scoreboard(Box<super::scoreboard::ScoreboardPacket>),
+    Overlay(OverlayPacket),
     ChunkUpdate(ChunkUpdatePacket),
     Command(CommandPacket),
     WorldEffect(WorldEffectPacket),
@@ -140,6 +147,19 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "scoreboard_objective"
+            | "scoreboard_display_objective"
+            | "scoreboard_score"
+            | "reset_score"
+            | "teams" => Self::Scoreboard(Box::new(super::scoreboard::ScoreboardPacket::decode(
+                name, bytes, version, limits,
+            )?)),
+            "boss_bar" => Self::Overlay(OverlayPacket::BossBar(super::overlay::BossBar::decode(
+                bytes, version, limits,
+            )?)),
+            "playerlist_header" => Self::Overlay(OverlayPacket::PlayerList(
+                super::overlay::PlayerListHeaderFooter::decode(bytes, version, limits)?,
+            )),
             "map_chunk" => {
                 let Some(sections) = context.section_count else {
                     return Ok(None);
