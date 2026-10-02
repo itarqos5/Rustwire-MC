@@ -7,9 +7,13 @@
 #![forbid(unsafe_code)]
 pub mod chunk;
 pub mod codec;
+pub mod connection;
+#[cfg(feature = "crypto")]
+pub mod crypto;
 pub mod error;
 pub mod frame;
 pub mod nbt;
+pub mod packet;
 pub mod registry;
 pub mod version;
 pub use error::{Error, Result};

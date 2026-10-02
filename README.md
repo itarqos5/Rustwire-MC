@@ -12,8 +12,20 @@ Cargo package: `rustwire-mc`. A lean Minecraft Java protocol library under activ
 - Semantic chunk sections, block/biome palettes, typed heightmaps, lights and block entities
 - Bounded Java NBT with modified UTF-8, registry decoding and dimension metadata
 
-`cargo test`: 34 passing tests. `cargo test --no-default-features`: 31 passing tests; zero runtime dependencies.
+- TCP transport, status/ping, login/configuration transitions and common control packets
+- Optional RSA/AES-CFB8 encryption with redacted secrets
+- Loopback mock-server login tests across all 14 protocol families
 
-A packet catalog is not full typed packet support. TCP/login/auth are being developed in subsequent coherent commits; they are not available in this foundation commit. No crates.io publication has occurred.
+`cargo test --all-features`: 47 passing tests. `cargo test --no-default-features`: 37 passing tests; zero runtime dependencies. Rust 1.88+.
+
+A packet catalog is not full typed packet support. The Microsoft/Xbox/Minecraft HTTP authentication layer is being developed in a subsequent commit. Many play packet payloads remain raw; inventory, entity metadata and signed chat are not typed yet. No crates.io publication has occurred.
 
 See [PROVENANCE.md](PROVENANCE.md) for immutable source references and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Try it
+
+`cargo run --example status -- 127.0.0.1 25565 1.21.1`
+
+`cargo run --features crypto --example offline_chunks -- 127.0.0.1 25565 1.21.1 24 20`
+
+Offline mode is only for authorized test servers. The last two arguments are section count and minimum observation seconds. Use the server dimension metadata for custom dimensions. Real isolated Paper tests passed on 1.21.1 build 133 and 26.2 build 129: login, configuration, registries, teleport acknowledgement, chunk decoding and keepalives over 20-second sessions. Paper 1.20.1 retest is in progress after fixing early settings transmission. Other version families currently have mock/fixture coverage.

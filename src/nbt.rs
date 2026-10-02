@@ -368,8 +368,10 @@ fn read_tag(r: &mut Reader<'_>, kind: TagType, depth: usize, b: &mut Budget) -> 
             b.charge(n)?;
             let raw = r.take(n.checked_mul(4).ok_or(Error::Limit("NBT array bytes"))?)?;
             Tag::IntArray(
-                raw.chunks_exact(4)
-                    .map(|x| i32::from_be_bytes(x.try_into().unwrap()))
+                raw.as_chunks::<4>()
+                    .0
+                    .iter()
+                    .map(|x| i32::from_be_bytes(*x))
                     .collect(),
             )
         }
@@ -378,8 +380,10 @@ fn read_tag(r: &mut Reader<'_>, kind: TagType, depth: usize, b: &mut Budget) -> 
             b.charge(n)?;
             let raw = r.take(n.checked_mul(8).ok_or(Error::Limit("NBT array bytes"))?)?;
             Tag::LongArray(
-                raw.chunks_exact(8)
-                    .map(|x| i64::from_be_bytes(x.try_into().unwrap()))
+                raw.as_chunks::<8>()
+                    .0
+                    .iter()
+                    .map(|x| i64::from_be_bytes(*x))
                     .collect(),
             )
         }

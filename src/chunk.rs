@@ -191,8 +191,10 @@ impl PaletteContainer {
         // Check all bytes before allocating.
         let raw = r.take(n * 8)?;
         let data = raw
-            .chunks_exact(8)
-            .map(|v| u64::from_be_bytes(v.try_into().unwrap()))
+            .as_chunks::<8>()
+            .0
+            .iter()
+            .map(|v| u64::from_be_bytes(*v))
             .collect();
         let result = Self {
             kind,
@@ -564,8 +566,10 @@ fn read_longs(r: &mut Reader<'_>) -> Result<Vec<i64>> {
     let n = r.count(r.limits.max_collection)?;
     let raw = r.take(n.checked_mul(8).ok_or(Error::Limit("long array bytes"))?)?;
     Ok(raw
-        .chunks_exact(8)
-        .map(|v| i64::from_be_bytes(v.try_into().unwrap()))
+        .as_chunks::<8>()
+        .0
+        .iter()
+        .map(|v| i64::from_be_bytes(*v))
         .collect())
 }
 fn write_longs(w: &mut Writer, data: &[i64], limits: Limits) -> Result<()> {
