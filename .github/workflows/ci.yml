@@ -25,6 +25,7 @@ jobs:
         with:
           components: rustfmt, clippy
       - run: cargo fmt --all -- --check
+      - run: python3 -m unittest discover -s tools/paper -p "test_validate_grim.py"
       - run: cargo clippy --locked --all-targets --all-features -- -D warnings
       - run: cargo doc --locked --all-features --no-deps
         env:

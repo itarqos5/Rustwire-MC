@@ -1,0 +1,94 @@
+{
+  "verified_utc": "2026-10-02T17:18:10.298267+00:00",
+  "official_provenance_chain": [
+    "https://github.com/GrimAnticheat/Grim",
+    "https://grim.ac/",
+    "https://modrinth.com/plugin/grimac"
+  ],
+  "records": [
+    {
+      "project_id": "LJNGWSvH",
+      "version_id": "1FIGlM6Q",
+      "version": "2.3.73",
+      "release_type": "release",
+      "published_utc": "2026-03-09T09:10:05.544421Z",
+      "version_page": "https://modrinth.com/plugin/grimac/version/1FIGlM6Q",
+      "api_url": "https://api.modrinth.com/v2/version/1FIGlM6Q",
+      "download_url": "https://cdn.modrinth.com/data/LJNGWSvH/versions/1FIGlM6Q/grimac-bukkit-2.3.73.jar",
+      "bytes": 10578230,
+      "publisher_hashes": {
+        "sha1": "f1cd0a6b8b4470dd10a542964784ec5937e0c19a",
+        "sha512": "bf9be1194eb45afe1dec6bd8e98d078dacf41539025c8aabe24d31337cbea86625774e30842568b47f34ca174472c724c7876cc30793945e7408b03609672655"
+      },
+      "verified_publisher_hashes": {
+        "sha1": true,
+        "sha512": true
+      },
+      "local_sha256": "a095331a8ba47286b27bdb9b51f0d35ae4a227632a2c50b25cedba85439f1810",
+      "build_properties": "timestamp=1773047124862\ngit.commit=879d566\ngit.branch=HEAD\ngit.org=GrimAnticheat\ngit.repo=Grim\nbuild.version=2.3.73\nbuild.shade_pe=true\nbuild.relocate=true\nbuild.release=true\n",
+      "source_commit": "879d566c05bc6b03918c5f24bb5da1a209352b99",
+      "source_url": "https://github.com/GrimAnticheat/Grim/tree/879d566c05bc6b03918c5f24bb5da1a209352b99",
+      "license": "GPL-3.0-or-later (Modrinth metadata); GPLv3 license text in official source",
+      "supported_test_versions": [
+        "1.20.6",
+        "1.21.1",
+        "1.21.3",
+        "1.21.5"
+      ],
+      "loaders": [
+        "bukkit",
+        "folia",
+        "paper",
+        "purpur",
+        "spigot"
+      ],
+      "dependencies_metadata": []
+    },
+    {
+      "project_id": "LJNGWSvH",
+      "version_id": "YJEwvStg",
+      "version": "2.3.74-abb95b6",
+      "release_type": "alpha",
+      "published_utc": "2026-10-01T03:37:08.057556Z",
+      "version_page": "https://modrinth.com/plugin/grimac/version/YJEwvStg",
+      "api_url": "https://api.modrinth.com/v2/version/YJEwvStg",
+      "download_url": "https://cdn.modrinth.com/data/LJNGWSvH/versions/YJEwvStg/grimac-bukkit-2.3.74-abb95b6.jar",
+      "bytes": 13138975,
+      "publisher_hashes": {
+        "sha1": "f7fc55769747eb0769b3b286dc8d5626c1b34f43",
+        "sha512": "12ca9f9a0e19bfee78309768788f141c432ec48b9a3180dbde430159ba09bbab43d25949c903a0a122e916229dfa938325d49aab1a793bc8c40100be6a2130b7"
+      },
+      "verified_publisher_hashes": {
+        "sha1": true,
+        "sha512": true
+      },
+      "local_sha256": "d33eed30bfd5c6eb54176b197c9c51018ba0916d7b056e0530ab183ac1a3d590",
+      "build_properties": "timestamp=1790825644912\ngit.commit=abb95b6\ngit.branch=2.0\ngit.org=GrimAnticheat\ngit.repo=Grim\nbuild.version=2.3.74-abb95b6\nbuild.shade_pe=true\nbuild.relocate=true\nbuild.release=false\n",
+      "source_commit": "abb95b6cac22643ff2cf0b9bc63909daebadf4c6",
+      "source_url": "https://github.com/GrimAnticheat/Grim/tree/abb95b6cac22643ff2cf0b9bc63909daebadf4c6",
+      "license": "GPL-3.0-or-later (Modrinth metadata); GPLv3 license text in official source",
+      "supported_test_versions": [
+        "1.20.6",
+        "1.21.1",
+        "1.21.3",
+        "1.21.5",
+        "26.1.2",
+        "26.2"
+      ],
+      "loaders": [
+        "bukkit",
+        "folia",
+        "paper",
+        "purpur",
+        "spigot"
+      ],
+      "dependencies_metadata": []
+    }
+  ],
+  "proof_limits": "Published CDN hashes and embedded source/build metadata are verified. No independently reproduced build or cryptographic signature attestation is claimed.",
+  "official_sources": {
+    "repository": "https://github.com/GrimAnticheat/Grim",
+    "downloads": "https://modrinth.com/plugin/grimac",
+    "release": "https://github.com/GrimAnticheat/Grim/releases/tag/v2.3.73"
+  }
+}
