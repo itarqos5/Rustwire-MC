@@ -61,7 +61,7 @@ cargo bench --bench codec
 - Transactional partial-frame decoding; packet/frame/collection/NBT limits; strict zlib decompressed sizes and trailing-stream rejection
 - Generic `Read + Write` transport plus timeout-aware TCP; separate continuous encrypt/decrypt states; failed I/O poisons the connection rather than retrying a partly consumed stream
 - Handshake, status/ping, login start/success, compression negotiation, RSA challenge/response and configuration transitions
-- Client settings, keepalive/ping replies, known-pack selection, cookie/plugin responses, custom payloads, player position and teleport acknowledgement
+- Client settings, keepalive/ping replies, known-pack selection, cookie/plugin responses, custom payloads, all four player movement forms and teleport acknowledgement
 - Typed Join Game and dimension metadata, including legacy in-login registries and 26.2's online-mode field
 - Full NBT tag tree with Java modified UTF-8, including lossless unpaired UTF-16 surrogates
 - Dynamic registry entries, omitted known-pack data, dimension height/min-Y lookup

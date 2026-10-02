@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 162 tests with all features; 149 applicable tests without default features
+- 164 tests with all features; 151 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -156,3 +156,8 @@ stopped with exit 0. No anti-cheat plugin was present in these scenarios.
 
 Reproduce with `--extended-components` on the gameplay runner. It uses only fresh
 disposable worlds and already accepted baseline EULA files, as described above.
+
+The four serverbound movement forms have independent golden bytes across all
+14 families, truncation/trailing-data tests, reserved flag and finite-value
+validation, and byte-budget checks. They report caller-simulated state; the
+codec itself does not implement gravity, collision, input or a client clock.

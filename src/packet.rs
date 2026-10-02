@@ -7,6 +7,7 @@ pub mod entity_metadata;
 pub mod interact;
 pub mod inventory;
 pub mod item_hash;
+pub mod movement;
 pub mod typed;
 mod world;
 use crate::{
@@ -277,20 +278,13 @@ pub fn player_position(
     on_ground: bool,
     horizontal_collision: bool,
 ) -> Result<RawPacket> {
-    if ![x, y, z].iter().all(|n| n.is_finite()) {
-        return Err(Error::Invalid("non-finite position"));
+    movement::PlayerMovement {
+        position: Some([x, y, z]),
+        rotation: None,
+        on_ground,
+        horizontal_collision,
     }
-    if horizontal_collision && version.protocol() < 768 {
-        return Err(Error::Unsupported(
-            "horizontal collision flag before 1.21.2",
-        ));
-    }
-    let mut w = Writer::new();
-    w.f64(x);
-    w.f64(y);
-    w.f64(z);
-    w.u8(u8::from(on_ground) | (u8::from(horizontal_collision) << 1));
-    named(version, State::Play, "position", w.into_inner())
+    .packet(version, Limits::default())
 }
 pub fn custom_payload(
     version: Version,
