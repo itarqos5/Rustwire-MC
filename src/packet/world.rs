@@ -29,7 +29,7 @@ pub struct SpawnInfo {
     pub sea_level: Option<i32>,
 }
 impl SpawnInfo {
-    fn read(r: &mut Reader<'_>, version: Version) -> Result<Self> {
+    pub(crate) fn read(r: &mut Reader<'_>, version: Version) -> Result<Self> {
         let dimension_type = if version.protocol() >= 766 {
             let id = r.var_i32()?;
             if id < 0 {

@@ -1,4 +1,6 @@
 //! Typed codecs for connection control and common play operations.
+pub mod blocks;
+pub mod entity;
 mod world;
 use crate::{
     codec::{Reader, Writer},
