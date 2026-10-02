@@ -3,6 +3,7 @@ pub mod blocks;
 pub mod chat;
 pub mod entity;
 pub mod interact;
+pub mod inventory;
 mod world;
 use crate::{
     codec::{Reader, Writer},
