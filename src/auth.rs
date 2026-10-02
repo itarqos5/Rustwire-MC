@@ -77,6 +77,8 @@ pub struct MinecraftSession {
 pub struct AuthClient {
     client_id: String,
     http: ureq::Agent,
+    #[cfg(test)]
+    test_server: Option<std::net::SocketAddr>,
 }
 impl std::fmt::Debug for AuthClient {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -93,6 +95,8 @@ impl AuthClient {
         }
         Ok(Self {
             client_id,
+            #[cfg(test)]
+            test_server: None,
             http: ureq::AgentBuilder::new()
                 .timeout(Duration::from_secs(30))
                 .redirects(0)
@@ -124,7 +128,7 @@ impl AuthClient {
         if code.created.elapsed() >= code.expires_in {
             return Err(Error::Auth("device code expired"));
         }
-        let response = self.http.post(&format!("{OAUTH}/token")).send_form(&[
+        let response = self.request("POST", &format!("{OAUTH}/token")).send_form(&[
             ("grant_type", "urn:ietf:params:oauth:grant-type:device_code"),
             ("client_id", &self.client_id),
             ("device_code", code.device_code.expose()),
@@ -181,11 +185,12 @@ impl AuthClient {
         )?)
     }
     pub fn minecraft_session(&self, microsoft_access_token: &Secret) -> Result<MinecraftSession> {
-        let xbl=self.post("https://user.auth.xboxlive.com/user/authenticate",json!({"Properties":{"AuthMethod":"RPS","SiteName":"user.auth.xboxlive.com","RpsTicket":format!("d={}",microsoft_access_token.expose())},"RelyingParty":"http://auth.xboxlive.com","TokenType":"JWT"}))?;
-        let xsts=self.post("https://xsts.auth.xboxlive.com/xsts/authorize",json!({"Properties":{"SandboxId":"RETAIL","UserTokens":[field(&xbl,"Token")?]},"RelyingParty":"rp://api.minecraftservices.com/","TokenType":"JWT"}))?;
+        let xbl=self.xbox_post("https://user.auth.xboxlive.com/user/authenticate",json!({"Properties":{"AuthMethod":"RPS","SiteName":"user.auth.xboxlive.com","RpsTicket":format!("d={}",microsoft_access_token.expose())},"RelyingParty":"http://auth.xboxlive.com","TokenType":"JWT"}))?;
+        let xsts=self.xbox_post("https://xsts.auth.xboxlive.com/xsts/authorize",json!({"Properties":{"SandboxId":"RETAIL","UserTokens":[field(&xbl,"Token")?]},"RelyingParty":"rp://api.minecraftservices.com/","TokenType":"JWT"}))?;
         let uhs = xsts
             .pointer("/DisplayClaims/xui/0/uhs")
             .and_then(Value::as_str)
+            .filter(|s| !s.is_empty())
             .ok_or(Error::Auth("missing Xbox user hash"))?;
         if xbl
             .pointer("/DisplayClaims/xui/0/uhs")
@@ -210,8 +215,7 @@ impl AuthClient {
     /// Also accepts a Minecraft access token acquired by an application-owned auth layer.
     pub fn profile(&self, access_token: &Secret) -> Result<MinecraftProfile> {
         let v = success_json(
-            self.http
-                .get("https://api.minecraftservices.com/minecraft/profile")
+            self.request("GET", "https://api.minecraftservices.com/minecraft/profile")
                 .set(
                     "Authorization",
                     &format!("Bearer {}", access_token.expose()),
@@ -229,29 +233,42 @@ impl AuthClient {
     }
     /// Authorize joining this exact server hash before sending the encryption response.
     pub fn join_server(&self, session: &MinecraftSession, server_hash: &str) -> Result<()> {
-        if server_hash == "-"
-            || server_hash.starts_with("--")
-            || server_hash.len() > 41
-            || server_hash.is_empty()
-            || !server_hash
-                .strip_prefix('-')
-                .unwrap_or(server_hash)
-                .bytes()
-                .all(|b| b.is_ascii_hexdigit())
+        let digits = server_hash.strip_prefix('-').unwrap_or(server_hash);
+        if digits.is_empty() || digits.len() > 40 || !digits.bytes().all(|b| b.is_ascii_hexdigit())
         {
             return Err(Error::Invalid("server hash"));
         }
-        let response=self.http.post("https://sessionserver.mojang.com/session/minecraft/join").send_json(json!({"accessToken":session.access_token.expose(),"selectedProfile":uuid_hex(&session.profile.uuid),"serverId":server_hash}));
+        let response=self.request("POST", "https://sessionserver.mojang.com/session/minecraft/join").send_json(json!({"accessToken":session.access_token.expose(),"selectedProfile":uuid_hex(&session.profile.uuid),"serverId":server_hash}));
         match response {
             Ok(r) if r.status() == 204 => Ok(()),
             _ => Err(Error::Auth("Minecraft session join rejected")),
         }
     }
+    fn request(&self, method: &str, url: &str) -> ureq::Request {
+        // Only unit tests can redirect fixed production URLs to an in-process server.
+        // Keep the original host in the path so tests verify the intended destination.
+        #[cfg(test)]
+        if let Some(address) = self.test_server {
+            assert!(address.ip().is_loopback());
+            let target = url.strip_prefix("https://").expect("HTTPS auth endpoint");
+            return self
+                .http
+                .request(method, &format!("http://{address}/{target}"));
+        }
+        self.http.request(method, url)
+    }
     fn form(&self, url: &str, fields: &[(&str, &str)]) -> Result<Value> {
-        success_json(self.http.post(url).send_form(fields))
+        success_json(self.request("POST", url).send_form(fields))
+    }
+    fn xbox_post(&self, url: &str, body: Value) -> Result<Value> {
+        success_json(
+            self.request("POST", url)
+                .set("x-xbl-contract-version", "1")
+                .send_json(body),
+        )
     }
     fn post(&self, url: &str, body: Value) -> Result<Value> {
-        success_json(self.http.post(url).send_json(body))
+        success_json(self.request("POST", url).send_json(body))
     }
 }
 fn field<'a>(v: &'a Value, key: &str) -> Result<&'a str> {
@@ -275,8 +292,8 @@ fn parse_token(v: Value) -> Result<MicrosoftToken> {
         access_token: Secret::new(field(&v, "access_token")?.into()),
         refresh_token: v
             .get("refresh_token")
-            .and_then(Value::as_str)
-            .map(|s| Secret::new(s.into())),
+            .map(|_| field(&v, "refresh_token").map(|s| Secret::new(s.into())))
+            .transpose()?,
         expires_in: seconds(&v, "expires_in")?,
     })
 }
@@ -312,10 +329,19 @@ fn success_json(response: std::result::Result<ureq::Response, ureq::Error>) -> R
     Ok(v)
 }
 pub fn parse_uuid(s: &str) -> Result<[u8; 16]> {
-    let s = s.replace('-', "");
-    if s.len() != 32 || !s.is_ascii() {
+    if !s.is_ascii()
+        || !match s.len() {
+            32 => !s.contains('-'),
+            36 => s
+                .bytes()
+                .enumerate()
+                .all(|(i, byte)| (byte == b'-') == matches!(i, 8 | 13 | 18 | 23)),
+            _ => false,
+        }
+    {
         return Err(Error::Invalid("UUID"));
     }
+    let s = s.replace('-', "");
     let mut out = [0; 16];
     for (i, byte) in out.iter_mut().enumerate() {
         *byte =
@@ -331,6 +357,9 @@ pub fn uuid_hex(uuid: &[u8; 16]) -> String {
     }
     out
 }
+#[cfg(test)]
+mod http_tests;
+
 #[cfg(test)]
 mod tests {
     use super::*;

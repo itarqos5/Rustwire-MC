@@ -315,3 +315,17 @@ boundary, and modern optional scalar NBT entries. [Per-release facts and artifac
 hashes](docs/validation/registry-tags-oracle.json) retain all14 results. These
 checks do not log into an account, start a server or distribute game implementation
 text. Syntactic identifiers do not supply missing static registry-name data.
+
+## Authentication request contracts
+
+The original loopback HTTP suite uses synthetic credentials and checks the
+[Microsoft device flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-device-code),
+[refresh flow](https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-auth-code-flow#refresh-the-access-token),
+[documented Xbox request headers and token exchange](https://learn.microsoft.com/en-us/gaming/gdk/docs/services/fundamentals/s2s-auth-calls/service-authentication/live-website-authentication),
+and [RFC8628 polling requirements](https://www.rfc-editor.org/rfc/rfc8628#section-3.5).
+Microsoft's Xbox documentation was verified 2026-10-02. A website/confidential-client
+example is used only for Xbox exchange/header facts, not to claim public-client
+app approval or require a client secret in Rustwire's device flow. Minecraft
+profile/session fixtures validate this library's HTTP contract without asserting
+live account interoperability. No real credentials or borrowed application IDs
+are used by the tests.

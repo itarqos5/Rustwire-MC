@@ -40,3 +40,9 @@ appropriate provider.
 ## Reporting
 
 Avoid posting tokens, private server addresses, captured worlds or exploit-ready private data in public issues. Use GitHub private vulnerability reporting if the repository has it enabled; otherwise contact the maintainer through an existing private channel. This document does not claim private reporting is enabled.
+
+Authentication HTTP regression tests use only loopback mock endpoints and
+explicitly synthetic credentials. Their private routing hook is compiled only
+under `cfg(test)`; it cannot redirect production authentication requests. Tests
+cover credential-redacted errors, redirect refusal, deadlines and body limits.
+They are not an independent security audit or a live eligible-account validation.

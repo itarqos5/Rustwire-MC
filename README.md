@@ -110,6 +110,8 @@ cargo run --features auth --example online_login -- YOUR_MICROSOFT_CLIENT_ID SER
 
 Use **your own properly registered and Minecraft-service-authorized public-client application ID**. A generic Entra registration may not be enough for Minecraft Services. Rustwire does not borrow another launcher's app ID, accept passwords, store refresh tokens, or log tokens. Token holders redact `Debug` and zeroize their owned strings on drop; this is best-effort memory hygiene, not a guarantee that no transient HTTP/JSON copy ever existed.
 
+Twenty-three loopback HTTP tests verify request/response contracts, error limits and redaction with synthetic credentials. Account-backed interoperability still needs an eligible account and authorized application.
+
 You may instead use an application-owned authentication layer and pass its Minecraft token/profile to the session-join helper. Join the session server for the server's exact hash before completing encryption when `should_authenticate` is true. Old Mojang username/password authentication is not implemented.
 
 **Live account-backed Microsoft authentication has not been tested.** Auth parsing/redaction and crypto tests are offline; server interoperability below uses isolated offline-mode servers.

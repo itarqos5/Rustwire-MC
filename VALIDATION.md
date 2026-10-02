@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 316 core tests with all features; 301 applicable core tests without default features
+- 339 core tests with all features; 301 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -537,3 +537,27 @@ and three independent Rust regressions document the boundary. Integrated checks
 passed 316 all-feature tests on stable/Rust1.88.0 and 301 no-default tests, plus
 strict Clippy and formatting. This is a malformed-input correction, with no
 change to valid packet representations.
+
+## Offline authentication HTTP exchanges
+
+Twenty-three new tests perform actual HTTP exchanges with in-process loopback
+servers and exclusively synthetic tokens. They cover device-code requests, form
+encoding, pending/slow-down/denial/expiry, persistent polling delay, cancellation,
+refresh rotation, the Xbox/XSTS/Minecraft request chain, profile parsing and
+session-join responses. Other cases cover status errors, redirects, timeouts,
+truncation, malformed/chunked/oversized bodies and credential-redacted errors.
+
+This exposed five request-contract/validation gaps, now corrected: the documented
+Xbox/XSTS contract header, UUID hyphen placement, malformed supplied refresh
+tokens, empty matching Xbox user hashes, and an overlong positive server hash.
+Valid absent/rotated refresh tokens, matching nonempty identities and up-to-40-hex-
+digit signed server hashes remain accepted.
+
+The loopback override is private and compiled only for unit tests. Production
+URLs remain fixed HTTPS endpoints with redirect refusal, 30-second deadlines,
+TLS verification and bounded bodies. No dependency or public endpoint override
+was added. The integrated snapshot passed 339 all-feature tests on stable and
+Rust1.88.0, 301 no-default tests, 20 example tests, strict Clippy/Rustdoc and
+formatting. The 80 Python harness tests also pass. These checks do not authenticate
+an eligible account or prove application/service approval; live Microsoft/Xbox/
+Minecraft account interoperability remains unverified.
