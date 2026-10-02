@@ -358,3 +358,34 @@ fn paper_1201_exact_singleton_zero_padding_regression() {
     let (_, bytes) = padded(Version::V1_20_2, &[0; 24]);
     assert!(ChunkData::decode(&bytes, Version::V1_20_2, 24, Limits::default()).is_err());
 }
+#[test]
+fn light_encoder_budget_is_preflighted() {
+    let light = LightData {
+        sky_mask: vec![1],
+        sky_arrays: vec![vec![0; 2048]],
+        ..LightData::default()
+    };
+    let mut w = Writer::new();
+    w.raw(&[7, 8]);
+    assert!(light
+        .write(
+            &mut w,
+            Limits {
+                max_packet: 32,
+                ..Limits::default()
+            }
+        )
+        .is_err());
+    assert_eq!(w.as_slice(), &[7, 8]);
+    let mut c = chunk(Version::V1_21);
+    c.light = light;
+    assert!(c
+        .encode(
+            Version::V1_21,
+            Limits {
+                max_packet: 1024,
+                ..Limits::default()
+            }
+        )
+        .is_err());
+}

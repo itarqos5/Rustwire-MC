@@ -16,7 +16,7 @@ Cargo package: `rustwire-mc`. A lean Minecraft Java protocol library under activ
 - Optional RSA/AES-CFB8 encryption with redacted secrets
 - Loopback mock-server login tests across all 14 protocol families
 
-`cargo test --all-features`: 50 passing tests. `cargo test --no-default-features`: 40 passing tests; zero runtime dependencies. Rust 1.88+.
+`cargo test --all-features`: 52 passing tests. `cargo test --no-default-features`: 42 passing tests; zero runtime dependencies. Rust 1.88+.
 
 A packet catalog is not full typed packet support. The Microsoft/Xbox/Minecraft HTTP authentication layer is being developed in a subsequent commit. Many play packet payloads remain raw; inventory, entity metadata and signed chat are not typed yet. No crates.io publication has occurred.
 

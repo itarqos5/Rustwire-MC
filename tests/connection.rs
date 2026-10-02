@@ -382,3 +382,23 @@ fn legacy_settings_wait_for_join_game() {
     assert!(matches!(c.next_event().unwrap(), Event::Joined(_)));
     c.send_settings(&packet::ClientSettings::default()).unwrap();
 }
+#[test]
+fn login_frame_budget_failure_does_not_send_handshake() {
+    let io = Fragmented {
+        input: std::io::Cursor::new(vec![]),
+        output: vec![],
+    };
+    let mut c = Connection::new(
+        io,
+        Version::V1_21,
+        Limits {
+            max_packet: 20,
+            ..Limits::default()
+        },
+    );
+    assert!(c
+        .start_login("a", 25565, "abcdefghijklmnop", [0; 16])
+        .is_err());
+    assert_eq!(c.state(), State::Handshake);
+    assert!(c.into_inner().output.is_empty());
+}

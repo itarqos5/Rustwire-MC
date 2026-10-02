@@ -157,6 +157,10 @@ impl<S: Read + Write> Connection<S> {
         // Validate both packets before writing either one.
         let handshake = packet::handshake(self.version, host, port, State::Login)?;
         let start = packet::login_start(self.version, username, uuid)?;
+        // Frame budgets can fail even when the individual fields are valid.
+        // Preflight both encodings before any externally visible write.
+        self.codec.encode(&handshake)?;
+        self.codec.encode(&start)?;
         self.send(&handshake)?;
         self.state = State::Login;
         self.send(&start)

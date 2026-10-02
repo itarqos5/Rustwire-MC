@@ -379,6 +379,52 @@ impl LightData {
     }
     pub fn write(&self, w: &mut Writer, limits: Limits) -> Result<()> {
         self.validate()?;
+        // Preflight all lengths before modifying the caller's buffer.
+        fn prefix(n: usize, limits: Limits) -> Result<usize> {
+            if n > limits.max_collection || n > i32::MAX as usize {
+                return Err(Error::Limit("light collection length"));
+            }
+            let mut bytes = 1;
+            let mut n = n;
+            while n >= 128 {
+                bytes += 1;
+                n >>= 7;
+            }
+            Ok(bytes)
+        }
+        let mut projected = w.as_slice().len();
+        for longs in [
+            &self.sky_mask,
+            &self.block_mask,
+            &self.empty_sky_mask,
+            &self.empty_block_mask,
+        ] {
+            let bytes = longs
+                .len()
+                .checked_mul(8)
+                .and_then(|n| n.checked_add(prefix(longs.len(), limits).ok()?))
+                .ok_or(Error::Limit("light encoded length"))?;
+            projected = projected
+                .checked_add(bytes)
+                .ok_or(Error::Limit("light encoded length"))?;
+        }
+        for arrays in [&self.sky_arrays, &self.block_arrays] {
+            projected = projected
+                .checked_add(prefix(arrays.len(), limits)?)
+                .ok_or(Error::Limit("light encoded length"))?;
+            for array in arrays {
+                let bytes = prefix(array.len(), limits)?
+                    .checked_add(array.len())
+                    .ok_or(Error::Limit("light encoded length"))?;
+                projected = projected
+                    .checked_add(bytes)
+                    .ok_or(Error::Limit("light encoded length"))?;
+            }
+        }
+        if projected > limits.max_packet {
+            return Err(Error::Limit("light encoded byte budget"));
+        }
+
         for longs in [
             &self.sky_mask,
             &self.block_mask,
