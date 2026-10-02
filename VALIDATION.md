@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 174 core tests with all features; 160 applicable core tests without default features
+- 196 core tests with all features; 182 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -202,3 +202,14 @@ hashes](docs/validation/chat-state-oracle.json) record the result. This verifies
 tracking, checksum and cache semantics without an account, not live secure-chat
 signing or signature trust. Full core tests and strict lint/docs checks passed
 on stable and the core tests passed on Rust 1.88 for this increment.
+
+## Player and entity-state codecs
+
+Twenty-two additional tests cover player-list actions/removal, equipment,
+attributes/modifiers and status effects across all fourteen protocol families.
+They include independent golden bytes, every truncated prefix, trailing bytes,
+shared budgets, malformed actions/identifiers, canonical duplicate identities,
+Connection dispatch/raw preservation and 10,752 bounded deterministic mutations.
+Isolated full suites, strict clippy/rustdoc/format checks and Rust 1.88 passed.
+Real-server evidence for these new packet APIs is recorded separately when run;
+the tests do not authenticate profile keys or resolve numeric registry identities.

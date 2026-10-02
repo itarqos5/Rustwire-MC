@@ -4,10 +4,12 @@ pub mod chat;
 pub mod common;
 pub mod entity;
 pub mod entity_metadata;
+pub mod entity_state;
 pub mod interact;
 pub mod inventory;
 pub mod item_hash;
 pub mod movement;
+pub mod player;
 pub mod typed;
 mod world;
 use crate::{

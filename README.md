@@ -73,6 +73,7 @@ cargo bench --bench codec
 `Connection::next_typed_event()` adds semantic dispatch while retaining complete raw packets when a nested layout is intentionally unsupported. Malformed known layouts remain errors. `next_event()` keeps the lower-level control/raw interface.
 
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
+- Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Block/section updates, chunk unload and respawn with dimension metadata
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Typed food/effects, potions, stew, writable/written books, attributes, lodestones, fireworks, bees, tools and repairable holder sets, including their release-specific layouts

@@ -4,7 +4,8 @@
 use crate::{
     packet::{
         self, blocks::WorldPacket, chat, common::CommonPacket, entity::EntityPacket,
-        entity_metadata::EntityMetadata, inventory,
+        entity_metadata::EntityMetadata, entity_state::EntityStatePacket, inventory,
+        player::PlayerPacket,
     },
     version::State,
     Error, Limits, Result, Version,
@@ -52,6 +53,8 @@ pub enum ChatPacket {
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
     Entity(EntityPacket),
+    EntityState(EntityStatePacket),
+    Player(PlayerPacket),
     Metadata(EntityMetadata),
     World(WorldPacket),
     Inventory(InventoryPacket),
@@ -87,6 +90,15 @@ impl DecodedPacket {
             | "entity_status"
             | "update_health"
             | "abilities" => Self::Entity(EntityPacket::decode(name, bytes, version, limits)?),
+            "player_info" | "player_remove" => {
+                Self::Player(PlayerPacket::decode(name, bytes, version, limits)?)
+            }
+            "entity_equipment"
+            | "entity_update_attributes"
+            | "entity_effect"
+            | "remove_entity_effect" => {
+                Self::EntityState(EntityStatePacket::decode(name, bytes, version, limits)?)
+            }
             "entity_metadata" => Self::Metadata(EntityMetadata::decode(bytes, version, limits)?),
             "block_change" | "multi_block_change" | "unload_chunk" | "respawn" => {
                 Self::World(WorldPacket::decode(name, bytes, version, limits)?)

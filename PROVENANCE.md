@@ -159,3 +159,22 @@ Eight original Rust tests cover these independent outputs, bitset wire bytes,
 checksum zero normalization, ignored/duplicate/wrapped histories, cache capacity,
 invalid-reference atomicity and offset overflow. None of these helpers verifies
 RSA signatures or certifies a remote identity.
+
+## Player roster, equipment, attributes and effects
+
+All fourteen cached release serializers were checked alongside pinned schemas.
+Official player-list actions assign list order bit 6 from 768 and hat bit 7 from
+769; the pinned schemas swap those labels in newer releases. Profile property
+count/name/signature limits become 16/64/1024 at 766; username, public-key and
+key-signature bounds remain 16/512/4096. Equipment adds BODY at 766 and SADDLE
+at 770. Attributes use registry IDs from 766 and modifier resource identifiers
+from 767. Attribute operations are VarInts from 766 despite the schema's i8 label.
+Effects switch from byte amplifiers and optional factor NBT to VarInt amplifiers
+and the blend flag at 766. Resource identifiers retain original text while
+duplicate checks normalize the default namespace; the namespace `..` is rejected
+from 775. These are verified protocol facts, not copied implementations.
+
+The original golden tests target ClientboundPlayerInfoUpdate/RemovePacket,
+EquipmentSlot, attribute/effect packets, profile/session codecs and the release
+ResourceLocation/Identifier rules. Public keys and signatures remain explicitly
+unverified envelopes, and registry references remain unresolved numeric IDs.

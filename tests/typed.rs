@@ -2,10 +2,7 @@ use rustwire_mc::{
     codec::Writer,
     connection::{Connection, Event, TypedEvent},
     frame::{FrameCodec, RawPacket},
-    packet::{
-        inventory,
-        typed::{ChatPacket, DecodedPacket},
-    },
+    packet::typed::{ChatPacket, DecodedPacket},
     version::{Direction, State},
     Limits, Version,
 };
@@ -80,7 +77,7 @@ fn unsupported_inventory_preserves_entire_raw_packet() {
     w.var_i32(1);
     w.var_i32(1);
     w.var_i32(0);
-    w.var_i32(inventory::component_id(v, "can_break").unwrap());
+    w.var_i32(i32::MAX); // Unknown component ID stays unsupported as coverage expands.
     w.raw(&[1, 2, 3, 4, 5]);
     let packet = RawPacket::new(
         v.packet_id(State::Play, Direction::Clientbound, "set_slot")
