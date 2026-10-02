@@ -100,3 +100,9 @@ a template at 776. Zero-count templates retain all fields. Charged-projectile
 template caps are 64 at 775 and 1024 at 776; bundle/container caps are 256. The
 shared template codecs enforce aggregate budgets across component and particle
 nesting. Six additional regression tests cover these verified corrections.
+
+The 1.20.6 and 1.21.1 ClientboundContainerSetSlotPacket constructors still
+read a signed byte for the container ID, verified independently from both
+server artifacts. The misleading unsigned schema alias was corrected so
+reserved IDs -1 and -2 survive through protocol 767. Regression fixtures cover
+all five pre-768 families and the later separate-cursor boundary.

@@ -1,0 +1,700 @@
+{
+  "description": "Extended isolated offline Paper component/metadata validation; one release per selected wire-layout boundary. No anti-cheat plugin was present in these runs.",
+  "notes": [
+    "The first older-version run used invalid written-book command syntax; all three affected releases were rerun using JSON-encoded page components.",
+    "1.21.5 and 26.x hash controls deliberately changed one predicted component hash, observed correction, then used derived hashes with no correction.",
+    "Recorded binary hashes identify the exact snapshots. Template families were exercised on 26.1.2 and 26.2, sulfur only 26.2."
+  ],
+  "records": [
+    {
+      "version": "1.20.6",
+      "paper_build": 151,
+      "started_utc": "2026-10-02T17:03:02.472359+00:00",
+      "client_seconds": 45.143,
+      "client_binary_sha256": "233cfa60072b53b6763bf3619e4de6918b7f08db3555749ae87cd25bae394fa6",
+      "server_jar_sha256": "4b011f5adb5f6c72007686a223174fce82f31aeb4b34faf4652abc840b47e640",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          3.5,
+          -60.0,
+          7.5
+        ],
+        "server_queried_position": [
+          3.625,
+          -60.0,
+          7.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=766 seconds=45.086 counts={\"block_update\": 1, \"chat_marker\": 1, \"chunk\": 154, \"configuration\": 1, \"death\": 1, \"entity_move\": 112, \"entity_remove\": 20, \"entity_spawn\": 29, \"entity_velocity\": 366, \"health\": 7, \"inventory\": 16, \"item_custom\": 1, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 1, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 2, \"metadata\": 50, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 4, \"teleport_ack\": 2}",
+      "hash_controls": [],
+      "verification_commands": []
+    },
+    {
+      "version": "1.21.1",
+      "paper_build": 133,
+      "started_utc": "2026-10-02T17:04:06.811467+00:00",
+      "client_seconds": 45.439,
+      "client_binary_sha256": "233cfa60072b53b6763bf3619e4de6918b7f08db3555749ae87cd25bae394fa6",
+      "server_jar_sha256": "39bd8c00b9e18de91dcabd3cc3dcfa5328685a53b7187a2f63280c22e2d287b9",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          -3.5,
+          -60.0,
+          -4.5
+        ],
+        "server_queried_position": [
+          -3.375,
+          -60.0,
+          -4.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=767 seconds=45.390 counts={\"block_update\": 2, \"chat_marker\": 1, \"chunk\": 154, \"configuration\": 1, \"death\": 1, \"entity_move\": 113, \"entity_remove\": 20, \"entity_spawn\": 29, \"entity_velocity\": 352, \"health\": 6, \"inventory\": 15, \"item_custom\": 1, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 1, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 3, \"metadata\": 49, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 4, \"teleport_ack\": 2}",
+      "hash_controls": [],
+      "verification_commands": []
+    },
+    {
+      "version": "1.21.3",
+      "paper_build": 83,
+      "started_utc": "2026-10-02T17:05:08.301671+00:00",
+      "client_seconds": 45.084,
+      "client_binary_sha256": "233cfa60072b53b6763bf3619e4de6918b7f08db3555749ae87cd25bae394fa6",
+      "server_jar_sha256": "87e973e1d338e869e7fdbc4b8fadc1579d7bb0246a0e0cf6e5700ace6c8bc17e",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          -5.5,
+          -60.0,
+          -9.5
+        ],
+        "server_queried_position": [
+          -5.375,
+          -60.0,
+          -9.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=768 seconds=45.026 counts={\"block_update\": 2, \"chat_marker\": 1, \"chunk\": 154, \"configuration\": 1, \"death\": 1, \"entity_move\": 112, \"entity_remove\": 20, \"entity_spawn\": 29, \"entity_velocity\": 373, \"health\": 6, \"inventory\": 15, \"item_custom\": 1, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 1, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 2, \"metadata\": 49, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 4, \"teleport_ack\": 2}",
+      "hash_controls": [],
+      "verification_commands": []
+    },
+    {
+      "version": "1.21.5",
+      "paper_build": 114,
+      "started_utc": "2026-10-02T16:55:53.735921+00:00",
+      "client_seconds": 45.601,
+      "client_binary_sha256": "482976855faa0d9cf9ff1214a98599e75eb35ff4e0404d8af0a9810eea74c993",
+      "server_jar_sha256": "2ae6ae22adf417699746e0f89fc2ef6cb6ee050a5f6608cee58f0535d60b509e",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "hash_bad_sent",
+        "hash_good_sent",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          -6.5,
+          -60.0,
+          4.5
+        ],
+        "server_queried_position": [
+          -6.375,
+          -60.0,
+          4.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=770 seconds=45.591 counts={\"block_update\": 1, \"chat_marker\": 1, \"chunk\": 162, \"configuration\": 1, \"death\": 1, \"entity_move\": 97, \"entity_remove\": 21, \"entity_spawn\": 29, \"entity_velocity\": 285, \"hash_bad_sent\": 1, \"hash_good_sent\": 1, \"health\": 5, \"inventory\": 17, \"item_custom\": 2, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 2, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 3, \"metadata\": 49, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 8, \"teleport_ack\": 2}",
+      "hash_controls": [
+        "HASH_CONTROL bad_corrections=1",
+        "HASH_CONTROL good_corrections=0"
+      ],
+      "verification_commands": [
+        {
+          "name": "verify_hash_bad_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD_END\"}> >",
+            "[17:56:15 INFO]: Rustwire has the following entity data: [{count: 3, Slot: 0b, id: \"minecraft:stone\"}, {count: 1, Slot: 1b, components: {\"minecraft:damage\": 3}, id: \"minecraft:diamond_sword\"}]"
+          ]
+        },
+        {
+          "name": "verify_hash_good_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD_END\"}> >",
+            "[17:56:17 INFO]: Rustwire has the following entity data: [{count: 1, Slot: 0b, components: {\"minecraft:custom_data\": {rustwire_probe: 1}}, id: \"minecraft:stone\"}, {count: 1, Slot: 1b, components: {\"minecraft:damage\": 3}, id: \"minecraft:diamond_sword\"}]"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "26.1.2",
+      "paper_build": 74,
+      "started_utc": "2026-10-02T17:17:45.402399+00:00",
+      "client_seconds": 45.707,
+      "client_binary_sha256": "dc7f4e01ead9e10b68998ed0493802cf8dbc915273cdcb935c7f80df36eb0368",
+      "server_jar_sha256": "1d70b1dab9cf4a6de615209a536f3a45a2186240253c428213ce2188ab95e5f7",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_template_bundle",
+        "item_template_container",
+        "item_template_projectiles",
+        "item_template_remainder",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "hash_bad_sent",
+        "hash_good_sent",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_template_bundle",
+        "item_template_container",
+        "item_template_projectiles",
+        "item_template_remainder",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          7.5,
+          -60.0,
+          5.5
+        ],
+        "server_queried_position": [
+          7.625,
+          -60.0,
+          5.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=775 seconds=45.692 counts={\"block_update\": 1, \"chat_marker\": 1, \"chunk\": 162, \"configuration\": 1, \"death\": 1, \"entity_move\": 123, \"entity_remove\": 28, \"entity_spawn\": 41, \"entity_velocity\": 339, \"hash_bad_sent\": 1, \"hash_good_sent\": 1, \"health\": 4, \"inventory\": 24, \"item_custom\": 2, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 1, \"item_template_bundle\": 1, \"item_template_container\": 1, \"item_template_projectiles\": 1, \"item_template_remainder\": 1, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 43, \"metadata\": 64, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 8, \"teleport_ack\": 2}",
+      "hash_controls": [
+        "HASH_CONTROL bad_corrections=1",
+        "HASH_CONTROL good_corrections=0"
+      ],
+      "verification_commands": [
+        {
+          "name": "verify_hash_bad_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD_END\"}> >",
+            "[18:18:05 INFO]: Rustwire has the following entity data: [{Slot: 0b, id: \"minecraft:stone\", count: 3}, {Slot: 1b, id: \"minecraft:diamond_sword\", count: 1, components: {\"minecraft:damage\": 3}}]"
+          ]
+        },
+        {
+          "name": "verify_hash_good_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD_END\"}> >",
+            "[18:18:07 INFO]: Rustwire has the following entity data: [{Slot: 0b, id: \"minecraft:stone\", count: 1, components: {\"minecraft:custom_data\": {rustwire_probe: 1}}}, {Slot: 1b, id: \"minecraft:diamond_sword\", count: 1, components: {\"minecraft:damage\": 3}}]"
+          ]
+        }
+      ]
+    },
+    {
+      "version": "26.2",
+      "paper_build": 129,
+      "started_utc": "2026-10-02T17:18:43.832951+00:00",
+      "client_seconds": 45.199,
+      "client_binary_sha256": "dc7f4e01ead9e10b68998ed0493802cf8dbc915273cdcb935c7f80df36eb0368",
+      "server_jar_sha256": "b1d8f6bfa1b6101fa8e947b53041cb3bdf5540e7b83b6547ca19ba7edefeb083",
+      "extended_components": true,
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "required_categories": [
+        "block_update",
+        "chat_marker",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_template_bundle",
+        "item_template_container",
+        "item_template_projectiles",
+        "item_template_remainder",
+        "item_template_sulfur",
+        "item_writable_book",
+        "item_written_book",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat"
+      ],
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "hash_bad_sent",
+        "hash_good_sent",
+        "hash_negative_control",
+        "hash_positive_control",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "item_fireworks",
+        "item_food",
+        "item_potion",
+        "item_stew",
+        "item_template_bundle",
+        "item_template_container",
+        "item_template_projectiles",
+        "item_template_remainder",
+        "item_template_sulfur",
+        "item_writable_book",
+        "item_written_book",
+        "join",
+        "keepalive",
+        "metadata",
+        "metadata_particles",
+        "metadata_particles_nonempty",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          -0.5,
+          -60.0,
+          6.5
+        ],
+        "server_queried_position": [
+          -0.375,
+          -60.0,
+          6.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_summary": "PROBE_SUMMARY protocol=776 seconds=45.193 counts={\"block_update\": 1, \"chat_marker\": 1, \"chunk\": 162, \"configuration\": 1, \"death\": 1, \"entity_move\": 133, \"entity_remove\": 30, \"entity_spawn\": 44, \"entity_velocity\": 348, \"hash_bad_sent\": 1, \"hash_good_sent\": 1, \"health\": 5, \"inventory\": 25, \"item_custom\": 2, \"item_damage\": 1, \"item_fireworks\": 1, \"item_food\": 1, \"item_potion\": 1, \"item_stew\": 1, \"item_template_bundle\": 1, \"item_template_container\": 1, \"item_template_projectiles\": 1, \"item_template_remainder\": 1, \"item_template_sulfur\": 1, \"item_writable_book\": 1, \"item_written_book\": 1, \"join\": 1, \"keepalive\": 43, \"metadata\": 69, \"metadata_particles\": 3, \"metadata_particles_nonempty\": 1, \"movement_sent\": 1, \"respawn\": 1, \"respawn_requested\": 1, \"selected_slot_sent\": 1, \"system_chat\": 8, \"teleport_ack\": 2}",
+      "hash_controls": [
+        "HASH_CONTROL bad_corrections=1",
+        "HASH_CONTROL good_corrections=0"
+      ],
+      "verification_commands": [
+        {
+          "name": "verify_hash_bad_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_BAD_END\"}> >",
+            "[18:19:02 INFO]: Rustwire has the following entity data: [{Slot: 0b, id: \"minecraft:stone\", count: 3}, {Slot: 1b, id: \"minecraft:diamond_sword\", count: 1, components: {\"minecraft:damage\": 3}}]"
+          ]
+        },
+        {
+          "name": "verify_hash_good_move",
+          "command": "data get entity Rustwire Inventory",
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD\"}> tellraw Rustwire {\"text\":\"RUSTWIRE_HASH_GOOD_END\"}> >",
+            "[18:19:04 INFO]: Rustwire has the following entity data: [{Slot: 0b, id: \"minecraft:stone\", count: 1, components: {\"minecraft:custom_data\": {rustwire_probe: 1}}}, {Slot: 1b, id: \"minecraft:diamond_sword\", count: 1, components: {\"minecraft:damage\": 3}}]"
+          ]
+        }
+      ]
+    }
+  ]
+}

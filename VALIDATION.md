@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 161 tests with all features; 148 applicable tests without default features
+- 162 tests with all features; 149 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -54,6 +54,7 @@ Separate 45-second scenarios passed on Paper 1.20.1 build 196, 1.21.1 build 133 
 - Paper 1.21.5 build 114 counts removed long-array length prefixes in its section-buffer allocation, leaving a precise zero tail
 - Legacy respawn keep-data is a two-bit byte, not the boolean declared by an upstream schema
 - Legacy optional global-position metadata contains both a dimension identifier and a packed position
+- Set-slot cursor/player-inventory container IDs remain signed bytes through protocol 767 (1.21.1)
 
 The relevant real server serializers were inspected to verify protocol facts. Independent synthetic fixtures cover the corrections; no proprietary implementation source, class files or captured world packets are committed. Both padding allowances are strictly version-scoped and size-checked; nonzero or unexplained trailing data remains an error.
 
@@ -118,8 +119,7 @@ Eight hash tests cover independently executed official HashOps fixtures, support
 component-codec defaults, item-patch derivation, byte-width and UTF-16 preservation,
 map ordering/duplicate normalization, malformed shapes and resource limits. The
 primitive oracle returned identical results on pinned Paper 1.21.5 and 26.2. These
-fixtures are separate from the earlier live gameplay runs: predicted hashed
-clicks have not yet been exercised end-to-end by those recorded runs.
+fixtures are separate from the earlier live gameplay runs: the newer extended runs below independently exercise predicted hashes end-to-end.
 
 The particle/holder increment adds 14 tests and removes the intentional missing
 particle-list decoder. The older live-run evidence above is retained unchanged;
@@ -129,3 +129,30 @@ The ordinary component increment adds 19 tests. Known added-component coverage
 is 50/56 at 766, 50/57 at 767, 56/67 at 768–769, 79/96 at 770–773, 80/104 at
 774, 85/110 at 775 and 87/111 at 776. Removed component IDs and caller-supplied
 hash representations can still carry every known component ID.
+
+## Extended component and metadata gameplay
+
+Fresh isolated Paper scenarios passed on **1.20.6, 1.21.1, 1.21.3, 1.21.5,
+26.1.2 and 26.2**, each observed for at least 45 seconds. All six decoded the
+new food, potion/effect, stew, writable/written-book and firework components,
+nonempty particle metadata, and full post-respawn metadata without an
+Unsupported fallback. The 26.x runs additionally verified actual template
+components for use-remainder, projectiles, bundles and optional containers;
+26.2 also verified sulfur-cube content.
+
+Modern inventory prediction used a positive/negative control on 1.21.5 and both
+26.x releases: changing one expected component hash triggered one server
+correction; the following swap using Rustwire-derived hashes triggered zero
+corrections. Server-side Inventory queries confirmed the predicted swaps. These
+controls test inventory synchronization, not any anti-cheat guarantee.
+
+[Extended results](docs/validation/components-gameplay-results.json) include
+exact binaries/artifacts, required observations, command failures, server action
+confirmations and the control results. The first older-version attempt used the
+wrong written-book command syntax; all three affected versions were rerun after
+fixing the harness to use JSON-encoded text components. No library decoder was
+changed to hide that harness failure. All final commands passed and all servers
+stopped with exit 0. No anti-cheat plugin was present in these scenarios.
+
+Reproduce with `--extended-components` on the gameplay runner. It uses only fresh
+disposable worlds and already accepted baseline EULA files, as described above.

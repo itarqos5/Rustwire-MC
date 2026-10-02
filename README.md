@@ -139,3 +139,12 @@ See [PROVENANCE.md](PROVENANCE.md), [VALIDATION.md](VALIDATION.md), [SECURITY.md
 ## License
 
 MIT for the Rust implementation. Generated metadata attribution is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Not affiliated with or endorsed by Mojang or Microsoft. No game binaries, source decompilations, worlds or assets are distributed.
+
+### Extended interoperability checkpoint
+
+Six real Paper versions (1.20.6, 1.21.1, 1.21.3, 1.21.5, 26.1.2, 26.2) passed
+additional component and particle-metadata scenarios. Derived click hashes passed
+positive/negative server-correction controls on the three hashed-click versions.
+See [validation](VALIDATION.md#extended-component-and-metadata-gameplay) for
+precise coverage and reproducible evidence. These are bounded protocol tests;
+there is no promise that arbitrary client behavior will satisfy an anti-cheat.

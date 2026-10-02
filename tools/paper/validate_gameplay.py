@@ -21,7 +21,7 @@ import time
 
 
 PROJECT = Path(__file__).resolve().parents[2]
-BUILDS = {"1.20.1": 196, "1.21.1": 133, "26.2": 129}
+BUILDS = {"1.20.1": 196, "1.20.6": 151, "1.21.1": 133, "1.21.3": 83, "1.21.5": 114, "26.1.2": 74, "26.2": 129}
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 EVENT = re.compile(r"\bEVENT\s+category=([a-zA-Z0-9_]+)")
 ACTION = re.compile(r"\bACTION\s+(?:kind|category)=([a-zA-Z0-9_]+)")
@@ -45,6 +45,7 @@ def arguments():
                         default=Path(os.environ.get("RUSTWIRE_VALIDATION_DIR", str(PROJECT.parent / "rustwire-server-validation"))))
     parser.add_argument("--client", type=Path,
                         default=PROJECT / "target/debug/examples/gameplay_probe")
+    parser.add_argument("--extended-components", action="store_true", help="Also validate typed ordinary components, particle metadata, and modern hash controls")
     parser.add_argument("--min-seconds", type=int, default=45)
     parser.add_argument("--client-timeout", type=int, default=120)
     parser.add_argument("--ready-marker", default="PROBE_READY")
@@ -149,14 +150,14 @@ def stop_process(process, polite=None):
             process.wait(timeout=5)
 
 
-def scenario_commands(version):
+def scenario_commands(version, extended=False):
     if version == "1.20.1":
         sword = "minecraft:diamond_sword{Damage:3}"
         stone = "minecraft:stone{rustwire_probe:1}"
     else:
         sword = "minecraft:diamond_sword[minecraft:damage=3]"
         stone = "minecraft:stone[minecraft:custom_data={rustwire_probe:1}]"
-    return [
+    commands = [
         ("verify_client_position", "data get entity Rustwire Pos", 0.5),
         ("verify_client_selected_slot", "data get entity Rustwire SelectedItemSlot", 0.5),
         ("inventory_give", "give Rustwire minecraft:stone 3", 1.25),
@@ -171,6 +172,47 @@ def scenario_commands(version):
         ("health_damage", "damage Rustwire 2 minecraft:generic", 1.75),
         ("death_respawn", "kill Rustwire", 1.0),
     ]
+
+    if extended and version != "1.20.1":
+        extra = []
+        if version in ("1.21.5", "26.1.2", "26.2"):
+            extra.extend([
+                ("hash_bad", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_BAD"}', 1.25),
+                ("hash_bad_end", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_BAD_END"}', 0.25),
+                ("verify_hash_bad_move", 'data get entity Rustwire Inventory', 0.5),
+                ("hash_good", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_GOOD"}', 1.25),
+                ("hash_good_end", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_GOOD_END"}', 0.25),
+                ("verify_hash_good_move", 'data get entity Rustwire Inventory', 0.5),
+            ])
+        items = {
+            "food": 'minecraft:apple[minecraft:food={nutrition:5,saturation:0.3,can_always_eat:true}]',
+            "potion": 'minecraft:potion[minecraft:potion_contents={custom_color:123,custom_effects:[{id:"minecraft:speed",duration:100,amplifier:1}]}]',
+            "stew": 'minecraft:suspicious_stew[minecraft:suspicious_stew_effects=[{id:"minecraft:speed",duration:100}]]',
+            "writable_book": 'minecraft:writable_book[minecraft:writable_book_content={pages:["Rustwire page"]}]',
+            "written_book": 'minecraft:written_book[minecraft:written_book_content={title:"Rustwire",author:"Rustwire",pages:["Rustwire written"]}]',
+            "fireworks": 'minecraft:firework_rocket[minecraft:fireworks={flight_duration:1,explosions:[{shape:"small_ball",colors:[123],has_trail:true}]}]',
+        }
+        if version in ("26.1.2", "26.2"):
+            items.update({
+                "template_remainder": 'minecraft:apple[minecraft:use_remainder={id:"minecraft:stone",count:2}]',
+                "template_projectiles": 'minecraft:crossbow[minecraft:charged_projectiles=[{id:"minecraft:arrow",count:1}]]',
+                "template_bundle": 'minecraft:bundle[minecraft:bundle_contents=[{id:"minecraft:stone",count:2}]]',
+                "template_container": 'minecraft:shulker_box[minecraft:container=[{slot:2,item:{id:"minecraft:stone",count:2}}]]',
+            })
+            if version == "26.2":
+                items["template_sulfur"] = 'minecraft:stone[minecraft:sulfur_cube_content={id:"minecraft:stone",count:2}]'
+        if version in ("1.20.6", "1.21.1", "1.21.3"):
+            # Pre-1.21.5 item commands use JSON-encoded text-component strings.
+            page = json.dumps(json.dumps({"text": "Rustwire written"}, separators=(",", ":")))
+            items["written_book"] = 'minecraft:written_book[minecraft:written_book_content={title:"Rustwire",author:"Rustwire",pages:[' + page + ']}]'
+        extra.extend(("component_"+kind, "give Rustwire "+item+" 1", 0.75) for kind,item in items.items())
+        extra.extend([
+            ("particle_effect", "effect give Rustwire minecraft:speed 2 0 false", 1.0),
+            ("wolf_holder", 'execute at Rustwire run summon minecraft:wolf ~3 ~ ~ {NoAI:1b,Tags:["rustwire_holder"]}', 1.0),
+            ("wolf_remove", 'execute at Rustwire run kill @e[type=minecraft:wolf,tag=rustwire_holder,distance=..8,limit=1]', 0.75),
+        ])
+        commands[5:5] = extra
+    return commands
 
 
 def client_action_confirmation(server_lines, commands):
@@ -202,9 +244,9 @@ def client_action_confirmation(server_lines, commands):
 def run_version(args, run_dir, client_bin, version):
     root = args.validation_dir
     world = prepare_world(root, run_dir, version)
-    java = str(root / "jdk25/bin/java") if version == "26.2" else "java"
+    java = str(root / "jdk25/bin/java") if version.startswith("26.") else "java"
     jar = root / "downloads" / f"paper-{version}-{BUILDS[version]}.jar"
-    manifest_path = root / "report/download-provenance.json"
+    manifest_path = PROJECT / "docs/validation/matrix-download-provenance.json"
     if not manifest_path.is_file():
         manifest_path = PROJECT / "docs/validation/download-provenance.json"
     provenance = json.loads(manifest_path.read_text())
@@ -215,7 +257,7 @@ def run_version(args, run_dir, client_bin, version):
         raise RuntimeError(f"{version}: Paper JAR SHA-256 differs from the pinned official artifact")
     server_command = [java, "-Xms256M", "-Xmx1024M", "-XX:ActiveProcessorCount=2", "-jar", str(jar), "--nogui"]
     record = {"version": version, "paper_build": BUILDS[version], "started_utc": utc_now(),
-              "scenario": args.mode, "server_command": server_command,
+              "scenario": args.mode, "extended_components": args.extended_components, "server_command": server_command,
               "server_jar_sha256": jar_sha,
               "client_binary_sha256": hashlib.sha256(client_bin.read_bytes()).hexdigest(),
               "commands": [], "observed_categories": [], "passed": False}
@@ -279,7 +321,7 @@ def run_version(args, run_dir, client_bin, version):
         wait_for_event(joined, [server, client], 45, "Rustwire server-side world entry")
         wait_for_event(probe_ready, [server, client], 45, "typed probe spawn readiness")
         time.sleep(0.75)
-        commands = scenario_commands(version)
+        commands = scenario_commands(version, args.extended_components)
         for name, command, pause in commands:
             if server.poll() is not None or client.poll() is not None:
                 raise RuntimeError(f"A process exited before scenario step {name}")
@@ -296,7 +338,17 @@ def run_version(args, run_dir, client_bin, version):
         record["client_seconds"] = round(time.monotonic() - client_started, 3)
         readers[-1].join(timeout=5)
         record["observed_categories"] = sorted(categories)
-        record["missing_categories"] = sorted(set(args.required_category) - categories)
+        required=set(args.required_category)
+        if args.extended_components and version != "1.20.1":
+            required.update(["item_food", "item_potion", "item_stew", "item_writable_book", "item_written_book", "item_fireworks", "metadata_particles", "metadata_particles_nonempty"])
+            if version in ("1.21.5", "26.1.2", "26.2"):
+                required.update(["hash_negative_control", "hash_positive_control"])
+            if version in ("26.1.2", "26.2"):
+                required.update(["item_template_remainder", "item_template_projectiles", "item_template_bundle", "item_template_container"])
+            if version == "26.2":
+                required.add("item_template_sulfur")
+        record["required_categories"] = sorted(required)
+        record["missing_categories"] = sorted(required - categories)
         record["scenario_commands_sent"] = len(record["commands"]) == len(commands)
         record["passed"] = client.returncode == 0 and not record["missing_categories"] and record["scenario_commands_sent"]
         if not record["passed"]:

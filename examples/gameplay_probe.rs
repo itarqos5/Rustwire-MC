@@ -1,5 +1,7 @@
 //! Bounded, destructive gameplay test client for disposable loopback servers only.
 //! The matching tools/paper/validate_gameplay.py harness owns server-side actions.
+#[path = "gameplay_probe/hash_probe.rs"]
+mod hash_probe;
 use rustwire_mc::{
     chunk::ChunkData,
     connection::{Connection, Event, TypedEvent},
@@ -42,6 +44,42 @@ fn slot_observations(slot: &Slot, counts: &mut BTreeMap<&'static str, u64>) {
             for c in &patch.added {
                 if c.name == "damage" && matches!(c.value, ComponentValue::VarInt(3)) {
                     record(counts, "item_damage");
+                }
+                match &c.value {
+                    ComponentValue::ItemTemplate(_) if c.name == "use_remainder" => {
+                        record(counts, "item_template_remainder")
+                    }
+                    ComponentValue::ItemTemplate(_) if c.name == "sulfur_cube_content" => {
+                        record(counts, "item_template_sulfur")
+                    }
+                    ComponentValue::ItemTemplates(v)
+                        if c.name == "charged_projectiles" && !v.is_empty() =>
+                    {
+                        record(counts, "item_template_projectiles")
+                    }
+                    ComponentValue::ItemTemplates(v)
+                        if c.name == "bundle_contents" && !v.is_empty() =>
+                    {
+                        record(counts, "item_template_bundle")
+                    }
+                    ComponentValue::OptionalItemTemplates(v) if v.iter().any(Option::is_some) => {
+                        record(counts, "item_template_container")
+                    }
+                    ComponentValue::Food(v) if v.nutrition == 5 => record(counts, "item_food"),
+                    ComponentValue::PotionContents(v) if v.custom_color == Some(123) => {
+                        record(counts, "item_potion")
+                    }
+                    ComponentValue::StewEffects(v) if !v.is_empty() => record(counts, "item_stew"),
+                    ComponentValue::WritableBook(v) if !v.is_empty() => {
+                        record(counts, "item_writable_book")
+                    }
+                    ComponentValue::WrittenBook(v) if v.author == "Rustwire" => {
+                        record(counts, "item_written_book")
+                    }
+                    ComponentValue::Fireworks(v) if v.flight_duration == 1 => {
+                        record(counts, "item_fireworks")
+                    }
+                    _ => {}
                 }
                 if c.name == "custom_data" {
                     if let ComponentValue::Nbt(nbt) = &c.value {
@@ -94,6 +132,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut ready = false;
     let mut loaded = false;
     let mut counts = BTreeMap::new();
+    let mut hash_probe = hash_probe::HashProbe::default();
     for _ in 0..100_000 {
         match c.next_typed_event()? {
             TypedEvent::Control(Event::LoginSuccess(_)) => {
@@ -205,6 +244,16 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             },
             TypedEvent::Decoded(DecodedPacket::Metadata(metadata)) => {
                 record(&mut counts, "metadata");
+                for entry in &metadata.entries {
+                    if let packet::entity_metadata::MetadataValue::Particles(particles) =
+                        &entry.value
+                    {
+                        record(&mut counts, "metadata_particles");
+                        if !particles.is_empty() {
+                            record(&mut counts, "metadata_particles_nonempty");
+                        }
+                    }
+                }
                 println!(
                     "METADATA entity={} entries={}",
                     metadata.entity_id,
@@ -224,6 +273,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             },
             TypedEvent::Decoded(DecodedPacket::Inventory(packet)) => {
                 record(&mut counts, "inventory");
+                hash_probe.observe(&packet);
                 match packet {
                     InventoryPacket::Content(p) => {
                         for item in &p.items {
@@ -239,10 +289,29 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             }
             TypedEvent::Decoded(DecodedPacket::Chat(ChatPacket::System(chat))) => {
                 record(&mut counts, "system_chat");
-                let has_marker = match chat.content {
-                    ChatComponent::Json(text) => text.contains("Rustwire gameplay probe"),
-                    ChatComponent::Nbt(nbt) => nbt_contains(&nbt.root, "Rustwire gameplay probe"),
+                let contains = |needle: &str| match &chat.content {
+                    ChatComponent::Json(text) => text.contains(needle),
+                    ChatComponent::Nbt(nbt) => nbt_contains(&nbt.root, needle),
                 };
+                let has_marker = contains("Rustwire gameplay probe");
+                if version.protocol() >= 770 {
+                    for marker in [
+                        "RUSTWIRE_HASH_BAD_END",
+                        "RUSTWIRE_HASH_GOOD_END",
+                        "RUSTWIRE_HASH_BAD",
+                        "RUSTWIRE_HASH_GOOD",
+                    ] {
+                        if contains(marker) {
+                            if let Some((packet, category)) =
+                                hash_probe.marker(marker, version, limits)?
+                            {
+                                c.send(&packet)?;
+                                record(&mut counts, category);
+                            }
+                            break;
+                        }
+                    }
+                }
                 if has_marker {
                     record(&mut counts, "chat_marker");
                 }
