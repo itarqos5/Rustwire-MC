@@ -118,3 +118,22 @@ fn encrypted_frames_cross_boundaries() {
     }
     thread.join().unwrap();
 }
+
+#[test]
+fn server_hash_uses_java_latin1_not_utf8() {
+    // Independently generated with Java's ISO_8859_1 encoder, MessageDigest
+    // SHA-1 and signed BigInteger. One supplementary scalar becomes one '?'.
+    let secret = [0, 1, 2, 3];
+    let public_key = [48, 1, 2, 255];
+    for (id, expected) in [
+        ("café", "-520fd4ed20b98c661bbb90ede1e7771c324ae76e"),
+        ("a🌏b", "-4826efe99a064276b5bf39b769404d53e6ddf317"),
+        ("snowman☃", "-62b8fb228872141733d03d20749446023d4ec84"),
+    ] {
+        assert_eq!(server_hash(id, &secret, &public_key), expected);
+    }
+    assert_eq!(
+        server_hash("a🌏b", &secret, &public_key),
+        server_hash("a?b", &secret, &public_key)
+    );
+}

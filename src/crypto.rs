@@ -91,9 +91,13 @@ pub fn encryption_response(
     })
 }
 /// Java BigInteger's signed hexadecimal representation of the SHA-1 digest.
+/// The server ID uses Java ISO-8859-1 encoding, including `?` replacement for
+/// characters outside Latin-1; the secret and public key are hashed verbatim.
 pub fn server_hash(server_id: &str, secret: &[u8], public_key: &[u8]) -> String {
     let mut sha = Sha1::new();
-    sha.update(server_id.as_bytes());
+    for ch in server_id.chars() {
+        sha.update([u8::try_from(u32::from(ch)).unwrap_or(b'?')]);
+    }
     sha.update(secret);
     sha.update(public_key);
     signed_hex(&sha.finalize())
