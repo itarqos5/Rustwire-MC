@@ -389,3 +389,40 @@ fn light_encoder_budget_is_preflighted() {
         )
         .is_err());
 }
+#[test]
+fn paper_1215_obsolete_length_prefix_padding_regression() {
+    fn padded(version: Version, padding: &[u8]) -> (ChunkData, Vec<u8>) {
+        let mut c = chunk(version);
+        c.sections = vec![c.sections[0].clone(); 24];
+        let original = c.encode(version, Limits::default()).unwrap();
+        let mut r = Reader::new(&original, Limits::default());
+        r.i32().unwrap();
+        r.i32().unwrap();
+        let count = r.var_i32().unwrap();
+        for _ in 0..count {
+            r.var_i32().unwrap();
+            let n = r.var_i32().unwrap();
+            r.take(n as usize * 8).unwrap();
+        }
+        let offset = r.position();
+        let data = r.bytes(1_000_000).unwrap();
+        let mut w = Writer::new();
+        w.raw(&original[..offset]);
+        w.var_i32((data.len() + padding.len()) as i32);
+        w.raw(data);
+        w.raw(padding);
+        w.raw(r.remaining());
+        (c, w.into_inner())
+    }
+    let (expected, bytes) = padded(Version::V1_21_5, &[0; 48]);
+    assert_eq!(
+        ChunkData::decode(&bytes, Version::V1_21_5, 24, Limits::default()).unwrap(),
+        expected
+    );
+    for bytes in [vec![0; 47], vec![0; 49], vec![1; 48]] {
+        let (_, packet) = padded(Version::V1_21_5, &bytes);
+        assert!(ChunkData::decode(&packet, Version::V1_21_5, 24, Limits::default()).is_err());
+    }
+    let (_, bytes) = padded(Version::V1_21_6, &[0; 48]);
+    assert!(ChunkData::decode(&bytes, Version::V1_21_6, 24, Limits::default()).is_err());
+}

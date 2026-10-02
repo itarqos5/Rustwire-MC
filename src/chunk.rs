@@ -537,7 +537,24 @@ impl ChunkData {
         let legacy_padding = version.protocol() == 763
             && padding.len() == singleton_sections
             && padding.iter().all(|&b| b == 0);
-        if !padding.is_empty() && !legacy_padding {
+        // Paper 1.21.5 build114 still includes removed long-array length prefixes
+        // in its allocation size. The wire omits them, leaving this exact zero tail.
+        fn varint_size(mut n: usize) -> usize {
+            let mut size = 1;
+            while n >= 128 {
+                n >>= 7;
+                size += 1;
+            }
+            size
+        }
+        let obsolete_prefix_bytes: usize = sections
+            .iter()
+            .map(|s| varint_size(s.blocks.data.len()) + varint_size(s.biomes.data.len()))
+            .sum();
+        let transitional_padding = version.protocol() == 770
+            && padding.len() == obsolete_prefix_bytes
+            && padding.iter().all(|&b| b == 0);
+        if !padding.is_empty() && !legacy_padding && !transitional_padding {
             return Err(Error::TrailingBytes {
                 context: "chunk sections",
                 count: padding.len(),
