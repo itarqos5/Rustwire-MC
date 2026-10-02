@@ -920,8 +920,8 @@ impl ContainerContent {
 }
 #[derive(Clone, Debug, PartialEq)]
 pub struct SetContainerSlot {
-    /// Protocols 763–765 use a signed byte (including special IDs -1 and -2).
-    /// 766–767 use the schema's unsigned-byte ContainerID; 768+ use VarInt.
+    /// Protocols 763–767 use a signed byte (including special IDs -1 and -2).
+    /// Protocol 768+ uses a nonnegative VarInt and separate cursor/player packets.
     pub window_id: i32,
     pub state_id: i32,
     pub slot: i16,
@@ -930,7 +930,7 @@ pub struct SetContainerSlot {
 impl SetContainerSlot {
     pub fn decode(bytes: &[u8], version: Version, limits: Limits) -> Result<Self> {
         let mut r = reader(bytes, limits)?;
-        let window_id = if version.protocol() <= 765 {
+        let window_id = if version.protocol() <= 767 {
             r.u8()? as i8 as i32
         } else {
             read_container_id(&mut r, version)?
@@ -948,7 +948,7 @@ impl SetContainerSlot {
     }
     pub fn encode(&self, version: Version, limits: Limits) -> Result<Vec<u8>> {
         let mut w = Writer::new();
-        if version.protocol() <= 765 {
+        if version.protocol() <= 767 {
             w.u8(i8::try_from(self.window_id)
                 .map_err(|_| Error::Invalid("signed-byte container ID"))? as u8);
         } else {

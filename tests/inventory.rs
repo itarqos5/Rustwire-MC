@@ -581,7 +581,7 @@ fn container_contents_and_set_slot_all_release_fixtures() {
                 "content truncation {p} {end}"
             );
         }
-        let (id, window_id) = if p <= 765 {
+        let (id, window_id) = if p <= 767 {
             ("ff", -1)
         } else if p <= 767 {
             ("82", 130)
@@ -1035,4 +1035,33 @@ fn random_small_inputs_do_not_panic_or_bypass_budgets() {
             let _ = HashedContainerClick::decode(&bytes, *version, limits);
         }
     }
+}
+
+#[test]
+fn signed_cursor_container_ids_survive_component_slot_releases() {
+    // Official 1.20.6 and 1.21.1 constructors still call readByte, not
+    // readUnsignedByte, despite the upstream ContainerID alias.
+    for p in 763..=767 {
+        for id in [-1, -2] {
+            let packet = SetContainerSlot {
+                window_id: id,
+                state_id: 3,
+                slot: -1,
+                item: Slot::Empty,
+            };
+            let bytes = [id as u8, 3, 0xff, 0xff, 0];
+            assert_eq!(packet.encode(v(p), Limits::default()).unwrap(), bytes);
+            assert_eq!(
+                SetContainerSlot::decode(&bytes, v(p), Limits::default()).unwrap(),
+                packet
+            );
+        }
+    }
+    let old_cursor = SetContainerSlot {
+        window_id: -1,
+        state_id: 0,
+        slot: -1,
+        item: Slot::Empty,
+    };
+    assert!(old_cursor.encode(v(768), Limits::default()).is_err());
 }
