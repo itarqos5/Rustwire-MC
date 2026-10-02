@@ -1,6 +1,8 @@
 //! Typed codecs for connection control and common play operations.
 pub mod blocks;
+pub mod chat;
 pub mod entity;
+pub mod interact;
 mod world;
 use crate::{
     codec::{Reader, Writer},
