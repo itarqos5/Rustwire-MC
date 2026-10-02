@@ -1,0 +1,12 @@
+/target/
+/research/protocols/
+/research/*-manifest.json
+/research/*-commit.json
+/research/*-repo.json
+/research/*-tags.json
+/research/upstream-*.json
+/research/upstream-readme.md
+/research/protocolVersions.json
+/research/dataPaths.json
+*.log
+.env

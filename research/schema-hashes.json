@@ -1,0 +1,123 @@
+[
+  {
+    "protocol": 763,
+    "releases": [
+      "1.20",
+      "1.20.1"
+    ],
+    "schema": "1.20",
+    "sha256": "3b4fb2620f5d08927f94509ae028b475f7ef3bf2e7eb987af499d3ad632765ad"
+  },
+  {
+    "protocol": 764,
+    "releases": [
+      "1.20.2"
+    ],
+    "schema": "1.20.2",
+    "sha256": "e038fd10ee94a8395062034e6ad8aff6c989e7206b74906c3a04daebc7c004fc"
+  },
+  {
+    "protocol": 765,
+    "releases": [
+      "1.20.3",
+      "1.20.4"
+    ],
+    "schema": "1.20.3",
+    "sha256": "ea8e6d9712cd0d8122c7830a6bd23f91251b4cd5c4526486a0ac4c7f7784ed52"
+  },
+  {
+    "protocol": 766,
+    "releases": [
+      "1.20.5",
+      "1.20.6"
+    ],
+    "schema": "1.20.5",
+    "sha256": "4204f6f1d4f5aa7ab0936fe0cb78fac3d249a06e534e4903d1937614667be241"
+  },
+  {
+    "protocol": 767,
+    "releases": [
+      "1.21",
+      "1.21.1"
+    ],
+    "schema": "1.21.1",
+    "sha256": "1f5f23d1d1425a12d1b46d78dbc2b79038ea456cc1be11c942a79bebd8d3f43a"
+  },
+  {
+    "protocol": 768,
+    "releases": [
+      "1.21.2",
+      "1.21.3"
+    ],
+    "schema": "1.21.3",
+    "sha256": "94b9c562df3be925c12615041281d9f492c69f3fee10038787fdeb312a65c575"
+  },
+  {
+    "protocol": 769,
+    "releases": [
+      "1.21.4"
+    ],
+    "schema": "1.21.4",
+    "sha256": "43936c5220a43b638b73ffd8165bccb3db7fe8dd0d54049072eb21fa5b9614ea"
+  },
+  {
+    "protocol": 770,
+    "releases": [
+      "1.21.5"
+    ],
+    "schema": "1.21.5",
+    "sha256": "96434702de4e203d84baf092aa500c7ba4ca2af95edfc6f339a982b61cbb0777"
+  },
+  {
+    "protocol": 771,
+    "releases": [
+      "1.21.6"
+    ],
+    "schema": "1.21.6",
+    "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7"
+  },
+  {
+    "protocol": 772,
+    "releases": [
+      "1.21.7",
+      "1.21.8"
+    ],
+    "schema": "1.21.8",
+    "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7"
+  },
+  {
+    "protocol": 773,
+    "releases": [
+      "1.21.9",
+      "1.21.10"
+    ],
+    "schema": "1.21.9",
+    "sha256": "f8ab7f079607267e5cbdd166d943fcf1ea77b87fa494cbc39737665a8d90aeb6"
+  },
+  {
+    "protocol": 774,
+    "releases": [
+      "1.21.11"
+    ],
+    "schema": "1.21.11",
+    "sha256": "34d280120eef9090c66abc502d43d5305ffa2f592c1d2b0eb7a96b71048b81f7"
+  },
+  {
+    "protocol": 775,
+    "releases": [
+      "26.1",
+      "26.1.1",
+      "26.1.2"
+    ],
+    "schema": "26.1",
+    "sha256": "a5fda872e2d425d1f35a8ab7e042148f4944ac1a7f0c3c5380b64b06d383bc0d"
+  },
+  {
+    "protocol": 776,
+    "releases": [
+      "26.2"
+    ],
+    "schema": "26.2",
+    "sha256": "fef8c96e9a25905f692b8e1129ab1d331922f4ce41909a56537a4331fff30430"
+  }
+]
