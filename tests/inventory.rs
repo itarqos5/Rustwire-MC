@@ -581,13 +581,7 @@ fn container_contents_and_set_slot_all_release_fixtures() {
                 "content truncation {p} {end}"
             );
         }
-        let (id, window_id) = if p <= 767 {
-            ("ff", -1)
-        } else if p <= 767 {
-            ("82", 130)
-        } else {
-            ("82 01", 130)
-        };
+        let (id, window_id) = if p <= 767 { ("ff", -1) } else { ("82 01", 130) };
         let bytes = decode(&format!("{id} ac 02 ff ff {stack}"));
         let expected = SetContainerSlot {
             window_id,
