@@ -10,3 +10,10 @@
 /research/dataPaths.json
 *.log
 .env
+
+/research/*-reference.js
+/validation-servers/
+
+/.rustwire-validation/
+__pycache__/
+*.pyc

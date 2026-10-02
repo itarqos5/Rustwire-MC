@@ -27,3 +27,10 @@ jobs:
       - run: cargo doc --locked --all-features --no-deps
         env:
           RUSTDOCFLAGS: -D warnings
+
+  minimum-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@1.88.0
+      - run: cargo test --locked --all-features

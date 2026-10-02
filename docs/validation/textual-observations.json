@@ -1,0 +1,84 @@
+[
+  {
+    "version": "1.20.1",
+    "status_response": {
+      "version": {
+        "name": "Paper 1.20.1",
+        "protocol": 763
+      },
+      "description": {
+        "text": "Rustwire isolated Paper 1.20.1 interoperability"
+      },
+      "players": {
+        "max": 2,
+        "online": 0
+      }
+    },
+    "first_four_decoded_chunk_observations": [
+      "chunk 0,-1: 24 sections; first block ID Some(79)",
+      "chunk 0,0: 24 sections; first block ID Some(79)",
+      "chunk 1,-1: 24 sections; first block ID Some(79)",
+      "chunk 0,-2: 24 sections; first block ID Some(79)"
+    ],
+    "lifecycle_output": [
+      "login Rustwire",
+      "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "teleport acknowledged: 1",
+      "validated: 77 chunks, 1 keepalives, 1 teleports, 0 registry packets, 0 configurations, 6 registries, 20.61868209s"
+    ]
+  },
+  {
+    "version": "1.21.1",
+    "status_response": {
+      "version": {
+        "name": "Paper 1.21.1",
+        "protocol": 767
+      },
+      "description": "Rustwire isolated Paper 1.21.1 interoperability",
+      "players": {
+        "max": 2,
+        "online": 0
+      }
+    },
+    "first_four_decoded_chunk_observations": [
+      "chunk 0,-1: 24 sections; first block ID Some(79)",
+      "chunk 0,0: 24 sections; first block ID Some(79)",
+      "chunk -1,-1: 24 sections; first block ID Some(79)",
+      "chunk 0,-2: 24 sections; first block ID Some(79)"
+    ],
+    "lifecycle_output": [
+      "login Rustwire",
+      "configuration complete: 1",
+      "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "teleport acknowledged: 1",
+      "validated: 77 chunks, 1 keepalives, 1 teleports, 11 registry packets, 1 configurations, 11 registries, 20.727360289s"
+    ]
+  },
+  {
+    "version": "26.2",
+    "status_response": {
+      "description": "Rustwire isolated Paper 26.2 interoperability",
+      "players": {
+        "max": 2,
+        "online": 0
+      },
+      "version": {
+        "name": "Paper 26.2",
+        "protocol": 776
+      }
+    },
+    "first_four_decoded_chunk_observations": [
+      "chunk -1,-1: 24 sections; first block ID Some(85)",
+      "chunk -1,0: 24 sections; first block ID Some(85)",
+      "chunk -2,-1: 24 sections; first block ID Some(85)",
+      "chunk -1,-2: 24 sections; first block ID Some(85)"
+    ],
+    "lifecycle_output": [
+      "login Rustwire",
+      "configuration complete: 1",
+      "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "teleport acknowledged: 1",
+      "validated: 81 chunks, 19 keepalives, 1 teleports, 29 registry packets, 1 configurations, 29 registries, 20.246439698s"
+    ]
+  }
+]
