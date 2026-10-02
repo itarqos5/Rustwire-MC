@@ -95,6 +95,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    WorldState(super::world_state::WorldStatePacket),
     Scoreboard(Box<super::scoreboard::ScoreboardPacket>),
     Overlay(OverlayPacket),
     ChunkUpdate(ChunkUpdatePacket),
@@ -147,6 +148,19 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "game_state_change"
+            | "update_time"
+            | "spawn_position"
+            | "difficulty"
+            | "initialize_world_border"
+            | "world_border_center"
+            | "world_border_lerp_size"
+            | "world_border_size"
+            | "world_border_warning_delay"
+            | "world_border_warning_reach"
+            | "acknowledge_player_digging" => Self::WorldState(
+                super::world_state::WorldStatePacket::decode(name, bytes, version, limits)?,
+            ),
             "scoreboard_objective"
             | "scoreboard_display_objective"
             | "scoreboard_score"

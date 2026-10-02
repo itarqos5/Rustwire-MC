@@ -573,8 +573,8 @@ No production authentication behavior, timeout or rejection gate was weakened.
 
 [The original failed run](https://github.com/itarqos5/Rustwire-MC/actions/runs/37073546148)
 is retained. This portability increment passed 340 all-feature tests locally on
-stable/Rust1.88.0 and strict Clippy. The exact replacement commit's multi-platform
-CI must still be checked before treating that external failure as resolved.
+stable/Rust1.88.0 and strict Clippy. [The replacement commit's five-job CI](https://github.com/itarqos5/Rustwire-MC/actions/runs/37075041718)
+passed, including macOS, Windows, Linux, minimum Rust and quality checks.
 
 ## Scoreboard and overlay packet codecs
 
@@ -598,3 +598,22 @@ The integrated snapshot passed 367 all-feature tests on stable/Rust1.88.0,
 328 no-default tests, strict Clippy and 91 Python verifier tests. These checks
 verify wire/API behavior; live command-driven scoreboard/overlay traffic is
 still pending and no renderer or scoreboard state machine is implied.
+
+## World/session packet codecs
+
+Eleven clientbound packet names now decode through `DecodedPacket::WorldState`,
+with symmetric encoding and packet helpers. They cover game events, world time
+and modern clock updates, spawn/difficulty, six border envelopes and block-change
+acknowledgements. The empty serverbound player-loaded helper is available from
+protocol 769. There is no automatic world simulation or acknowledgement policy.
+
+The [independent release-API audit](docs/world-state-wire-audit.md) records 586
+checks and 162 golden packets across all 14 families. It verifies the 771
+difficulty encoding, 773 spawn fields and 775 clock map, plus VarLong border
+durations in every family. Tests include 2,269 truncations, 6,807 bounded mutations,
+aggregate limits and raw floating-point bit preservation. Dispatcher tests replay
+all 154 clientbound goldens and preserve malformed-versus-unsupported behavior.
+
+This integrated snapshot passed 377 all-feature tests on stable and Rust 1.88.0,
+338 no-default tests, strict Clippy and 99 Python verifier tests. Live HUD/world
+command replay is pending; these results establish wire/API behavior only.

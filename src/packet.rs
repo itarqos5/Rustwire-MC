@@ -18,6 +18,7 @@ pub mod tags;
 pub mod typed;
 mod world;
 pub mod world_effects;
+pub mod world_state;
 use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,

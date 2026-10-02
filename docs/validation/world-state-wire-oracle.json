@@ -1,0 +1,2463 @@
+{
+  "oracle_source_sha256": "15987d769d272cb6436307fcaf65cf9fc67a4a14e1a1f573cbb9b94a63f8a861",
+  "fixture_count": 162,
+  "case_count": 586,
+  "results": [
+    {
+      "protocol": 763,
+      "release": "1.20.1",
+      "schema_sha256": "3b4fb2620f5d08927f94509ae028b475f7ef3bf2e7eb987af499d3ad632765ad",
+      "jar_sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.r\" is null"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.r\" is null"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.r\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.r\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb8000000000000000",
+          "output_hex": "fffffffff8a432eb8000000000000000"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 764,
+      "release": "1.20.2",
+      "schema_sha256": "e038fd10ee94a8395062034e6ad8aff6c989e7206b74906c3a04daebc7c004fc",
+      "jar_sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.s\" is null"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.s\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.s\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb8000000000000000",
+          "output_hex": "fffffffff8a432eb8000000000000000"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 765,
+      "release": "1.20.4",
+      "schema_sha256": "ea8e6d9712cd0d8122c7830a6bd23f91251b4cd5c4526486a0ac4c7f7784ed52",
+      "jar_sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.t\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"b\" because \"this.t\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb8000000000000000",
+          "output_hex": "fffffffff8a432eb8000000000000000"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 766,
+      "release": "1.20.6",
+      "schema_sha256": "4204f6f1d4f5aa7ab0936fe0cb78fac3d249a06e534e4903d1937614667be241",
+      "jar_sha256": "07349f2a63fe23db4e5edd5ad44f0359f700f67f4afad8272ac2cfaf5f6fc1d7",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb8000000000000000",
+          "output_hex": "fffffffff8a432eb8000000000000000"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 767,
+      "release": "1.21.1",
+      "schema_sha256": "1f5f23d1d1425a12d1b46d78dbc2b79038ea456cc1be11c942a79bebd8d3f43a",
+      "jar_sha256": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb8000000000000000",
+          "output_hex": "fffffffff8a432eb8000000000000000"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 768,
+      "release": "1.21.3",
+      "schema_sha256": "94b9c562df3be925c12615041281d9f492c69f3fee10038787fdeb312a65c575",
+      "jar_sha256": "2f7bffaf0ab60e4e8e3167709e25bf3add7fed7741268fd54cc655b5eb849e63",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        }
+      }
+    },
+    {
+      "protocol": 769,
+      "release": "1.21.4",
+      "schema_sha256": "43936c5220a43b638b73ffd8165bccb3db7fe8dd0d54049072eb21fa5b9614ea",
+      "jar_sha256": "9cd431f4b77d66a3bd565c01720dae617843684a363c4d9ad2eab590f8450819",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 770,
+      "release": "1.21.5",
+      "schema_sha256": "96434702de4e203d84baf092aa500c7ba4ca2af95edfc6f339a982b61cbb0777",
+      "jar_sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff01",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 771,
+      "release": "1.21.6",
+      "schema_sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+      "jar_sha256": "80671afc8efae94785497531fd43a2dd171d2a45b7206f37d57013cf4dd5d5e6",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 772,
+      "release": "1.21.8",
+      "schema_sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+      "jar_sha256": "c64fb7dbc95cd15aa0b7460a5b1e117eef5ee91c4e6fa7a8f1fe6487b6c31507",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "80000020000007ffc2f70000",
+          "output_hex": "80000020000007ffc2f70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "80000020000007ff7fc00000",
+          "output_hex": "80000020000007ff7fc00000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "80000020000007ff7f800000",
+          "output_hex": "80000020000007ff7f800000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 773,
+      "release": "1.21.10",
+      "schema_sha256": "f8ab7f079607267e5cbdd166d943fcf1ea77b87fa494cbc39737665a8d90aeb6",
+      "jar_sha256": "8163aae3da901af7c4bf910cd8f27f5b28f02f2a7a572122f70f34c941f09cea",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000"
+        },
+        "spawn_id_": {
+          "input_hex": "0000000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_:": {
+          "input_hex": "013a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_..:x": {
+          "input_hex": "042e2e3a7800000000000000000000000000000000",
+          "output_hex": "042e2e3a7800000000000000000000000000000000"
+        },
+        "spawn_id_UPPER:x": {
+          "input_hex": "0755505045523a7800000000000000000000000000000000",
+          "error": "ResourceLocationException:Non [a-z0-9_.-] character in namespace of location: UPPER:x"
+        },
+        "spawn_id_minecraft:": {
+          "input_hex": "0a6d696e6563726166743a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 774,
+      "release": "1.21.11",
+      "schema_sha256": "34d280120eef9090c66abc502d43d5305ffa2f592c1d2b0eb7a96b71048b81f7",
+      "jar_sha256": "3a73f0cc4020a5eb45629a67629b14263331c68de45552f8505df8060fa8ed43",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb800000000000000001",
+          "output_hex": "fffffffff8a432eb800000000000000001"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000"
+        },
+        "spawn_id_": {
+          "input_hex": "0000000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_:": {
+          "input_hex": "013a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_..:x": {
+          "input_hex": "042e2e3a7800000000000000000000000000000000",
+          "output_hex": "042e2e3a7800000000000000000000000000000000"
+        },
+        "spawn_id_UPPER:x": {
+          "input_hex": "0755505045523a7800000000000000000000000000000000",
+          "error": "IdentifierException:Non [a-z0-9_.-] character in namespace of location: UPPER:x"
+        },
+        "spawn_id_minecraft:": {
+          "input_hex": "0a6d696e6563726166743a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 775,
+      "release": "26.1.2",
+      "schema_sha256": "a5fda872e2d425d1f35a8ab7e042148f4944ac1a7f0c3c5380b64b06d383bc0d",
+      "jar_sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb0100ffffffffffffffffff013e800000c0200000",
+          "output_hex": "fffffffff8a432eb0100ffffffffffffffffff013e800000c0200000"
+        },
+        "time_float": {
+          "input_hex": "00000000000000000101808080808080808080017fc01234ff800000",
+          "output_hex": "00000000000000000101808080808080808080017fc01234ff800000"
+        },
+        "time_multi": {
+          "input_hex": "fffffffff8a432eb0200ffffffffffffffffff013e800000c020000002ffffffffffffffff7f800000007f800000",
+          "output_hex": "fffffffff8a432eb0202ffffffffffffffff7f800000007f80000000ffffffffffffffffff013e800000c0200000"
+        },
+        "time_duplicate": {
+          "input_hex": "0000000000000001020001000000003f8000000002000000003f800000",
+          "output_hex": "0000000000000001010002000000003f800000"
+        },
+        "time_negative_id": {
+          "input_hex": "000000000000000101ffffffff0f01000000003f800000",
+          "error": "IllegalArgumentException:No value with id -1"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000"
+        },
+        "spawn_id_": {
+          "input_hex": "0000000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_:": {
+          "input_hex": "013a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_..:x": {
+          "input_hex": "042e2e3a7800000000000000000000000000000000",
+          "error": "IdentifierException:Non [a-z0-9_.-] character in namespace of identifier: ..:x"
+        },
+        "spawn_id_UPPER:x": {
+          "input_hex": "0755505045523a7800000000000000000000000000000000",
+          "error": "IdentifierException:Non [a-z0-9_.-] character in namespace of identifier: UPPER:x"
+        },
+        "spawn_id_minecraft:": {
+          "input_hex": "0a6d696e6563726166743a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    },
+    {
+      "protocol": 776,
+      "release": "26.2",
+      "schema_sha256": "fef8c96e9a25905f692b8e1129ab1d331922f4ce41909a56537a4331fff30430",
+      "jar_sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+      "cases": {
+        "game_reason_0": {
+          "input_hex": "00c0600000",
+          "output_hex": "00c0600000"
+        },
+        "game_reason_1": {
+          "input_hex": "01c0600000",
+          "output_hex": "01c0600000"
+        },
+        "game_reason_2": {
+          "input_hex": "02c0600000",
+          "output_hex": "02c0600000"
+        },
+        "game_reason_3": {
+          "input_hex": "03c0600000",
+          "output_hex": "03c0600000"
+        },
+        "game_reason_4": {
+          "input_hex": "04c0600000",
+          "output_hex": "04c0600000"
+        },
+        "game_reason_5": {
+          "input_hex": "05c0600000",
+          "output_hex": "05c0600000"
+        },
+        "game_reason_6": {
+          "input_hex": "06c0600000",
+          "output_hex": "06c0600000"
+        },
+        "game_reason_7": {
+          "input_hex": "07c0600000",
+          "output_hex": "07c0600000"
+        },
+        "game_reason_8": {
+          "input_hex": "08c0600000",
+          "output_hex": "08c0600000"
+        },
+        "game_reason_9": {
+          "input_hex": "09c0600000",
+          "output_hex": "09c0600000"
+        },
+        "game_reason_10": {
+          "input_hex": "0ac0600000",
+          "output_hex": "0ac0600000"
+        },
+        "game_reason_11": {
+          "input_hex": "0bc0600000",
+          "output_hex": "0bc0600000"
+        },
+        "game_reason_12": {
+          "input_hex": "0cc0600000",
+          "output_hex": "0cc0600000"
+        },
+        "game_reason_13": {
+          "input_hex": "0dc0600000",
+          "output_hex": "0dc0600000"
+        },
+        "game_reason_14": {
+          "input_hex": "0ec0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_reason_15": {
+          "input_hex": "0fc0600000",
+          "error": "NullPointerException:Cannot read field \"id\" because \"this.event\" is null"
+        },
+        "game_scalar_2143289344": {
+          "input_hex": "077fc00000",
+          "output_hex": "077fc00000"
+        },
+        "game_scalar_2139095040": {
+          "input_hex": "077f800000",
+          "output_hex": "077f800000"
+        },
+        "game_scalar_-8388608": {
+          "input_hex": "07ff800000",
+          "output_hex": "07ff800000"
+        },
+        "game_scalar_-2147483648": {
+          "input_hex": "0780000000",
+          "output_hex": "0780000000"
+        },
+        "difficulty_0": {
+          "input_hex": "0001",
+          "output_hex": "0001"
+        },
+        "difficulty_1": {
+          "input_hex": "0101",
+          "output_hex": "0101"
+        },
+        "difficulty_2": {
+          "input_hex": "0201",
+          "output_hex": "0201"
+        },
+        "difficulty_3": {
+          "input_hex": "0301",
+          "output_hex": "0301"
+        },
+        "difficulty_4": {
+          "input_hex": "0401",
+          "output_hex": "0001"
+        },
+        "difficulty_127": {
+          "input_hex": "7f01",
+          "output_hex": "0301"
+        },
+        "difficulty_255": {
+          "input_hex": "ff0101",
+          "output_hex": "0301"
+        },
+        "difficulty_-1": {
+          "input_hex": "ffffffff0f01",
+          "output_hex": "0301"
+        },
+        "difficulty_-2147483648": {
+          "input_hex": "808080800801",
+          "output_hex": "0001"
+        },
+        "difficulty_2147483647": {
+          "input_hex": "ffffffff0701",
+          "output_hex": "0301"
+        },
+        "time_golden": {
+          "input_hex": "fffffffff8a432eb0100ffffffffffffffffff013e800000c0200000",
+          "output_hex": "fffffffff8a432eb0100ffffffffffffffffff013e800000c0200000"
+        },
+        "time_float": {
+          "input_hex": "00000000000000000101808080808080808080017fc01234ff800000",
+          "output_hex": "00000000000000000101808080808080808080017fc01234ff800000"
+        },
+        "time_multi": {
+          "input_hex": "fffffffff8a432eb0200ffffffffffffffffff013e800000c020000002ffffffffffffffff7f800000007f800000",
+          "output_hex": "fffffffff8a432eb0202ffffffffffffffff7f800000007f80000000ffffffffffffffffff013e800000c0200000"
+        },
+        "time_duplicate": {
+          "input_hex": "0000000000000001020001000000003f8000000002000000003f800000",
+          "output_hex": "0000000000000001010002000000003f800000"
+        },
+        "time_negative_id": {
+          "input_hex": "000000000000000101ffffffff0f01000000003f800000",
+          "error": "IllegalArgumentException:No value with id -1"
+        },
+        "spawn_-1024000000": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ffc2f70000c2b70000"
+        },
+        "spawn_2143289344": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7fc00000c2b70000"
+        },
+        "spawn_2139095040": {
+          "input_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000",
+          "output_hex": "136d696e6563726166743a6f766572776f726c6480000020000007ff7f800000c2b70000"
+        },
+        "spawn_id_": {
+          "input_hex": "0000000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_:": {
+          "input_hex": "013a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "spawn_id_..:x": {
+          "input_hex": "042e2e3a7800000000000000000000000000000000",
+          "error": "IdentifierException:Non [a-z0-9_.-] character in namespace of identifier: ..:x"
+        },
+        "spawn_id_UPPER:x": {
+          "input_hex": "0755505045523a7800000000000000000000000000000000",
+          "error": "IdentifierException:Non [a-z0-9_.-] character in namespace of identifier: UPPER:x"
+        },
+        "spawn_id_minecraft:": {
+          "input_hex": "0a6d696e6563726166743a00000000000000000000000000000000",
+          "output_hex": "0a6d696e6563726166743a00000000000000000000000000000000"
+        },
+        "border_initialize": {
+          "input_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07",
+          "output_hex": "bff40000000000004004000000000000c00c0000000000004013000000000000808080808020ffffffff0f8080808008ffffffff07"
+        },
+        "border_center": {
+          "input_hex": "7ff8000000000000fff0000000000000",
+          "output_hex": "7ff8000000000000fff0000000000000"
+        },
+        "border_lerp": {
+          "input_hex": "bff40000000000007ff000000000000080808080808080808001",
+          "output_hex": "bff40000000000007ff000000000000080808080808080808001"
+        },
+        "border_size": {
+          "input_hex": "c00c000000000000",
+          "output_hex": "c00c000000000000"
+        },
+        "border_warning_delay": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "border_warning_distance": {
+          "input_hex": "ffffffff0f",
+          "output_hex": "ffffffff0f"
+        },
+        "block_ack": {
+          "input_hex": "8080808008",
+          "output_hex": "8080808008"
+        },
+        "player_loaded": {
+          "input_hex": "",
+          "output_hex": ""
+        }
+      }
+    }
+  ]
+}

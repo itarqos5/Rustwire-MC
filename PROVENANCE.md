@@ -339,3 +339,12 @@ The [scoreboard report](docs/scoreboard-wire-audit.md) and
 version boundaries and fallback/strict-enum distinctions. Domain probes distinguish
 wire representability from valid gameplay/UI choices. Only original oracle code
 and protocol facts are distributed.
+
+## World/session wire facts
+
+The original [WorldStateOracle.java](tools/paper/WorldStateOracle.java) invokes
+cached release packet APIs without distributing their implementation text. The
+[wire audit](docs/world-state-wire-audit.md) and [artifact facts](docs/validation/world-state-wire-oracle.json)
+record all 14 releases, including clock-registry setup for 26.x. Both valid and
+non-gameplay scalar domains are tested; names, field types and version boundaries
+are reported as protocol facts rather than inferred from adjacent releases.
