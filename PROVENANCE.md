@@ -43,3 +43,26 @@ Entity metadata and item-component registries are generated from the same hash-p
 - Cached checksum-verified Paper 1.20.1 serializers confirmed respawn keep-data flags and optional global-position fields; Paper 1.21.5 build 114 confirmed the obsolete palette-length allocation overhead. Only protocol facts and original Rust implementations are included here; no proprietary bytecode/source is distributed
 
 Where an upstream schema differs from inspected wire behavior, the specific correction is documented and tested rather than silently treating the schema as infallible. The exact real-server artifacts are recorded in `docs/validation/matrix-download-provenance.json`.
+
+## Modern inventory component hashes
+
+`packet::item_hash` implements the structured CRC32C HashOps representation,
+not a CRC of network bytes. `tools/paper/HashOracle.java` is an original fixture
+harness that calls the cached official server's public HashOps API. It was run
+against pinned Paper 1.21.5 build 114 and 26.2 build 129; both produced identical
+primitive/array/list/map fixtures. `tools/paper/ComponentHashOracle.java` also calls those builds' actual
+DataComponents codecs verified damage, unbreakable, rarity, block-state,
+custom-model-data, tooltip defaults and enchantable fixtures. NBT numeric types
+are significant: JSON conversion can narrow an integer to a byte, while SNBT
+`7` and a network TAG_Int retain the integer representation.
+
+Primary interoperability references consulted:
+- [GeyserMC HashOps encoder](https://github.com/GeyserMC/Geyser/blob/63a4e2b79b12f0d138777d5fd80176a112b4bd72/core/src/main/java/org/geysermc/geyser/item/hashing/MinecraftHashEncoder.java)
+- [GeyserMC persistent component-codec adapters](https://github.com/GeyserMC/Geyser/blob/63a4e2b79b12f0d138777d5fd80176a112b4bd72/core/src/main/java/org/geysermc/geyser/item/hashing/DataComponentHashers.java)
+
+No proprietary class implementation or decompiled source is included. Run the
+harness only against an independently downloaded and accepted server install:
+`javac -cp "$SERVER_AND_LIBRARIES" -d /tmp tools/paper/HashOracle.java`, then
+`java -cp "/tmp:$SERVER_AND_LIBRARIES" HashOracle`. The classpath must contain the
+Paper version JAR and its runtime library JARs. No server or network is started
+by this primitive hash harness.

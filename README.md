@@ -75,7 +75,8 @@ cargo bench --bench codec
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
 - Block/section updates, chunk unload and respawn with dimension metadata
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
-- Full-stack container clicks through 1.21.4; caller-provided hashed click representations from 1.21.5
+- Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
+- `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components; unknown persistent codecs fail explicitly
 - Version-aware entity metadata with shared slot/NBT budgets
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets

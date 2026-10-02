@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 120 tests with all features; 107 applicable tests without default features
+- 127 tests with all features; 114 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -111,3 +111,12 @@ is the actual runtime change.
 ## Not verified
 
 Live Microsoft/Xbox/Minecraft account authorization, secure-chat signing, every release alias, every gameplay packet, arbitrary plugins/modded servers, other dimensions and production-scale hostile traffic have not been exhaustively tested. The README lists currently untyped gameplay areas explicitly.
+
+## Component hash fixtures
+
+Seven hash tests cover independently executed official HashOps fixtures, supported
+component-codec defaults, item-patch derivation, byte-width and UTF-16 preservation,
+map ordering/duplicate normalization, malformed shapes and resource limits. The
+primitive oracle returned identical results on pinned Paper 1.21.5 and 26.2. These
+fixtures are separate from the earlier live gameplay runs: predicted hashed
+clicks have not yet been exercised end-to-end by those recorded runs.

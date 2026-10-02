@@ -12,7 +12,7 @@
 //! <https://github.com/PrismarineJS/minecraft-data/tree/f5d7d74604d8c6153fd086bfe035e0630a5207cc/data/pc>.
 //! Protocol 776 provenance is recorded separately in `research/26.2-commit.json`.
 //! These are wire codecs, not an inventory simulator: callers manage state IDs,
-//! click predictions and (770+) server-compatible component hashes.
+//! click predictions; the item_hash module derives a supported subset of 770+ hashes.
 use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,
@@ -63,7 +63,7 @@ pub fn component_id(version: Version, name: &str) -> Result<i32> {
         .map(|id| id as i32)
         .ok_or(Error::Unsupported("item component in selected release"))
 }
-fn component_type(version: Version, id: i32) -> Result<(&'static str, ComponentWire)> {
+pub(crate) fn component_type(version: Version, id: i32) -> Result<(&'static str, ComponentWire)> {
     usize::try_from(id)
         .ok()
         .and_then(|i| component_registry(version).get(i))
@@ -557,7 +557,7 @@ fn read_component(
         }
     })
 }
-fn write_component(
+pub(crate) fn write_component(
     value: &ComponentValue,
     wire: ComponentWire,
     w: &mut Writer,
@@ -1063,8 +1063,8 @@ impl ContainerClick {
         )
     }
 }
-/// A server-compatible component hash supplied by the caller. This library
-/// does not derive hashes from item components or promise their correctness.
+/// Explicit component-hash representation. [`Self::from_slot`] derives the
+/// supported persistent codecs; callers may supply additional verified hashes.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HashedItemStack {
     pub item_id: i32,
@@ -1145,7 +1145,8 @@ fn write_hashed(
     b.check_bytes(w)
 }
 /// Protocol 770+ click prediction. `None` is an empty stack, encoded as a
-/// false option flag. Hashes are explicit inputs; full stack encoding is never
+/// false option flag. Hashes can come from [`HashedItemStack::from_slot`];
+/// full stack encoding is never
 /// silently substituted for this format.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HashedContainerClick {

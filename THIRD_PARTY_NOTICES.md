@@ -31,3 +31,9 @@ SOFTWARE.
 Cargo dependencies retain their own licenses, recorded in their crates. This
 project is not affiliated with or endorsed by Mojang or Microsoft. Minecraft
 is a trademark of its respective owner.
+
+The component hashing interoperability research consulted GeyserMC's MIT-licensed
+`MinecraftHashEncoder` and `DataComponentHashers` (Copyright (c) 2025 GeyserMC),
+in addition to direct tests of official server APIs. The MIT permission and
+warranty notice above applies to that reference material as well. Rustwire's
+bounded Rust CRC32C and component adapter implementation is original.

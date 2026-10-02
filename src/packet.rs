@@ -6,6 +6,7 @@ pub mod entity;
 pub mod entity_metadata;
 pub mod interact;
 pub mod inventory;
+pub mod item_hash;
 pub mod typed;
 mod world;
 use crate::{
