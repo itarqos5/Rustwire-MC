@@ -9,7 +9,7 @@ Cargo package: `rustwire-mc`. A lean Minecraft Java protocol library under activ
 - Optional pure-Rust zlib compression and decompressed-size validation
 - Explicit packet ID/name catalogs for 14 protocol families, covering 23 releases from 1.20 through 26.2
 
-`cargo test`: 15 passing tests. `cargo test --no-default-features`: 13 passing tests; zero runtime dependencies.
+`cargo test`: 16 passing tests. `cargo test --no-default-features`: 13 passing tests; zero runtime dependencies.
 
 A packet catalog is not full typed packet support. TCP/login/auth/chunks are being developed in subsequent coherent commits; they are not available in this foundation commit. No crates.io publication has occurred.
 

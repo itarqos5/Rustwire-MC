@@ -185,3 +185,17 @@ fn rejects_compression_bombs_and_trailing_streams() {
     body.raw(&compressed);
     assert!(c.decode_body(body.as_slice()).is_err());
 }
+#[cfg(feature = "compression")]
+#[test]
+fn compression_threshold_may_exceed_packet_budget() {
+    let mut c = FrameCodec::new(Limits {
+        max_packet: 32,
+        ..Limits::default()
+    });
+    c.set_compression(Some(4096)).unwrap();
+    let p = RawPacket::new(1, vec![2; 8]);
+    let encoded = c.encode(&p).unwrap();
+    assert_eq!(c.decode(&mut encoded.as_slice()).unwrap(), Some(p));
+    c.set_compression(None).unwrap();
+    assert_eq!(c.compression_threshold(), None);
+}

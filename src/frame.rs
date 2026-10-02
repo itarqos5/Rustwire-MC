@@ -41,9 +41,6 @@ impl FrameCodec {
         if threshold.is_some() {
             return Err(Error::Unsupported("enable compression feature"));
         }
-        if threshold.is_some_and(|n| n > self.limits.max_packet) {
-            return Err(Error::Limit("compression threshold"));
-        }
         self.compression_threshold = threshold;
         Ok(())
     }
