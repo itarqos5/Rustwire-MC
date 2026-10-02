@@ -204,3 +204,20 @@ game-specific predicate evaluation remains an application responsibility.
 `components_predicates.rs` contain 32 independent tests. The code comments name
 the corresponding release classes and corrected boundaries. No game class,
 disassembly or proprietary implementation is distributed.
+
+## Command registries and graphs
+
+The parser registry and property serializers were checked against all fourteen
+cached release artifacts. The official parser name is `minecraft:nbt_compound_tag`,
+not the schemas' `minecraft:nbt`; protocol 776 uses `minecraft:team_color` at
+parser index 16. Entity-parser flag bit 0 means a single target and bit 1 means
+players only. Restricted-node flag 0x20 begins at protocol 771. Numeric bound
+values are retained exactly, including unusual floating-point values transmitted
+by the official serializers. Graph validation independently checks child and
+redirect dependencies, retaining valid mixed-edge cycles such as `execute run`.
+
+Suggestion requests follow vanilla's 32,500 UTF-16-unit wire limit. The cached
+Paper 26.2 receiver imposes a separately patched 2,048-unit policy; applications
+should respect their server's stricter limits. Provider identifiers are data,
+never executed or fetched by Rustwire. The original tests cover every known
+parser/version ordinal and independent malformed/limit fixtures.

@@ -74,6 +74,7 @@ cargo bench --bench codec
 
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
+- Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Block/section updates, chunk unload and respawn with dimension metadata
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers
@@ -128,7 +129,7 @@ Important wire boundaries are explicit: configuration/anonymous NBT from 764, pe
 
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
-- Known component wire layouts are implemented; registry identities, NBT-backed predicate semantics and many persistent component-hash forms remain application responsibilities. Recipes, comprehensive command trees and remaining gameplay packets still need codecs
+- Known component wire layouts are implemented; registry identities, NBT-backed predicate semantics and many persistent component-hash forms remain application responsibilities. Recipes and remaining gameplay packets still need codecs; the command tree describes syntax but does not execute commands or replace Brigadier parsing
 - Secure player-chat signing and signature verification remain application responsibilities; the provided acknowledgement/cache helpers do not establish trust. Unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang secure-chat signing session, mod-loader handshake, world simulation or rendering

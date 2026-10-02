@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 228 core tests with all features; 214 applicable core tests without default features
+- 246 core tests with all features; 232 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -230,3 +230,15 @@ Full no-default/all-feature suites, strict all-target clippy, generator checks
 and an initial Rust 1.88 library check passed before publication. Existing
 persistent component-hash coverage is unchanged. Fresh live-server evidence for
 this increment is separate from the earlier six-version component checkpoint.
+
+## Command-tree and suggestion codecs
+
+Fifteen command-codec tests cover 761 parser/version golden combinations, all
+truncated prefixes and trailing bytes, invalid flags/references, aggregate
+budgets, tooltip format changes, bounded mutations and a 20,000-node iterative
+graph. Valid mixed child/redirect cycles are preserved; invalid dependency cycles
+within either relation are rejected. Two additional tests cover semantic dispatch
+and malformed-known-packet errors. Focused tests pass on stable and Rust 1.88
+with and without features; the isolated full suites, strict clippy and rustdoc
+checks pass. This increment has fixture/oracle evidence, not a live command
+execution claim.

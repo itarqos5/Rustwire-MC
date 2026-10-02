@@ -51,7 +51,13 @@ pub enum ChatPacket {
     Player(Box<chat::PlayerChat>),
 }
 #[derive(Debug, Clone, PartialEq)]
+pub enum CommandPacket {
+    Tree(super::commands::CommandTree),
+    Suggestions(super::commands::CommandSuggestions),
+}
+#[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Command(CommandPacket),
     Entity(EntityPacket),
     EntityState(EntityStatePacket),
     Player(PlayerPacket),
@@ -79,6 +85,13 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "declare_commands" => Self::Command(CommandPacket::Tree(
+                super::commands::CommandTree::decode(bytes, version, limits)?,
+            )),
+            "tab_complete" => Self::Command(CommandPacket::Suggestions(
+                super::commands::CommandSuggestions::decode(bytes, version, limits)?,
+            )),
+
             "spawn_entity"
             | "rel_entity_move"
             | "entity_move_look"
