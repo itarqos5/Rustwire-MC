@@ -1,0 +1,817 @@
+{
+  "date": "2026-10-02",
+  "generated_utc": "2026-10-02T18:25:49.898685+00:00",
+  "scenario": "bounded-grim",
+  "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+  "client_source": "examples/grim_probe.rs and examples/grim_probe/",
+  "harness": "tools/paper/validate_grim.py",
+  "harness_sha256": "9191c29706e6e8f193f472d6497910835055280f5eea4e6015728d55b3cf9c85",
+  "python_acceptance_tests": {
+    "count": 13,
+    "command": "python3 -m unittest discover -s tools/paper -p test_validate_grim.py -v",
+    "result": "passed"
+  },
+  "conditions": {
+    "native_matching_protocol": true,
+    "loopback_only": "127.0.0.1:25565",
+    "offline_disposable_worlds": true,
+    "ordinary_non_op_survival_player": "Rustwire",
+    "grim_checks_and_thresholds": "upstream defaults unchanged",
+    "only_grim_config_change": "verbose.print-to-console: false -> true",
+    "comparison": "headless Rustwire client on real Paper plus official vanilla protocol/timing inspection; not a graphical vanilla comparison",
+    "movement_scope": "grounded stone-floor walking/deceleration only",
+    "wind_charge_scope": "two upward offhand uses and server-confirmed projectile creation; no explosion knockback or jumping",
+    "negative_control": "bounded duplicate sprint state; expected BadPacketsF; does not independently establish invalid-trajectory Simulation detection",
+    "online_authentication_tested": false,
+    "metadata_fetch_caveat": "JVM public-key and Paper/Grim update lookups failed on this host. Raw logs retain those warnings; they are distinct from packet/plugin processing failures."
+  },
+  "final_runs": [
+    {
+      "version": "1.21.1",
+      "paper_build": 133,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "39bd8c00b9e18de91dcabd3cc3dcfa5328685a53b7187a2f63280c22e2d287b9",
+      "grim_version": "2.3.73",
+      "grim_channel": "release",
+      "grim_version_url": "https://modrinth.com/plugin/grimac/version/1FIGlM6Q",
+      "grim_jar_sha256": "a095331a8ba47286b27bdb9b51f0d35ae4a227632a2c50b25cedba85439f1810",
+      "grim_publisher_hashes": {
+        "sha1": "f1cd0a6b8b4470dd10a542964784ec5937e0c19a",
+        "sha512": "bf9be1194eb45afe1dec6bd8e98d078dacf41539025c8aabe24d31337cbea86625774e30842568b47f34ca174472c724c7876cc30793945e7408b03609672655"
+      },
+      "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+      "config_sha256": "d7cd73b0d029d36a8c9f03672810d3034213e95eaa21ef99079e520c2a8d35e2",
+      "default_config_sha256": "c0c80e2efb34b739c6aac9a1c8f2e9887701e99b99782bd340639dbf27a59a7e",
+      "punishments_sha256": "311ee46e0d271361dfd3a61b9db4cdf4571f19e3512f82c2521231679498a1b1",
+      "default_checks_and_thresholds_preserved": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "started_utc": "2026-10-02T18:20:25.292104+00:00",
+      "client_seconds": 26.017,
+      "seconds": 45.281975,
+      "server_exit": 0,
+      "client_exit": 0,
+      "acceptance_checks": {
+        "server_clean_exit": true,
+        "client_clean_exit": true,
+        "ready_seen": true,
+        "all_scenario_commands_sent": true,
+        "plugin_version_confirmed": true,
+        "player_tracked": true,
+        "prediction_debug_enabled": true,
+        "survival_confirmed": true,
+        "no_ops_or_permission_grants": true,
+        "check_configuration_unchanged": true,
+        "no_flags_outside_negative_control": true,
+        "negative_control_flagged": true,
+        "all_client_actions_observed": true,
+        "walking_confirmed": true,
+        "initial_wind_stack_confirmed": true,
+        "offhand_swap_confirmed": true,
+        "two_wind_uses_confirmed": true,
+        "wind_entities_confirmed": true,
+        "no_console_command_errors": true,
+        "no_runtime_errors": true
+      },
+      "server_action_confirmation": {
+        "initial_position": [
+          0.5,
+          -60.0,
+          0.5
+        ],
+        "walk_position": [
+          0.5,
+          -60.0,
+          4.8134259902859675
+        ],
+        "walk_delta": [
+          0.0,
+          0.0,
+          4.3134259902859675
+        ],
+        "initial_inventory": [
+          {
+            "slot": 0,
+            "count": 8
+          }
+        ],
+        "swapped_inventory": [
+          {
+            "slot": -106,
+            "count": 8
+          }
+        ],
+        "after_wind_inventory": [
+          {
+            "slot": -106,
+            "count": 6
+          }
+        ],
+        "wind_entity_count": 2,
+        "offhand_nbt_location": "Inventory[{Slot:-106b}]"
+      },
+      "run_id": "20261002T182025.026876Z",
+      "passed": true,
+      "flags_outside_negative": 0,
+      "expected_negative_flags": [
+        {
+          "seconds": 41.450778,
+          "utc": "2026-10-02T18:21:06.744514+00:00",
+          "line": "[19:21:06 INFO]: Grim \u00bb Rustwire failed BadPacketsF (x1) state=true",
+          "check": "BadPacketsF",
+          "vl": 1,
+          "verbose": "state=true",
+          "phase": "negative"
+        }
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "java_runtime": {
+        "version_output": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+        "executable_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+        "implementor": "Debian",
+        "runtime_version": "21.0.12.1+1-1-deb13u1-Debian",
+        "os_arch": "x86_64"
+      },
+      "client_completion": [
+        "GRIM_PROBE_DONE protocol=767 ticks=372 movement_packets=49 wind_uses=2 seconds=25.992"
+      ],
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "64041643e560edb5fb74daf363cdbc24791085a6561e7d67410029621f1e834f",
+          "bytes": 83123
+        },
+        "grim-server.log": {
+          "sha256": "2cab5bd808816aaa17eed0cbb04c100307b9b3d579291308f6d26e8d0cab3211",
+          "bytes": 24734
+        },
+        "grim-client.log": {
+          "sha256": "7bb26c6b6d8a424aa64a4db0167cc1f51f0a895b98b0e72f7c31529c82397470",
+          "bytes": 874
+        }
+      }
+    },
+    {
+      "version": "1.21.5",
+      "paper_build": 114,
+      "paper_channel": "ALPHA",
+      "paper_jar_sha256": "2ae6ae22adf417699746e0f89fc2ef6cb6ee050a5f6608cee58f0535d60b509e",
+      "grim_version": "2.3.73",
+      "grim_channel": "release",
+      "grim_version_url": "https://modrinth.com/plugin/grimac/version/1FIGlM6Q",
+      "grim_jar_sha256": "a095331a8ba47286b27bdb9b51f0d35ae4a227632a2c50b25cedba85439f1810",
+      "grim_publisher_hashes": {
+        "sha1": "f1cd0a6b8b4470dd10a542964784ec5937e0c19a",
+        "sha512": "bf9be1194eb45afe1dec6bd8e98d078dacf41539025c8aabe24d31337cbea86625774e30842568b47f34ca174472c724c7876cc30793945e7408b03609672655"
+      },
+      "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+      "config_sha256": "d7cd73b0d029d36a8c9f03672810d3034213e95eaa21ef99079e520c2a8d35e2",
+      "default_config_sha256": "c0c80e2efb34b739c6aac9a1c8f2e9887701e99b99782bd340639dbf27a59a7e",
+      "punishments_sha256": "311ee46e0d271361dfd3a61b9db4cdf4571f19e3512f82c2521231679498a1b1",
+      "default_checks_and_thresholds_preserved": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "started_utc": "2026-10-02T18:21:30.910073+00:00",
+      "client_seconds": 25.946,
+      "seconds": 46.674185,
+      "server_exit": 0,
+      "client_exit": 0,
+      "acceptance_checks": {
+        "server_clean_exit": true,
+        "client_clean_exit": true,
+        "ready_seen": true,
+        "all_scenario_commands_sent": true,
+        "plugin_version_confirmed": true,
+        "player_tracked": true,
+        "prediction_debug_enabled": true,
+        "survival_confirmed": true,
+        "no_ops_or_permission_grants": true,
+        "check_configuration_unchanged": true,
+        "no_flags_outside_negative_control": true,
+        "negative_control_flagged": true,
+        "all_client_actions_observed": true,
+        "walking_confirmed": true,
+        "initial_wind_stack_confirmed": true,
+        "offhand_swap_confirmed": true,
+        "two_wind_uses_confirmed": true,
+        "wind_entities_confirmed": true,
+        "no_console_command_errors": true,
+        "no_runtime_errors": true
+      },
+      "server_action_confirmation": {
+        "initial_position": [
+          0.5,
+          -60.0,
+          0.5
+        ],
+        "walk_position": [
+          0.5,
+          -60.0,
+          4.8134259902859675
+        ],
+        "walk_delta": [
+          0.0,
+          0.0,
+          4.3134259902859675
+        ],
+        "initial_inventory": [
+          {
+            "slot": 0,
+            "count": 8
+          }
+        ],
+        "swapped_inventory": [
+          {
+            "slot": -106,
+            "count": 8
+          }
+        ],
+        "after_wind_inventory": [
+          {
+            "slot": -106,
+            "count": 6
+          }
+        ],
+        "wind_entity_count": 2,
+        "offhand_nbt_location": "equipment.offhand"
+      },
+      "run_id": "20261002T182130.649056Z",
+      "passed": true,
+      "flags_outside_negative": 0,
+      "expected_negative_flags": [
+        {
+          "seconds": 42.165005,
+          "utc": "2026-10-02T18:22:13.076340+00:00",
+          "line": "[19:22:13 INFO]: Grim \u00bb Rustwire failed BadPacketsF (x1) state=true",
+          "check": "BadPacketsF",
+          "vl": 1,
+          "verbose": "state=true",
+          "phase": "negative"
+        }
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "java_runtime": {
+        "version_output": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)",
+        "executable_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+        "implementor": "Debian",
+        "runtime_version": "21.0.12.1+1-1-deb13u1-Debian",
+        "os_arch": "x86_64"
+      },
+      "client_completion": [
+        "GRIM_PROBE_DONE protocol=770 ticks=372 movement_packets=49 wind_uses=2 seconds=25.940"
+      ],
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "317714baafe4f93a21e3abe8b180e0b2b1970b4282120e2ebc815a296b3cbb60",
+          "bytes": 129227
+        },
+        "grim-server.log": {
+          "sha256": "c81207e21d580487290e49709977c36640d9ef3a877897534be52bdc9619b153",
+          "bytes": 27067
+        },
+        "grim-client.log": {
+          "sha256": "b56a81f0a7c109ce533f29b98ff2e4628f311faffe6d51a1a0681cb855d89e28",
+          "bytes": 873
+        }
+      }
+    },
+    {
+      "version": "26.1.2",
+      "paper_build": 74,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "1d70b1dab9cf4a6de615209a536f3a45a2186240253c428213ce2188ab95e5f7",
+      "grim_version": "2.3.74-abb95b6",
+      "grim_channel": "alpha",
+      "grim_version_url": "https://modrinth.com/plugin/grimac/version/YJEwvStg",
+      "grim_jar_sha256": "d33eed30bfd5c6eb54176b197c9c51018ba0916d7b056e0530ab183ac1a3d590",
+      "grim_publisher_hashes": {
+        "sha1": "f7fc55769747eb0769b3b286dc8d5626c1b34f43",
+        "sha512": "12ca9f9a0e19bfee78309768788f141c432ec48b9a3180dbde430159ba09bbab43d25949c903a0a122e916229dfa938325d49aab1a793bc8c40100be6a2130b7"
+      },
+      "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+      "config_sha256": "6928291acb9e113cfdb5229d3fa5d33d15621629b850b4833d98bfa3268182f0",
+      "default_config_sha256": "5fb36e0fa0086ef41a4e3cd4971373676dac5ce0702d3df05206aa4e64aaf7b5",
+      "punishments_sha256": "64aeeab2d493508630e158af283453df58d43247478c9e2d6ceb30eeddd33bad",
+      "default_checks_and_thresholds_preserved": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "started_utc": "2026-10-02T18:22:53.886701+00:00",
+      "client_seconds": 26.612,
+      "seconds": 42.379918,
+      "server_exit": 0,
+      "client_exit": 0,
+      "acceptance_checks": {
+        "server_clean_exit": true,
+        "client_clean_exit": true,
+        "ready_seen": true,
+        "all_scenario_commands_sent": true,
+        "plugin_version_confirmed": true,
+        "player_tracked": true,
+        "prediction_debug_enabled": true,
+        "survival_confirmed": true,
+        "no_ops_or_permission_grants": true,
+        "check_configuration_unchanged": true,
+        "no_flags_outside_negative_control": true,
+        "negative_control_flagged": true,
+        "all_client_actions_observed": true,
+        "walking_confirmed": true,
+        "initial_wind_stack_confirmed": true,
+        "offhand_swap_confirmed": true,
+        "two_wind_uses_confirmed": true,
+        "wind_entities_confirmed": true,
+        "no_console_command_errors": true,
+        "no_runtime_errors": true
+      },
+      "server_action_confirmation": {
+        "initial_position": [
+          0.5,
+          -60.0,
+          0.5
+        ],
+        "walk_position": [
+          0.5,
+          -60.0,
+          4.8134259902859675
+        ],
+        "walk_delta": [
+          0.0,
+          0.0,
+          4.3134259902859675
+        ],
+        "initial_inventory": [
+          {
+            "slot": 0,
+            "count": 8
+          }
+        ],
+        "swapped_inventory": [
+          {
+            "slot": -106,
+            "count": 8
+          }
+        ],
+        "after_wind_inventory": [
+          {
+            "slot": -106,
+            "count": 6
+          }
+        ],
+        "wind_entity_count": 2,
+        "offhand_nbt_location": "equipment.offhand"
+      },
+      "run_id": "20261002T182253.612884Z",
+      "passed": true,
+      "flags_outside_negative": 0,
+      "expected_negative_flags": [
+        {
+          "seconds": 38.875445,
+          "utc": "2026-10-02T18:23:32.763396+00:00",
+          "line": "[19:23:32 INFO]: Grim \u00bb Rustwire failed BadPacketsF (x1) state=true",
+          "check": "BadPacketsF",
+          "vl": 1,
+          "verbose": "state=true",
+          "phase": "negative"
+        }
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "java_runtime": {
+        "version_output": "openjdk version \"25.0.4.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)",
+        "executable_sha256": "7380ce48ed5013735d2c8414db54adb8f981e7933ff594bd36f3baccddaafba3",
+        "implementor": "Eclipse Adoptium",
+        "runtime_version": "25.0.4.1+1-LTS",
+        "os_arch": "x86_64"
+      },
+      "client_completion": [
+        "GRIM_PROBE_DONE protocol=775 ticks=372 movement_packets=49 wind_uses=2 seconds=26.593"
+      ],
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "5c2989eaf994ee06118d7b58d2c6d50f485f6467de30d23638c31fcd3db4a708",
+          "bytes": 146436
+        },
+        "grim-server.log": {
+          "sha256": "c060de75f3bb2bc6ae76b2957ee009a3c9d2f51c4f013e2c9d4b874e46b19b8d",
+          "bytes": 33989
+        },
+        "grim-client.log": {
+          "sha256": "a6e222483f42f4911ad72512673237664497e4f72482c9e7ae164a2a85b25a89",
+          "bytes": 874
+        }
+      }
+    },
+    {
+      "version": "26.2",
+      "paper_build": 129,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "b1d8f6bfa1b6101fa8e947b53041cb3bdf5540e7b83b6547ca19ba7edefeb083",
+      "grim_version": "2.3.74-abb95b6",
+      "grim_channel": "alpha",
+      "grim_version_url": "https://modrinth.com/plugin/grimac/version/YJEwvStg",
+      "grim_jar_sha256": "d33eed30bfd5c6eb54176b197c9c51018ba0916d7b056e0530ab183ac1a3d590",
+      "grim_publisher_hashes": {
+        "sha1": "f7fc55769747eb0769b3b286dc8d5626c1b34f43",
+        "sha512": "12ca9f9a0e19bfee78309768788f141c432ec48b9a3180dbde430159ba09bbab43d25949c903a0a122e916229dfa938325d49aab1a793bc8c40100be6a2130b7"
+      },
+      "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+      "config_sha256": "6928291acb9e113cfdb5229d3fa5d33d15621629b850b4833d98bfa3268182f0",
+      "default_config_sha256": "5fb36e0fa0086ef41a4e3cd4971373676dac5ce0702d3df05206aa4e64aaf7b5",
+      "punishments_sha256": "64aeeab2d493508630e158af283453df58d43247478c9e2d6ceb30eeddd33bad",
+      "default_checks_and_thresholds_preserved": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "started_utc": "2026-10-02T18:19:20.179358+00:00",
+      "client_seconds": 26.608,
+      "seconds": 41.866424,
+      "server_exit": 0,
+      "client_exit": 0,
+      "acceptance_checks": {
+        "server_clean_exit": true,
+        "client_clean_exit": true,
+        "ready_seen": true,
+        "all_scenario_commands_sent": true,
+        "plugin_version_confirmed": true,
+        "player_tracked": true,
+        "prediction_debug_enabled": true,
+        "survival_confirmed": true,
+        "no_ops_or_permission_grants": true,
+        "check_configuration_unchanged": true,
+        "no_flags_outside_negative_control": true,
+        "negative_control_flagged": true,
+        "all_client_actions_observed": true,
+        "walking_confirmed": true,
+        "initial_wind_stack_confirmed": true,
+        "offhand_swap_confirmed": true,
+        "two_wind_uses_confirmed": true,
+        "wind_entities_confirmed": true,
+        "no_console_command_errors": true,
+        "no_runtime_errors": true
+      },
+      "server_action_confirmation": {
+        "initial_position": [
+          0.5,
+          -60.0,
+          0.5
+        ],
+        "walk_position": [
+          0.5,
+          -60.0,
+          4.8134259902859675
+        ],
+        "walk_delta": [
+          0.0,
+          0.0,
+          4.3134259902859675
+        ],
+        "initial_inventory": [
+          {
+            "slot": 0,
+            "count": 8
+          }
+        ],
+        "swapped_inventory": [
+          {
+            "slot": -106,
+            "count": 8
+          }
+        ],
+        "after_wind_inventory": [
+          {
+            "slot": -106,
+            "count": 6
+          }
+        ],
+        "wind_entity_count": 2,
+        "offhand_nbt_location": "equipment.offhand"
+      },
+      "run_id": "20261002T181919.881609Z",
+      "passed": true,
+      "flags_outside_negative": 0,
+      "expected_negative_flags": [
+        {
+          "seconds": 38.466776,
+          "utc": "2026-10-02T18:19:58.647722+00:00",
+          "line": "[19:19:58 INFO]: Grim \u00bb Rustwire failed BadPacketsF (x1) state=true",
+          "check": "BadPacketsF",
+          "vl": 1,
+          "verbose": "state=true",
+          "phase": "negative"
+        }
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "java_runtime": {
+        "version_output": "openjdk version \"25.0.4.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)",
+        "executable_sha256": "7380ce48ed5013735d2c8414db54adb8f981e7933ff594bd36f3baccddaafba3",
+        "implementor": "Eclipse Adoptium",
+        "runtime_version": "25.0.4.1+1-LTS",
+        "os_arch": "x86_64"
+      },
+      "client_completion": [
+        "GRIM_PROBE_DONE protocol=776 ticks=372 movement_packets=49 wind_uses=2 seconds=26.595"
+      ],
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "336ea72468231bd89649dd353732417607f522f762a0546b7a57f565e6c30cac",
+          "bytes": 146866
+        },
+        "grim-server.log": {
+          "sha256": "667b96f29e3c402ce33ecdb92b6697f6d2a60811c78202dbcdcefbeb4a723cec",
+          "bytes": 34022
+        },
+        "grim-client.log": {
+          "sha256": "7ab2227e2ab9542aa511d4647d5607e4ce07393b34e5b695d86d387c6fdcb165",
+          "bytes": 873
+        }
+      }
+    }
+  ],
+  "preserved_diagnostic_runs": [
+    {
+      "run_id": "20261002T173355.378164Z",
+      "version": "1.21.1",
+      "client_binary_sha256": "7440afd12b562bf9d770a94c3d778abf0ebc844164f0f25601948c165b208ced",
+      "original_passed": false,
+      "original_failed_checks": [
+        "legitimate_window_no_flags"
+      ],
+      "all_flag_counts": {
+        "Simulation": 9,
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "6e30a7169bc4068db4aa89dfee7c9b507a39c026a1ef323982d71a3106d55334",
+          "bytes": 92968
+        },
+        "grim-server.log": {
+          "sha256": "5c1aebf7bcc0918c5c723767464e449572997e21742cfe7a77624318a9ac609a",
+          "bytes": 26325
+        },
+        "grim-client.log": {
+          "sha256": "0ac76dc3cacee5ede11e8484f30dd49b874e1dfc7ee089197ced8587641d4578",
+          "bytes": 830
+        }
+      },
+      "classification": "client_simulation",
+      "diagnosis": "Ground acceleration began immediately after an airborne teleport response; corrected with real gravity/floor-contact settling and a normal stop-sprinting reset."
+    },
+    {
+      "run_id": "20261002T174134.281478Z",
+      "version": "1.21.5",
+      "client_binary_sha256": "6f24c993b38092751c7b4e39d4c994f2c0037786f117eba2493255f11c8efaff",
+      "original_passed": false,
+      "original_failed_checks": [
+        "offhand_swap_confirmed",
+        "two_wind_uses_confirmed"
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "dcfa29e443fe98543aa9c52c9266085487da3050f52e8a767ddb2193219faba2",
+          "bytes": 128040
+        },
+        "grim-server.log": {
+          "sha256": "3306e14abb3186e6a5cf3f7ac98d31605388c07785e8437e835d265b923e172c",
+          "bytes": 26982
+        },
+        "grim-client.log": {
+          "sha256": "0168010571799440d7d46a161cfb50ee1c0afbf52ec02dc72457bb761f4cc2ec",
+          "bytes": 873
+        }
+      },
+      "classification": "harness_observation",
+      "diagnosis": "1.21.5 moved offhand storage from Inventory into equipment.offhand; corrected the read-only server query."
+    },
+    {
+      "run_id": "20261002T174709.465350Z",
+      "version": "1.21.5",
+      "client_binary_sha256": "6f24c993b38092751c7b4e39d4c994f2c0037786f117eba2493255f11c8efaff",
+      "original_passed": false,
+      "original_failed_checks": [
+        "no_flags_outside_negative_control"
+      ],
+      "all_flag_counts": {
+        "Post": 1,
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "e7179383a3a8fcf5fcaa4dc2b325f879ab744de61e6ebe863e9b8e3fbb98d987",
+          "bytes": 131436
+        },
+        "grim-server.log": {
+          "sha256": "8c5c948811b6bf81e2d4ad85d4d9058bf4ddd64d80ebba9bf4c4c09048ef931a",
+          "bytes": 27206
+        },
+        "grim-client.log": {
+          "sha256": "10401bea90bf556c8309f27137d5bb5c1bf0c2cd88be966e33373a7453efb091",
+          "bytes": 875
+        }
+      },
+      "classification": "client_action_order",
+      "diagnosis": "Redundant selected-slot packet after a movement heartbeat caused Post; corrected actual vanilla action ordering and changed-slot semantics."
+    },
+    {
+      "run_id": "20261002T175727.108420Z",
+      "version": "26.2",
+      "client_binary_sha256": "25c9f6380a503522e3d22e8d4140813e3d8e82b6ea8b28a19a557f723b9db51d",
+      "original_passed": false,
+      "original_failed_checks": [
+        "client_clean_exit",
+        "all_scenario_commands_sent",
+        "plugin_version_confirmed",
+        "player_tracked",
+        "prediction_debug_enabled",
+        "survival_confirmed",
+        "no_flags_outside_negative_control",
+        "negative_control_flagged",
+        "all_client_actions_observed",
+        "walking_confirmed",
+        "initial_wind_stack_confirmed",
+        "offhand_swap_confirmed",
+        "two_wind_uses_confirmed",
+        "wind_entities_confirmed"
+      ],
+      "all_flag_counts": {
+        "BadPacketsN": 76,
+        "AimDuplicateLook": 15,
+        "TickTimer": 75,
+        "Simulation": 6,
+        "Timer": 61,
+        "GroundSpoof": 8,
+        "TimerLimit": 3
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "91d75303c215c166ab266eb01986953365655607621d9dea4e18b94667e42673",
+          "bytes": 426425
+        },
+        "grim-server.log": {
+          "sha256": "b5abbfdef90cf6a12934b858a0d7742af6d545820779b8fdd79047bfd6f4392e",
+          "bytes": 55000
+        },
+        "grim-client.log": {
+          "sha256": "0b251a6d2593eb098a5ec5042db9d9db2cb8955b6a43590af801286ef66f29e9",
+          "bytes": 6084
+        }
+      },
+      "classification": "client_response_order",
+      "diagnosis": "A later automatic Pong overtook the earlier teleport ACK/PosRot; corrected with an application-completion barrier and bounded unexpected-correction guard."
+    },
+    {
+      "run_id": "20261002T180653.726901Z",
+      "version": "26.2",
+      "client_binary_sha256": "fef2dd4048ec2ee5918f681423b824e2662ada3a1e2fc3d04ba2be6f8c327077",
+      "original_passed": false,
+      "original_failed_checks": [
+        "client_clean_exit",
+        "all_scenario_commands_sent",
+        "negative_control_flagged",
+        "all_client_actions_observed",
+        "two_wind_uses_confirmed",
+        "wind_entities_confirmed",
+        "no_runtime_errors"
+      ],
+      "all_flag_counts": {},
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "a1428d92ee374fe48e3129f5471a88b3e539b2db1a6cd657cdd99cafe25df61c",
+          "bytes": 185095
+        },
+        "grim-server.log": {
+          "sha256": "b6586e1be7c0925f1bd0feba91688480ce3ced39370b729fe2b2559a81e1a83a",
+          "bytes": 48629
+        },
+        "grim-client.log": {
+          "sha256": "beea87891b514f2a88e3725c00cd57f1533501476eb9c05fbf9238eda463bc49",
+          "bytes": 1515
+        }
+      },
+      "classification": "library_packet_catalog",
+      "diagnosis": "Protocol 776 upstream schema misordered spectator_action after swing and omitted the separate UUID-target spectate packet, shifting the serverbound tail; corrected against official GameProtocols registration, including use_item_on=0x42 and use_item=0x43."
+    },
+    {
+      "run_id": "20261002T181703.889531Z",
+      "version": "26.2",
+      "client_binary_sha256": "77d87d2a49fbdd09bfc98bf8d8b3ef38523bb45e4907f47edc5130aa771c93be",
+      "original_passed": false,
+      "original_failed_checks": [
+        "wind_entities_confirmed"
+      ],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "5db622537d6e7392ea1afbcc2826ae0d4d9cb26682801c06b761cf567359352e",
+          "bytes": 146465
+        },
+        "grim-server.log": {
+          "sha256": "ebe6197854988b6ef14b3bc5101493926a66efd956936e104cfab2bcca1d0aad",
+          "bytes": 34009
+        },
+        "grim-client.log": {
+          "sha256": "1ae3e8684c46e8969e4a732f948bf23f440332588c59638edd60003dbd170108",
+          "bytes": 874
+        }
+      },
+      "classification": "harness_observation",
+      "diagnosis": "26.2 console output changed Test passed, count to Test passed. Count; the two spawned projectile positions were already present. Corrected parser and repeated the run."
+    }
+  ],
+  "preserved_earlier_passes": [
+    {
+      "run_id": "20261002T173926.821525Z",
+      "version": "1.21.1",
+      "client_binary_sha256": "6f24c993b38092751c7b4e39d4c994f2c0037786f117eba2493255f11c8efaff",
+      "original_passed": true,
+      "original_failed_checks": [],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "7ab1bf432271154210eb8ea2a98f0286b85d44d8b7bb21bc46e22102dec63eed",
+          "bytes": 81367
+        },
+        "grim-server.log": {
+          "sha256": "7eb72df29c258ea64cbb041e8a3ca00d4830b8c349b8cf3fe5189fd8d9e84f5d",
+          "bytes": 24732
+        },
+        "grim-client.log": {
+          "sha256": "1773dfdd0f34a1fbc0a878e4b48bd8b64932d4f94d9fc12a62cffaaad00c2f9c",
+          "bytes": 874
+        }
+      },
+      "note": "Historical pass on an earlier client snapshot; not substituted for any final-matrix result."
+    },
+    {
+      "run_id": "20261002T175511.556268Z",
+      "version": "1.21.1",
+      "client_binary_sha256": "25c9f6380a503522e3d22e8d4140813e3d8e82b6ea8b28a19a557f723b9db51d",
+      "original_passed": true,
+      "original_failed_checks": [],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "38f6d02bda60df2dd4d6daa7b033f37759f827a7e5ea94ab4617842679642259",
+          "bytes": 83244
+        },
+        "grim-server.log": {
+          "sha256": "5af471a2908a69a39a3421bd487f8ecef6a416e11a430a24fb12654c32bf37cb",
+          "bytes": 24733
+        },
+        "grim-client.log": {
+          "sha256": "e9b76343feae2a0e235cb631dad5d1c44eb93e1bef318f2c8671bfcf6c7abd24",
+          "bytes": 874
+        }
+      },
+      "note": "Historical pass on an earlier client snapshot; not substituted for any final-matrix result."
+    },
+    {
+      "run_id": "20261002T175616.226626Z",
+      "version": "1.21.5",
+      "client_binary_sha256": "25c9f6380a503522e3d22e8d4140813e3d8e82b6ea8b28a19a557f723b9db51d",
+      "original_passed": true,
+      "original_failed_checks": [],
+      "all_flag_counts": {
+        "BadPacketsF": 1
+      },
+      "raw_evidence": {
+        "grim-result.json": {
+          "sha256": "3479ebaee2a5b50d62b30045f650f98c91c6b36c3bf7e570aa81a230ba3c48cd",
+          "bytes": 129635
+        },
+        "grim-server.log": {
+          "sha256": "0bb2640f73efeef9ae297092e42ef6abe8919f4c8589eedec2eff00521f6e7df",
+          "bytes": 27077
+        },
+        "grim-client.log": {
+          "sha256": "06d06c35a8aec1f2766ac2fbaabff4e75658dabbb3c9f1bfc8cd32030b119c9a",
+          "bytes": 875
+        }
+      },
+      "note": "Historical pass on an earlier client snapshot; not substituted for any final-matrix result."
+    }
+  ],
+  "shutdown_verification": {
+    "checked_utc": "2026-10-02T18:28:40.465125+00:00",
+    "all_final_server_and_client_exit_codes_zero": true,
+    "active_listeners_on_25565": [],
+    "active_paper_or_grim_probe_processes": []
+  }
+}

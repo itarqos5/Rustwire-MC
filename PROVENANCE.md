@@ -121,3 +121,20 @@ The official 26.2 client SHA-1 is
 `2dc72797acbc1b63fc16a11c4ac393605f453754`; its verified official version-metadata
 SHA-1 is `c7868781b30aaf24be0dac894c94a34e5d6df10d`. Cached Paper 26.2 build 129
 agrees with the client registration order. No game implementation is distributed.
+
+## Headless client ordering and session hashes
+
+The bounded Grim probe's action order was checked with the official 1.21.5
+client and mappings. Verified client SHA-1:
+`b88808bbb3da8d9f453694b5d8f74a3396f1a533`; mappings SHA-1:
+`57669731d542f98646772e91a0d68628f9827a5c`. Actual client tick ordering places
+input/UI item actions before player movement; unchanged selected slots are not
+resent. Official 26.2 client inspection confirms teleport acknowledgement then
+position/rotation response. A later transaction Pong must not overtake that
+application handling. Original Rust/TCP regressions cover these facts; no
+proprietary class, disassembly or implementation source is distributed.
+
+The official server's Crypt.digestData uses ISO-8859-1 for the server ID.
+Java-generated SHA-1/signed-BigInteger fixtures cover Latin-1 and replacement of
+unrepresentable Unicode characters. Secret and public-key bytes remain verbatim.
+These offline interoperability fixtures are not evidence of account authentication.

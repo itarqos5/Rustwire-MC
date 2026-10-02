@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 164 tests with all features; 151 applicable tests without default features
+- 166 core tests with all features; 152 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -161,3 +161,34 @@ The four serverbound movement forms have independent golden bytes across all
 14 families, truncation/trailing-data tests, reserved flag and finite-value
 validation, and byte-budget checks. They report caller-simulated state; the
 codec itself does not implement gravity, collision, input or a client clock.
+
+## Grim compatibility validation
+
+The same final client binary passed all 20 acceptance checks on Paper 1.21.1,
+1.21.5, 26.1.2 and 26.2. Stable Grim 2.3.73 was used for the two older targets;
+a pinned official 2.3.74-abb95b6 alpha was used for 26.x. There were zero flags
+outside each explicit negative-control window and exactly one expected
+BadPacketsF flag within it. Server queries confirmed walking, the offhand swap,
+two projectiles and stack reduction from eight to six. The player remained
+non-OP and in survival, all checks/thresholds remained stock, and every process
+exited cleanly.
+
+[Report and limitations](docs/validation/grim-validation.md) and
+[compact evidence](docs/validation/grim-results.json) preserve exact artifact,
+JVM and client hashes, all acceptance criteria, diagnostic failures and earlier
+passing snapshots. No earlier binary's pass is counted in the final matrix.
+The invalid-sprint control establishes active packet checks; it is not a
+standalone invalid-trajectory test of movement prediction. No graphical vanilla
+client or account-backed authentication was exercised.
+
+The probe has **15** additional Rust unit tests, including real TCP frame order,
+a coalesced teleport/ping sequence, bounded-channel cancellation, physics
+initialization and inventory predictions. They pass with default, no-default,
+all features and Rust 1.88. The harness has **13** offline Python acceptance
+regressions. CI now runs the probe tests on all three OS targets and the Python
+checks in its Linux quality job.
+
+The investigation also corrected the protocol-776 spectator/item-action tail
+against official client and server registrations (69 serverbound entries), and
+independent Java fixtures confirmed ISO-8859-1 encoding for session-hash server
+IDs. Live Microsoft/Minecraft account authentication remains unverified.

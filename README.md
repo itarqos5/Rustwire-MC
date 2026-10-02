@@ -101,7 +101,7 @@ You may instead use an application-owned authentication layer and pass its Minec
 
 ## Version coverage
 
-Every row has catalog checks, loopback login/control tests and synthetic chunk roundtrips. All 14 families also passed real Paper status/login/configuration (when applicable)/chunk/keepalive tests. “Paper tested” names the exact representative release, not every patch alias. Deeper gameplay probes ran on 1.20.1, 1.21.1 and 26.2.
+Every row has catalog checks, loopback login/control tests and synthetic chunk roundtrips. All 14 families also passed real Paper status/login/configuration (when applicable)/chunk/keepalive tests. “Paper tested” names the exact representative release, not every patch alias. Initial gameplay probes ran on 1.20.1, 1.21.1 and 26.2; the later six-version component and four-version Grim scenarios are described below.
 
 | Protocol | Releases | Paper tested |
 |---|---|---|
@@ -148,3 +148,20 @@ positive/negative server-correction controls on the three hashed-click versions.
 See [validation](VALIDATION.md#extended-component-and-metadata-gameplay) for
 precise coverage and reproducible evidence. These are bounded protocol tests;
 there is no promise that arbitrary client behavior will satisfy an anti-cheat.
+
+### Grim compatibility checkpoint
+
+A bounded headless client passed walking, player-inventory swapping and two
+upward wind-charge uses on **1.21.1, 1.21.5, 26.1.2 and 26.2**. Every run used
+the same binary and an ordinary non-OP survival player with default checks.
+There were zero flags outside a deliberately invalid duplicate-sprint control,
+which produced exactly one expected BadPacketsF flag per run. The 26.x tests
+use a pinned official **alpha** Grim build; older tests use stable 2.3.73.
+
+These tests found and fixed a real 26.2 packet-ID catalog error, plus test-client
+physics and response-ordering mistakes. Full evidence, limitations and
+reproduction are in [the Grim report](docs/validation/grim-validation.md).
+Walking is limited to a known flat stone floor. Wind-charge use verifies
+projectile creation, not explosion knockback or wind-charge jumping. This is
+an interoperability checkpoint, not a complete graphical client or a guarantee
+for arbitrary client behavior.
