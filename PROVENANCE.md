@@ -138,3 +138,24 @@ The official server's Crypt.digestData uses ISO-8859-1 for the server ID.
 Java-generated SHA-1/signed-BigInteger fixtures cover Latin-1 and replacement of
 unrepresentable Unicode characters. Secret and public-key bytes remain verbatim.
 These offline interoperability fixtures are not evidence of account authentication.
+
+## Chat acknowledgement and signature-cache state
+
+The original `tools/paper/ChatStateOracle.java` harness invokes the prepared
+release APIs for LastSeenMessagesTracker and MessageSignatureCache. All fourteen
+representative server artifacts agree on the twenty-entry ring, consecutive
+duplicate suppression, ignored-message advancement, pending-only deletion and
+128-entry packed-signature ordering. Protocol 770 adds the nonzero one-byte
+checksum of the ordered Java signed-byte hashes. The oracle exercises both
+legacy and modern API signatures without copying the underlying implementation.
+
+[Oracle outputs and artifact hashes](docs/validation/chat-state-oracle.json)
+record actual API execution, not a live signed-chat exchange. Compile the harness
+with `javac -d /tmp tools/paper/ChatStateOracle.java` and run with `/tmp`, the
+prepared release JAR and its libraries on the classpath. No game server, account
+login or network connection is started. Java 25 emits incidental Jansi warnings
+for the two oldest artifacts; their fixture outputs and exit codes still pass.
+Eight original Rust tests cover these independent outputs, bitset wire bytes,
+checksum zero normalization, ignored/duplicate/wrapped histories, cache capacity,
+invalid-reference atomicity and offset overflow. None of these helpers verifies
+RSA signatures or certifies a remote identity.

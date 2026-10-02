@@ -80,10 +80,11 @@ cargo bench --bench codec
 - `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components; unknown persistent codecs fail explicitly
 - All known entity-metadata outer serializers, including semantic particles, painting/wolf holders and resolvable profiles, with shared slot/NBT budgets
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
+- Bounded last-seen tracking, version-aware acknowledgement checksums and transactional packed-signature cache resolution, after explicit application display/trust decisions
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
 - Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
 
-This remains partial typed coverage: modern added-item payload coverage ranges from 50/56 layouts in 1.20.5 to 87/111 in 26.2. All known outer metadata serializers are decoded, but nested item components retain their explicit limits. Secure-chat signing/cache/checksum generation remains incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
+This remains partial typed coverage: modern added-item payload coverage ranges from 50/56 layouts in 1.20.5 to 87/111 in 26.2. All known outer metadata serializers are decoded, but nested item components retain their explicit limits. Secure-chat signing and signature verification remain incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
 
 Numeric block-state and biome IDs remain numeric. Dynamic registry names can be looked up with `RegistryStore`; a bundled static block-state-name dataset is not included.
 
@@ -127,7 +128,7 @@ Important wire boundaries are explicit: configuration/anonymous NBT from 764, pe
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
 - Item components have explicit partial payload coverage; nested item particles inherit those limits. Recipes, comprehensive command trees and remaining gameplay packets still need codecs
-- Secure player-chat signing, signature verification, last-seen cache management and acknowledgement-checksum generation remain application responsibilities; unsigned sending requires an explicit allowed-by-server policy
+- Secure player-chat signing and signature verification remain application responsibilities; the provided acknowledgement/cache helpers do not establish trust. Unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang secure-chat signing session, mod-loader handshake, world simulation or rendering
 - NBT is bounded and owned; large registry/packet processing can still allocate materially. Adjust `Limits` for your application

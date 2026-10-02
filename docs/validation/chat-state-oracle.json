@@ -1,0 +1,306 @@
+{
+  "date": "2026-10-02",
+  "harness_sha256": "2e88c1489db1d94d9e40aea6a993502e2c6f50c9eda95fba40d3fbd0b0c45dcd",
+  "java_version": "openjdk 25.0.4.1 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)\n",
+  "method": "Original reflection harness invokes the cached official release APIs without a server connection or account. This is an API oracle, not a signed-chat server exchange.",
+  "results": [
+    {
+      "version": "1.20.1",
+      "exit_code": 0,
+      "server_jar_sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+      "stdout_sha256": "2ea3116d8e3ed0332c8b2f50ddef9c0989c711d4317f059539ec72ffdee8ab97",
+      "stderr_sha256": "eb30824618b154bbc3e934acf2acacb758e00c3e14c612b8c08cccb8cf3a1aef",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": [
+        "Java 25 reported Jansi native-access and unavailable-terminal warnings while initializing the old release API"
+      ]
+    },
+    {
+      "version": "1.20.2",
+      "exit_code": 0,
+      "server_jar_sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+      "stdout_sha256": "c8497839234920e8b53d1c167eb86e16c9f3ef9e2e2daa090d67d2fd49d04d6c",
+      "stderr_sha256": "165863a0cad3372b8727e102ef145c681a4abeb5b21d633016ca2f516b9aa940",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": [
+        "Java 25 reported Jansi native-access and unavailable-terminal warnings while initializing the old release API"
+      ]
+    },
+    {
+      "version": "1.20.4",
+      "exit_code": 0,
+      "server_jar_sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+      "stdout_sha256": "1b46a90646238bde9d06fa01887642f72fae4a649682653c957d2fe592b8ced4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.20.6",
+      "exit_code": 0,
+      "server_jar_sha256": "07349f2a63fe23db4e5edd5ad44f0359f700f67f4afad8272ac2cfaf5f6fc1d7",
+      "stdout_sha256": "1b46a90646238bde9d06fa01887642f72fae4a649682653c957d2fe592b8ced4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.1",
+      "exit_code": 0,
+      "server_jar_sha256": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+      "stdout_sha256": "1b46a90646238bde9d06fa01887642f72fae4a649682653c957d2fe592b8ced4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.3",
+      "exit_code": 0,
+      "server_jar_sha256": "2f7bffaf0ab60e4e8e3167709e25bf3add7fed7741268fd54cc655b5eb849e63",
+      "stdout_sha256": "1b46a90646238bde9d06fa01887642f72fae4a649682653c957d2fe592b8ced4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.4",
+      "exit_code": 0,
+      "server_jar_sha256": "9cd431f4b77d66a3bd565c01720dae617843684a363c4d9ad2eab590f8450819",
+      "stdout_sha256": "1b46a90646238bde9d06fa01887642f72fae4a649682653c957d2fe592b8ced4",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=-1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=-1 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=-1 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=-1 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=-1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.5",
+      "exit_code": 0,
+      "server_jar_sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.6",
+      "exit_code": 0,
+      "server_jar_sha256": "80671afc8efae94785497531fd43a2dd171d2a45b7206f37d57013cf4dd5d5e6",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.8",
+      "exit_code": 0,
+      "server_jar_sha256": "c64fb7dbc95cd15aa0b7460a5b1e117eef5ee91c4e6fa7a8f1fe6487b6c31507",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.10",
+      "exit_code": 0,
+      "server_jar_sha256": "8163aae3da901af7c4bf910cd8f27f5b28f02f2a7a572122f70f34c941f09cea",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "1.21.11",
+      "exit_code": 0,
+      "server_jar_sha256": "3a73f0cc4020a5eb45629a67629b14263331c68de45552f8505df8060fa8ed43",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "26.1.2",
+      "exit_code": 0,
+      "server_jar_sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    },
+    {
+      "version": "26.2",
+      "exit_code": 0,
+      "server_jar_sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+      "stdout_sha256": "585d50077e71c22fda56f49a7b08a065178aadd232f5bcaa97f71428d278c835",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "fixture_output": [
+        "empty offset=0 bits=[] checksum=1 seen=[]",
+        "duplicate=false",
+        "one offset=1 bits=[0, 0, 8] checksum=33 seen=[1]",
+        "ignored offset=2 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "cannot_remove_acknowledged offset=0 bits=[0, 0, 2] checksum=33 seen=[1]",
+        "wrapped offset=22 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "repeat offset=0 bits=[-1, -1, 15] checksum=75 seen=[6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]",
+        "zero_checksum offset=1 bits=[0, 0, 8] checksum=1 seen=[224]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]",
+        "cache=[2, 1, 0, -1]"
+      ],
+      "runtime_warnings": []
+    }
+  ]
+}

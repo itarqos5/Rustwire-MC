@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 166 core tests with all features; 152 applicable core tests without default features
+- 174 core tests with all features; 160 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -192,3 +192,13 @@ The investigation also corrected the protocol-776 spectator/item-action tail
 against official client and server registrations (69 serverbound entries), and
 independent Java fixtures confirmed ISO-8859-1 encoding for session-hash server
 IDs. Live Microsoft/Minecraft account authentication remains unverified.
+
+## Offline chat-state API oracle
+
+Eight additional Rust tests validate the fixed acknowledgement window and
+packed-signature cache. An original Java harness executed the corresponding
+official APIs on all fourteen cached release artifacts; [fixture outputs and
+hashes](docs/validation/chat-state-oracle.json) record the result. This verifies
+tracking, checksum and cache semantics without an account, not live secure-chat
+signing or signature trust. Full core tests and strict lint/docs checks passed
+on stable and the core tests passed on Rust 1.88 for this increment.
