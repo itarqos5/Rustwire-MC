@@ -226,3 +226,57 @@ fn indexed_catalog_lookup_matches_every_generated_entry() {
         }
     }
 }
+
+#[test]
+fn protocol_776_serverbound_tail_matches_official_registration() {
+    // Independently counted from official client and Paper 26.2 GameProtocols,
+    // not inferred by roundtripping the pinned third-party schema.
+    use rustwire_mc::{
+        packet::interact::{self, Hand, UseItem},
+        version::{Direction, State},
+    };
+    let v = Version::V26_2;
+    assert_eq!(v.packets(State::Play, Direction::Serverbound).len(), 69);
+    for (id, name) in [
+        (0x3e, "spectator_action"),
+        (0x3f, "arm_animation"),
+        (0x40, "spectate"),
+        (0x41, "test_instance_block_action"),
+        (0x42, "block_place"),
+        (0x43, "use_item"),
+        (0x44, "custom_click_action"),
+    ] {
+        assert_eq!(
+            v.packet_id(State::Play, Direction::Serverbound, name)
+                .unwrap(),
+            id
+        );
+        assert_eq!(
+            v.packet(State::Play, Direction::Serverbound, id)
+                .unwrap()
+                .name,
+            name
+        );
+    }
+    let packet = UseItem {
+        hand: Hand::Off,
+        sequence: 0,
+        rotation: Some([0., -90.]),
+    }
+    .encode(v)
+    .unwrap();
+    assert_eq!(
+        FrameCodec::default().encode(&packet).unwrap(),
+        [0x0b, 0x43, 1, 0, 0, 0, 0, 0, 0xc2, 0xb4, 0, 0]
+    );
+    assert_eq!(
+        interact::swing_arm(v, Hand::Off).unwrap(),
+        RawPacket::new(0x3f, [1])
+    );
+    assert_eq!(
+        Version::V26_1
+            .packet_id(State::Play, Direction::Serverbound, "use_item")
+            .unwrap(),
+        0x43
+    );
+}

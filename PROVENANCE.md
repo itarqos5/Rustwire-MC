@@ -106,3 +106,18 @@ read a signed byte for the container ID, verified independently from both
 server artifacts. The misleading unsigned schema alias was corrected so
 reserved IDs -1 and -2 survive through protocol 767. Regression fixtures cover
 all five pre-768 families and the later separate-cursor boundary.
+
+## Protocol 776 serverbound catalog correction
+
+The pinned 26.2 schema misorders `spectator_action` after swing and omits the
+separate UUID-target teleport-to-entity packet (`spectate`). Official client
+and Paper 26.2 `GameProtocols` independently register 69 serverbound packets:
+spectator action 0x3e, swing 0x3f, teleport-to-entity 0x40, test-instance action
+0x41, use-item-on 0x42, use-item 0x43, custom-click action 0x44. The generator
+applies an explicit guarded correction while retaining the immutable input hash.
+A full-tail independent fixture also checks actual use-item/swing encoded frames.
+
+The official 26.2 client SHA-1 is
+`2dc72797acbc1b63fc16a11c4ac393605f453754`; its verified official version-metadata
+SHA-1 is `c7868781b30aaf24be0dac894c94a34e5d6df10d`. Cached Paper 26.2 build 129
+agrees with the client registration order. No game implementation is distributed.

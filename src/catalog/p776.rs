@@ -1505,36 +1505,42 @@ pub(crate) static P776: &[PacketInfo] = &[
         state: State::Play,
         direction: Direction::Serverbound,
         id: 62,
-        name: "arm_animation",
-    },
-    PacketInfo {
-        state: State::Play,
-        direction: Direction::Serverbound,
-        id: 63,
         name: "spectator_action",
     },
     PacketInfo {
         state: State::Play,
         direction: Direction::Serverbound,
+        id: 63,
+        name: "arm_animation",
+    },
+    PacketInfo {
+        state: State::Play,
+        direction: Direction::Serverbound,
         id: 64,
-        name: "test_instance_block_action",
+        name: "spectate",
     },
     PacketInfo {
         state: State::Play,
         direction: Direction::Serverbound,
         id: 65,
-        name: "block_place",
+        name: "test_instance_block_action",
     },
     PacketInfo {
         state: State::Play,
         direction: Direction::Serverbound,
         id: 66,
-        name: "use_item",
+        name: "block_place",
     },
     PacketInfo {
         state: State::Play,
         direction: Direction::Serverbound,
         id: 67,
+        name: "use_item",
+    },
+    PacketInfo {
+        state: State::Play,
+        direction: Direction::Serverbound,
+        id: 68,
         name: "custom_click_action",
     },
 ];
@@ -1548,5 +1554,5 @@ pub(crate) static P776_RANGES: [(usize, usize); 10] = [
     (17, 37),
     (37, 47),
     (47, 188),
-    (188, 256),
+    (188, 257),
 ];
