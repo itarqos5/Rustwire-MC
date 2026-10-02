@@ -12,6 +12,7 @@ pub mod inventory;
 pub mod item_hash;
 pub mod movement;
 pub mod player;
+pub mod tags;
 pub mod typed;
 mod world;
 pub mod world_effects;

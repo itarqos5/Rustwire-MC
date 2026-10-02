@@ -126,57 +126,8 @@ impl StoredCookie {
         Ok(Self { key, value })
     }
 }
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct RegistryTag {
-    pub name: String,
-    pub entries: Vec<u32>,
-}
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct TaggedRegistry {
-    pub registry: String,
-    pub tags: Vec<RegistryTag>,
-}
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct UpdateTags {
-    pub registries: Vec<TaggedRegistry>,
-}
-impl UpdateTags {
-    pub fn decode(bytes: &[u8], _version: Version, limits: Limits) -> Result<Self> {
-        let mut r = reader(bytes, limits)?;
-        let mut budget = limits.max_collection;
-        let count = budgeted_count(&mut r, &mut budget)?;
-        let mut registries = Vec::with_capacity(count);
-        for _ in 0..count {
-            let registry = r.string(32767)?.into();
-            let count = budgeted_count(&mut r, &mut budget)?;
-            let mut tags = Vec::with_capacity(count);
-            for _ in 0..count {
-                let name = r.string(32767)?.into();
-                let count = budgeted_count(&mut r, &mut budget)?;
-                if count > r.remaining().len() {
-                    return Err(Error::Eof);
-                }
-                let mut entries = Vec::with_capacity(count);
-                for _ in 0..count {
-                    let id = r.var_i32()?;
-                    if id < 0 {
-                        return Err(Error::Invalid("negative tag registry ID"));
-                    }
-                    entries.push(id as u32);
-                }
-                tags.push(RegistryTag { name, entries });
-            }
-            registries.push(TaggedRegistry { registry, tags });
-        }
-        r.finish()?;
-        Ok(Self { registries })
-    }
-}
-fn budgeted_count(r: &mut Reader<'_>, budget: &mut usize) -> Result<usize> {
-    let count = r.count(*budget)?;
-    *budget -= count;
-    Ok(count)
-}
+// Preserve the original public paths while the complete codecs live separately.
+pub use super::tags::{RegistryTag, TaggedRegistry, UpdateTags};
 #[derive(Debug, Clone, PartialEq)]
 pub enum ServerLinkLabel {
     BuiltIn(u32),

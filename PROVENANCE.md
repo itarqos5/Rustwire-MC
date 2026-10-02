@@ -305,3 +305,13 @@ checks semantic text normalization, byte widths, ordered integer lists, defaults
 filtered books and registry-independent consumption effects. It does not copy
 implementation text or distribute game binaries. Numeric registry references and
 unimplemented structured text remain unsupported rather than hashed as wire bytes.
+
+## Registry/tag packet roundtrips
+
+The original [RegistryTagsOracle.java](tools/paper/RegistryTagsOracle.java)
+uses cached public packet APIs/reflection to check canonical registry/tag bodies,
+last-key-wins duplicate maps, default namespace aliases, the protocol775 namespace
+boundary, and modern optional scalar NBT entries. [Per-release facts and artifact
+hashes](docs/validation/registry-tags-oracle.json) retain all14 results. These
+checks do not log into an account, start a server or distribute game implementation
+text. Syntactic identifiers do not supply missing static registry-name data.

@@ -1,4 +1,5 @@
 //! Borrowing, checked binary codecs. Minecraft VarInts are two's-complement, not zigzag.
+pub(crate) mod identifier;
 use crate::{Error, Limits, Result};
 #[derive(Clone, Debug)]
 pub struct Reader<'a> {

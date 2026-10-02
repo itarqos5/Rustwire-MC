@@ -65,6 +65,7 @@ cargo bench --bench codec
 - Typed Join Game and dimension metadata, including legacy in-login registries and 26.2's online-mode field
 - Full NBT tag tree with Java modified UTF-8, including lossless unpaired UTF-16 surrogates
 - Dynamic registry entries, omitted known-pack data, dimension height/min-Y lookup
+- Bidirectional registry/tag packets with state/version checks, last-key-wins tag lookups, optional numeric-ID resolution and aggregate resource budgets
 - Chunk coordinates, sections, block-state and biome palettes, non-spanning packed storage, heightmaps, block entities and light data
 - Exact release-specific packet ID/name catalogs, split into `src/catalog/p763.rs` through `p776.rs`; unknown versions fail closed
 

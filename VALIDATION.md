@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 301 core tests with all features; 286 applicable core tests without default features
+- 309 core tests with all features; 294 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -460,3 +460,25 @@ approved EULA copies; all processes exited zero and listeners closed. No
 production decoder/hash correction was needed. Registry-dependent holders,
 translated/click/hover text, other inventories/click modes, online accounts
 and third-party anti-cheat behavior are outside this particular scenario.
+
+## Bidirectional registry and tag codecs
+
+The existing tag decoder now has encode/packet helpers, explicit state checks,
+identifier validation and conservative preallocation checks. The dedicated tags
+module preserves the original common-module public paths. Wire order, duplicate
+keys and repeated membership IDs remain intact; lookup helpers implement the
+release readers' last-key-wins semantics and default namespace aliases. Optional
+resolution uses only a supplied Registry, leaving unknown IDs unresolved.
+
+Modern RegistryData now has state-checked clientbound packet helpers and a
+packet-wide NBT-node budget shared by its optional entry payloads. Arbitrary
+non-End modern NBT roots remain legal, including scalar Int roots; they are not
+incorrectly constrained to compounds. Known-pack omissions remain unresolved.
+
+Eight regression tests plus the [original API oracle](tools/paper/RegistryTagsOracle.java)
+verify all 14 families. [Facts and cached artifact hashes](docs/validation/registry-tags-oracle.json)
+cover tag state availability, duplicate keys, identifier boundaries and registry
+wire representations. This increment passed 309 all-feature and 294 no-default
+tests on stable and Rust1.88.0, strict stable Clippy and Rustdoc. It is fixture/API
+conformance evidence; the earlier real-server results identify their own exact
+source snapshots. No static block/item registry database was added.

@@ -5,9 +5,15 @@
 //! an ordered list of entries with a boolean plus optional anonymous NBT.
 //! Entries omitted via known packs remain unresolved (`None`); this module never
 //! invents vanilla or modded values. Static block/item registries are not supplied.
+//! Modern packets share `max_nbt_nodes` across all present entry payloads.
+//! The wire entry list retains order and duplicate keys; `RegistryStore::apply`
+//! separately rejects duplicate keys when assigning a usable lookup table.
+mod wire;
 use crate::{
     codec::{Reader, Writer},
+    frame::RawPacket,
     nbt::{Nbt, RootFormat, Tag, TagType},
+    version::{Direction, State},
     Error, Limits, Result, Version,
 };
 use std::collections::BTreeMap;
@@ -35,6 +41,22 @@ impl RegistryData {
         r.finish()?;
         Ok(result)
     }
+    /// Decode a standalone clientbound registry packet. Protocol 763 has only
+    /// the embedded Join Game registry field; configuration starts at 764.
+    pub fn decode_in_state(
+        bytes: &[u8],
+        version: Version,
+        state: State,
+        limits: Limits,
+    ) -> Result<Self> {
+        version.packet_id(state, Direction::Clientbound, "registry_data")?;
+        Self::decode(bytes, version, limits)
+    }
+    /// Build a standalone clientbound configuration packet (764+).
+    pub fn packet(&self, version: Version, state: State, limits: Limits) -> Result<RawPacket> {
+        let id = version.packet_id(state, Direction::Clientbound, "registry_data")?;
+        Ok(RawPacket::new(id, self.encode(version, limits)?))
+    }
     /// Also usable at the legacy registry codec field within the 1.20 login packet.
     pub fn read(r: &mut Reader<'_>, version: Version) -> Result<Self> {
         let available = r.remaining();
@@ -54,16 +76,18 @@ impl RegistryData {
                     .ok_or(Error::Invalid("missing registry NBT"))?,
             ))
         } else {
-            let registry = r.string(32767)?.to_owned();
+            let registry = wire::read_identifier(r, version)?;
             let count = r.count(r.limits.max_collection)?;
-            let mut entries = Vec::new();
+            // Even an empty identifier plus absent-data flag takes two bytes.
+            if count > r.remaining().len() / 2 {
+                return Err(Error::Eof);
+            }
+            let mut nodes = r.limits.max_nbt_nodes;
+            let mut entries = Vec::with_capacity(count);
             for _ in 0..count {
-                let key = r.string(32767)?.to_owned();
+                let key = wire::read_identifier(r, version)?;
                 let data = if r.bool()? {
-                    Some(
-                        Nbt::read(r, RootFormat::Anonymous)?
-                            .ok_or(Error::Invalid("present registry entry has End root"))?,
-                    )
+                    Some(wire::read_nbt(r, &mut nodes)?)
                 } else {
                     None
                 };
@@ -79,16 +103,17 @@ impl RegistryData {
                 n.write(&mut w, RootFormat::for_version(version), limits)?
             }
             Self::Entries { registry, entries } if version.protocol() >= 766 => {
-                w.string(registry, limits.max_string_chars.min(32767))?;
+                wire::write_identifier(&mut w, registry, version, limits)?;
                 if entries.len() > limits.max_collection || entries.len() > i32::MAX as usize {
                     return Err(Error::Limit("registry entries"));
                 }
                 w.var_i32(entries.len() as i32);
+                let mut nodes = limits.max_nbt_nodes;
                 for entry in entries {
-                    w.string(&entry.key, limits.max_string_chars.min(32767))?;
+                    wire::write_identifier(&mut w, &entry.key, version, limits)?;
                     w.bool(entry.data.is_some());
                     if let Some(n) = &entry.data {
-                        n.write(&mut w, RootFormat::Anonymous, limits)?;
+                        wire::write_nbt(&mut w, n, &mut nodes, limits)?;
                     }
                     if w.as_slice().len() > limits.max_packet {
                         return Err(Error::Limit("registry packet bytes"));
