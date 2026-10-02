@@ -22,7 +22,7 @@ pub struct PacketInfo {
     pub id: i32,
     pub name: &'static str,
 }
-#[path = "catalog.rs"]
+#[path = "catalog/mod.rs"]
 mod catalog;
 impl Version {
     pub const V1_20: Self = Self(763);

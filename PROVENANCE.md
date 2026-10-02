@@ -12,7 +12,7 @@ ID/name index, not a claim that every listed packet has a typed implementation.
 
 `research/schema-hashes.json` records exact input SHA-256 values and release
 aliases. `tools/fetch_schemas.py` downloads pinned schemas; then
-`python3 tools/generate_catalog.py` reproduces `src/catalog.rs`. No download,
+`python3 tools/generate_catalog.py` reproduces `src/catalog/`. No download,
 Java installation, decompilation, or code generator runs during Cargo builds.
 
 Some upstream data was extracted by its maintainers from wiki.vg and
