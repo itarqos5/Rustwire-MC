@@ -83,7 +83,7 @@ cargo bench --bench codec
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
 - Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
 
-This remains partial typed coverage: modern added-item payload coverage ranges from 39/56 layouts in 1.20.5 to 74/111 in 26.2. Complex particles, holders/profiles and secure-chat signing/cache/checksum generation remain incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
+This remains partial typed coverage: modern added-item payload coverage ranges from 50/56 layouts in 1.20.5 to 87/111 in 26.2. All known outer metadata serializers are decoded, but nested item components retain their explicit limits. Secure-chat signing/cache/checksum generation remains incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
 
 Numeric block-state and biome IDs remain numeric. Dynamic registry names can be looked up with `RegistryStore`; a bundled static block-state-name dataset is not included.
 
