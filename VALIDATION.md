@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 339 core tests with all features; 301 applicable core tests without default features
+- 340 core tests with all features; 301 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -561,3 +561,17 @@ Rust1.88.0, 301 no-default tests, 20 example tests, strict Clippy/Rustdoc and
 formatting. The 80 Python harness tests also pass. These checks do not authenticate
 an eligible account or prove application/service approval; live Microsoft/Xbox/
 Minecraft account interoperability remains unverified.
+
+## Authentication mock socket portability
+
+The first authentication-suite CI run failed on macOS because accepted sockets
+inherited the mock listener's nonblocking mode. The test server now explicitly
+restores blocking mode before applying read/write timeouts. A new regression
+forces nonblocking mode on every platform, verifies an initial WouldBlock, then
+requires a delayed HTTP request to be read successfully after configuration.
+No production authentication behavior, timeout or rejection gate was weakened.
+
+[The original failed run](https://github.com/itarqos5/Rustwire-MC/actions/runs/37073546148)
+is retained. This portability increment passed 340 all-feature tests locally on
+stable/Rust1.88.0 and strict Clippy. The exact replacement commit's multi-platform
+CI must still be checked before treating that external failure as resolved.

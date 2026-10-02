@@ -191,6 +191,47 @@ impl Response {
     }
 }
 
+// A nonblocking listener is needed for prompt shutdown, but accepted streams
+// inherit that flag on BSD/macOS. Their HTTP fixture I/O must explicitly block.
+fn configure_stream(stream: &TcpStream) {
+    stream.set_nonblocking(false).unwrap();
+    stream
+        .set_read_timeout(Some(Duration::from_secs(3)))
+        .unwrap();
+    stream
+        .set_write_timeout(Some(Duration::from_secs(3)))
+        .unwrap();
+}
+
+#[test]
+fn accepted_stream_resets_inherited_nonblocking_mode() {
+    let listener = TcpListener::bind(("127.0.0.1", 0)).unwrap();
+    let address = listener.local_addr().unwrap();
+    let (start, ready) = mpsc::channel();
+    let sender = thread::spawn(move || {
+        let mut socket = TcpStream::connect(address).unwrap();
+        ready.recv_timeout(Duration::from_secs(3)).unwrap();
+        thread::sleep(Duration::from_millis(25));
+        socket
+            .write_all(b"GET /delayed HTTP/1.1\r\nContent-Length: 0\r\n\r\n")
+            .unwrap();
+    });
+    let (mut stream, _) = listener.accept().unwrap();
+    // Simulate BSD's inherited descriptor mode on every CI operating system.
+    stream.set_nonblocking(true).unwrap();
+    let mut byte = [0];
+    assert_eq!(
+        stream.peek(&mut byte).unwrap_err().kind(),
+        std::io::ErrorKind::WouldBlock
+    );
+    configure_stream(&stream);
+    start.send(()).unwrap();
+    let request = Request::read(&mut stream);
+    request.assert_target("GET", "/delayed");
+    assert!(request.body.is_empty());
+    sender.join().unwrap();
+}
+
 /// A bounded server that records *every* connection, even unexpected extra requests.
 /// Drop stops and joins its worker so failing tests do not leave listeners behind.
 struct Server {
@@ -218,12 +259,7 @@ impl Server {
                     }
                     Err(e) => panic!("mock accept: {e}"),
                 };
-                stream
-                    .set_read_timeout(Some(Duration::from_secs(3)))
-                    .unwrap();
-                stream
-                    .set_write_timeout(Some(Duration::from_secs(3)))
-                    .unwrap();
+                configure_stream(&stream);
                 let request = Request::read(&mut stream);
                 if send.send(request).is_err() {
                     break;
