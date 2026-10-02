@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 263 core tests with all features; 249 applicable core tests without default features
+- 270 core tests with all features; 256 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -253,3 +253,20 @@ and bounded mutations pass. Two additional dispatch regressions keep malformed
 known payloads as errors. Full isolated stable suites, strict clippy/rustdoc and
 focused Rust 1.88 checks passed. These are wire-codec tests; they do not simulate
 explosion physics or establish new real-server particle/explosion coverage.
+
+## Signed-chat wire envelopes and signing input
+
+Seven additional tests cover signed-message/command/session envelope bytes and
+packet IDs across all fourteen families, argument and acknowledgement limits,
+UTF-16/byte budgets, exact packet-budget boundaries and provider-error propagation.
+An original Java harness captured official canonical signing input from all
+fourteen prepared release APIs: empty content, UTF-8 text with a supplementary
+character, negative milliseconds and a previous signature, and a positive
+sub-second timestamp. [Hashes and oracle results](docs/validation/chat-signing-oracle.json)
+record the API executions; the Rust fixtures match them exactly.
+
+Full isolated stable and Rust 1.88 all-feature suites, no-default tests, strict
+clippy/rustdoc and formatting pass. No private key, certificate service, account,
+cryptographic provider or live signed-chat exchange was exercised. The callback
+API delegates cryptography to an application-owned provider rather than adding
+private RSA operations to Rustwire's existing dependency.

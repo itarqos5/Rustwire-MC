@@ -29,7 +29,9 @@ As reviewed on 2026-10-02, the pinned `rsa` 0.9.10 dependency is covered by
 patched release listed. The advisory concerns private-key recovery through
 observable timing of private RSA operations. Rustwire's production helper uses
 only public-key encryption, so it does not expose that private-key operation;
-test-only private keys are synthetic and never serve network requests. This
+test-only private keys are synthetic and never serve network requests. The
+signed-chat helper exposes canonical bytes to a caller-owned provider and does
+not select a cryptographic implementation or handle its private key. This
 scope assessment is not a clean dependency-audit claim or a promise that the
 dependency is safe for other uses. Do not extend this implementation to network
 private-key decryption/signing without a separate cryptographic review and an

@@ -2,6 +2,7 @@
 //! signatures or implement the secure-chat signing chain. The `state` module
 //! separately provides bounded acknowledgement and packed-signature tracking.
 //! Applications must make trust and server-policy decisions themselves.
+pub mod signed;
 pub mod state;
 
 use crate::{

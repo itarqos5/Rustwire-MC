@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-02",
+  "harness_sha256": "7a3d99fb3119fb9355e1f3ee7a1d352f454bd3dc9eb73d0c708459b3448221f8",
+  "fixtures_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+  "method": "Capture canonical signing bytes from official release APIs. No private keys, cryptographic provider, certificate service, account or server connection used.",
+  "results": [
+    {
+      "version": "1.20.1",
+      "exit_code": 0,
+      "server_jar_sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+      "stdout_sha256": "086ce4c50829cfdfa9a10b85e6326342bc1583e2f97556549cf005d044378938",
+      "stderr_sha256": "db42aa2f9e21db9b89542f1cc13cc8bbfe1b7bfad9739e48d97c25bd8a73c391",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.20.2",
+      "exit_code": 0,
+      "server_jar_sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+      "stdout_sha256": "bb2811fa407f082cda7f2d9cc4dca378f5f52440991df4ce181939477b2bc525",
+      "stderr_sha256": "0dd0b574ed3f12d54fc82cfa5504adf538632ffad9f0f25aa5107c6dd56a63c6",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.20.4",
+      "exit_code": 0,
+      "server_jar_sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+      "stdout_sha256": "0d905d4be9470bb4c3d05ebfe4332b13cdaecf46d5533cf295b19df059ceb037",
+      "stderr_sha256": "134e667caf16a8181de8a12764b6449da508a780b31a8920341e3aee5730be5c",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.20.6",
+      "exit_code": 0,
+      "server_jar_sha256": "07349f2a63fe23db4e5edd5ad44f0359f700f67f4afad8272ac2cfaf5f6fc1d7",
+      "stdout_sha256": "e2fa3254594828cfbfd5992a35911b4666b1f560890b81a1694e9c716ff7f1cc",
+      "stderr_sha256": "bbef27e9160ba8e831c95214ee9ffacd5d7776273ece5c673dec913ce5e3a33c",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.1",
+      "exit_code": 0,
+      "server_jar_sha256": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+      "stdout_sha256": "e2fa3254594828cfbfd5992a35911b4666b1f560890b81a1694e9c716ff7f1cc",
+      "stderr_sha256": "7d69be8cfc78ad89493069a4bd43c72095982206758097a5d690e49af3db123b",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.3",
+      "exit_code": 0,
+      "server_jar_sha256": "2f7bffaf0ab60e4e8e3167709e25bf3add7fed7741268fd54cc655b5eb849e63",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "01a6ba386a2c5185ca35f7f02a07aff3a2e69b5eab92e3be85e068766594c5c7",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.4",
+      "exit_code": 0,
+      "server_jar_sha256": "9cd431f4b77d66a3bd565c01720dae617843684a363c4d9ad2eab590f8450819",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "25f22eceb6f011e6fc45b378739807fc659fdeee37a6b7505245d82f36cbd592",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.5",
+      "exit_code": 0,
+      "server_jar_sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "525cd18164074ca1e8e01390c6a1735cdaf5d38d37dea9eb052b88a21ad94eaf",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.6",
+      "exit_code": 0,
+      "server_jar_sha256": "80671afc8efae94785497531fd43a2dd171d2a45b7206f37d57013cf4dd5d5e6",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "36b73c9e9fdd0521cddbda90af72ebd477c60cc7dea6b0873b8c44d46649f5a0",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.8",
+      "exit_code": 0,
+      "server_jar_sha256": "c64fb7dbc95cd15aa0b7460a5b1e117eef5ee91c4e6fa7a8f1fe6487b6c31507",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "2b639f834c4a4190ff12a4bd7367783a2bf82127b81cb85f8274441bddb8d211",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.10",
+      "exit_code": 0,
+      "server_jar_sha256": "8163aae3da901af7c4bf910cd8f27f5b28f02f2a7a572122f70f34c941f09cea",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "2491432916ee51ce77b8e4f064f6767669d93f5e3252565dea796e0486f8fdec",
+      "fixtures_match": true
+    },
+    {
+      "version": "1.21.11",
+      "exit_code": 0,
+      "server_jar_sha256": "3a73f0cc4020a5eb45629a67629b14263331c68de45552f8505df8060fa8ed43",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "f7e760fb3b3fa46cc855247a2e8c22630000987edc7d06171718d2ccf46bfc60",
+      "fixtures_match": true
+    },
+    {
+      "version": "26.1.2",
+      "exit_code": 0,
+      "server_jar_sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "15fc11d42223aba3f40ea2ae5c16c4a716cafa416e2ec382bdcf77454ced7e66",
+      "fixtures_match": true
+    },
+    {
+      "version": "26.2",
+      "exit_code": 0,
+      "server_jar_sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+      "stdout_sha256": "8feaed052103b122935b45ef7d7b8744a7dcdb647de5a8479325920461b8ae44",
+      "stderr_sha256": "544bd848bc26f3b90a244484074dd547bf3f005a48ab74020e5526877dda9c24",
+      "fixtures_match": true
+    }
+  ]
+}

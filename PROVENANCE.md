@@ -240,3 +240,23 @@ metadata/item behavior. Independent tests cover all six packet families and
 release boundaries, plus nested item budgets and weighted-total overflow. The
 26.1.2/26.2 explosion codecs were also checked against the official artifacts
 directly. No rendering, world simulation or cryptographic trust is implied.
+
+## Canonical chat-signing input
+
+`tools/paper/ChatSigningOracle.java` is an original reflection harness invoking
+the official PlayerChatMessage signature updater on all fourteen release
+artifacts. It initializes the release registries when the codec's static
+initializers require them, without starting a game server. The captured bytes
+confirm the fixed big-endian signature domain, sender/session UUIDs, signed
+32-bit index, salt, Unix seconds, UTF-8 byte length/content and ordered previous
+signatures. Packet timestamps remain milliseconds; negative values use floor
+division when constructing canonical signing input.
+
+The output fixtures are test data, not copied game implementation. Signed
+commands carry at most eight argument signatures with names bounded to sixteen
+UTF-16 units; chat-session envelopes retain the verified 512-byte public-key and
+4096-byte key-signature bounds. The dedicated signed-command packet begins at
+766 and acknowledgement checksums at 770. The cached Paper command receiver has
+a separately patched input-size policy; the codecs follow vanilla wire bounds.
+The original Rust helpers expose canonical bytes/provider callbacks and wire
+envelopes, with no certificate acquisition, private-key storage or implicit trust.
