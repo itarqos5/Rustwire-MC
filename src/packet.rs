@@ -2,6 +2,7 @@
 pub mod blocks;
 pub mod chat;
 pub mod entity;
+pub mod entity_metadata;
 pub mod interact;
 pub mod inventory;
 mod world;
