@@ -87,7 +87,8 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers
 - Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
-- `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components; unknown persistent codecs fail explicitly
+- `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components, plus literal/styled names and lore, food, books, fireworks, lodestones, cooldowns and selected combat/consumption components
+- Persistent hash support is an explicit subset: numeric registry references, translated/click/hover text and unknown persistent codecs fail rather than producing guessed checksums
 - All known entity-metadata outer serializers, including semantic particles, painting/wolf holders and resolvable profiles, with shared slot/NBT budgets
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
 - Signed-message, signed-command and public chat-session envelopes, plus canonical signing input and a caller-owned signing-provider hook

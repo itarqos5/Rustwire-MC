@@ -184,7 +184,10 @@ fn refuses_unsupported_shapes_and_malformed_components() {
     for (name, value) in [
         (
             "custom_name",
-            ComponentValue::Nbt(Nbt::anonymous(Tag::String("hello".into()))),
+            ComponentValue::Nbt(Nbt::anonymous(Tag::Compound(vec![(
+                "translate".into(),
+                Tag::String("item.minecraft.stone".into()),
+            )]))),
         ),
         ("creative_slot_lock", ComponentValue::Unit),
     ] {

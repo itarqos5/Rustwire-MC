@@ -295,3 +295,13 @@ becomes non-null at 766, unlike optional embedded full-chunk block entities.
 Paper 1.21.5 build 114 biome buffers retain precisely the removed palette-length
 allocation bytes; the decoder tolerates only that version-specific zero tail.
 No proprietary implementation text is included.
+
+## Additional persistent component representations
+
+[ComponentHashExtendedOracle.java](tools/paper/ComponentHashExtendedOracle.java)
+is an original offline API test, using public DataComponents persistent codecs
+and HashOps for the seven cached modern families. Its [122-case record](docs/validation/component-hash-extended-oracle.json)
+checks semantic text normalization, byte widths, ordered integer lists, defaults,
+filtered books and registry-independent consumption effects. It does not copy
+implementation text or distribute game binaries. Numeric registry references and
+unimplemented structured text remain unsupported rather than hashed as wire bytes.

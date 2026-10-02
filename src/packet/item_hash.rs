@@ -3,7 +3,9 @@
 //! These are CRC32C hashes of Minecraft's structured `HashOps` values, **not**
 //! hashes of packet bytes. Supported component codecs are deliberately explicit:
 //! an unimplemented persistent representation returns [`Error::Unsupported`].
-//! Registry-dependent and text-component codecs are not guessed from wire NBT.
+//! Registry references and unsupported text structures fail closed. Literal text,
+//! styles and siblings are normalized through the verified persistent codec subset.
+//! See `tools/paper/ComponentHashExtendedOracle.java` for the expanded fixtures.
 //!
 //! The primitive encoding was checked against the official cached Paper 1.21.5
 //! and 26.2 `HashOps` implementations. See `tools/paper/HashOracle.java` and
@@ -15,6 +17,8 @@ use crate::{
     Error, Limits, Result, Version,
 };
 use std::collections::{BTreeMap, BTreeSet};
+mod ordinary;
+mod text;
 
 const fn crc_table() -> [u32; 256] {
     let mut table = [0; 256];
@@ -174,6 +178,19 @@ fn identifier(value: &str) -> Result<u32> {
 }
 /// Derive a supported persistent component-codec hash. Wire shape and all input
 /// budgets are validated first. Unsupported codecs never produce an estimate.
+///
+/// In addition to the primitive/custom-data codecs, this supports food, cooldown,
+/// weapon/use effects, attack range, swing animation, fireworks, lodestone targets,
+/// writable/written books and literal name/lore text. Literal text can include
+/// siblings, the five decoration booleans, named/hex colors, integer shadow color,
+/// font identifiers and insertion strings. Translation, selector, score, keybind,
+/// NBT text, click/hover events and unrecognized style fields remain unsupported.
+///
+/// Sound components require inline sound events. Consumable/death-protection
+/// effects support clearing effects, random teleport and inline sound playback;
+/// effect-registry references and numeric sound IDs require caller knowledge and
+/// are intentionally unsupported. No registry IDs are guessed from static tables.
+/// Defaults, enum names and persistent numeric widths follow the selected release.
 pub fn hash_component(component: &Component, version: Version, limits: Limits) -> Result<i32> {
     if version.protocol() < 770 {
         return Err(Error::Unsupported("component hashes before protocol 770"));
@@ -188,9 +205,9 @@ pub fn hash_component(component: &Component, version: Version, limits: Limits) -
         &mut inventory::Budget::new(limits),
         0,
     )?;
-    Ok(component_hash(component)? as i32)
+    Ok(component_hash(component, version)? as i32)
 }
-fn component_hash(component: &Component) -> Result<u32> {
+fn component_hash(component: &Component, version: Version) -> Result<u32> {
     // Wire primitives are wider than several persistent codecs. Refuse values
     // whose vanilla codec cannot encode, rather than inventing a usable hash.
     let valid = match (component.name, &component.value) {
@@ -282,7 +299,7 @@ fn component_hash(component: &Component) -> Result<u32> {
             }
             fields(out)
         }
-        _ => return Err(Error::Unsupported("component persistent hash codec")),
+        _ => return ordinary::hash(component, version),
     })
 }
 impl HashedItemStack {
@@ -304,7 +321,7 @@ impl HashedItemStack {
         let components = patch
             .added
             .iter()
-            .map(|c| Ok((c.name, component_hash(c)? as i32)))
+            .map(|c| Ok((c.name, component_hash(c, version)? as i32)))
             .collect::<Result<Vec<_>>>()?;
         Ok(Some(Self {
             item_id: item.item_id,

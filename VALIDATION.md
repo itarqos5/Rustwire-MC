@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 293 core tests with all features; 278 applicable core tests without default features
+- 301 core tests with all features; 286 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -375,3 +375,27 @@ zero-tail compatibility rule. Encoding emits canonical compact palettes. These
 fixture/source checks are separate from the earlier initial-chunk server matrix;
 fresh streamed-update live verification is still pending. No world cache, numeric
 registry-name database or gameplay light simulation is implied.
+
+## Extended persistent component hashes
+
+Eight additional tests verify 17 new component names with version-specific
+subsets: custom_name, item_name, lore, food, use_cooldown, weapon, use_effects,
+attack_range, swing_animation, firework_explosion, fireworks, lodestone_tracker,
+writable_book_content, written_book_content, break_sound, consumable and
+death_protection. Inline sounds and registry-independent consumption effects are
+supported; numeric registry references, translated text, click/hover events and
+unknown style forms remain explicitly unsupported. Literal text is normalized
+semantically, including default omissions, siblings and Java UTF-16 units.
+
+The original [Java oracle](tools/paper/ComponentHashExtendedOracle.java) exercises
+122 cases against cached official APIs from all seven modern release families.
+[Structured results](docs/validation/component-hash-extended-oracle.json) include
+artifact hashes, introduction boundaries, defaults, signed byte-width/float
+edge cases, filtered books and intentional unsupported diagnostics. This is
+independent API evidence, not a live click-acceptance result. Fresh positive and
+negative loopback inventory controls for this expanded subset are pending.
+
+The coherent snapshot passed 301 all-feature tests on stable and Rust 1.88.0,
+286 no-default-feature tests, formatting and strict all-target/all-feature Clippy.
+No runtime dependency was added. HashOps CRC32C remains a synchronization
+checksum, not a cryptographic integrity or authentication mechanism.
