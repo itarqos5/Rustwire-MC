@@ -182,5 +182,16 @@ set, or console failures. Every process exited cleanly.
 
 [Expanded evidence](docs/validation/expanded-gameplay-results.json) preserves
 the real equippable-slot correction and earlier test-harness timing failures.
-This is additional bounded protocol evidence; later command/effect/signed-chat
-helpers have their separately documented fixture/API-oracle checks.
+Each later increment has separately scoped evidence. The command/world-effect
+checkpoint below has its own live matrix; signing input remains API-oracle tested.
+
+### Command and world-effect checkpoint
+
+All fourteen representatives also passed a separate frozen-source scenario for
+command trees/suggestions, particles, explosions, positional sounds, stop-sound
+and world events: **381 value-check groups and 216 byte-exact real-packet
+roundtrips**, with no decode, raw-gate, value or console failures.
+[Evidence and scope](docs/validation/surface-results.json) identify snapshot
+`19444536` and the common client binary. Entity-attached sounds remain fixture-only;
+ordinary pig sounds used positional packets. These checks do not establish
+rendering, physics or complete coverage of every command parser/tooltip value.

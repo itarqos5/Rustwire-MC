@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 270 core tests with all features; 256 applicable core tests without default features
+- 271 core tests with all features; 256 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -301,12 +301,48 @@ signaling and bounded coordinate polling fixed it, followed by a passing targete
 smoke test and this full same-binary replay. The earlier failure is retained.
 
 The harness now has eighteen offline acceptance regressions, and CI discovers
-both gameplay and Grim suites: **31 Python tests** total. Latest code additions
-for command trees, world effects and signing input are separate later increments
-with their own fixture/oracle evidence, rather than retroactively attributed to
-this frozen live binary.
+both gameplay and Grim suites: **31 Python tests** total. The later command/world-effect live run is recorded separately below; signing
+input remains API-oracle tested. None is retroactively attributed to this frozen
+live binary.
 
 Reproduce with the already accepted, isolated baseline and
 `validate_gameplay.py --mode bounded-gameplay --expanded-state --extended-components --min-seconds 55` (all fourteen
 versions by default). Use `--source-commit` when running an archived snapshot;
 the harness records actual source hashes in addition to that explicit label.
+
+## Live command and world-effect matrix
+
+All fourteen pinned releases passed a separate frozen-source run based on
+`1944453662b44e2b749d2e12f26e54477fba5c27`, using client SHA-256
+`23064bf2b7f1aa6a804c0e823dee08fdf560e65d165b001e268aad2bee9e18c0`.
+It checked 381 version-specific value groups and 216 byte-exact decode/re-encode
+observations across seven packet surfaces: command trees, command suggestions,
+world particles, explosions, positional sound, stop-sound and world events.
+There were zero decode, raw-gate, value or console failures, and all processes
+exited zero with no listeners remaining. The source snapshot was checked against
+the exact commit, rather than inferred from a working-tree label.
+
+[Results](docs/validation/surface-results.json) retain hashes, required values,
+roundtrip counts, boundary attempts and explicit limits. Six corrected boundary
+smokes passed before the final matrix. Initial failures were harness expectations,
+not codec failures: force-particle requests have always-show false, packed colors
+include opaque alpha, legacy item particles use count one, default TNT uses
+Destroy, and the ordinary targets parser stops advertising AskServer at 769.
+The original observations are preserved. No production codec changed for the run.
+
+EntitySound remains independently fixture-checked, without a natural live trigger
+in this scenario: pig damage/death emitted positional sound packets. The matrix
+also does not cover every command parser or tooltip value, arbitrary particle
+parameters, rendering, game physics, account authentication or Grim behavior.
+No OP privileges or plugins were used.
+
+Thirteen new offline acceptance tests bring CI's Python total to **44**. The
+existing all-three-platform, minimum-Rust and quality jobs remain active.
+Run `validate_surfaces.py --help` for its bounded reproduction options; prepare
+and explicitly accept the same isolated baseline as the earlier scenarios.
+
+The separate RSA response hardening keeps temporary secrets in a zeroizing guard
+through failure paths and rejects PKCS#1-v1.5-oversized challenges before random
+secret generation. A new 1024/2048/4096-bit capacity-boundary regression passes
+alongside the existing independent encryption/decryption fixtures. This does not
+change the documented upstream private-RSA advisory assessment.

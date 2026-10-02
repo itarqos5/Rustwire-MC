@@ -273,3 +273,14 @@ audited against their release constructors; no collateral entity-packet change
 was needed. The final fourteen-release replay verifies the Head value rather
 than merely accepting successful roundtrips. Diagnostic disassemblies remain
 outside published source and evidence bundles.
+
+## Real command/effect serialization checks
+
+The independent Paper surface matrix confirms actual target-parser flags, redirect
+references, suggestion ranges, all four stop-sound filters, particle envelope and
+payload boundaries, world event 2001 and explosion formats. Decoded values are
+checked before requiring byte-exact re-encoding. The harness uses normal console
+actions and a non-executing client suggestion request in fresh loopback worlds.
+Observed field differences are recorded as fixture-expectation corrections, not
+retrofitted codec changes. Entity-attached sound remains a fixture-only surface;
+no plugin was added to manufacture an observation.
