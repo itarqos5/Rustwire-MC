@@ -316,8 +316,17 @@ impl<S: Read + Write> Connection<S> {
     }
     /// Receives control traffic as usual, with optional typed gameplay dispatch.
     /// Unknown packets and unsupported item/component layouts retain all raw bytes.
-    /// Malformed known layouts still return an error and should end the connection.
+    /// Malformed selected typed layouts return an error and should end the connection.
     pub fn next_typed_event(&mut self) -> Result<TypedEvent> {
+        self.next_typed_event_with_context(packet::typed::DecodeContext::default())
+    }
+    /// Receives typed events with caller-owned dimension context. Full chunks,
+    /// lighting and biome updates remain raw when no section count is supplied. Refresh the
+    /// context after a dimension/configuration transition before reading again.
+    pub fn next_typed_event_with_context(
+        &mut self,
+        context: packet::typed::DecodeContext,
+    ) -> Result<TypedEvent> {
         match self.next_event()? {
             Event::Packet {
                 state,
@@ -325,12 +334,13 @@ impl<S: Read + Write> Connection<S> {
                 packet,
             } => {
                 let result = if let Some(name) = name {
-                    packet::typed::DecodedPacket::decode(
+                    packet::typed::DecodedPacket::decode_with_context(
                         state,
                         name,
                         &packet.data,
                         self.version,
                         self.limits(),
+                        context,
                     )
                 } else {
                     Ok(None)

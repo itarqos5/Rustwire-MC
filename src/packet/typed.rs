@@ -64,8 +64,33 @@ pub enum WorldEffectPacket {
     StopSound(super::world_effects::StopSound),
     Event(super::world_effects::WorldEvent),
 }
+/// Dimension context for packets whose section count is not carried on the wire.
+/// Refresh this after Join Game/Respawn or a configuration change. The default
+/// preserves full-chunk/light/biome packets as raw rather than guessing a height.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct DecodeContext {
+    pub section_count: Option<usize>,
+}
+impl DecodeContext {
+    pub fn for_dimension(dimension: &crate::registry::DimensionInfo) -> Self {
+        Self {
+            section_count: Some(dimension.section_count()),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq)]
+pub enum ChunkUpdatePacket {
+    FullChunk(Box<crate::chunk::ChunkData>),
+    Light(super::chunk_updates::UpdateLight),
+    Biomes(super::chunk_updates::ChunkBiomes),
+    BlockEntity(super::chunk_updates::TileEntityData),
+    ViewPosition(super::chunk_updates::UpdateViewPosition),
+    ViewDistance(super::chunk_updates::UpdateViewDistance),
+    SimulationDistance(super::chunk_updates::SimulationDistance),
+}
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    ChunkUpdate(ChunkUpdatePacket),
     Command(CommandPacket),
     WorldEffect(WorldEffectPacket),
     Entity(EntityPacket),
@@ -85,6 +110,26 @@ impl DecodedPacket {
         version: Version,
         limits: Limits,
     ) -> Result<Option<Self>> {
+        Self::decode_with_context(
+            state,
+            name,
+            bytes,
+            version,
+            limits,
+            DecodeContext::default(),
+        )
+    }
+    /// Semantic dispatch with explicit world dimensions for lighting and biomes.
+    /// Missing context returns None for those packets; malformed bytes with
+    /// supplied context still fail instead of silently falling back.
+    pub fn decode_with_context(
+        state: State,
+        name: &str,
+        bytes: &[u8],
+        version: Version,
+        limits: Limits,
+        context: DecodeContext,
+    ) -> Result<Option<Self>> {
         if !matches!(state, State::Configuration | State::Play) {
             return Ok(None);
         }
@@ -95,6 +140,42 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "map_chunk" => {
+                let Some(sections) = context.section_count else {
+                    return Ok(None);
+                };
+                Self::ChunkUpdate(ChunkUpdatePacket::FullChunk(Box::new(
+                    crate::chunk::ChunkData::decode(bytes, version, sections, limits)?,
+                )))
+            }
+            "update_light" => {
+                let Some(sections) = context.section_count else {
+                    return Ok(None);
+                };
+                Self::ChunkUpdate(ChunkUpdatePacket::Light(
+                    super::chunk_updates::UpdateLight::decode(bytes, version, sections, limits)?,
+                ))
+            }
+            "chunk_biomes" => {
+                let Some(sections) = context.section_count else {
+                    return Ok(None);
+                };
+                Self::ChunkUpdate(ChunkUpdatePacket::Biomes(
+                    super::chunk_updates::ChunkBiomes::decode(bytes, version, sections, limits)?,
+                ))
+            }
+            "tile_entity_data" => Self::ChunkUpdate(ChunkUpdatePacket::BlockEntity(
+                super::chunk_updates::TileEntityData::decode(bytes, version, limits)?,
+            )),
+            "update_view_position" => Self::ChunkUpdate(ChunkUpdatePacket::ViewPosition(
+                super::chunk_updates::UpdateViewPosition::decode(bytes, version, limits)?,
+            )),
+            "update_view_distance" => Self::ChunkUpdate(ChunkUpdatePacket::ViewDistance(
+                super::chunk_updates::UpdateViewDistance::decode(bytes, version, limits)?,
+            )),
+            "simulation_distance" => Self::ChunkUpdate(ChunkUpdatePacket::SimulationDistance(
+                super::chunk_updates::SimulationDistance::decode(bytes, version, limits)?,
+            )),
             "declare_commands" => Self::Command(CommandPacket::Tree(
                 super::commands::CommandTree::decode(bytes, version, limits)?,
             )),

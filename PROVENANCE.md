@@ -284,3 +284,14 @@ actions and a non-executing client suggestion request in fresh loopback worlds.
 Observed field differences are recorded as fixture-expectation corrections, not
 retrofitted codec changes. Entity-attached sound remains a fixture-only surface;
 no plugin was added to manufacture an observation.
+
+## Streamed chunk packets
+
+[All-family wire facts and artifact hashes](docs/validation/chunk-update-protocol-facts.json)
+cover Update Light, Chunk Biomes, standalone block-entity data and view controls.
+Release readers independently confirm no trust-edges field, two extra light
+boundary sections, and signed VarInt view distances. Standalone compound NBT
+becomes non-null at 766, unlike optional embedded full-chunk block entities.
+Paper 1.21.5 build 114 biome buffers retain precisely the removed palette-length
+allocation bytes; the decoder tolerates only that version-specific zero tail.
+No proprietary implementation text is included.

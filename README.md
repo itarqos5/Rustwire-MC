@@ -72,10 +72,17 @@ cargo bench --bench codec
 
 `Connection::next_typed_event()` adds semantic dispatch while retaining complete raw packets when a nested layout is intentionally unsupported. Malformed known layouts remain errors. `next_event()` keeps the lower-level control/raw interface.
 
+`next_typed_event_with_context(DecodeContext::for_dimension(&dimension))` also
+decodes full chunks, streamed light and biome replacements with the active
+dimension's section count. Refresh that context after Join Game, Respawn and
+registry changes. Without it, those packets remain raw rather than guessing a
+world height. Standalone block-entity and view/simulation controls need no context.
+
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Block/section updates, chunk unload and respawn with dimension metadata
+- Streamed lighting, biome-only chunk replacements, compound block-entity updates and view/simulation-distance controls, with dimension and aggregate-allocation limits
 - World particles, legacy/modern explosions, positional/entity sounds, stop-sound filters and world events with shared nested-payload budgets
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers

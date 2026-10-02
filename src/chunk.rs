@@ -154,6 +154,16 @@ impl PaletteContainer {
         })
     }
     pub fn read(r: &mut Reader<'_>, version: Version, kind: ContainerKind) -> Result<Self> {
+        let mut remaining = usize::MAX;
+        Self::read_bounded(r, version, kind, &mut remaining)
+    }
+    /// Packet-level users share this budget across every palette allocation.
+    pub(crate) fn read_bounded(
+        r: &mut Reader<'_>,
+        version: Version,
+        kind: ContainerKind,
+        remaining: &mut usize,
+    ) -> Result<Self> {
         let bits = r.u8()?;
         let palette = if bits == 0 {
             Palette::Single(read_id(r)?)
@@ -161,6 +171,11 @@ impl PaletteContainer {
             let n = r.count((1usize << bits).min(r.limits.max_collection))?;
             if n == 0 {
                 return Err(Error::Invalid("empty indirect palette"));
+            }
+            charge_elements(remaining, n)?;
+            // Every registry ID occupies at least one byte.
+            if n > r.remaining().len() {
+                return Err(Error::Eof);
             }
             let mut ids = Vec::with_capacity(n);
             for _ in 0..n {
@@ -188,6 +203,7 @@ impl PaletteContainer {
         if n > r.limits.max_collection {
             return Err(Error::Limit("palette data-array length"));
         }
+        charge_elements(remaining, n)?;
         // Check all bytes before allocating.
         let raw = r.take(n * 8)?;
         let data = raw
@@ -204,6 +220,34 @@ impl PaletteContainer {
         };
         result.validate()?;
         Ok(result)
+    }
+    /// Exact canonical length, checked without allocating an encoded copy.
+    pub(crate) fn encoded_len(&self, version: Version, limits: Limits) -> Result<usize> {
+        self.validate()?;
+        if self.data.len() > limits.max_collection {
+            return Err(Error::Limit("palette data-array length"));
+        }
+        let palette_bytes = match &self.palette {
+            Palette::Single(id) => varint_size(*id as usize),
+            Palette::Indirect(ids) => {
+                if ids.len() > limits.max_collection {
+                    return Err(Error::Limit("palette length"));
+                }
+                varint_size(ids.len())
+                    + ids
+                        .iter()
+                        .map(|&id| varint_size(id as usize))
+                        .sum::<usize>()
+            }
+            Palette::Direct => 0,
+        };
+        Ok(1 + palette_bytes
+            + if version.protocol() < 770 {
+                varint_size(self.data.len())
+            } else {
+                0
+            }
+            + self.data.len() * 8)
     }
     pub fn write(&self, w: &mut Writer, version: Version, limits: Limits) -> Result<()> {
         self.validate()?;
@@ -380,6 +424,100 @@ impl LightData {
         result.validate()?;
         Ok(result)
     }
+    /// Reads dimension-bounded light data. Bits address ascending sections,
+    /// including one light-only section below and above the dimension. Mask
+    /// words, array entries and their bytes share `max_collection`.
+    pub fn read_for_sections(r: &mut Reader<'_>, section_count: usize) -> Result<Self> {
+        let available = r.remaining();
+        let mut bounded = Reader::new(
+            &available[..available.len().min(r.limits.max_packet)],
+            r.limits,
+        );
+        let result = Self::read_sections_inner(&mut bounded, section_count)?;
+        r.take(bounded.position())?;
+        Ok(result)
+    }
+    fn read_sections_inner(r: &mut Reader<'_>, section_count: usize) -> Result<Self> {
+        let sections = light_section_count(section_count, r.limits)?;
+        let mut remaining = r.limits.max_collection;
+        let mut mask = |r: &mut Reader<'_>| -> Result<Vec<i64>> {
+            let count = r.count(sections.div_ceil(64).min(r.limits.max_collection))?;
+            charge_elements(&mut remaining, count)?;
+            let bytes = r.take(
+                count
+                    .checked_mul(8)
+                    .ok_or(Error::Limit("light mask bytes"))?,
+            )?;
+            let words: Vec<i64> = bytes
+                .as_chunks::<8>()
+                .0
+                .iter()
+                .map(|v| i64::from_be_bytes(*v))
+                .collect();
+            validate_light_mask(&words, sections)?;
+            Ok(words)
+        };
+        let sky_mask = mask(r)?;
+        let block_mask = mask(r)?;
+        let empty_sky_mask = mask(r)?;
+        let empty_block_mask = mask(r)?;
+        let mut arrays = |r: &mut Reader<'_>, expected: usize| -> Result<Vec<Vec<u8>>> {
+            let count = r.count(sections.min(r.limits.max_collection))?;
+            if count != expected {
+                return Err(Error::Invalid("light mask/array count"));
+            }
+            charge_elements(&mut remaining, count)?;
+            let mut result = Vec::new();
+            for _ in 0..count {
+                let bytes = r.bytes(2048)?;
+                if bytes.len() != 2048 {
+                    return Err(Error::Invalid("light array must contain 2048 bytes"));
+                }
+                charge_elements(&mut remaining, bytes.len())?;
+                result.push(bytes.to_vec());
+            }
+            Ok(result)
+        };
+        let sky_arrays = arrays(r, sky_mask.iter().map(|w| w.count_ones() as usize).sum())?;
+        let block_arrays = arrays(r, block_mask.iter().map(|w| w.count_ones() as usize).sum())?;
+        let result = Self {
+            sky_mask,
+            block_mask,
+            empty_sky_mask,
+            empty_block_mask,
+            sky_arrays,
+            block_arrays,
+        };
+        result.validate()?;
+        Ok(result)
+    }
+    /// Validates the exact dimension extent and aggregate collection budget
+    /// before writing. A failure does not modify the caller's writer.
+    pub fn write_for_sections(
+        &self,
+        w: &mut Writer,
+        section_count: usize,
+        limits: Limits,
+    ) -> Result<()> {
+        let sections = light_section_count(section_count, limits)?;
+        let mut remaining = limits.max_collection;
+        for mask in [
+            &self.sky_mask,
+            &self.block_mask,
+            &self.empty_sky_mask,
+            &self.empty_block_mask,
+        ] {
+            validate_light_mask(mask, sections)?;
+            charge_elements(&mut remaining, mask.len())?;
+        }
+        for arrays in [&self.sky_arrays, &self.block_arrays] {
+            charge_elements(&mut remaining, arrays.len())?;
+            for array in arrays {
+                charge_elements(&mut remaining, array.len())?;
+            }
+        }
+        self.write(w, limits)
+    }
     pub fn write(&self, w: &mut Writer, limits: Limits) -> Result<()> {
         self.validate()?;
         // Preflight all lengths before modifying the caller's buffer.
@@ -476,6 +614,41 @@ impl LightData {
         }
         Ok(())
     }
+}
+fn light_section_count(section_count: usize, limits: Limits) -> Result<usize> {
+    if section_count == 0 {
+        return Err(Error::Invalid("empty dimension"));
+    }
+    if section_count > limits.max_collection {
+        return Err(Error::Limit("dimension section count"));
+    }
+    section_count
+        .checked_add(2)
+        .ok_or(Error::Limit("light section count"))
+}
+fn validate_light_mask(mask: &[i64], sections: usize) -> Result<()> {
+    if mask.len() > sections.div_ceil(64)
+        || (!sections.is_multiple_of(64)
+            && mask.len() == sections.div_ceil(64)
+            && (mask[mask.len() - 1] as u64 >> (sections % 64)) != 0)
+    {
+        return Err(Error::Invalid("light mask outside dimension"));
+    }
+    Ok(())
+}
+pub(crate) fn charge_elements(remaining: &mut usize, count: usize) -> Result<()> {
+    *remaining = remaining
+        .checked_sub(count)
+        .ok_or(Error::Limit("chunk aggregate elements"))?;
+    Ok(())
+}
+pub(crate) fn varint_size(mut value: usize) -> usize {
+    let mut bytes = 1;
+    while value >= 128 {
+        value >>= 7;
+        bytes += 1;
+    }
+    bytes
 }
 #[derive(Clone, Debug, PartialEq)]
 pub struct ChunkData {

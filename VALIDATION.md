@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 273 core tests with all features; 258 applicable core tests without default features
+- 293 core tests with all features; 278 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -358,3 +358,20 @@ decoding now reject scalar/list/array roots. [Inspected serializer facts and
 artifact hashes](docs/validation/chunk-nbt-roots.json) record the independent
 all-family check. The exact isolated snapshot passed 273 all-feature and 258
 no-default-feature tests, formatting, and strict all-target/all-feature Clippy.
+
+## Streamed chunk updates and contextual dispatch
+
+Fourteen packet tests and six typed-dispatch tests cover all 14 protocol families,
+exact boundaries, truncation, malformed roots/masks, aggregate budgets, all
+light-section boundary layers, and biome palette transitions. Dimension-dependent
+full-chunk/light/biome packets remain raw when no DecodeContext is supplied.
+View/simulation controls and standalone block entities decode without that context.
+The isolated increment passed 293 full-feature tests on stable and Rust 1.88.0,
+278 no-default-feature tests, formatting and strict all-target/all-feature Clippy.
+
+[Independent all-family serializer facts](docs/validation/chunk-update-protocol-facts.json)
+record standalone block-entity nullability and the exact Paper 1.21.5 biome-buffer
+zero-tail compatibility rule. Encoding emits canonical compact palettes. These
+fixture/source checks are separate from the earlier initial-chunk server matrix;
+fresh streamed-update live verification is still pending. No world cache, numeric
+registry-name database or gameplay light simulation is implied.
