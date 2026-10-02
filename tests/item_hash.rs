@@ -265,3 +265,37 @@ fn hashing_preserves_nbt_widths_strings_and_limits() {
     )
     .is_err());
 }
+
+#[test]
+fn persistent_codec_ranges_are_narrower_than_wire_primitives() {
+    for (name, value) in [
+        ("max_stack_size", ComponentValue::VarInt(0)),
+        ("max_stack_size", ComponentValue::VarInt(100)),
+        ("max_damage", ComponentValue::VarInt(0)),
+        ("damage", ComponentValue::VarInt(-1)),
+        ("repair_cost", ComponentValue::VarInt(-1)),
+        ("enchantable", ComponentValue::VarInt(0)),
+        ("ominous_bottle_amplifier", ComponentValue::VarInt(5)),
+        ("potion_duration_scale", ComponentValue::Float(-0.5)),
+        ("potion_duration_scale", ComponentValue::Float(f32::NAN)),
+        ("minimum_attack_charge", ComponentValue::Float(1.1)),
+    ] {
+        let component = Component { name, value };
+        assert!(matches!(
+            hash_component(&component, v(776), Limits::default()),
+            Err(Error::Invalid(_))
+        ));
+        let slot = Slot::Item(ItemStack {
+            item_id: 1,
+            count: 1,
+            data: ItemData::Components(ComponentPatch {
+                added: vec![component],
+                removed: vec![],
+            }),
+        });
+        assert!(matches!(
+            HashedItemStack::from_slot(&slot, v(776), Limits::default()),
+            Err(Error::Invalid(_))
+        ));
+    }
+}

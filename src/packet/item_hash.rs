@@ -191,6 +191,20 @@ pub fn hash_component(component: &Component, version: Version, limits: Limits) -
     Ok(component_hash(component)? as i32)
 }
 fn component_hash(component: &Component) -> Result<u32> {
+    // Wire primitives are wider than several persistent codecs. Refuse values
+    // whose vanilla codec cannot encode, rather than inventing a usable hash.
+    let valid = match (component.name, &component.value) {
+        ("max_stack_size", V::VarInt(v)) => (1..=99).contains(v),
+        ("max_damage" | "enchantable", V::VarInt(v)) => *v > 0,
+        ("damage" | "repair_cost", V::VarInt(v)) => *v >= 0,
+        ("ominous_bottle_amplifier", V::VarInt(v)) => (0..=4).contains(v),
+        ("potion_duration_scale", V::Float(v)) => v.is_finite() && *v >= 0.0,
+        ("minimum_attack_charge", V::Float(v)) => (0.0..=1.0).contains(v),
+        _ => true,
+    };
+    if !valid {
+        return Err(Error::Invalid("component persistent codec range"));
+    }
     Ok(match (component.name, &component.value) {
         (
             "max_stack_size"
