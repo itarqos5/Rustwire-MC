@@ -1,13 +1,14 @@
 use rustwire_mc::{codec::BlockPosition, packet::interact::*, Version};
 
-// Independent schema-derived packet IDs, indexed by protocol 763..=776.
-const SWING: [i32; 14] = [47, 50, 51, 54, 54, 56, 58, 59, 60, 60, 60, 60, 63, 62];
+// Schema-derived IDs with official GameProtocols corrections for 776;
+// indexed by protocol 763..=776. See the independent full-tail fixture in codec.rs.
+const SWING: [i32; 14] = [47, 50, 51, 54, 54, 56, 58, 59, 60, 60, 60, 60, 63, 63];
 const COMMAND: [i32; 14] = [7, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 11, 12, 12];
 const ABILITIES: [i32; 14] = [28, 31, 32, 35, 35, 37, 38, 38, 39, 39, 39, 39, 40, 40];
 const INPUT: [i32; 14] = [31, 34, 35, 38, 38, 40, 41, 41, 42, 42, 42, 42, 43, 43];
 const DIG: [i32; 14] = [29, 32, 33, 36, 36, 38, 39, 39, 40, 40, 40, 40, 41, 41];
-const PLACE: [i32; 14] = [49, 52, 53, 56, 56, 58, 60, 62, 63, 63, 63, 63, 66, 65];
-const ITEM: [i32; 14] = [50, 53, 54, 57, 57, 59, 61, 63, 64, 64, 64, 64, 67, 66];
+const PLACE: [i32; 14] = [49, 52, 53, 56, 56, 58, 60, 62, 63, 63, 63, 63, 66, 66];
+const ITEM: [i32; 14] = [50, 53, 54, 57, 57, 59, 61, 63, 64, 64, 64, 64, 67, 67];
 const ACTION: [i32; 14] = [30, 33, 34, 37, 37, 39, 40, 40, 41, 41, 41, 41, 42, 42];
 const ENTITY: [i32; 14] = [16, 18, 19, 22, 22, 24, 24, 24, 25, 25, 25, 25, 26, 26];
 
