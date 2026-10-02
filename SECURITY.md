@@ -22,6 +22,19 @@ Raw packet payloads and server strings are untrusted. Render them safely; do not
 
 AES-CFB8, SHA-1, RSA PKCS#1 v1.5 and MD5 offline UUIDs are Minecraft compatibility algorithms. Do not reuse these helpers as a general-purpose security design. The RSA helper only encrypts with a server public key; no private RSA key is used in production library code. RSA private-key operations appear only in offline tests.
 
+### Known RSA dependency advisory
+
+As reviewed on 2026-10-02, the pinned `rsa` 0.9.10 dependency is covered by
+[RUSTSEC-2023-0071](https://rustsec.org/advisories/RUSTSEC-2023-0071.html), with no
+patched release listed. The advisory concerns private-key recovery through
+observable timing of private RSA operations. Rustwire's production helper uses
+only public-key encryption, so it does not expose that private-key operation;
+test-only private keys are synthetic and never serve network requests. This
+scope assessment is not a clean dependency-audit claim or a promise that the
+dependency is safe for other uses. Do not extend this implementation to network
+private-key decryption/signing without a separate cryptographic review and an
+appropriate provider.
+
 ## Reporting
 
 Avoid posting tokens, private server addresses, captured worlds or exploit-ready private data in public issues. Use GitHub private vulnerability reporting if the repository has it enabled; otherwise contact the maintainer through an existing private channel. This document does not claim private reporting is enabled.
