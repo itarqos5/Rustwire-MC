@@ -301,9 +301,29 @@ impl PaletteContainer {
         if self.data.len() != expected {
             return Err(Error::Invalid("palette data-array length"));
         }
-        if self.values().any(|v| v.is_none()) {
-            return Err(Error::Invalid("palette index"));
+        if let Palette::Indirect(ids) = &self.palette {
+            // A full index domain cannot contain an out-of-range palette index.
+            // Otherwise scan packed words directly, avoiding division/remainder
+            // and repeated container bounds checks for every logical entry.
+            if ids.len() < (1usize << bits) {
+                let per_word = 64 / usize::from(bits);
+                let mask = (1u64 << bits) - 1;
+                let mut remaining = self.kind.entries();
+                for &packed in &self.data {
+                    let count = remaining.min(per_word);
+                    let mut word = packed;
+                    for _ in 0..count {
+                        if (word & mask) >= ids.len() as u64 {
+                            return Err(Error::Invalid("palette index"));
+                        }
+                        word >>= bits;
+                    }
+                    remaining -= count;
+                }
+            }
         }
+        // Direct storage has no palette lookup. Validated bit width and exact
+        // storage length already guarantee each ID fits a nonnegative VarInt.
         Ok(())
     }
 }

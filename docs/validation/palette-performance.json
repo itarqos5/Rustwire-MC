@@ -1,0 +1,73 @@
+{
+  "date_utc": "2026-10-02T22:00:57.173313+00:00",
+  "baseline_commit": "fe7db1fb60ff3a8ceec634c4d3b03e74cdc4bc4b",
+  "os": "Linux",
+  "machine": "x86_64",
+  "build": "cargo bench --locked --no-default-features --bench protocol_workloads --no-run; release thin LTO, codegen-units1",
+  "method": "Alternating unchanged/word-scan-validation binaries on same host. Five timed samples per workload, allocation and destruction included, eight warm-up calls per workload. Server lock held and loopback listener absent. Synthetic workloads only; no end-to-end or hardware-independent guarantee.",
+  "library_change": "Only PaletteContainer::validate index scanning. Benchmark harness identical.",
+  "artifacts": {
+    "baseline_binary_sha256": "e7580c1445c324b90586d41fae92220bcdc5a5e4a9eafbfb0d3063e22f901d77",
+    "optimized_binary_sha256": "5ffdebe13781a1d8d2e366fb52e96489300223445a0d03a38120c6c62f7683b3",
+    "baseline_chunk_source_sha256": "28e4c87d1a2af679ecd2593289471b361b3fe1b810e442821275faea74ef073e",
+    "optimized_chunk_source_sha256": "f5a1c9f455a5b44b292af0443757d4d6ed4e9db804f50b0fe9f9a0e972fddd32",
+    "benchmark_source_sha256": "081159c8c4fbc317b98589be3dd0e596a708f2df5c4e54260aa4d258e388c1e1"
+  },
+  "runs": [
+    {
+      "ordinal": 1,
+      "implementation": "baseline",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=126536.61 min_ns=123975.31 max_ns=129042.38\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=137958.92 min_ns=137203.32 max_ns=143535.37\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2234.64 min_ns=2205.64 max_ns=2313.34\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=35059.24 min_ns=34580.61 max_ns=37094.11\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=762.14 min_ns=756.09 max_ns=791.96\n"
+    },
+    {
+      "ordinal": 2,
+      "implementation": "optimized",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=55599.38 min_ns=51458.85 max_ns=55821.30\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=67034.87 min_ns=65794.39 max_ns=70686.97\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2458.84 min_ns=2364.21 max_ns=2557.31\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=22320.53 min_ns=21892.45 max_ns=27225.71\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=987.03 min_ns=918.61 max_ns=1113.03\n"
+    },
+    {
+      "ordinal": 3,
+      "implementation": "baseline",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=124745.75 min_ns=122745.26 max_ns=129623.28\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=152085.91 min_ns=138139.19 max_ns=170819.24\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2368.82 min_ns=2254.18 max_ns=2430.38\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=35139.69 min_ns=34497.58 max_ns=36844.93\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=772.97 min_ns=759.89 max_ns=784.11\n"
+    },
+    {
+      "ordinal": 4,
+      "implementation": "optimized",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=49761.92 min_ns=49310.78 max_ns=50599.86\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=64632.66 min_ns=63723.89 max_ns=72116.92\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2244.03 min_ns=2211.49 max_ns=2264.69\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=19527.41 min_ns=19227.35 max_ns=26485.16\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=774.24 min_ns=762.93 max_ns=998.89\n"
+    },
+    {
+      "ordinal": 5,
+      "implementation": "baseline",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=124675.15 min_ns=123303.64 max_ns=125256.92\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=137060.05 min_ns=135114.78 max_ns=142181.82\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2269.74 min_ns=2247.03 max_ns=3217.06\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=35419.29 min_ns=34947.94 max_ns=37224.23\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=887.84 min_ns=791.25 max_ns=1029.93\n"
+    },
+    {
+      "ordinal": 6,
+      "implementation": "optimized",
+      "stdout": "protocol=776 fixture=synthetic_mixed_palettes sections=24; compile-time defaults and active features are selected by Cargo\nchunk_decode: iterations=500 samples=5 input_bytes=Some(105033) median_ns=51686.91 min_ns=50989.72 max_ns=54605.03\nchunk_encode: iterations=500 samples=5 input_bytes=None median_ns=66589.12 min_ns=65618.72 max_ns=68373.75\nlight_decode: iterations=5000 samples=5 input_bytes=Some(55394) median_ns=2339.52 min_ns=2233.05 max_ns=3350.05\nbiome_decode_nine_chunks: iterations=1000 samples=5 input_bytes=Some(2683) median_ns=19554.67 min_ns=19004.89 max_ns=20392.80\nstyled_name_hash: iterations=20000 samples=5 input_bytes=None median_ns=812.96 min_ns=781.59 max_ns=865.61\n"
+    }
+  ],
+  "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+  "cpu_quota": "not exposed",
+  "summary_median_of_run_medians_ns": {
+    "chunk_decode": {
+      "baseline": 124745.75,
+      "optimized": 51686.91
+    },
+    "chunk_encode": {
+      "baseline": 137958.92,
+      "optimized": 66589.12
+    },
+    "light_decode": {
+      "baseline": 2269.74,
+      "optimized": 2339.52
+    },
+    "biome_decode_nine_chunks": {
+      "baseline": 35139.69,
+      "optimized": 19554.67
+    },
+    "styled_name_hash": {
+      "baseline": 772.97,
+      "optimized": 812.96
+    }
+  },
+  "compiler": "rustc 1.99.0 (b940084d7 2026-09-28), LLVM23.1.1, x86_64-unknown-linux-gnu"
+}

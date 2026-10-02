@@ -53,6 +53,7 @@ cargo test --all-features
 cargo clippy --all-targets --all-features -- -D warnings
 cargo doc --all-features --no-deps
 cargo bench --bench codec
+cargo bench --no-default-features --bench protocol_workloads
 ```
 
 ## What is implemented
@@ -219,3 +220,11 @@ All seven modern families passed 149 survival-inventory clicks: 142 correct
 predictions without corrections and seven deliberate wrong-hash controls with
 exact authoritative reconciliation. Server inventory state and official-oracle
 hashes were checked independently. [Scenarios, reproducibility and limits](docs/validation/extended-item-hash-report.md).
+
+### Measured chunk-codec optimization
+
+Packed palette validation scans storage words without repeated per-block division
+and skips impossible out-of-range checks for direct/full-domain palettes. On the
+recorded Linux host, a synthetic 24-section chunk decode changed from 124.75µs to
+51.69µs; this is an allocation-inclusive microbenchmark, not network throughput.
+[Workloads, controls, source hashes and all runs](VALIDATION.md#packed-palette-validation-benchmark).

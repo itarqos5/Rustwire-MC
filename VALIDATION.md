@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 309 core tests with all features; 294 applicable core tests without default features
+- 313 core tests with all features; 298 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -482,3 +482,42 @@ wire representations. This increment passed 309 all-feature and 294 no-default
 tests on stable and Rust1.88.0, strict stable Clippy and Rustdoc. It is fixture/API
 conformance evidence; the earlier real-server results identify their own exact
 source snapshots. No static block/item registry database was added.
+
+## Packed-palette validation benchmark
+
+Palette validation now scans packed words directly instead of calling a
+division/remainder-based getter for every entry. Direct storage already has a
+validated bit width and exact length; a complete indirect index domain likewise
+cannot contain an out-of-range index. Those redundant index scans are skipped.
+Incomplete palettes still validate every meaningful index, including final
+partial words, while ignoring only the same unused padding bits as before.
+
+Four independent regression tests compare the optimized decision with the public
+per-entry accessor over deterministic mutations, word edges, partial final words,
+full palette domains, maximum direct IDs and invalid palette IDs. Integrated
+checks passed 313 full-feature tests on stable and Rust1.88.0, 298 no-default
+tests, strict Clippy and an MSRV compile of the new benchmark.
+
+The new dependency-free `protocol_workloads` benchmark constructs synthetic
+protocol776 fixtures, checks roundtrips before timing, and includes allocation
+and destruction in each codec measurement. Three alternating baseline/optimized
+executions each took five timed samples after eight warm-up calls. Baseline
+production source was `fe7db1fb60ff3a8ceec634c4d3b03e74cdc4bc4b`; the isolated
+comparison changed only palette index validation. Median of the three per-run
+medians, microseconds per operation:
+
+| Workload | Baseline | Word-scan validation |
+|---|---:|---:|
+| Mixed-palette 24-section chunk decode, 105,033-byte body | 124.75 | 51.69 |
+| Same chunk encode | 137.96 | 66.59 |
+| Nine-chunk biome update decode, 2,683 bytes | 35.14 | 19.55 |
+| Light decode control, 55,394 bytes | 2.27 | 2.34 |
+| Styled-name hash control | 0.773 | 0.813 |
+
+[All six runs, source/binary hashes and host/compiler metadata](docs/validation/palette-performance.json)
+are retained, including the unchanged controls and host variability. The local
+server lock was held and its loopback listener absent; the entire cloud machine
+was not claimed to be otherwise idle. These are synthetic in-memory codec
+observations, not a claim about real-world chunk distributions, framed/compressed
+network throughput, authentication or other machines. Reproduce the current
+workloads with `cargo bench --locked --no-default-features --bench protocol_workloads`.

@@ -39,3 +39,7 @@ codegen-units = 1
 
 [lints.rust]
 unsafe_code = "forbid"
+
+[[bench]]
+name = "protocol_workloads"
+harness = false
