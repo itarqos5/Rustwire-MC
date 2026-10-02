@@ -314,6 +314,50 @@ impl<S: Read + Write> Connection<S> {
             }),
         }
     }
+    /// Receives control traffic as usual, with optional typed gameplay dispatch.
+    /// Unknown packets and unsupported item/component layouts retain all raw bytes.
+    /// Malformed known layouts still return an error and should end the connection.
+    pub fn next_typed_event(&mut self) -> Result<TypedEvent> {
+        match self.next_event()? {
+            Event::Packet {
+                state,
+                name,
+                packet,
+            } => {
+                let result = if let Some(name) = name {
+                    packet::typed::DecodedPacket::decode(
+                        state,
+                        name,
+                        &packet.data,
+                        self.version,
+                        self.limits(),
+                    )
+                } else {
+                    Ok(None)
+                };
+                match result {
+                    Ok(Some(decoded)) => Ok(TypedEvent::Decoded(decoded)),
+                    Ok(None) => Ok(TypedEvent::Raw {
+                        state,
+                        name,
+                        packet,
+                        unsupported: None,
+                    }),
+                    Err(Error::Unsupported(reason)) => Ok(TypedEvent::Raw {
+                        state,
+                        name,
+                        packet,
+                        unsupported: Some(reason),
+                    }),
+                    Err(error) => Err(error),
+                }
+            }
+            Event::Disconnected(bytes) => Ok(TypedEvent::Disconnected(
+                packet::chat::Disconnect::decode(&bytes, self.version, self.state, self.limits())?,
+            )),
+            event => Ok(TypedEvent::Control(event)),
+        }
+    }
     pub fn send_settings(&mut self, settings: &ClientSettings) -> Result<()> {
         if self.state == State::Play && !self.world_ready {
             return Err(Error::State("wait for Join Game before play settings"));
@@ -437,5 +481,20 @@ pub enum Event {
         state: State,
         name: Option<&'static str>,
         packet: RawPacket,
+    },
+}
+
+/// A typed view layered over raw/control events, without implicit gameplay policy.
+#[derive(Debug)]
+#[non_exhaustive]
+pub enum TypedEvent {
+    Control(Event),
+    Decoded(packet::typed::DecodedPacket),
+    Disconnected(packet::chat::Disconnect),
+    Raw {
+        state: State,
+        name: Option<&'static str>,
+        packet: RawPacket,
+        unsupported: Option<&'static str>,
     },
 }
