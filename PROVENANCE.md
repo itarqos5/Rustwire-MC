@@ -260,3 +260,16 @@ UTF-16 units; chat-session envelopes retain the verified 512-byte public-key and
 a separately patched input-size policy; the codecs follow vanilla wire bounds.
 The original Rust helpers expose canonical bytes/provider callbacks and wire
 envelopes, with no certificate acquisition, private-key storage or implicit trust.
+
+## Live equippable slot-ID correction
+
+The expanded Paper matrix detected that equippable item components serialize
+EquipmentSlot.getId(), while entity-equipment packets serialize enum ordinals.
+All applicable release constructors/stream bindings confirm MainHand=0, Feet=1,
+Legs=2, Chest=3, Head=4, OffHand=5, Body=6 and Saddle=7, with Saddle introduced
+at 770. The corrected component mapping is independently covered by all seventy
+valid slot/version combinations and pre-770 rejection. Other enum casts were
+audited against their release constructors; no collateral entity-packet change
+was needed. The final fourteen-release replay verifies the Head value rather
+than merely accepting successful roundtrips. Diagnostic disassemblies remain
+outside published source and evidence bundles.

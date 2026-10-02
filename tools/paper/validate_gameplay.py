@@ -21,18 +21,26 @@ import time
 
 
 PROJECT = Path(__file__).resolve().parents[2]
-BUILDS = {"1.20.1": 196, "1.20.6": 151, "1.21.1": 133, "1.21.3": 83, "1.21.5": 114, "26.1.2": 74, "26.2": 129}
+MANIFEST = PROJECT / "docs/validation/matrix-download-provenance.json"
+BUILDS = {item["version"]: item["build"] for item in json.loads(MANIFEST.read_text())["paper"]}
+PROTOCOLS = dict(zip(BUILDS, range(763, 777)))
+COMMAND_SOURCES = [
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-20-5",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-2",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-5",
+]
 ANSI = re.compile(r"\x1b\[[0-?]*[ -/]*[@-~]")
 EVENT = re.compile(r"\bEVENT\s+category=([a-zA-Z0-9_]+)")
 ACTION = re.compile(r"\bACTION\s+(?:kind|category)=([a-zA-Z0-9_]+)")
 DEFAULT_CATEGORIES = ["entity_spawn", "entity_move", "entity_remove", "block_update",
                       "health", "inventory", "system_chat", "respawn", "keepalive",
                       "item_damage", "item_custom", "chat_marker", "metadata",
-                      "death", "respawn_requested", "movement_sent", "selected_slot_sent"]
+                      "death", "respawn_requested", "movement_sent", "movement_after_ready", "selected_slot_sent"]
 COMMAND_FAILURE = re.compile(
     r"Unknown or incomplete command|Incorrect argument|<--\[HERE\]|"
     r"No (?:entity|player) was found|Unable to summon|Target is invulnerable|"
-    r"Could not set the block|Nothing changed|(?:Expected|Invalid).+at position",
+    r"Could not set the block|Nothing changed|has no modifier|Malformed .+ component|(?:Expected|Invalid).+at position",
     re.IGNORECASE,
 )
 
@@ -45,7 +53,9 @@ def arguments():
                         default=Path(os.environ.get("RUSTWIRE_VALIDATION_DIR", str(PROJECT.parent / "rustwire-server-validation"))))
     parser.add_argument("--client", type=Path,
                         default=PROJECT / "target/debug/examples/gameplay_probe")
+    parser.add_argument("--source-commit", help="Exact archived source commit used to build the frozen client")
     parser.add_argument("--extended-components", action="store_true", help="Also validate typed ordinary components, particle metadata, and modern hash controls")
+    parser.add_argument("--expanded-state", action="store_true", help="Validate roster lifecycle, equipment, modifiers, effects and newly completed component layouts")
     parser.add_argument("--min-seconds", type=int, default=45)
     parser.add_argument("--client-timeout", type=int, default=120)
     parser.add_argument("--ready-marker", default="PROBE_READY")
@@ -56,6 +66,8 @@ def arguments():
         parser.error("--min-seconds must be between 20 and 120")
     if args.client_timeout <= args.min_seconds or args.client_timeout > 180:
         parser.error("--client-timeout must exceed --min-seconds and be at most 180")
+    if args.source_commit is not None and not re.fullmatch(r"[0-9a-f]{40}", args.source_commit):
+        parser.error("--source-commit must be an exact 40-character commit SHA")
     args.validation_dir = args.validation_dir.resolve()
     if args.validation_dir == PROJECT or PROJECT in args.validation_dir.parents:
         parser.error("validation evidence and worlds must remain outside the Rustwire project")
@@ -150,8 +162,9 @@ def stop_process(process, polite=None):
             process.wait(timeout=5)
 
 
-def scenario_commands(version, extended=False):
-    if version == "1.20.1":
+def scenario_commands(version, extended=False, expanded=False):
+    protocol = PROTOCOLS[version]
+    if protocol < 766:
         sword = "minecraft:diamond_sword{Damage:3}"
         stone = "minecraft:stone{rustwire_probe:1}"
     else:
@@ -173,9 +186,9 @@ def scenario_commands(version, extended=False):
         ("death_respawn", "kill Rustwire", 1.0),
     ]
 
-    if extended and version != "1.20.1":
+    if extended and protocol >= 766:
         extra = []
-        if version in ("1.21.5", "26.1.2", "26.2"):
+        if protocol >= 770:
             extra.extend([
                 ("hash_bad", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_BAD"}', 1.25),
                 ("hash_bad_end", 'tellraw Rustwire {"text":"RUSTWIRE_HASH_BAD_END"}', 0.25),
@@ -192,7 +205,7 @@ def scenario_commands(version, extended=False):
             "written_book": 'minecraft:written_book[minecraft:written_book_content={title:"Rustwire",author:"Rustwire",pages:["Rustwire written"]}]',
             "fireworks": 'minecraft:firework_rocket[minecraft:fireworks={flight_duration:1,explosions:[{shape:"small_ball",colors:[123],has_trail:true}]}]',
         }
-        if version in ("26.1.2", "26.2"):
+        if protocol >= 775:
             items.update({
                 "template_remainder": 'minecraft:apple[minecraft:use_remainder={id:"minecraft:stone",count:2}]',
                 "template_projectiles": 'minecraft:crossbow[minecraft:charged_projectiles=[{id:"minecraft:arrow",count:1}]]',
@@ -201,7 +214,7 @@ def scenario_commands(version, extended=False):
             })
             if version == "26.2":
                 items["template_sulfur"] = 'minecraft:stone[minecraft:sulfur_cube_content={id:"minecraft:stone",count:2}]'
-        if version in ("1.20.6", "1.21.1", "1.21.3"):
+        if protocol < 770:
             # Pre-1.21.5 item commands use JSON-encoded text-component strings.
             page = json.dumps(json.dumps({"text": "Rustwire written"}, separators=(",", ":")))
             items["written_book"] = 'minecraft:written_book[minecraft:written_book_content={title:"Rustwire",author:"Rustwire",pages:[' + page + ']}]'
@@ -212,7 +225,129 @@ def scenario_commands(version, extended=False):
             ("wolf_remove", 'execute at Rustwire run kill @e[type=minecraft:wolf,tag=rustwire_holder,distance=..8,limit=1]', 0.75),
         ])
         commands[5:5] = extra
+    if expanded:
+        attribute = "minecraft:generic.movement_speed" if protocol < 768 else "minecraft:movement_speed"
+        modifier = '00000000-0000-0000-0000-000000000001 "rustwire_probe" 0.125 ' + ('add' if protocol < 766 else 'add_value') if protocol < 767 else 'rustwire:probe 0.125 add_value'
+        removal = "00000000-0000-0000-0000-000000000001" if protocol < 767 else "rustwire:probe"
+        extra = [
+            ("attribute_modifier_add", f"attribute Rustwire {attribute} modifier add {modifier}", 0.75),
+            ("attribute_modifier_remove", f"attribute Rustwire {attribute} modifier remove {removal}", 0.5),
+            ("effect_add", "effect give Rustwire minecraft:speed 60 2 false", 0.75),
+            ("effect_remove", "effect clear Rustwire minecraft:speed", 0.75),
+        ]
+        if protocol >= 766:
+            predicate = '{blocks:"minecraft:oak_log",state:{axis:"x"},nbt:"{rustwire_probe:1}"}'
+            if protocol < 770:
+                predicate = '{predicates:[' + predicate + '],show_in_tooltip:false}'
+            items = {
+                "block_predicate": 'minecraft:stick[minecraft:can_break=' + predicate + ']',
+                "block_tag": 'minecraft:stick[minecraft:can_place_on={blocks:"#minecraft:logs"}]',
+                "trim": 'minecraft:diamond_chestplate[minecraft:trim={material:"minecraft:quartz",pattern:"minecraft:sentry"}]',
+                "banner": 'minecraft:white_banner[minecraft:banner_patterns=[{pattern:"minecraft:stripe_top",color:"red"}]]',
+                # An explicit property-only profile on stone never requests account/skin resolution.
+                "profile": 'minecraft:stone[minecraft:profile={properties:[{name:"rustwire_probe",value:"local"}]}]',
+                "instrument": 'minecraft:stone[minecraft:instrument="minecraft:ponder_goat_horn"]',
+            }
+            instrument = '{sound_event:{sound_id:"rustwire:probe",range:12.0},range:32.0,use_duration:'
+            instrument += '140}' if protocol < 768 else '3.5,description:' + (json.dumps(json.dumps({"text": "Rustwire horn"}, separators=(",", ":"))) if protocol < 770 else '{text:"Rustwire horn"}') + '}'
+            items["instrument"] = 'minecraft:stone[minecraft:instrument=' + instrument + ']'
+            if protocol >= 767:
+                items["jukebox"] = 'minecraft:music_disc_13[minecraft:jukebox_playable=' + ('{song:"minecraft:cat"}' if protocol < 770 else '"minecraft:cat"') + ']'
+            if protocol >= 768:
+                items.update({
+                    "consumable": 'minecraft:apple[minecraft:consumable={consume_seconds:3.0,animation:"eat",has_consume_particles:false,on_consume_effects:[{type:"minecraft:clear_all_effects"}]}]',
+                    "equippable": 'minecraft:stone[minecraft:equippable={slot:"head",dispensable:false,swappable:false,damage_on_hurt:false}]',
+                    "use_cooldown": 'minecraft:stone[minecraft:use_cooldown={seconds:1.5,cooldown_group:"rustwire:probe"}]',
+                    "death_protection": 'minecraft:stick[minecraft:death_protection={death_effects:[{type:"minecraft:clear_all_effects"}]}]',
+                })
+            if protocol >= 770:
+                items.update({
+                    "component_matchers": 'minecraft:stick[minecraft:can_break={blocks:"minecraft:chest",components:{"minecraft:custom_data":{rustwire_probe:1}},predicates:{"minecraft:custom_data":{rustwire_probe:1}}}]',
+                    "weapon": 'minecraft:stick[minecraft:weapon={item_damage_per_attack:2,disable_blocking_for_seconds:3.5}]',
+                    "blocks_attacks": 'minecraft:stick[minecraft:blocks_attacks={block_delay_seconds:0.75,disable_cooldown_scale:1.5}]',
+                })
+            extra.extend(("component_" + kind, "give Rustwire " + item + " 1", 0.5) for kind, item in items.items())
+        commands[5:5] = extra
+        helmet = "minecraft:diamond_helmet{Damage:7}" if protocol < 766 else "minecraft:diamond_helmet[minecraft:damage=7]"
+        target = "@e[type=minecraft:armor_stand,tag=rustwire_probe,distance=..8,limit=1,sort=nearest]"
+        spawn = next(i for i, c in enumerate(commands) if c[0] == "entity_spawn")
+        commands.insert(spawn + 1, ("entity_equipment", f"execute at Rustwire run item replace entity {target} armor.head with {helmet} 1", 1.0))
+    commands.insert(0, ("client_move_after_ready", 'tellraw Rustwire {"text":"RUSTWIRE_MOVE_AFTER_READY"}', 1.0))
     return commands
+
+
+def required_values(version):
+    p = PROTOCOLS[version]
+    values = {
+        "movement_after_ready": {"delta_x": "0.125", "server_ready": "true"},
+        "player_self_add": {"name": "Rustwire", "listed": "true", "mode": "Creative"},
+        "player_peer_add": {"name": "RustwirePeer", "listed": "true"},
+        "player_peer_remove": {"name": "RustwirePeer", "matched_added_uuid": "true"},
+        "player_mode_update": {"name": "Rustwire", "mode": "Survival"},
+        "entity_equipment": {"slot": "Head", "damage": "7", "count": "1"},
+        "entity_attribute_modifier": {"amount": "0.125", "operation": "AddValue", "own_entity": "true"},
+        "entity_effect_add": {"amplifier": "2", "visible": "true", "icon": "true", "own_entity": "true"},
+        "entity_effect_remove": {"matched_added_effect": "true", "own_entity": "true"},
+    }
+    if p >= 766:
+        values.update({
+            "item_block_predicate": {"component": "can_break", "axis": "x", "nbt_marker": "1", "block_ids": "1"},
+            "item_block_tag": {"component": "can_place_on", "tag": "minecraft:logs"},
+            "item_trim": {"material": "minecraft:quartz", "pattern": "minecraft:sentry"},
+            "item_banner": {"pattern": "minecraft:stripe_top", "color": "14"},
+            "item_profile": {"property": "rustwire_probe", "value": "local", "signed": "false"},
+            "item_instrument": {"inline": "true", "duration": "140" if p < 768 else "3.5", "unit": "ticks" if p < 768 else "seconds", "range": "32", "sound": "rustwire:probe", "sound_range": "12"},
+        })
+    if p >= 767:
+        values["item_jukebox"] = {"song": "minecraft:cat"}
+    if p >= 768:
+        values.update({
+            "item_consumable": {"seconds": "3", "animation": "Eat", "particles": "false", "effect": "ClearAllEffects"},
+            "item_equippable": {"slot": "Head", "dispensable": "false", "swappable": "false", "damage_on_hurt": "false"},
+            "item_use_cooldown": {"seconds": "1.5", "group": "rustwire:probe"},
+            "item_death_protection": {"effect": "ClearAllEffects"},
+        })
+    if p >= 770:
+        values.update({
+            "item_component_matchers": {"exact_custom_data": "1", "partial_custom_data": "1"},
+            "item_weapon": {"damage_per_attack": "2", "disable_seconds": "3.5"},
+            "item_blocks_attacks": {"delay_seconds": "0.75", "cooldown_scale": "1.5"},
+        })
+    return values
+
+
+def assess_values(version, lines):
+    observations = {}
+    for line in lines:
+        if line.startswith("VALUE "):
+            fields = dict(re.findall(r"([a-z_]+)=([^\s]+)", line))
+            observations.setdefault(fields.pop("category", ""), []).append(fields)
+    required = required_values(version)
+    missing = []
+    for category, expected in required.items():
+        matches = [row for row in observations.get(category, []) if all(row.get(k) == v for k, v in expected.items())]
+        if category == "entity_effect_add":
+            matches = [row for row in matches if row.get("duration", "").isdigit() and 1100 < int(row["duration"]) <= 1200
+                       and row.get("effect_id", "").isdigit()]
+        if category == "entity_equipment":
+            matches = [row for row in matches if row.get("entity", "").isdigit() and row.get("item_id", "").isdigit()]
+        if not matches:
+            missing.append(category)
+    return {"observations": observations, "expected": required, "missing_or_wrong": sorted(missing), "passed": not missing}
+
+
+def assess_protocol_transcript(version, lines, expanded=False, peer_lines=(), peer_exit=None):
+    result = {
+        "unsupported_packet_observations": [line for line in lines if line.startswith("UNSUPPORTED ")],
+        "raw_scenario_packet_observations": [line for line in lines if line.startswith("RAW_SCENARIO ")],
+    }
+    result["passed"] = not result["unsupported_packet_observations"] and not result["raw_scenario_packet_observations"]
+    if expanded:
+        result["value_checks"] = assess_values(version, lines)
+        result["peer_lifecycle_passed"] = (peer_exit == 0 and "PEER_READY" in peer_lines and "PEER_DONE" in peer_lines
+                                           and not any(line.startswith(("UNSUPPORTED ", "RAW_SCENARIO ", "Error:")) for line in peer_lines))
+        result["passed"] &= result["value_checks"]["passed"] and result["peer_lifecycle_passed"]
+    return result
 
 
 def client_action_confirmation(server_lines, commands):
@@ -256,16 +391,17 @@ def run_version(args, run_dir, client_bin, version):
     if jar_sha != expected:
         raise RuntimeError(f"{version}: Paper JAR SHA-256 differs from the pinned official artifact")
     server_command = [java, "-Xms256M", "-Xmx1024M", "-XX:ActiveProcessorCount=2", "-jar", str(jar), "--nogui"]
-    record = {"version": version, "paper_build": BUILDS[version], "started_utc": utc_now(),
-              "scenario": args.mode, "extended_components": args.extended_components, "server_command": server_command,
+    record = {"version": version, "protocol": PROTOCOLS[version], "paper_build": BUILDS[version], "started_utc": utc_now(),
+              "scenario": args.mode, "extended_components": args.extended_components, "expanded_state": args.expanded_state, "server_command": server_command,
               "server_jar_sha256": jar_sha,
               "client_binary_sha256": hashlib.sha256(client_bin.read_bytes()).hexdigest(),
               "commands": [], "observed_categories": [], "passed": False}
-    ready, joined, probe_ready = threading.Event(), threading.Event(), threading.Event()
+    ready, joined, probe_ready, movement_ready = (threading.Event() for _ in range(4))
     server_lines, client_lines, client_timeline, categories = [], [], [], set()
     actions = set()
     started = time.monotonic()
-    server = client = None
+    server = client = peer = None
+    peer_lines = []
     readers = []
     print(f"=== GAMEPLAY START {version} ===", flush=True)
     try:
@@ -313,15 +449,43 @@ def run_version(args, run_dir, client_bin, version):
                     actions.update(ACTION.findall(line))
                     if args.ready_marker in line:
                         probe_ready.set()
+                    if "movement_after_ready" in line_categories:
+                        movement_ready.set()
                     if not line_categories or first_observation:
                         print(f"client {version}: {line}", flush=True)
 
-        readers.append(threading.Thread(target=read_client, daemon=True))
-        readers[-1].start()
+        client_reader = threading.Thread(target=read_client, daemon=True)
+        readers.append(client_reader)
+        client_reader.start()
         wait_for_event(joined, [server, client], 45, "Rustwire server-side world entry")
         wait_for_event(probe_ready, [server, client], 45, "typed probe spawn readiness")
         time.sleep(0.75)
-        commands = scenario_commands(version, args.extended_components)
+        if args.expanded_state:
+            peer_ready = threading.Event()
+            peer = subprocess.Popen([str(client_bin), "127.0.0.1", "25565", version, "120", "--peer"], cwd=world,
+                                    stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+            def read_peer():
+                with (world / "gameplay-peer.log").open("w") as log:
+                    for raw in peer.stdout:
+                        log.write(raw)
+                        log.flush()
+                        line = ANSI.sub("", raw).strip()
+                        peer_lines.append(line)
+                        if line == "PEER_READY":
+                            peer_ready.set()
+            peer_reader = threading.Thread(target=read_peer, daemon=True)
+            readers.append(peer_reader)
+            peer_reader.start()
+            wait_for_event(peer_ready, [server, client, peer], 45, "loopback peer readiness")
+            time.sleep(0.5)
+            server.stdin.write('tellraw RustwirePeer {"text":"RUSTWIRE_PEER_DONE"}\n')
+            server.stdin.flush()
+            peer.wait(timeout=15)
+            peer_reader.join(timeout=5)
+            if peer.returncode != 0 or "PEER_DONE" not in peer_lines:
+                raise RuntimeError("Roster peer did not complete its bounded lifecycle")
+            time.sleep(0.5)
+        commands = scenario_commands(version, args.extended_components, args.expanded_state)
         for name, command, pause in commands:
             if server.poll() is not None or client.poll() is not None:
                 raise RuntimeError(f"A process exited before scenario step {name}")
@@ -330,23 +494,52 @@ def run_version(args, run_dir, client_bin, version):
             print(f"console {version}: {command}", flush=True)
             server.stdin.write(command + "\n")
             server.stdin.flush()
-            time.sleep(pause)
+            if name == "client_move_after_ready":
+                wait_for_event(movement_ready, [server, client], 10, "the client movement-sent marker after setup")
+            if name == "verify_client_position":
+                # Console execution and socket processing are asynchronous. Poll
+                # only this test player's position, with a strict total bound.
+                deadline = time.monotonic() + 8
+                retry_at = time.monotonic() + 0.5
+                entry = record["commands"][-1]
+                entry["retry_sent_seconds"] = []
+                while True:
+                    observed = [item["line"] for item in server_lines if item["seconds"] >= entry["sent_seconds"]]
+                    confirmation = client_action_confirmation(server_lines, [{"name": name, "server_output_in_window": observed}])
+                    if confirmation["movement_confirmed"]:
+                        entry["movement_poll_confirmed"] = True
+                        break
+                    if server.poll() is not None or client.poll() is not None:
+                        raise RuntimeError("A process exited while confirming client movement")
+                    if time.monotonic() >= deadline:
+                        raise RuntimeError("The server did not confirm the post-readiness client movement within eight seconds")
+                    if time.monotonic() >= retry_at:
+                        entry["retry_sent_seconds"].append(round(time.monotonic() - started, 3))
+                        server.stdin.write(command + "\n")
+                        server.stdin.flush()
+                        retry_at = time.monotonic() + 0.5
+                    time.sleep(0.05)
+            else:
+                time.sleep(pause)
         remaining = args.client_timeout - (time.monotonic() - client_started)
         if remaining <= 0:
             raise RuntimeError("Scenario exceeded the bounded client timeout")
         client.wait(timeout=remaining)
         record["client_seconds"] = round(time.monotonic() - client_started, 3)
-        readers[-1].join(timeout=5)
+        client_reader.join(timeout=5)
         record["observed_categories"] = sorted(categories)
         required=set(args.required_category)
-        if args.extended_components and version != "1.20.1":
+        protocol = PROTOCOLS[version]
+        if args.extended_components and protocol >= 766:
             required.update(["item_food", "item_potion", "item_stew", "item_writable_book", "item_written_book", "item_fireworks", "metadata_particles", "metadata_particles_nonempty"])
-            if version in ("1.21.5", "26.1.2", "26.2"):
+            if protocol >= 770:
                 required.update(["hash_negative_control", "hash_positive_control"])
-            if version in ("26.1.2", "26.2"):
+            if protocol >= 775:
                 required.update(["item_template_remainder", "item_template_projectiles", "item_template_bundle", "item_template_container"])
             if version == "26.2":
                 required.add("item_template_sulfur")
+        if args.expanded_state:
+            required.update(required_values(version))
         record["required_categories"] = sorted(required)
         record["missing_categories"] = sorted(required - categories)
         record["scenario_commands_sent"] = len(record["commands"]) == len(commands)
@@ -357,17 +550,26 @@ def run_version(args, run_dir, client_bin, version):
         record["error"] = f"{type(exc).__name__}: {exc}"
         print(f"GAMEPLAY FAIL {version}: {record['error']}", flush=True)
     finally:
+        stop_process(peer)
         stop_process(client)
         stop_process(server, "stop")
         for reader in readers:
             reader.join(timeout=5)
         record["server_exit"] = None if server is None else server.returncode
+        record["peer_exit"] = None if peer is None else peer.returncode
+        record["peer_output"] = peer_lines
         record["client_exit"] = None if client is None else client.returncode
         record["observed_categories"] = sorted(categories)
         record["observed_client_actions"] = sorted(actions)
         record["client_output"] = client_lines
         record["client_timeline"] = client_timeline
-        record["unsupported_packet_observations"] = [line for line in client_lines if line.startswith("UNSUPPORTED ")]
+        transcript = assess_protocol_transcript(version, client_lines, args.expanded_state, peer_lines, record["peer_exit"])
+        for key, value in transcript.items():
+            if key != "passed":
+                record[key] = value
+        if not transcript["passed"]:
+            record["passed"] = False
+            record.setdefault("error", "Missing/incorrect decoded values, unsupported/Raw scenario packets, or incomplete roster peer lifecycle")
         record["seconds"] = round(time.monotonic() - started, 3)
         if record["server_exit"] != 0:
             record["passed"] = False
@@ -408,8 +610,13 @@ def main():
         client_bin = binary_dir / "gameplay_probe"
         shutil.copyfile(args.client, client_bin)
         client_bin.chmod(0o755)
-        results = {"scenario": args.mode, "created_utc": utc_now(),
-                   "required_categories": args.required_category, "records": []}
+        source_paths = ["examples/gameplay_probe.rs", "examples/gameplay_probe/expanded.rs", "examples/gameplay_probe/hash_probe.rs", "tools/paper/validate_gameplay.py"]
+        results = {"source_base_commit": args.source_commit or subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=PROJECT, text=True).strip(),
+                   "library_source_sha256": {str(path.relative_to(PROJECT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in sorted((PROJECT / "src").rglob("*.rs"))},
+                   "cargo_source_sha256": {name: hashlib.sha256((PROJECT / name).read_bytes()).hexdigest() for name in ["Cargo.toml", "Cargo.lock"]},
+                   "source_sha256": {path: hashlib.sha256((PROJECT / path).read_bytes()).hexdigest() for path in source_paths},
+                   "scenario": args.mode, "created_utc": utc_now(),
+                   "required_categories": args.required_category, "command_sources": COMMAND_SOURCES, "records": []}
         for version in args.versions:
             results["records"].append(run_version(args, run_dir, client_bin, version))
             (run_dir / "gameplay-results.json").write_text(json.dumps(results, indent=2) + "\n")

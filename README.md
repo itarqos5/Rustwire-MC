@@ -170,3 +170,17 @@ Walking is limited to a known flat stone floor. Wind-charge use verifies
 projectile creation, not explosion knockback or wind-charge jumping. This is
 an interoperability checkpoint, not a complete graphical client or a guarantee
 for arbitrary client behavior.
+
+### Expanded fourteen-family gameplay checkpoint
+
+All fourteen pinned representative releases passed one frozen client built from
+library snapshot `11674342`, with **259 version-specific decoded-value checks**.
+The scenario covers a second player's roster entry/removal, damaged equipment,
+attribute modifiers, effect add/remove and selected modern component values.
+There were no unsupported decodes, raw fallbacks in the explicitly gated packet
+set, or console failures. Every process exited cleanly.
+
+[Expanded evidence](docs/validation/expanded-gameplay-results.json) preserves
+the real equippable-slot correction and earlier test-harness timing failures.
+This is additional bounded protocol evidence; later command/effect/signed-chat
+helpers have their separately documented fixture/API-oracle checks.

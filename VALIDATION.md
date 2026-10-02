@@ -270,3 +270,43 @@ clippy/rustdoc and formatting pass. No private key, certificate service, account
 cryptographic provider or live signed-chat exchange was exercised. The callback
 API delegates cryptography to an application-owned provider rather than adding
 private RSA operations to Rustwire's existing dependency.
+
+## Expanded fourteen-family gameplay matrix
+
+A final replay passed on all fourteen pinned representative releases using one
+frozen binary, SHA-256
+`bf233954114d58ddd247cfb4dba27932bb49fcefbf9b55c04ceef84496d30505`.
+Its library source is exactly `11674342d6aaa07bf2cb1ed5b2c504d07babce9f`,
+plus the recorded probe source files. All 259 version-specific decoded-value
+checks passed. Each client ran for 55.053–55.935 seconds. All servers, primary
+clients and roster peers exited zero; no listeners or test processes remained.
+
+Checks include matching peer UUID add/remove, nonempty damaged-helmet equipment,
+attribute modifier identity/operation/value, effect amplifier/flags/removal,
+and version-appropriate predicate, trim, banner, profile, inline instrument,
+jukebox, consumption/equipment and template component values. Server-side
+queries confirm movement and selected slot. The raw-packet gate covers eleven
+explicit scenario packet names; other intentionally untyped packets are not
+misrepresented as semantic coverage. No Grim plugin is installed in this matrix.
+
+[Compact results](docs/validation/expanded-gameplay-results.json) include source
+and artifact hashes, every required value check, example decoded values, command
+counts, exits, the earlier diagnostic runs and the movement smoke test. The first
+run exposed a genuine equippable component bug: EquipmentSlot's stream IDs differ
+from its Java ordinals. The library fix has a 70-combination independent fixture
+and leaves entity-equipment ordinals unchanged. Initial command syntax/default
+item assumptions were corrected in the harness, without weakening value checks.
+A later 1.20.2 run caught an initial-teleport race in the test client; post-readiness
+signaling and bounded coordinate polling fixed it, followed by a passing targeted
+smoke test and this full same-binary replay. The earlier failure is retained.
+
+The harness now has eighteen offline acceptance regressions, and CI discovers
+both gameplay and Grim suites: **31 Python tests** total. Latest code additions
+for command trees, world effects and signing input are separate later increments
+with their own fixture/oracle evidence, rather than retroactively attributed to
+this frozen live binary.
+
+Reproduce with the already accepted, isolated baseline and
+`validate_gameplay.py --mode bounded-gameplay --expanded-codecs` (all fourteen
+versions by default). Use `--source-commit` when running an archived snapshot;
+the harness records actual source hashes in addition to that explicit label.

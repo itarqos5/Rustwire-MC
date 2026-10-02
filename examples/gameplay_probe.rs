@@ -1,5 +1,7 @@
 //! Bounded, destructive gameplay test client for disposable loopback servers only.
 //! The matching tools/paper/validate_gameplay.py harness owns server-side actions.
+#[path = "gameplay_probe/expanded.rs"]
+mod expanded;
 #[path = "gameplay_probe/hash_probe.rs"]
 mod hash_probe;
 use rustwire_mc::{
@@ -29,7 +31,12 @@ fn record(counts: &mut BTreeMap<&'static str, u64>, category: &'static str) {
     *counts.entry(category).or_default() += 1;
     println!("EVENT category={category}");
 }
-fn slot_observations(slot: &Slot, counts: &mut BTreeMap<&'static str, u64>) {
+fn slot_observations(
+    slot: &Slot,
+    registries: &RegistryStore,
+    counts: &mut BTreeMap<&'static str, u64>,
+) {
+    expanded::slot(slot, registries, counts);
     let Slot::Item(item) = slot else { return };
     match &item.data {
         ItemData::Legacy(Some(nbt)) => {
@@ -118,6 +125,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .map(|s| s.parse::<u64>())
         .transpose()?
         .unwrap_or(45);
+    let peer = args.get(5).is_some_and(|arg| arg == "--peer");
     let limits = Limits::default();
     let mut c = Connection::connect(
         (host.as_str(), port),
@@ -125,13 +133,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Duration::from_secs(20),
         limits,
     )?;
-    c.start_login(host, port, "Rustwire", [0; 16])?;
+    c.start_login(
+        host,
+        port,
+        if peer { "RustwirePeer" } else { "Rustwire" },
+        if peer { [1; 16] } else { [0; 16] },
+    )?;
     let started = Instant::now();
     let mut registries = RegistryStore::default();
     let mut sections = 24;
     let mut ready = false;
+    let mut last_absolute_position = None;
+    let mut movement_after_ready = false;
     let mut loaded = false;
     let mut counts = BTreeMap::new();
+    let mut expanded = expanded::State::default();
     let mut hash_probe = hash_probe::HashProbe::default();
     for _ in 0..100_000 {
         match c.next_typed_event()? {
@@ -141,6 +157,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             }
             TypedEvent::Control(Event::Joined(mut world)) => {
+                expanded.own_entity = Some(world.entity_id);
                 if let Some(nbt) = world.dimension_codec.take() {
                     registries.apply(rustwire_mc::registry::RegistryData::Legacy(nbt))?;
                 }
@@ -159,6 +176,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             TypedEvent::Control(Event::Ready) => record(&mut counts, "configuration"),
             TypedEvent::Control(Event::KeepAlive(_)) => record(&mut counts, "keepalive"),
             TypedEvent::Control(Event::Position(position)) => {
+                if position.relative_flags == 0 {
+                    last_absolute_position = Some([position.x, position.y, position.z]);
+                }
                 c.send(&position.acknowledgement(version)?)?;
                 record(&mut counts, "teleport_ack");
                 if !loaded
@@ -174,18 +194,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     )?)?;
                     loaded = true;
                 }
+                if !ready && peer {
+                    ready = true;
+                    println!("PEER_READY");
+                    std::io::stdout().flush()?;
+                }
                 if !ready {
-                    if position.relative_flags == 0 {
-                        c.send(&packet::player_position(
-                            version,
-                            position.x + 0.125,
-                            position.y,
-                            position.z,
-                            true,
-                            false,
-                        )?)?;
-                        record(&mut counts, "movement_sent");
-                    }
                     c.send(&SetSelectedSlot { slot: 1 }.packet(version, limits)?)?;
                     c.send(&interact::swing_arm(version, Hand::Main)?)?;
                     record(&mut counts, "selected_slot_sent");
@@ -224,6 +238,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             },
             TypedEvent::Decoded(DecodedPacket::Entity(packet)) => match packet {
                 EntityPacket::Spawn(entity) => {
+                    expanded.spawn(entity.entity_id);
                     record(&mut counts, "entity_spawn");
                     println!(
                         "ENTITY id={} type={} uuid={:02x?}",
@@ -242,6 +257,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
                 _ => {}
             },
+            TypedEvent::Decoded(DecodedPacket::Player(packet)) => {
+                expanded.player(&packet, &mut counts)
+            }
+            TypedEvent::Decoded(DecodedPacket::EntityState(packet)) => {
+                expanded.entity(&packet, &mut counts)
+            }
             TypedEvent::Decoded(DecodedPacket::Metadata(metadata)) => {
                 record(&mut counts, "metadata");
                 for entry in &metadata.entries {
@@ -277,13 +298,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 match packet {
                     InventoryPacket::Content(p) => {
                         for item in &p.items {
-                            slot_observations(item, &mut counts);
+                            slot_observations(item, &registries, &mut counts);
                         }
-                        slot_observations(&p.carried_item, &mut counts);
+                        slot_observations(&p.carried_item, &registries, &mut counts);
                     }
-                    InventoryPacket::Slot(p) => slot_observations(&p.item, &mut counts),
-                    InventoryPacket::PlayerSlot(p) => slot_observations(&p.item, &mut counts),
-                    InventoryPacket::Cursor(p) => slot_observations(&p.item, &mut counts),
+                    InventoryPacket::Slot(p) => {
+                        slot_observations(&p.item, &registries, &mut counts)
+                    }
+                    InventoryPacket::PlayerSlot(p) => {
+                        slot_observations(&p.item, &registries, &mut counts)
+                    }
+                    InventoryPacket::Cursor(p) => {
+                        slot_observations(&p.item, &registries, &mut counts)
+                    }
                     _ => {}
                 }
             }
@@ -293,6 +320,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                     ChatComponent::Json(text) => text.contains(needle),
                     ChatComponent::Nbt(nbt) => nbt_contains(&nbt.root, needle),
                 };
+                if peer && contains("RUSTWIRE_PEER_DONE") {
+                    println!("PEER_DONE");
+                    return Ok(());
+                }
+                if !peer && !movement_after_ready && contains("RUSTWIRE_MOVE_AFTER_READY") {
+                    let [x, y, z] = last_absolute_position
+                        .ok_or("no absolute spawn position before movement marker")?;
+                    c.send(&packet::player_position(
+                        version,
+                        x + 0.125,
+                        y,
+                        z,
+                        true,
+                        false,
+                    )?)?;
+                    movement_after_ready = true;
+                    record(&mut counts, "movement_sent");
+                    record(&mut counts, "movement_after_ready");
+                    println!("VALUE category=movement_after_ready delta_x=0.125 server_ready=true source_x={x} target_x={}", x + 0.125);
+                }
                 let has_marker = contains("Rustwire gameplay probe");
                 if version.protocol() >= 770 {
                     for marker in [
@@ -337,14 +384,44 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             TypedEvent::Raw {
                 name,
                 unsupported: Some(reason),
+                packet,
                 ..
-            } => println!("UNSUPPORTED name={name:?} reason={reason}"),
+            } => {
+                println!(
+                    "UNSUPPORTED name={name:?} reason={reason} bytes={:02x?}",
+                    packet.data
+                );
+                return Err("unsupported packet in expanded gameplay scenario".into());
+            }
+            TypedEvent::Raw {
+                name: Some(name),
+                packet,
+                ..
+            } if matches!(
+                name,
+                "player_info"
+                    | "player_remove"
+                    | "entity_equipment"
+                    | "entity_update_attributes"
+                    | "entity_effect"
+                    | "remove_entity_effect"
+                    | "entity_metadata"
+                    | "window_items"
+                    | "set_slot"
+                    | "set_player_inventory"
+                    | "set_cursor_item"
+            ) =>
+            {
+                println!("RAW_SCENARIO name={name} bytes={:02x?}", packet.data);
+                return Err("scenario packet unexpectedly returned raw".into());
+            }
             TypedEvent::Disconnected(reason) => {
                 return Err(format!("server disconnected: {reason:?}").into())
             }
             _ => {}
         }
-        if started.elapsed() >= Duration::from_secs(min_seconds)
+        if !peer
+            && started.elapsed() >= Duration::from_secs(min_seconds)
             && counts.get("respawn").copied().unwrap_or(0) > 0
         {
             let required = [
