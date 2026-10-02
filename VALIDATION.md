@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 141 tests with all features; 128 applicable tests without default features
+- 161 tests with all features; 148 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -114,7 +114,7 @@ Live Microsoft/Xbox/Minecraft account authorization, secure-chat signing, every 
 
 ## Component hash fixtures
 
-Seven hash tests cover independently executed official HashOps fixtures, supported
+Eight hash tests cover independently executed official HashOps fixtures, supported
 component-codec defaults, item-patch derivation, byte-width and UTF-16 preservation,
 map ordering/duplicate normalization, malformed shapes and resource limits. The
 primitive oracle returned identical results on pinned Paper 1.21.5 and 26.2. These
@@ -124,3 +124,8 @@ clicks have not yet been exercised end-to-end by those recorded runs.
 The particle/holder increment adds 14 tests and removes the intentional missing
 particle-list decoder. The older live-run evidence above is retained unchanged;
 its historical raw-fallback observations are not rewritten as newer test results.
+
+The ordinary component increment adds 19 tests. Known added-component coverage
+is 50/56 at 766, 50/57 at 767, 56/67 at 768–769, 79/96 at 770–773, 80/104 at
+774, 85/110 at 775 and 87/111 at 776. Removed component IDs and caller-supplied
+hash representations can still carry every known component ID.

@@ -80,3 +80,23 @@ Painting dimensions are VarInts and optional title/author fields start at 768.
 independent fixtures, every-prefix truncation, malformed options, unknown-ID
 fallback, and shared collection/NBT/depth limits. All known outer metadata
 serializer kinds are implemented; nested item components remain a stated subset.
+
+## Ordinary item-component corrections
+
+The generated component classifications are paired with handwritten version-aware
+codecs. Official release codecs confirmed that food in 766 has no converter while
+767 has a boolean-prefixed nonempty stack; both legacy versions carry full effect
+instances. Potion custom names begin at 768. Written-book filtered pages use a
+boolean followed by required component NBT. Bee occupants add their entity type
+ID at 773. Writable-book page/string limits and the 256-explosion limit are
+enforced. `tests/item_components.rs` adds independent golden/truncation fixtures,
+version-boundary rejection and aggregate effect/NBT/collection budget tests.
+
+Nested item stream layouts were checked separately: use-remainder, charged
+projectiles and bundles require nonempty Slots through 774; container entries
+are optional. All four switch to complete ItemStackTemplates at 775 and remain
+templates at 776 despite stale schema aliases. Sulfur-cube content also carries
+a template at 776. Zero-count templates retain all fields. Charged-projectile
+template caps are 64 at 775 and 1024 at 776; bundle/container caps are 256. The
+shared template codecs enforce aggregate budgets across component and particle
+nesting. Six additional regression tests cover these verified corrections.

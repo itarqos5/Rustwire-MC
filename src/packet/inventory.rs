@@ -11,8 +11,10 @@
 //! `SlotComponentType`, `HashedSlot`, and inventory packet definitions from
 //! <https://github.com/PrismarineJS/minecraft-data/tree/f5d7d74604d8c6153fd086bfe035e0630a5207cc/data/pc>.
 //! Protocol 776 provenance is recorded separately in `research/26.2-commit.json`.
-//! These are wire codecs, not an inventory simulator: callers manage state IDs,
-//! click predictions; the item_hash module derives a supported subset of 770+ hashes.
+//! These are wire codecs, not an inventory simulator: callers manage state IDs
+//! and click predictions. The [`super::item_hash`] adapters derive verified
+//! component hashes for supported protocol-770+ payloads.
+use super::entity_metadata::holders::RegistryHolderSet;
 use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,
@@ -21,8 +23,11 @@ use crate::{
     Error, Limits, Result, Version,
 };
 use std::collections::BTreeSet;
+#[path = "inventory/components.rs"]
+mod components;
 #[path = "item_components.rs"]
 mod registry;
+pub use components::*;
 
 /// Wire layout supported for a particular component in a particular release.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -44,10 +49,33 @@ pub enum ComponentWire {
     CustomModelData,
     TooltipDisplay,
     BlockState,
+    /// Required, nonempty slot (through protocol 774).
     Item,
+    /// List of required, nonempty slots (through protocol 774).
     Items,
+    /// List allowing empty slot sentinels, with an inclusive maximum length.
+    OptionalItems(usize),
+    /// Item ID, count, then patch, including all fields when count is zero.
+    ItemTemplate,
+    /// Template list with the release's inclusive maximum length.
+    ItemTemplates(usize),
+    /// Boolean-prefixed optional templates with an inclusive maximum length.
+    OptionalItemTemplates(usize),
     IntList,
     TypedNbt,
+    FoodLegacy,
+    Food,
+    PotionContents,
+    StewEffects,
+    WritableBook,
+    WrittenBook,
+    AttributeModifiers,
+    LodestoneTracker,
+    FireworkExplosion,
+    Fireworks,
+    Bees,
+    Tool,
+    Repairable,
     Unsupported,
 }
 /// Ordered by on-wire ID. An empty registry denotes classic-NBT releases.
@@ -112,9 +140,28 @@ pub enum ComponentValue {
         hidden_components: Vec<&'static str>,
     },
     BlockState(Vec<(String, String)>),
+    /// Required nonempty stack in the selected release.
     Item(Box<Slot>),
+    /// `container` permits empty slots; bundle/projectile lists require items.
     Items(Vec<Slot>),
+    /// Protocol 775+ item template; requires component data and a nonnegative
+    /// count. Unlike `Slot::Empty`, count zero still carries item ID and patch.
+    ItemTemplate(Box<ItemStack>),
+    ItemTemplates(Vec<ItemStack>),
+    OptionalItemTemplates(Vec<Option<ItemStack>>),
     IntList(Vec<i32>),
+    Food(Food),
+    PotionContents(PotionContents),
+    StewEffects(Vec<StewEffect>),
+    WritableBook(Vec<Filterable<String>>),
+    WrittenBook(WrittenBook),
+    AttributeModifiers(AttributeModifiers),
+    LodestoneTracker(LodestoneTracker),
+    FireworkExplosion(FireworkExplosion),
+    Fireworks(Fireworks),
+    Bees(Vec<BeeOccupant>),
+    Tool(Tool),
+    Repairable(RegistryHolderSet),
     /// Registry type ID plus anonymous NBT, used by entity_data and
     /// block_entity_data from protocol 773.
     TypedNbt {
@@ -400,6 +447,47 @@ pub(crate) fn write_slot(
     }
     b.check_bytes(w)
 }
+/// The 775+ template layout is ID before count, with no empty-stack sentinel.
+/// Keep this shared by inventory components and item particles so recursive
+/// templates consume the same collection, NBT, byte, and call-stack budgets.
+pub(crate) fn read_template(
+    r: &mut Reader<'_>,
+    version: Version,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<ItemStack> {
+    if version.protocol() < 775 {
+        return Err(Error::Unsupported("item template before protocol 775"));
+    }
+    b.depth(depth)?;
+    b.charge(1)?;
+    let item_id = nonnegative(r.var_i32()?, "template item ID")?;
+    let count = nonnegative(r.var_i32()?, "template item count")?;
+    Ok(ItemStack {
+        item_id,
+        count,
+        data: ItemData::Components(read_patch(r, version, b, depth)?),
+    })
+}
+pub(crate) fn write_template(
+    item: &ItemStack,
+    w: &mut Writer,
+    version: Version,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<()> {
+    if version.protocol() < 775 {
+        return Err(Error::Unsupported("item template before protocol 775"));
+    }
+    b.depth(depth)?;
+    b.charge(1)?;
+    w.var_i32(nonnegative(item.item_id, "template item ID")?);
+    w.var_i32(nonnegative(item.count, "template item count")?);
+    let ItemData::Components(patch) = &item.data else {
+        return Err(Error::Invalid("item template requires components"));
+    };
+    write_patch(patch, w, version, b, depth)
+}
 pub(crate) fn read_patch(
     r: &mut Reader<'_>,
     version: Version,
@@ -467,6 +555,22 @@ fn read_component(
     use ComponentValue as V;
     use ComponentWire as W;
     Ok(match wire {
+        W::ItemTemplate
+        | W::ItemTemplates(_)
+        | W::OptionalItemTemplates(_)
+        | W::FoodLegacy
+        | W::Food
+        | W::PotionContents
+        | W::StewEffects
+        | W::WritableBook
+        | W::WrittenBook
+        | W::AttributeModifiers
+        | W::LodestoneTracker
+        | W::FireworkExplosion
+        | W::Fireworks
+        | W::Bees
+        | W::Tool
+        | W::Repairable => components::read(r, wire, version, b, depth)?,
         W::Unsupported => return Err(Error::Unsupported("item component payload layout")),
         W::Unit => V::Unit,
         W::Bool => V::Bool(r.bool()?),
@@ -557,12 +661,27 @@ fn read_component(
             }
             V::BlockState(values)
         }
-        W::Item => V::Item(Box::new(read_slot(r, version, b, depth + 1)?)),
-        W::Items => {
+        W::Item => {
+            let item = read_slot(r, version, b, depth + 1)?;
+            if item == Slot::Empty {
+                return Err(Error::Invalid("empty required component item"));
+            }
+            V::Item(Box::new(item))
+        }
+        W::Items | W::OptionalItems(_) => {
             let n = b.count(r)?;
+            if let W::OptionalItems(maximum) = wire {
+                if n > maximum {
+                    return Err(Error::Limit("component item list"));
+                }
+            }
             let mut items = Vec::new();
             for _ in 0..n {
-                items.push(read_slot(r, version, b, depth + 1)?);
+                let item = read_slot(r, version, b, depth + 1)?;
+                if wire == W::Items && item == Slot::Empty {
+                    return Err(Error::Invalid("empty required component item"));
+                }
+                items.push(item);
             }
             V::Items(items)
         }
@@ -587,6 +706,25 @@ pub(crate) fn write_component(
     use ComponentValue as V;
     use ComponentWire as W;
     match (wire, value) {
+        (
+            W::ItemTemplate
+            | W::ItemTemplates(_)
+            | W::OptionalItemTemplates(_)
+            | W::FoodLegacy
+            | W::Food
+            | W::PotionContents
+            | W::StewEffects
+            | W::WritableBook
+            | W::WrittenBook
+            | W::AttributeModifiers
+            | W::LodestoneTracker
+            | W::FireworkExplosion
+            | W::Fireworks
+            | W::Bees
+            | W::Tool
+            | W::Repairable,
+            value,
+        ) => components::write(value, wire, w, version, b, depth)?,
         (W::Unsupported, _) => return Err(Error::Unsupported("item component payload layout")),
         (W::Unit, V::Unit) => {}
         (W::Bool, V::Bool(v)) => w.bool(*v),
@@ -686,10 +824,25 @@ pub(crate) fn write_component(
                 string(w, value, b)?;
             }
         }
-        (W::Item, V::Item(v)) => write_slot(v, w, version, b, depth + 1)?,
-        (W::Items, V::Items(v)) => {
+        (W::Item, V::Item(v)) => {
+            b.depth(depth + 1)?;
+            if **v == Slot::Empty {
+                return Err(Error::Invalid("empty required component item"));
+            }
+            write_slot(v, w, version, b, depth + 1)?;
+        }
+        (W::Items | W::OptionalItems(_), V::Items(v)) => {
+            if let W::OptionalItems(maximum) = wire {
+                if v.len() > maximum {
+                    return Err(Error::Limit("component item list"));
+                }
+            }
             b.write_count(v.len(), w)?;
             for x in v {
+                b.depth(depth + 1)?;
+                if wire == W::Items && *x == Slot::Empty {
+                    return Err(Error::Invalid("empty required component item"));
+                }
                 write_slot(x, w, version, b, depth + 1)?;
             }
         }
@@ -1082,8 +1235,9 @@ impl ContainerClick {
         )
     }
 }
-/// Explicit component-hash representation. [`Self::from_slot`] derives the
-/// supported persistent codecs; callers may supply additional verified hashes.
+/// Explicit hashed-stack representation for protocol-770+ click predictions.
+/// [`Self::from_slot`] derives supported component hashes; callers may supply
+/// additional hashes verified against the selected release.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HashedItemStack {
     pub item_id: i32,
@@ -1164,9 +1318,9 @@ fn write_hashed(
     b.check_bytes(w)
 }
 /// Protocol 770+ click prediction. `None` is an empty stack, encoded as a
-/// false option flag. Hashes can come from [`HashedItemStack::from_slot`];
-/// full stack encoding is never
-/// silently substituted for this format.
+/// false option flag. Explicit inputs can be constructed with
+/// [`HashedItemStack::from_slot`]; full stack encoding is never silently
+/// substituted for this format.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct HashedContainerClick {
     pub header: ClickHeader,

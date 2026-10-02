@@ -343,43 +343,49 @@ fn typed_entity_nbt_change_and_latest_empty_payload_change() {
     );
 }
 #[test]
-fn recursive_components_and_template_gap_fail_closed() {
+fn recursive_components_and_templates_have_distinct_layouts() {
     check_slot(
         774,
-        "01 05 01 00 19 00",
+        "01 05 01 00 19 01 05 00 00",
         modern(
             1,
             vec![Component {
                 name: "use_remainder",
-                value: ComponentValue::Item(Box::new(Slot::Empty)),
+                value: ComponentValue::Item(Box::new(modern(1, vec![], vec![]))),
             }],
             vec![],
         ),
     );
-    check_slot(
-        776,
-        "01 05 01 00 19 00",
-        modern(
-            1,
-            vec![Component {
-                name: "use_remainder",
-                value: ComponentValue::Item(Box::new(Slot::Empty)),
-            }],
-            vec![],
-        ),
-    );
-    assert!(matches!(
-        Slot::decode(&decode("01 05 01 00 19 00"), v(775), Limits::default()),
-        Err(Error::Unsupported(_))
-    ));
+    for p in [775, 776] {
+        check_slot(
+            p,
+            "01 05 01 00 19 05 01 00 00",
+            modern(
+                1,
+                vec![Component {
+                    name: "use_remainder",
+                    value: ComponentValue::ItemTemplate(Box::new(ItemStack {
+                        item_id: 5,
+                        count: 1,
+                        data: ItemData::Components(ComponentPatch::default()),
+                    })),
+                }],
+                vec![],
+            ),
+        );
+        assert!(Slot::decode(&decode("01 05 01 00 19 00"), v(p), Limits::default()).is_err());
+    }
     check_slot(
         770,
-        "01 05 01 00 29 02 00 01 05 00 00",
+        "01 05 01 00 29 02 02 05 00 00 01 05 00 00",
         modern(
             1,
             vec![Component {
                 name: "bundle_contents",
-                value: ComponentValue::Items(vec![Slot::Empty, modern(1, vec![], vec![])]),
+                value: ComponentValue::Items(vec![
+                    modern(2, vec![], vec![]),
+                    modern(1, vec![], vec![]),
+                ]),
             }],
             vec![],
         ),

@@ -8,7 +8,7 @@
 //! still present in 776; item templates replace stacks in 775.
 use crate::{
     codec::{BlockPosition, Reader, Writer},
-    packet::inventory::{self, Budget, ItemData, ItemStack, Slot},
+    packet::inventory::{self, Budget, ItemStack, Slot},
     Error, Limits, Result, Version,
 };
 
@@ -1221,16 +1221,7 @@ pub(super) fn read(r: &mut Reader<'_>, version: Version, b: &mut Budget) -> Resu
             }
             D::Item(Box::new(slot))
         }
-        W::ItemTemplate => {
-            b.charge(1)?;
-            let item_id = nonnegative(r.var_i32()?)?;
-            let count = nonnegative(r.var_i32()?)?;
-            D::ItemTemplate(Box::new(ItemStack {
-                item_id,
-                count,
-                data: ItemData::Components(inventory::read_patch(r, version, b, 0)?),
-            }))
-        }
+        W::ItemTemplate => D::ItemTemplate(Box::new(inventory::read_template(r, version, b, 0)?)),
         W::VibrationLegacy | W::Vibration => {
             let source = if wire == W::VibrationLegacy {
                 match r.string(32767)? {
@@ -1334,13 +1325,7 @@ pub(super) fn write(
             inventory::write_slot(slot, w, version, b, 0)?;
         }
         (W::ItemTemplate, D::ItemTemplate(item)) => {
-            b.charge(1)?;
-            w.var_i32(nonnegative(item.item_id)?);
-            w.var_i32(nonnegative(item.count)?);
-            let ItemData::Components(patch) = &item.data else {
-                return Err(Error::Invalid("item template requires components"));
-            };
-            inventory::write_patch(patch, w, version, b, 0)?;
+            inventory::write_template(item, w, version, b, 0)?
         }
         (W::VibrationLegacy | W::Vibration, D::Vibration { destination, ticks }) => {
             let block = matches!(destination, VibrationDestination::Block(_));

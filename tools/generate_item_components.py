@@ -8,8 +8,9 @@ uses the checked-in generated module and does not run this script.
 
 The allowlist below is the coverage boundary of inventory.rs. A component that
 is not explicitly recognized is emitted as Unsupported; it is never treated as
-zero bytes or an opaque length-prefixed payload. Template item stacks (where used, notably 775) are
-intentionally different from Slot and remain unsupported here.
+zero bytes or an opaque length-prefixed payload. Template item stacks in
+775–776 are intentionally different from Slot and have their own typed layouts.
+Official codecs override stale 776 schemas that incorrectly revert to Slot.
 """
 import argparse
 import hashlib
@@ -34,6 +35,38 @@ PRIMITIVES = {
 
 
 def classify(name, shape, protocol):
+    # Official 26.1/26.2 codecs retain templates, despite the 26.2 schema
+    # incorrectly reverting four fields to classic Slot layouts. Container
+    # entries are boolean-prefixed optionals; bundles/projectiles are not.
+    if protocol >= 775:
+        if name in ("use_remainder", "sulfur_cube_content"):
+            return "ItemTemplate"
+        if name == "charged_projectiles":
+            return f"ItemTemplates({64 if protocol == 775 else 1024})"
+        if name == "bundle_contents":
+            return "ItemTemplates(256)"
+        if name == "container":
+            return "OptionalItemTemplates(256)"
+    # Historical schemas backport food conversion/potion-name fields and omit
+    # the post-773 bee entity type. These version switches are verified against
+    # official release STREAM_CODEC declarations, not inferred from the schema.
+    if name == "food":
+        return "FoodLegacy" if protocol <= 767 else "Food"
+    structured = {
+        "potion_contents": "PotionContents",
+        "suspicious_stew_effects": "StewEffects",
+        "writable_book_content": "WritableBook",
+        "written_book_content": "WrittenBook",
+        "attribute_modifiers": "AttributeModifiers",
+        "lodestone_tracker": "LodestoneTracker",
+        "firework_explosion": "FireworkExplosion",
+        "fireworks": "Fireworks",
+        "bees": "Bees",
+        "tool": "Tool",
+        "repairable": "Repairable",
+    }
+    if name in structured:
+        return structured[name]
     if isinstance(shape, str):
         return PRIMITIVES.get(shape, "Unsupported")
     kind, body = shape
@@ -59,7 +92,9 @@ def classify(name, shape, protocol):
     if name in ("charged_projectiles", "bundle_contents", "container"):
         array = body[0]["type"]
         if kind == "container" and array[0] == "array" and array[1]["type"] == "Slot":
-            return "Items"
+            # Only container uses ItemStack.OPTIONAL_STREAM_CODEC. Bundle and
+            # projectile lists use the required codec and reject empty slots.
+            return "OptionalItems(256)" if name == "container" else "Items"
         return "Unsupported"
     if name == "pot_decorations":
         return "IntList"
