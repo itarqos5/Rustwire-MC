@@ -5,9 +5,12 @@
 //! optional Microsoft/Xbox/Minecraft HTTP flow. See the README coverage matrix:
 //! packet catalogs are not a promise that every play packet has a typed codec.
 #![forbid(unsafe_code)]
+pub mod chunk;
 pub mod codec;
 pub mod error;
 pub mod frame;
+pub mod nbt;
+pub mod registry;
 pub mod version;
 pub use error::{Error, Result};
 pub use version::Version;
