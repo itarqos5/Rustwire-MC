@@ -307,6 +307,6 @@ with their own fixture/oracle evidence, rather than retroactively attributed to
 this frozen live binary.
 
 Reproduce with the already accepted, isolated baseline and
-`validate_gameplay.py --mode bounded-gameplay --expanded-codecs` (all fourteen
+`validate_gameplay.py --mode bounded-gameplay --expanded-state --extended-components --min-seconds 55` (all fourteen
 versions by default). Use `--source-commit` when running an archived snapshot;
 the harness records actual source hashes in addition to that explicit label.
