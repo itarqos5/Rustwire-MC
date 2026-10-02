@@ -12,6 +12,7 @@ publish = false
 default = ["compression"]
 compression = ["dep:flate2"]
 crypto = ["dep:aes", "dep:sha1", "dep:rsa", "dep:rand", "dep:md-5", "dep:zeroize"]
+auth = ["crypto", "dep:ureq", "dep:serde_json"]
 
 [dependencies]
 flate2 = { version = "1.1", optional = true, default-features = false, features = ["rust_backend"] }
@@ -21,6 +22,16 @@ rsa = { version = "0.9", optional = true }
 rand = { version = "0.8", optional = true }
 md-5 = { version = "0.10", optional = true }
 zeroize = { version = "1.8", optional = true }
+ureq = { version = "2.12", optional = true, default-features = false, features = ["tls", "json"] }
+serde_json = { version = "1", optional = true }
+
+[[example]]
+name = "online_login"
+required-features = ["auth"]
+
+[[bench]]
+name = "codec"
+harness = false
 
 [profile.release]
 lto = "thin"

@@ -5,6 +5,8 @@
 //! optional Microsoft/Xbox/Minecraft HTTP flow. See the README coverage matrix:
 //! packet catalogs are not a promise that every play packet has a typed codec.
 #![forbid(unsafe_code)]
+#[cfg(feature = "auth")]
+pub mod auth;
 pub mod chunk;
 pub mod codec;
 pub mod connection;
