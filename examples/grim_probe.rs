@@ -21,7 +21,7 @@ use rustwire_mc::{
         common::CommonPacket,
         entity::EntityPacket,
         interact::{self, EntityAction, Hand, InputKeys, PlayerInput, UseItem},
-        inventory::{CloseContainer, SetSelectedSlot},
+        inventory::CloseContainer,
         movement::PlayerMovement,
         typed::{ChatPacket, DecodedPacket},
     },
@@ -133,12 +133,15 @@ impl Probe {
                 self.entity_id = Some(world.entity_id);
             }
             TypedEvent::Control(Event::Position(position)) => {
-                if self.phase != Phase::Waiting {
+                if self.phase != Phase::Waiting || self.teleports >= 2 || position.teleport_id < 0 {
                     return Err(Error::Unsupported(
                         "unexpected teleport/correction during the active flat-stone test",
                     ));
                 }
                 self.walk.teleport(&position)?;
+                if self.teleports == 1 {
+                    self.walk.verify_fixture()?;
+                }
                 self.teleports += 1;
                 self.fixture_settle_ticks = 0;
                 transport.send(&position.acknowledgement(self.version)?)?;
@@ -180,6 +183,7 @@ impl Probe {
                     println!("GRIM_PROBE_READY");
                     std::io::stdout().flush()?;
                 }
+                transport.complete_position()?;
             }
             TypedEvent::Decoded(DecodedPacket::Inventory(packet)) => {
                 self.inventory.observe(&packet)?
@@ -248,10 +252,10 @@ impl Probe {
             if self.teleports >= 2 && self.walk.verify_fixture().is_ok() {
                 self.walk.tick(false);
                 self.send_movement(transport)?;
-                if self.version.protocol() >= 768 {
-                    transport.send(&interact::tick_end(self.version)?)?;
-                }
                 self.fixture_settle_ticks += 1;
+            }
+            if self.ready && self.version.protocol() >= 768 {
+                transport.send(&interact::tick_end(self.version)?)?;
             }
             return Ok(());
         }
@@ -271,19 +275,15 @@ impl Probe {
         if self.phase == Phase::Wind && self.phase_tick == 0 {
             self.walk.rotation = [0., -90.];
         }
-        self.send_movement(transport)?;
+        // UI/use actions are processed before this tick's movement report.
+        // In particular, carried-item changes must not follow a flying packet.
         match self.phase {
-            Phase::Walk if self.phase_tick == 0 => println!(
-                "GRIM_ACTION phase=walk tick={} position={:?}",
-                self.ticks, self.walk.position
-            ),
             Phase::Walk if self.phase_tick == 40 => {
                 println!("GRIM_WALK_DONE position={:?}", self.walk.position)
             }
             Phase::Inventory if self.phase_tick == 0 => {
                 // Opening the player inventory is client-local. No open packet
                 // exists here; SWAP button 40 selects the offhand slot.
-                transport.send(&SetSelectedSlot { slot: 0 }.packet(self.version, self.limits)?)?;
                 transport.send(&self.inventory.swap_to_offhand(self.version, self.limits)?)?;
                 self.inventory_sent = true;
                 println!(
@@ -337,6 +337,13 @@ impl Probe {
                 println!("GRIM_NEGATIVE_RESET tick={} sprinting=false", self.ticks);
             }
             _ => {}
+        }
+        self.send_movement(transport)?;
+        if self.phase == Phase::Walk && self.phase_tick == 0 {
+            println!(
+                "GRIM_ACTION phase=walk tick={} position={:?}",
+                self.ticks, self.walk.position
+            );
         }
         if self.version.protocol() >= 768 {
             transport.send(&interact::tick_end(self.version)?)?;
@@ -490,6 +497,125 @@ fn main() {
 mod tests {
     use super::*;
     use rustwire_mc::codec::Writer;
+    #[test]
+    fn setup_corrections_fail_before_echoing_any_more_packets() {
+        for (teleports, id) in [(1, -1), (2, 3)] {
+            let (mut transport, server) = Transport::capture().unwrap();
+            let mut probe = Probe::new(Version::V26_2, Limits::default());
+            probe.teleports = teleports;
+            let correction = packet::PositionSync {
+                teleport_id: id,
+                x: 0.5,
+                y: -60.,
+                z: 0.5,
+                velocity: Some([0.; 3]),
+                yaw: 0.,
+                pitch: 0.,
+                relative_flags: 0,
+            };
+            assert!(probe
+                .event(
+                    TypedEvent::Control(Event::Position(correction)),
+                    &mut transport
+                )
+                .is_err());
+            server
+                .set_read_timeout(Some(Duration::from_millis(50)))
+                .unwrap();
+            assert!(server.peek(&mut [0; 1]).is_err());
+        }
+    }
+    #[test]
+    fn modern_waiting_play_ticks_emit_tick_end_without_inventing_movement() {
+        let version = Version::V26_2;
+        let limits = Limits::default();
+        let (transport, server) = Transport::capture().unwrap();
+        let mut capture = rustwire_mc::connection::Connection::new(server, version, limits);
+        let mut probe = Probe::new(version, limits);
+        probe.ready = true;
+        probe.teleports = 1;
+        probe.tick(&transport).unwrap();
+        assert_eq!(
+            capture.receive().unwrap().id,
+            version
+                .packet_id(State::Play, Direction::Serverbound, "tick_end")
+                .unwrap()
+        );
+        assert_eq!(probe.movement_packets, 0);
+    }
+    #[test]
+    fn inventory_and_use_actions_precede_coincident_position_heartbeat() {
+        use rustwire_mc::{
+            connection::Connection,
+            packet::{
+                inventory::{ComponentPatch, ContainerContent, ItemData, ItemStack, Slot},
+                typed::InventoryPacket,
+            },
+        };
+        for version in [Version::V1_21, Version::V1_21_5, Version::V26_2] {
+            let limits = Limits::default();
+            let (transport, server) = Transport::capture().unwrap();
+            let mut capture = Connection::new(server, version, limits);
+            let mut probe = Probe::new(version, limits);
+            probe.walk.position = [0.5, -60., 0.5];
+            probe.walk.tick(false);
+            probe.walk.tick(false);
+            probe.last_position = probe.walk.position;
+            probe.last_ground = true;
+            probe.phase = Phase::Inventory;
+            probe.position_reminder = 19;
+            let mut items = vec![Slot::Empty; 46];
+            items[36] = Slot::Item(ItemStack {
+                item_id: 1,
+                count: 8,
+                data: ItemData::Components(ComponentPatch::default()),
+            });
+            probe
+                .inventory
+                .observe(&InventoryPacket::Content(ContainerContent {
+                    window_id: 0,
+                    state_id: 3,
+                    items,
+                    carried_item: Slot::Empty,
+                }))
+                .unwrap();
+            probe.tick(&transport).unwrap();
+            let mut expected = vec!["window_click", "position"];
+            if version.protocol() >= 768 {
+                expected.push("tick_end");
+            }
+            for name in expected {
+                let packet = capture.receive().unwrap();
+                assert_eq!(
+                    packet.id,
+                    version
+                        .packet_id(State::Play, Direction::Serverbound, name)
+                        .unwrap(),
+                    "{version:?}: {name}"
+                );
+            }
+            probe.phase = Phase::Wind;
+            probe.phase_tick = 2;
+            probe.walk.rotation = [0., -90.];
+            probe.last_rotation = probe.walk.rotation;
+            probe.position_reminder = 19;
+            probe.tick(&transport).unwrap();
+            let mut expected = vec!["use_item", "arm_animation", "position"];
+            if version.protocol() >= 768 {
+                expected.push("tick_end");
+            }
+            for name in expected {
+                assert_eq!(
+                    capture.receive().unwrap().id,
+                    version
+                        .packet_id(State::Play, Direction::Serverbound, name)
+                        .unwrap(),
+                    "{version:?}: {name}"
+                );
+            }
+        }
+    }
+
     #[test]
     fn negative_control_cannot_run_before_completed_valid_actions() {
         let mut probe = Probe::new(Version::V1_21_5, Limits::default());
