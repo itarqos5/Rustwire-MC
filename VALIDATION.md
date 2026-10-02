@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 271 core tests with all features; 256 applicable core tests without default features
+- 273 core tests with all features; 258 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -346,3 +346,15 @@ through failure paths and rejects PKCS#1-v1.5-oversized challenges before random
 secret generation. A new 1024/2048/4096-bit capacity-boundary regression passes
 alongside the existing independent encryption/decryption fixtures. This does not
 change the documented upstream private-RSA advisory assessment.
+
+## Full-chunk compound-root validation
+
+A two-test regression increment checks every non-compound root kind against all
+applicable protocol families. Heightmaps through protocol 769 require a non-null
+compound; embedded chunk block-entity data permits either a compound or TAG_End
+in every supported family. Standalone block-entity updates have a different
+nullability boundary and are not used to infer this rule. Both encoding and
+decoding now reject scalar/list/array roots. [Inspected serializer facts and
+artifact hashes](docs/validation/chunk-nbt-roots.json) record the independent
+all-family check. The exact isolated snapshot passed 273 all-feature and 258
+no-default-feature tests, formatting, and strict all-target/all-feature Clippy.

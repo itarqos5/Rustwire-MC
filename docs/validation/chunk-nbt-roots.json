@@ -1,0 +1,150 @@
+{
+  "scope": "ClientboundLevelChunkPacketData and nested BlockEntityInfo wire readers and writers, all 14 release families",
+  "findings": [
+    "Heightmap NBT (763\u2013769) uses the nullable compound reader followed by an explicit null rejection. The old Rust codec rejected null correctly but incorrectly accepted non-compound roots.",
+    "Embedded block-entity NBT uses the nullable compound reader in all 14 release families, including 766\u2013776. The old Rust codec incorrectly accepted non-compound roots.",
+    "The new checks reject non-compound roots before parsing their payloads and reject non-compound values on encode. TAG_End remains supported for embedded block entities, without importing the stricter standalone tile_entity_data 766 boundary."
+  ],
+  "families": [
+    {
+      "protocol": 763,
+      "release_jar": "../rustwire-server-validation/servers/1.20.1/versions/1.20.1/paper-1.20.1.jar",
+      "release_jar_sha256": "cfd4617af161ec938a752a6a24eb411aec599848e60b865b295e0923ef3a056e",
+      "schema": "research/protocols/1.20.json",
+      "schema_sha256": "3b4fb2620f5d08927f94509ae028b475f7ef3bf2e7eb987af499d3ad632765ad",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "present"
+    },
+    {
+      "protocol": 764,
+      "release_jar": "../rustwire-server-validation/servers/1.20.2/versions/1.20.2/paper-1.20.2.jar",
+      "release_jar_sha256": "4d9a55272273a6cd2a89320602f068c3afb778c47c23786b555deda847832a49",
+      "schema": "research/protocols/1.20.2.json",
+      "schema_sha256": "e038fd10ee94a8395062034e6ad8aff6c989e7206b74906c3a04daebc7c004fc",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 765,
+      "release_jar": "../rustwire-server-validation/servers/1.20.4/versions/1.20.4/paper-1.20.4.jar",
+      "release_jar_sha256": "f0e1a9ba8733781815dce2a5f49c8b918377917b1c47239a3fb9c0d362e74db4",
+      "schema": "research/protocols/1.20.3.json",
+      "schema_sha256": "ea8e6d9712cd0d8122c7830a6bd23f91251b4cd5c4526486a0ac4c7f7784ed52",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 766,
+      "release_jar": "../rustwire-server-validation/servers/1.20.6/versions/1.20.6/paper-1.20.6.jar",
+      "release_jar_sha256": "07349f2a63fe23db4e5edd5ad44f0359f700f67f4afad8272ac2cfaf5f6fc1d7",
+      "schema": "research/protocols/1.20.5.json",
+      "schema_sha256": "4204f6f1d4f5aa7ab0936fe0cb78fac3d249a06e534e4903d1937614667be241",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 767,
+      "release_jar": "../rustwire-server-validation/servers/1.21.1/versions/1.21.1/paper-1.21.1.jar",
+      "release_jar_sha256": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+      "schema": "research/protocols/1.21.1.json",
+      "schema_sha256": "1f5f23d1d1425a12d1b46d78dbc2b79038ea456cc1be11c942a79bebd8d3f43a",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 768,
+      "release_jar": "../rustwire-server-validation/servers/1.21.3/versions/1.21.3/paper-1.21.3.jar",
+      "release_jar_sha256": "2f7bffaf0ab60e4e8e3167709e25bf3add7fed7741268fd54cc655b5eb849e63",
+      "schema": "research/protocols/1.21.3.json",
+      "schema_sha256": "94b9c562df3be925c12615041281d9f492c69f3fee10038787fdeb312a65c575",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 769,
+      "release_jar": "../rustwire-server-validation/servers/1.21.4/versions/1.21.4/paper-1.21.4.jar",
+      "release_jar_sha256": "9cd431f4b77d66a3bd565c01720dae617843684a363c4d9ad2eab590f8450819",
+      "schema": "research/protocols/1.21.4.json",
+      "schema_sha256": "43936c5220a43b638b73ffd8165bccb3db7fe8dd0d54049072eb21fa5b9614ea",
+      "heightmaps": "required compound root",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 770,
+      "release_jar": "../rustwire-server-validation/servers/1.21.5/versions/1.21.5/paper-1.21.5.jar",
+      "release_jar_sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+      "schema": "research/protocols/1.21.5.json",
+      "schema_sha256": "96434702de4e203d84baf092aa500c7ba4ca2af95edfc6f339a982b61cbb0777",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 771,
+      "release_jar": "../rustwire-server-validation/servers/1.21.6/versions/1.21.6/paper-1.21.6.jar",
+      "release_jar_sha256": "80671afc8efae94785497531fd43a2dd171d2a45b7206f37d57013cf4dd5d5e6",
+      "schema": "research/protocols/1.21.6.json",
+      "schema_sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 772,
+      "release_jar": "../rustwire-server-validation/servers/1.21.8/versions/1.21.8/paper-1.21.8.jar",
+      "release_jar_sha256": "c64fb7dbc95cd15aa0b7460a5b1e117eef5ee91c4e6fa7a8f1fe6487b6c31507",
+      "schema": "research/protocols/1.21.8.json",
+      "schema_sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 773,
+      "release_jar": "../rustwire-server-validation/servers/1.21.10/versions/1.21.10/paper-1.21.10.jar",
+      "release_jar_sha256": "8163aae3da901af7c4bf910cd8f27f5b28f02f2a7a572122f70f34c941f09cea",
+      "schema": "research/protocols/1.21.9.json",
+      "schema_sha256": "f8ab7f079607267e5cbdd166d943fcf1ea77b87fa494cbc39737665a8d90aeb6",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 774,
+      "release_jar": "../rustwire-server-validation/servers/1.21.11/versions/1.21.11/paper-1.21.11.jar",
+      "release_jar_sha256": "3a73f0cc4020a5eb45629a67629b14263331c68de45552f8505df8060fa8ed43",
+      "schema": "research/protocols/1.21.11.json",
+      "schema_sha256": "34d280120eef9090c66abc502d43d5305ffa2f592c1d2b0eb7a96b71048b81f7",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 775,
+      "release_jar": "../rustwire-server-validation/servers/26.1.2/versions/26.1.2/paper-26.1.2.jar",
+      "release_jar_sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+      "schema": "research/protocols/26.1.json",
+      "schema_sha256": "a5fda872e2d425d1f35a8ab7e042148f4944ac1a7f0c3c5380b64b06d383bc0d",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    },
+    {
+      "protocol": 776,
+      "release_jar": "../rustwire-server-validation/servers/26.2/versions/26.2/paper-26.2.jar",
+      "release_jar_sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+      "schema": "research/protocols/26.2.json",
+      "schema_sha256": "fef8c96e9a25905f692b8e1129ab1d331922f4ce41909a56537a4331fff30430",
+      "heightmaps": "typed map, not NBT",
+      "embedded_block_entity": "optional compound root; TAG_End accepted",
+      "root_name": "absent"
+    }
+  ]
+}

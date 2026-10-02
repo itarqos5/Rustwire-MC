@@ -426,3 +426,131 @@ fn paper_1215_obsolete_length_prefix_padding_regression() {
     let (_, bytes) = padded(Version::V1_21_6, &[0; 48]);
     assert!(ChunkData::decode(&bytes, Version::V1_21_6, 24, Limits::default()).is_err());
 }
+
+// Independent full-chunk body with one all-air section and one block entity.
+// Parameters are complete network NBT roots, including named-root bytes in 763.
+fn compound_boundary_fixture(version: Version, heightmap: &[u8], entity: &[u8]) -> Vec<u8> {
+    let mut bytes = vec![0, 0, 0, 1, 0xff, 0xff, 0xff, 0xfe];
+    if version.protocol() < 770 {
+        bytes.extend(heightmap);
+    } else {
+        bytes.push(0); // Empty typed heightmap list.
+    }
+    let section: &[u8] = if version.protocol() < 770 {
+        &[0, 0, 0, 0, 0, 0, 1, 0]
+    } else if version.protocol() < 775 {
+        &[0, 0, 0, 0, 0, 1]
+    } else {
+        &[0, 0, 0, 0, 0, 0, 0, 1]
+    };
+    bytes.push(section.len() as u8);
+    bytes.extend(section);
+    bytes.extend([1, 0x12, 0xff, 0xc0, 3]);
+    bytes.extend(entity);
+    bytes.extend([0; 6]); // Empty light masks and lists.
+    bytes
+}
+fn empty_compound_wire(version: Version) -> Vec<u8> {
+    if version.protocol() == 763 {
+        vec![10, 0, 0, 0]
+    } else {
+        vec![10, 0]
+    }
+}
+fn noncompound_roots(version: Version) -> Vec<(Tag, Vec<u8>)> {
+    [
+        (1, Tag::Byte(1), vec![1]),
+        (2, Tag::Short(2), vec![0, 2]),
+        (3, Tag::Int(3), vec![0, 0, 0, 3]),
+        (4, Tag::Long(4), vec![0, 0, 0, 0, 0, 0, 0, 4]),
+        (5, Tag::Float(0.0), vec![0; 4]),
+        (6, Tag::Double(0.0), vec![0; 8]),
+        (7, Tag::ByteArray(vec![]), vec![0; 4]),
+        (8, Tag::String("x".into()), vec![0, 1, b'x']),
+        (
+            9,
+            Tag::List {
+                element_type: TagType::End,
+                elements: vec![],
+            },
+            vec![0; 5],
+        ),
+        (11, Tag::IntArray(vec![]), vec![0; 4]),
+        (12, Tag::LongArray(vec![]), vec![0; 4]),
+    ]
+    .into_iter()
+    .map(|(kind, tag, payload)| {
+        let mut bytes = vec![kind];
+        if version.protocol() == 763 {
+            bytes.extend([0, 0]);
+        }
+        bytes.extend(payload);
+        (tag, bytes)
+    })
+    .collect()
+}
+
+#[test]
+fn full_chunk_heightmaps_require_nonnull_compound_through_769() {
+    let limits = Limits::default();
+    for &version in Version::ALL.iter().filter(|v| v.protocol() < 770) {
+        let compound = empty_compound_wire(version);
+        let good = compound_boundary_fixture(version, &compound, &[0]);
+        let expected = ChunkData::decode(&good, version, 1, limits).unwrap();
+        assert_eq!(expected.heightmaps, Heightmaps::Nbt(empty_nbt(version)));
+        assert_eq!(expected.encode(version, limits).unwrap(), good);
+        let absent = compound_boundary_fixture(version, &[0], &[0]);
+        assert!(
+            ChunkData::decode(&absent, version, 1, limits).is_err(),
+            "{version}"
+        );
+        for (tag, root) in noncompound_roots(version) {
+            let bad = compound_boundary_fixture(version, &root, &[0]);
+            assert!(
+                ChunkData::decode(&bad, version, 1, limits).is_err(),
+                "{version} {tag:?}"
+            );
+            let mut value = expected.clone();
+            let mut nbt = empty_nbt(version);
+            nbt.root = tag;
+            value.heightmaps = Heightmaps::Nbt(nbt);
+            assert!(value.encode(version, limits).is_err(), "{version}");
+        }
+    }
+}
+
+#[test]
+fn embedded_chunk_entities_keep_optional_compound_all_fourteen_families() {
+    let limits = Limits::default();
+    for &version in Version::ALL {
+        let compound = empty_compound_wire(version);
+        for root in [&[0][..], compound.as_slice()] {
+            let good = compound_boundary_fixture(version, &compound, root);
+            let expected = ChunkData::decode(&good, version, 1, limits).unwrap();
+            assert_eq!(expected.encode(version, limits).unwrap(), good, "{version}");
+            assert_eq!(
+                expected.block_entities[0].data,
+                if root == [0] {
+                    None
+                } else {
+                    Some(empty_nbt(version))
+                }
+            );
+            assert_eq!(expected.block_entities[0].local_x, 1);
+            assert_eq!(expected.block_entities[0].local_z, 2);
+            assert_eq!(expected.block_entities[0].y, -64);
+            for (tag, bad_root) in noncompound_roots(version) {
+                let bad = compound_boundary_fixture(version, &compound, &bad_root);
+                assert!(
+                    ChunkData::decode(&bad, version, 1, limits).is_err(),
+                    "{version} {tag:?}"
+                );
+                let mut value = expected.clone();
+                let mut nbt = empty_nbt(version);
+                nbt.root = tag;
+                value.block_entities[0].data = Some(nbt);
+                assert!(value.encode(version, limits).is_err(), "{version}");
+            }
+        }
+    }
+}

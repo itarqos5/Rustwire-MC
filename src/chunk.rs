@@ -11,7 +11,7 @@
 //! common/PaletteChunkSection}.js` (retrieved 2026-10-02).
 use crate::{
     codec::{Reader, Writer},
-    nbt::{Nbt, RootFormat},
+    nbt::{Nbt, RootFormat, Tag},
     Error, Limits, Result, Version,
 };
 
@@ -313,6 +313,7 @@ impl ChunkSection {
 }
 #[derive(Clone, Debug, PartialEq)]
 pub enum Heightmaps {
+    /// Required compound root in protocols 763–769.
     Nbt(Nbt),
     /// The numeric heightmap kind is preserved, including unknown future kinds.
     Typed(Vec<Heightmap>),
@@ -353,6 +354,8 @@ pub struct BlockEntity {
     pub local_z: u8,
     pub y: i16,
     pub kind: u32,
+    /// Optional compound in all supported releases. Unlike standalone
+    /// `tile_entity_data`, embedded chunk entries still permit TAG_End in 766+.
     pub data: Option<Nbt>,
 }
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
@@ -501,8 +504,7 @@ impl ChunkData {
         let z = r.i32()?;
         let heightmaps = if version.protocol() < 770 {
             Heightmaps::Nbt(
-                Nbt::read(&mut r, RootFormat::for_version(version))?
-                    .ok_or(Error::Invalid("missing heightmap NBT"))?,
+                read_compound(&mut r, version)?.ok_or(Error::Invalid("missing heightmap NBT"))?,
             )
         } else {
             let count = r.count(limits.max_collection)?;
@@ -566,7 +568,7 @@ impl ChunkData {
             let packed = r.u8()?;
             let y = r.i16()?;
             let kind = read_id(&mut r)?;
-            let data = Nbt::read(&mut r, RootFormat::for_version(version))?;
+            let data = read_compound(&mut r, version)?;
             block_entities.push(BlockEntity {
                 local_x: packed >> 4,
                 local_z: packed & 15,
@@ -596,6 +598,9 @@ impl ChunkData {
         w.i32(self.z);
         match &self.heightmaps {
             Heightmaps::Nbt(n) if version.protocol() < 770 => {
+                if !matches!(n.root, Tag::Compound(_)) {
+                    return Err(Error::Invalid("heightmap compound NBT"));
+                }
                 n.write(&mut w, RootFormat::for_version(version), limits)?
             }
             Heightmaps::Typed(maps) if version.protocol() >= 770 => {
@@ -625,6 +630,9 @@ impl ChunkData {
             w.i16(entity.y);
             w.var_i32(entity.kind as i32);
             if let Some(n) = &entity.data {
+                if !matches!(n.root, Tag::Compound(_)) {
+                    return Err(Error::Invalid("block-entity compound NBT"));
+                }
                 n.write(&mut w, RootFormat::for_version(version), limits)?;
             } else {
                 w.u8(0);
@@ -634,6 +642,16 @@ impl ChunkData {
         self.light.write(&mut w, limits)?;
         check_size(&w, limits)?;
         Ok(w.into_inner())
+    }
+}
+// ClientboundLevelChunkPacketData and its BlockEntityInfo use the nullable
+// compound reader in every applicable release. The outer heightmap constructor
+// additionally rejects null through 769; 770+ heightmaps are no longer NBT.
+fn read_compound(r: &mut Reader<'_>, version: Version) -> Result<Option<Nbt>> {
+    match r.remaining().first() {
+        Some(0 | 10) => Nbt::read(r, RootFormat::for_version(version)),
+        Some(_) => Err(Error::Invalid("chunk compound NBT")),
+        None => Err(Error::Eof),
     }
 }
 fn read_id(r: &mut Reader<'_>) -> Result<u32> {
