@@ -178,3 +178,29 @@ The original golden tests target ClientboundPlayerInfoUpdate/RemovePacket,
 EquipmentSlot, attribute/effect packets, profile/session codecs and the release
 ResourceLocation/Identifier rules. Public keys and signatures remain explicitly
 unverified envelopes, and registry references remain unresolved numeric IDs.
+
+## Remaining item-component stream layouts
+
+The new inventory submodules check the actual release stream codecs instead of
+assuming every historical schema alias is correct. Bundle-use animation starts
+at 769 and spear-use animation at 774. Equippable gains interaction at 770 and
+shearing fields at 771. Shield bypass changes from an optional tag string to an
+optional holder set at 775. Profiles become discriminated complete/partial
+profiles with a skin patch at 773. Trim model-index floats remain through 768,
+numeric armor keys through 767, and ingredient/template IDs disappear at 770.
+Instruments use ticks without descriptions through 767, then seconds with a
+description. Instrument, provided-trim-material and jukebox key wrappers disappear
+at 775. Chicken, zombie-nautilus and damage-type component references use older
+boolean ID/key wrappers before their plain registry-ID representations at 775.
+
+Adventure-mode block predicates have boolean-prefixed compound NBT. Protocol 770
+adds typed exact component matchers and registry-aware NBT partial matchers; 774
+adds the concrete/any-value selector, and 775 adds VillagerVariant. Partial
+matcher NBT is the actual official network representation, not an opaque fallback.
+The original codecs preserve it and enforce shared recursion/node/byte budgets;
+game-specific predicate evaluation remains an application responsibility.
+
+`tests/components_extended.rs`, `components_holders.rs` and
+`components_predicates.rs` contain 32 independent tests. The code comments name
+the corresponding release classes and corrected boundaries. No game class,
+disassembly or proprietary implementation is distributed.

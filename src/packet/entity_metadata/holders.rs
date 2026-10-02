@@ -221,7 +221,7 @@ fn write_optional_nbt(value: &Option<Nbt>, w: &mut Writer, b: &mut Budget) -> Re
     b.check_bytes(w)
 }
 
-pub(super) fn read_painting(
+pub(crate) fn read_painting(
     r: &mut Reader<'_>,
     version: Version,
     b: &mut Budget,
@@ -251,7 +251,7 @@ pub(super) fn read_painting(
     }))
 }
 
-pub(super) fn write_painting(
+pub(crate) fn write_painting(
     value: &RegistryHolder<PaintingVariant>,
     w: &mut Writer,
     version: Version,
@@ -379,7 +379,7 @@ fn write_skin_patch(value: &PlayerSkinPatch, w: &mut Writer, b: &Budget) -> Resu
     b.check_bytes(w)
 }
 
-pub(super) fn read_profile(
+pub(crate) fn read_profile(
     r: &mut Reader<'_>,
     version: Version,
     b: &mut Budget,
@@ -406,7 +406,7 @@ pub(super) fn read_profile(
     }
 }
 
-pub(super) fn write_profile(
+pub(crate) fn write_profile(
     value: &ResolvableProfile,
     w: &mut Writer,
     version: Version,

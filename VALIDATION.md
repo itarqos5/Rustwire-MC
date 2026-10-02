@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 196 core tests with all features; 182 applicable core tests without default features
+- 228 core tests with all features; 214 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -125,8 +125,8 @@ The particle/holder increment adds 14 tests and removes the intentional missing
 particle-list decoder. The older live-run evidence above is retained unchanged;
 its historical raw-fallback observations are not rewritten as newer test results.
 
-The ordinary component increment adds 19 tests. Known added-component coverage
-is 50/56 at 766, 50/57 at 767, 56/67 at 768–769, 79/96 at 770–773, 80/104 at
+The earlier ordinary-component increment added 19 tests. Its added-component coverage
+was 50/56 at 766, 50/57 at 767, 56/67 at 768–769, 79/96 at 770–773, 80/104 at
 774, 85/110 at 775 and 87/111 at 776. Removed component IDs and caller-supplied
 hash representations can still carry every known component ID.
 
@@ -213,3 +213,20 @@ Connection dispatch/raw preservation and 10,752 bounded deterministic mutations.
 Isolated full suites, strict clippy/rustdoc/format checks and Rust 1.88 passed.
 Real-server evidence for these new packet APIs is recorded separately when run;
 the tests do not authenticate profile keys or resolve numeric registry identities.
+
+## Remaining known component layouts
+
+Thirty-two new tests cover consumables, equippable/combat payloads, profiles,
+registry holders, trims, instruments, banners and adventure-mode predicates.
+They exercise independent golden bytes, all truncated prefixes, atomic failures,
+version boundaries, recursive exact predicates and shared packet/collection/NBT
+budgets. All known outer vanilla component layouts are classified as implemented:
+56 at 766, 57 at 767, 67 at 768–769, 96 at 770–773, 104 at 774, 110 at 775 and
+111 at 776. Unknown IDs still fail closed. Registry-aware partial predicate
+payloads genuinely use NBT on the wire; their game-specific semantics are not
+validated or replaced with opaque byte blobs.
+
+Full no-default/all-feature suites, strict all-target clippy, generator checks
+and an initial Rust 1.88 library check passed before publication. Existing
+persistent component-hash coverage is unchanged. Fresh live-server evidence for
+this increment is separate from the earlier six-version component checkpoint.

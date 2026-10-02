@@ -412,7 +412,7 @@ fn coverage_registry_is_release_specific_and_honest() {
         assert_eq!(component_id(v(p), "custom_name").unwrap(), name_id);
         assert_eq!(
             registry[component_id(v(p), "can_place_on").unwrap() as usize].1,
-            ComponentWire::Unsupported
+            ComponentWire::BlockPredicates
         );
         for (id, (name, _)) in registry.iter().enumerate() {
             assert_eq!(component_id(v(p), name).unwrap(), id as i32);
@@ -424,9 +424,9 @@ fn coverage_registry_is_release_specific_and_honest() {
 }
 #[test]
 fn unsupported_payload_never_consumes_unknown_layout() {
-    // ID 11 is can_place_on in 770. It has no length prefix, so bytes after
-    // its ID must not be guessed or scanned to find the following component.
-    let bytes = decode("01 05 01 00 0b ff aa 55");
+    // Unknown component ID 255 has no known payload length: fail closed
+    // without guessing or scanning for the following component.
+    let bytes = decode("01 05 01 00 ff 01 ff aa 55");
     let mut r = Reader::new(&bytes, Limits::default());
     assert!(matches!(
         Slot::read(&mut r, v(770)),

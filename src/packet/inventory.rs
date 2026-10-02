@@ -25,9 +25,18 @@ use crate::{
 use std::collections::BTreeSet;
 #[path = "inventory/components.rs"]
 mod components;
+#[path = "inventory/extended.rs"]
+mod extended;
+#[path = "inventory/extended_holders.rs"]
+mod extended_holders;
+#[path = "inventory/predicates.rs"]
+mod predicates;
 #[path = "item_components.rs"]
 mod registry;
 pub use components::*;
+pub use extended::*;
+pub use extended_holders::*;
+pub use predicates::*;
 
 /// Wire layout supported for a particular component in a particular release.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
@@ -76,6 +85,27 @@ pub enum ComponentWire {
     Bees,
     Tool,
     Repairable,
+    Sound,
+    Consumable,
+    UseCooldown,
+    Equippable,
+    DeathProtection,
+    Weapon,
+    AttackRange,
+    BlocksAttacks,
+    UseEffects,
+    PiercingWeapon,
+    KineticWeapon,
+    SwingAnimation,
+    Profile,
+    PaintingVariant,
+    ArmorTrim,
+    Instrument,
+    ProvidesTrimMaterial,
+    JukeboxPlayable,
+    BannerPatterns,
+    RegistryReference,
+    BlockPredicates,
     Unsupported,
 }
 /// Ordered by on-wire ID. An empty registry denotes classic-NBT releases.
@@ -162,6 +192,34 @@ pub enum ComponentValue {
     Bees(Vec<BeeOccupant>),
     Tool(Tool),
     Repairable(RegistryHolderSet),
+    ArmorTrim(ArmorTrim),
+    Instrument(HolderOrKey<Instrument>),
+    ProvidesTrimMaterial(HolderOrKey<TrimMaterial>),
+    JukeboxPlayable(JukeboxPlayable),
+    BannerPatterns(Vec<BannerPatternLayer>),
+    RegistryReference(RegistryReference),
+    BlockPredicates(BlockPredicates),
+
+    Sound(SoundHolder),
+    Consumable(Consumable),
+    UseCooldown(UseCooldown),
+    Equippable(Equippable),
+    DeathProtection(Vec<ConsumeEffect>),
+    Weapon(Weapon),
+    AttackRange(AttackRange),
+    BlocksAttacks(BlocksAttacks),
+    UseEffects(UseEffects),
+    PiercingWeapon(PiercingWeapon),
+    KineticWeapon(KineticWeapon),
+    SwingAnimation(SwingAnimation),
+    /// Before protocol 773, requires a Partial profile with an empty skin patch.
+    Profile(super::entity_metadata::holders::ResolvableProfile),
+    PaintingVariant(
+        super::entity_metadata::holders::RegistryHolder<
+            super::entity_metadata::holders::PaintingVariant,
+        >,
+    ),
+
     /// Registry type ID plus anonymous NBT, used by entity_data and
     /// block_entity_data from protocol 773.
     TypedNbt {
@@ -228,7 +286,8 @@ impl Slot {
 
 // Inventory arrays, component patches and nested item lists share a collection
 // budget. All NBT roots in a packet additionally share max_nbt_nodes. Nested
-// items use max_nbt_depth (hard-capped at 64) to bound the Rust call stack.
+// items, consume effects and exact predicate values use max_nbt_depth
+// (hard-capped at 64) to bound the Rust call stack.
 pub(crate) struct Budget {
     pub(crate) limits: Limits,
     remaining: usize,
@@ -571,6 +630,33 @@ fn read_component(
         | W::Bees
         | W::Tool
         | W::Repairable => components::read(r, wire, version, b, depth)?,
+        W::Sound
+        | W::Consumable
+        | W::UseCooldown
+        | W::Equippable
+        | W::DeathProtection
+        | W::Weapon
+        | W::AttackRange
+        | W::BlocksAttacks
+        | W::UseEffects
+        | W::PiercingWeapon
+        | W::KineticWeapon
+        | W::SwingAnimation
+        | W::Profile
+        | W::PaintingVariant => extended::read(r, wire, version, b, depth)?,
+        W::ArmorTrim => V::ArmorTrim(extended_holders::read_trim(r, version, b)?),
+        W::Instrument => V::Instrument(extended_holders::read_instrument(r, version, b)?),
+        W::ProvidesTrimMaterial => V::ProvidesTrimMaterial(
+            extended_holders::read_provides_trim_material(r, version, b)?,
+        ),
+        W::JukeboxPlayable => V::JukeboxPlayable(extended_holders::read_jukebox(r, version, b)?),
+        W::BannerPatterns => {
+            V::BannerPatterns(extended_holders::read_banner_patterns(r, version, b)?)
+        }
+        W::RegistryReference => {
+            V::RegistryReference(extended_holders::read_registry_reference(r, version, b)?)
+        }
+        W::BlockPredicates => V::BlockPredicates(predicates::read(r, version, b, depth)?),
         W::Unsupported => return Err(Error::Unsupported("item component payload layout")),
         W::Unit => V::Unit,
         W::Bool => V::Bool(r.bool()?),
@@ -725,6 +811,38 @@ pub(crate) fn write_component(
             | W::Repairable,
             value,
         ) => components::write(value, wire, w, version, b, depth)?,
+        (
+            W::Sound
+            | W::Consumable
+            | W::UseCooldown
+            | W::Equippable
+            | W::DeathProtection
+            | W::Weapon
+            | W::AttackRange
+            | W::BlocksAttacks
+            | W::UseEffects
+            | W::PiercingWeapon
+            | W::KineticWeapon
+            | W::SwingAnimation
+            | W::Profile
+            | W::PaintingVariant,
+            value,
+        ) => extended::write(value, wire, w, version, b, depth)?,
+        (W::ArmorTrim, V::ArmorTrim(v)) => extended_holders::write_trim(v, w, version, b)?,
+        (W::Instrument, V::Instrument(v)) => extended_holders::write_instrument(v, w, version, b)?,
+        (W::ProvidesTrimMaterial, V::ProvidesTrimMaterial(v)) => {
+            extended_holders::write_provides_trim_material(v, w, version, b)?
+        }
+        (W::JukeboxPlayable, V::JukeboxPlayable(v)) => {
+            extended_holders::write_jukebox(v, w, version, b)?
+        }
+        (W::BannerPatterns, V::BannerPatterns(v)) => {
+            extended_holders::write_banner_patterns(v, w, version, b)?
+        }
+        (W::RegistryReference, V::RegistryReference(v)) => {
+            extended_holders::write_registry_reference(v, w, version, b)?
+        }
+        (W::BlockPredicates, V::BlockPredicates(v)) => predicates::write(v, w, version, b, depth)?,
         (W::Unsupported, _) => return Err(Error::Unsupported("item component payload layout")),
         (W::Unit, V::Unit) => {}
         (W::Bool, V::Bool(v)) => w.bool(*v),

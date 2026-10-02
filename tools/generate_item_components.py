@@ -52,6 +52,10 @@ def classify(name, shape, protocol):
     # official release STREAM_CODEC declarations, not inferred from the schema.
     if name == "food":
         return "FoodLegacy" if protocol <= 767 else "Food"
+    # Structured codecs also correct official holder/key boundaries, early
+    # instrument/trim payloads, animation enums and predicate framing; these
+    # are implemented by release in inventory/{extended,extended_holders,
+    # predicates}.rs instead of inheriting stale historical schema fields.
     structured = {
         "potion_contents": "PotionContents",
         "suspicious_stew_effects": "StewEffects",
@@ -64,6 +68,33 @@ def classify(name, shape, protocol):
         "bees": "Bees",
         "tool": "Tool",
         "repairable": "Repairable",
+        "can_place_on": "BlockPredicates",
+        "can_break": "BlockPredicates",
+        "trim": "ArmorTrim",
+        "instrument": "Instrument",
+        "provides_trim_material": "ProvidesTrimMaterial",
+        "jukebox_playable": "JukeboxPlayable",
+        "banner_patterns": "BannerPatterns",
+        "damage_type": "RegistryReference",
+
+        "break_sound": "Sound",
+        "consumable": "Consumable",
+        "use_cooldown": "UseCooldown",
+        "equippable": "Equippable",
+        "death_protection": "DeathProtection",
+        "weapon": "Weapon",
+        "attack_range": "AttackRange",
+        "blocks_attacks": "BlocksAttacks",
+        "use_effects": "UseEffects",
+        "piercing_weapon": "PiercingWeapon",
+        "kinetic_weapon": "KineticWeapon",
+        "swing_animation": "SwingAnimation",
+        "profile": "Profile",
+        "painting/variant": "PaintingVariant",
+        "chicken/variant": "RegistryReference",
+        "zombie_nautilus/variant": "RegistryReference",
+        "chicken/sound_variant": "VarInt",
+
     }
     if name in structured:
         return structured[name]

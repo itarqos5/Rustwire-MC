@@ -76,7 +76,7 @@ cargo bench --bench codec
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Block/section updates, chunk unload and respawn with dimension metadata
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
-- Typed food/effects, potions, stew, writable/written books, attributes, lodestones, fireworks, bees, tools and repairable holder sets, including their release-specific layouts
+- Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers
 - Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
 - `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components; unknown persistent codecs fail explicitly
 - All known entity-metadata outer serializers, including semantic particles, painting/wolf holders and resolvable profiles, with shared slot/NBT budgets
@@ -85,7 +85,7 @@ cargo bench --bench codec
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
 - Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
 
-This remains partial typed coverage: modern added-item payload coverage ranges from 50/56 layouts in 1.20.5 to 87/111 in 26.2. All known outer metadata serializers are decoded, but nested item components retain their explicit limits. Secure-chat signing and signature verification remain incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
+All known vanilla added-item outer payload layouts are implemented: 56/56 in 1.20.5 through 111/111 in 26.2, together with all known outer metadata serializers. Registry resolution, game-specific NBT predicate semantics and persistent component-hash derivation retain explicit limits. Secure-chat signing and signature verification remain incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
 
 Numeric block-state and biome IDs remain numeric. Dynamic registry names can be looked up with `RegistryStore`; a bundled static block-state-name dataset is not included.
 
@@ -128,7 +128,7 @@ Important wire boundaries are explicit: configuration/anonymous NBT from 764, pe
 
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
-- Item components have explicit partial payload coverage; nested item particles inherit those limits. Recipes, comprehensive command trees and remaining gameplay packets still need codecs
+- Known component wire layouts are implemented; registry identities, NBT-backed predicate semantics and many persistent component-hash forms remain application responsibilities. Recipes, comprehensive command trees and remaining gameplay packets still need codecs
 - Secure player-chat signing and signature verification remain application responsibilities; the provided acknowledgement/cache helpers do not establish trust. Unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang secure-chat signing session, mod-loader handshake, world simulation or rendering

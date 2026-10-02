@@ -319,13 +319,22 @@ fn write_effect_details(
         write_effect_details(x, w, b, depth + 1)
     })
 }
-fn read_effect(r: &mut Reader<'_>, b: &mut Budget, depth: usize) -> Result<PotionEffect> {
+pub(super) fn read_effect(
+    r: &mut Reader<'_>,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<PotionEffect> {
     Ok(PotionEffect {
         id: nonnegative(r.var_i32()?, "mob effect ID")?,
         details: read_effect_details(r, b, depth + 1)?,
     })
 }
-fn write_effect(value: &PotionEffect, w: &mut Writer, b: &mut Budget, depth: usize) -> Result<()> {
+pub(super) fn write_effect(
+    value: &PotionEffect,
+    w: &mut Writer,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<()> {
     w.var_i32(nonnegative(value.id, "mob effect ID")?);
     write_effect_details(&value.details, w, b, depth + 1)
 }
