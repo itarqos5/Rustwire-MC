@@ -13,6 +13,7 @@ pub mod movement;
 pub mod player;
 pub mod typed;
 mod world;
+pub mod world_effects;
 use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,

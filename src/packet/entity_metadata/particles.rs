@@ -1174,9 +1174,19 @@ pub fn particle_id(version: Version, name: &str) -> Result<i32> {
         .map(|id| id as i32)
         .ok_or(Error::Unsupported("particle in selected release"))
 }
-pub(super) fn read(r: &mut Reader<'_>, version: Version, b: &mut Budget) -> Result<Particle> {
+pub(crate) fn read(r: &mut Reader<'_>, version: Version, b: &mut Budget) -> Result<Particle> {
+    let id = r.var_i32()?;
+    read_payload(r, version, b, id)
+}
+// Older world-particle packets put the registry ID before the common fields.
+pub(crate) fn read_payload(
+    r: &mut Reader<'_>,
+    version: Version,
+    b: &mut Budget,
+    id: i32,
+) -> Result<Particle> {
     b.charge(1)?;
-    let id = nonnegative(r.var_i32()?)? as usize;
+    let id = nonnegative(id)? as usize;
     let (kind, wire) = particle_registry(version)
         .get(id)
         .copied()
@@ -1279,7 +1289,16 @@ pub(super) fn read(r: &mut Reader<'_>, version: Version, b: &mut Budget) -> Resu
     };
     Ok(Particle { kind, data })
 }
-pub(super) fn write(
+pub(crate) fn write(
+    particle: &Particle,
+    w: &mut Writer,
+    version: Version,
+    b: &mut Budget,
+) -> Result<()> {
+    w.var_i32(particle_id(version, particle.kind)?);
+    write_payload(particle, w, version, b)
+}
+pub(crate) fn write_payload(
     particle: &Particle,
     w: &mut Writer,
     version: Version,
@@ -1288,7 +1307,6 @@ pub(super) fn write(
     b.charge(1)?;
     let id = particle_id(version, particle.kind)?;
     let wire = particle_registry(version)[id as usize].1;
-    w.var_i32(id);
     use ParticleData as D;
     use ParticleWire as W;
     match (wire, &particle.data) {

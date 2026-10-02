@@ -221,3 +221,22 @@ Paper 26.2 receiver imposes a separately patched 2,048-unit policy; applications
 should respect their server's stricter limits. Provider identifiers are data,
 never executed or fetched by Rustwire. The original tests cover every known
 parser/version ordinal and independent malformed/limit fixtures.
+
+## World-particle, explosion and sound boundaries
+
+The six new clientbound codecs follow cached official release serializers.
+Explosions use the legacy layout in 763–764; 765 adds interaction, two particles
+and an untagged inline sound, with a sound holder replacing that direct sound in
+766–767. Optional player knockback uses f64 from 768, correcting a stale f32
+schema annotation. Radius, fixed-i32 block count and weighted block particles
+begin at 773 and persist through 776. The outer explosion layout does not change
+at 775/776, although its nested particle payloads do. World-particle IDs move
+from the prefix to the suffix at 766, the always-show flag starts at 769, and
+UI sound category 10 starts at 771. Fixed-point sound coordinates remain exact
+integers rather than round-tripping through floating-point conversions.
+
+Shared particle and SoundEvent helpers were factored without changing existing
+metadata/item behavior. Independent tests cover all six packet families and
+release boundaries, plus nested item budgets and weighted-total overflow. The
+26.1.2/26.2 explosion codecs were also checked against the official artifacts
+directly. No rendering, world simulation or cryptographic trust is implied.

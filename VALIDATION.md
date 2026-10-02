@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 246 core tests with all features; 232 applicable core tests without default features
+- 263 core tests with all features; 249 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -242,3 +242,14 @@ and malformed-known-packet errors. Focused tests pass on stable and Rust 1.88
 with and without features; the isolated full suites, strict clippy and rustdoc
 checks pass. This increment has fixture/oracle evidence, not a live command
 execution claim.
+
+## World effects and sounds
+
+Fifteen new codec tests cover particles, all explosion-layout boundaries,
+positional/entity sounds, stop-sound filters and world events across all fourteen
+protocols. Independent golden bodies, every-prefix truncation, malformed
+discriminants, aggregate byte/collection/item/NBT/depth limits, weight overflow
+and bounded mutations pass. Two additional dispatch regressions keep malformed
+known payloads as errors. Full isolated stable suites, strict clippy/rustdoc and
+focused Rust 1.88 checks passed. These are wire-codec tests; they do not simulate
+explosion physics or establish new real-server particle/explosion coverage.

@@ -257,18 +257,29 @@ fn limited_string(x: &str, max: usize, w: &mut Writer, b: &Budget) -> Result<()>
     }
     string(w, x, b)
 }
-pub(super) fn read_sound(r: &mut Reader<'_>, _b: &mut Budget) -> Result<SoundHolder> {
+pub(crate) fn read_sound_event(r: &mut Reader<'_>) -> Result<SoundEvent> {
+    Ok(SoundEvent {
+        name: read_string(r)?,
+        fixed_range: optional(r, |r| r.f32())?,
+    })
+}
+pub(crate) fn write_sound_event(x: &SoundEvent, w: &mut Writer, b: &mut Budget) -> Result<()> {
+    string(w, &x.name, b)?;
+    w.bool(x.fixed_range.is_some());
+    if let Some(range) = x.fixed_range {
+        w.f32(range);
+    }
+    b.check_bytes(w)
+}
+pub(crate) fn read_sound(r: &mut Reader<'_>, _b: &mut Budget) -> Result<SoundHolder> {
     let marker = nonnegative(r.var_i32()?, "sound holder ID")?;
     Ok(if marker == 0 {
-        RegistryHolder::Inline(SoundEvent {
-            name: read_string(r)?,
-            fixed_range: optional(r, |r| r.f32())?,
-        })
+        RegistryHolder::Inline(read_sound_event(r)?)
     } else {
         RegistryHolder::RegistryId(marker - 1)
     })
 }
-pub(super) fn write_sound(x: &SoundHolder, w: &mut Writer, b: &mut Budget) -> Result<()> {
+pub(crate) fn write_sound(x: &SoundHolder, w: &mut Writer, b: &mut Budget) -> Result<()> {
     match x {
         RegistryHolder::RegistryId(id) => w.var_i32(
             nonnegative(*id, "sound holder ID")?
@@ -277,11 +288,7 @@ pub(super) fn write_sound(x: &SoundHolder, w: &mut Writer, b: &mut Budget) -> Re
         ),
         RegistryHolder::Inline(x) => {
             w.var_i32(0);
-            string(w, &x.name, b)?;
-            w.bool(x.fixed_range.is_some());
-            if let Some(range) = x.fixed_range {
-                w.f32(range);
-            }
+            write_sound_event(x, w, b)?;
         }
     }
     b.check_bytes(w)

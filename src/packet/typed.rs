@@ -56,8 +56,18 @@ pub enum CommandPacket {
     Suggestions(super::commands::CommandSuggestions),
 }
 #[derive(Debug, Clone, PartialEq)]
+pub enum WorldEffectPacket {
+    Particles(super::world_effects::WorldParticles),
+    Explosion(Box<super::world_effects::Explosion>),
+    Sound(super::world_effects::SoundEffect),
+    EntitySound(super::world_effects::EntitySoundEffect),
+    StopSound(super::world_effects::StopSound),
+    Event(super::world_effects::WorldEvent),
+}
+#[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
     Command(CommandPacket),
+    WorldEffect(WorldEffectPacket),
     Entity(EntityPacket),
     EntityState(EntityStatePacket),
     Player(PlayerPacket),
@@ -91,7 +101,24 @@ impl DecodedPacket {
             "tab_complete" => Self::Command(CommandPacket::Suggestions(
                 super::commands::CommandSuggestions::decode(bytes, version, limits)?,
             )),
-
+            "world_particles" => Self::WorldEffect(WorldEffectPacket::Particles(
+                super::world_effects::WorldParticles::decode(bytes, version, limits)?,
+            )),
+            "explosion" => Self::WorldEffect(WorldEffectPacket::Explosion(Box::new(
+                super::world_effects::Explosion::decode(bytes, version, limits)?,
+            ))),
+            "sound_effect" => Self::WorldEffect(WorldEffectPacket::Sound(
+                super::world_effects::SoundEffect::decode(bytes, version, limits)?,
+            )),
+            "entity_sound_effect" => Self::WorldEffect(WorldEffectPacket::EntitySound(
+                super::world_effects::EntitySoundEffect::decode(bytes, version, limits)?,
+            )),
+            "stop_sound" => Self::WorldEffect(WorldEffectPacket::StopSound(
+                super::world_effects::StopSound::decode(bytes, version, limits)?,
+            )),
+            "world_event" => Self::WorldEffect(WorldEffectPacket::Event(
+                super::world_effects::WorldEvent::decode(bytes, version, limits)?,
+            )),
             "spawn_entity"
             | "rel_entity_move"
             | "entity_move_look"

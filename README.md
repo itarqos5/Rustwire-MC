@@ -76,6 +76,7 @@ cargo bench --bench codec
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Block/section updates, chunk unload and respawn with dimension metadata
+- World particles, legacy/modern explosions, positional/entity sounds, stop-sound filters and world events with shared nested-payload budgets
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers
 - Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
