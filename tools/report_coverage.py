@@ -46,7 +46,7 @@ for row in json.loads((ROOT/'research/schema-hashes.json').read_text()):
               else types['entityMetadataItem'][1]['fields'])
     supported, unsupported = [], []
     for name in names.values():
-        if name in metadata.BASE or name in ('component', 'optional_component') or fields[name] == 'varint':
+        if name in metadata.BASE or name in ('component', 'optional_component', 'painting_variant', 'wolf_variant') or fields[name] == 'varint':
             supported.append(name)
         else:
             unsupported.append(name)

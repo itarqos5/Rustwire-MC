@@ -66,3 +66,17 @@ harness only against an independently downloaded and accepted server install:
 `java -cp "/tmp:$SERVER_AND_LIBRARIES" HashOracle`. The classpath must contain the
 Paper version JAR and its runtime library JARs. No server or network is started
 by this primitive hash harness.
+
+## Particle and holder metadata corrections
+
+The metadata generator corrects verified schema discrepancies using release-server
+stream codecs: protocol 765 embeds the wrong particle-ID mapper; vibration entity
+eye height is f32; RGB dust-transition scale moves last at 766; dust colors become
+packed integers at 768 and remain packed at 776; trail duration starts at 769 and
+still exists at 776. Protocol 775 replaces particle Slots with item templates.
+Painting/wolf references in 766 are direct IDs; inline holders begin at 767.
+Painting dimensions are VarInts and optional title/author fields start at 768.
+`tests/entity_metadata_particles.rs` and `tests/entity_metadata_holders.rs` include
+independent fixtures, every-prefix truncation, malformed options, unknown-ID
+fallback, and shared collection/NBT/depth limits. All known outer metadata
+serializer kinds are implemented; nested item components remain a stated subset.

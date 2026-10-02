@@ -6,10 +6,12 @@
 //! This and the distinct optional-state/optional-integer encodings were verified
 //! by inspecting the 1.20.1 server codec. No server implementation is included.
 //!
-//! Particles, inline variant holders and resolvable profiles are deliberately
-//! unsupported: these values are not length-framed and cannot safely be skipped.
+//! Particle options, registry/inline variant holders and resolvable profiles are
+//! semantic values. Unknown IDs are Unsupported because these are not length-framed.
 //! Item-stack support has exactly the same component limits as `inventory::Slot`.
 //! Keep the original RawPacket when a typed decode returns Unsupported.
+pub mod holders;
+pub mod particles;
 use super::{
     inventory::{self, Budget, Slot},
     DeathLocation,
@@ -19,6 +21,8 @@ use crate::{
     nbt::{Nbt, RootFormat, Tag},
     Error, Limits, Result, Version,
 };
+use holders::{PaintingVariant, RegistryHolder, ResolvableProfile, WolfVariant};
+use particles::Particle;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum MetadataWire {
@@ -47,6 +51,11 @@ pub enum MetadataWire {
     OptionalGlobalPosition,
     Quaternion,
     HumanoidArm,
+    Particle,
+    Particles,
+    PaintingVariant,
+    WolfVariant,
+    ResolvableProfile,
     Unsupported,
 }
 
@@ -57,11 +66,12 @@ pub fn metadata_registry(version: Version) -> &'static [(&'static str, MetadataW
     match version.protocol() {
         763 | 764 => REGISTRY_0,
         765 => REGISTRY_1,
-        766..=769 => REGISTRY_2,
-        770..=772 => REGISTRY_3,
-        773 => REGISTRY_4,
-        774 => REGISTRY_5,
-        775 | 776 => REGISTRY_6,
+        766 => REGISTRY_2,
+        767..=769 => REGISTRY_3,
+        770..=772 => REGISTRY_4,
+        773 => REGISTRY_5,
+        774 => REGISTRY_6,
+        775 | 776 => REGISTRY_7,
         _ => unreachable!(),
     }
 }
@@ -83,7 +93,7 @@ const REGISTRY_0: &[(&str, MetadataWire)] = &[
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
     ("compound_tag", MetadataWire::Compound),
-    ("particle", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
@@ -113,7 +123,7 @@ const REGISTRY_1: &[(&str, MetadataWire)] = &[
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
     ("compound_tag", MetadataWire::Compound),
-    ("particle", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
@@ -143,16 +153,16 @@ const REGISTRY_2: &[(&str, MetadataWire)] = &[
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
     ("compound_tag", MetadataWire::Compound),
-    ("particle", MetadataWire::Unsupported),
-    ("particles", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
     ("cat_variant", MetadataWire::NonnegativeVarInt),
-    ("wolf_variant", MetadataWire::Unsupported),
+    ("wolf_variant", MetadataWire::NonnegativeVarInt),
     ("frog_variant", MetadataWire::NonnegativeVarInt),
     ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
-    ("painting_variant", MetadataWire::Unsupported),
+    ("painting_variant", MetadataWire::NonnegativeVarInt),
     ("sniffer_state", MetadataWire::NonnegativeVarInt),
     ("armadillo_state", MetadataWire::NonnegativeVarInt),
     ("vector3", MetadataWire::Vec3),
@@ -176,20 +186,16 @@ const REGISTRY_3: &[(&str, MetadataWire)] = &[
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
     ("compound_tag", MetadataWire::Compound),
-    ("particle", MetadataWire::Unsupported),
-    ("particles", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
     ("cat_variant", MetadataWire::NonnegativeVarInt),
-    ("cow_variant", MetadataWire::NonnegativeVarInt),
-    ("wolf_variant", MetadataWire::NonnegativeVarInt),
-    ("wolf_sound_variant", MetadataWire::NonnegativeVarInt),
+    ("wolf_variant", MetadataWire::WolfVariant),
     ("frog_variant", MetadataWire::NonnegativeVarInt),
-    ("pig_variant", MetadataWire::NonnegativeVarInt),
-    ("chicken_variant", MetadataWire::NonnegativeVarInt),
     ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
-    ("painting_variant", MetadataWire::Unsupported),
+    ("painting_variant", MetadataWire::PaintingVariant),
     ("sniffer_state", MetadataWire::NonnegativeVarInt),
     ("armadillo_state", MetadataWire::NonnegativeVarInt),
     ("vector3", MetadataWire::Vec3),
@@ -212,8 +218,9 @@ const REGISTRY_4: &[(&str, MetadataWire)] = &[
     ("optional_uuid", MetadataWire::OptionalUuid),
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
-    ("particle", MetadataWire::Unsupported),
-    ("particles", MetadataWire::Unsupported),
+    ("compound_tag", MetadataWire::Compound),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
@@ -225,17 +232,11 @@ const REGISTRY_4: &[(&str, MetadataWire)] = &[
     ("pig_variant", MetadataWire::NonnegativeVarInt),
     ("chicken_variant", MetadataWire::NonnegativeVarInt),
     ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
-    ("painting_variant", MetadataWire::Unsupported),
+    ("painting_variant", MetadataWire::PaintingVariant),
     ("sniffer_state", MetadataWire::NonnegativeVarInt),
     ("armadillo_state", MetadataWire::NonnegativeVarInt),
-    ("copper_golem_state", MetadataWire::NonnegativeVarInt),
-    (
-        "weathering_copper_golem_state",
-        MetadataWire::NonnegativeVarInt,
-    ),
     ("vector3", MetadataWire::Vec3),
     ("quaternion", MetadataWire::Quaternion),
-    ("resolvable_profile", MetadataWire::Unsupported),
 ];
 const REGISTRY_5: &[(&str, MetadataWire)] = &[
     ("byte", MetadataWire::Byte),
@@ -254,8 +255,8 @@ const REGISTRY_5: &[(&str, MetadataWire)] = &[
     ("optional_uuid", MetadataWire::OptionalUuid),
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
-    ("particle", MetadataWire::Unsupported),
-    ("particles", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
@@ -266,9 +267,8 @@ const REGISTRY_5: &[(&str, MetadataWire)] = &[
     ("frog_variant", MetadataWire::NonnegativeVarInt),
     ("pig_variant", MetadataWire::NonnegativeVarInt),
     ("chicken_variant", MetadataWire::NonnegativeVarInt),
-    ("zombie_nautilus_variant", MetadataWire::NonnegativeVarInt),
     ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
-    ("painting_variant", MetadataWire::Unsupported),
+    ("painting_variant", MetadataWire::PaintingVariant),
     ("sniffer_state", MetadataWire::NonnegativeVarInt),
     ("armadillo_state", MetadataWire::NonnegativeVarInt),
     ("copper_golem_state", MetadataWire::NonnegativeVarInt),
@@ -278,8 +278,7 @@ const REGISTRY_5: &[(&str, MetadataWire)] = &[
     ),
     ("vector3", MetadataWire::Vec3),
     ("quaternion", MetadataWire::Quaternion),
-    ("resolvable_profile", MetadataWire::Unsupported),
-    ("humanoid_arm", MetadataWire::HumanoidArm),
+    ("resolvable_profile", MetadataWire::ResolvableProfile),
 ];
 const REGISTRY_6: &[(&str, MetadataWire)] = &[
     ("byte", MetadataWire::Byte),
@@ -298,8 +297,52 @@ const REGISTRY_6: &[(&str, MetadataWire)] = &[
     ("optional_uuid", MetadataWire::OptionalUuid),
     ("block_state", MetadataWire::BlockState),
     ("optional_block_state", MetadataWire::OptionalBlockState),
-    ("particle", MetadataWire::Unsupported),
-    ("particles", MetadataWire::Unsupported),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
+    ("villager_data", MetadataWire::VillagerData),
+    ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
+    ("pose", MetadataWire::NonnegativeVarInt),
+    ("cat_variant", MetadataWire::NonnegativeVarInt),
+    ("cow_variant", MetadataWire::NonnegativeVarInt),
+    ("wolf_variant", MetadataWire::NonnegativeVarInt),
+    ("wolf_sound_variant", MetadataWire::NonnegativeVarInt),
+    ("frog_variant", MetadataWire::NonnegativeVarInt),
+    ("pig_variant", MetadataWire::NonnegativeVarInt),
+    ("chicken_variant", MetadataWire::NonnegativeVarInt),
+    ("zombie_nautilus_variant", MetadataWire::NonnegativeVarInt),
+    ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
+    ("painting_variant", MetadataWire::PaintingVariant),
+    ("sniffer_state", MetadataWire::NonnegativeVarInt),
+    ("armadillo_state", MetadataWire::NonnegativeVarInt),
+    ("copper_golem_state", MetadataWire::NonnegativeVarInt),
+    (
+        "weathering_copper_golem_state",
+        MetadataWire::NonnegativeVarInt,
+    ),
+    ("vector3", MetadataWire::Vec3),
+    ("quaternion", MetadataWire::Quaternion),
+    ("resolvable_profile", MetadataWire::ResolvableProfile),
+    ("humanoid_arm", MetadataWire::HumanoidArm),
+];
+const REGISTRY_7: &[(&str, MetadataWire)] = &[
+    ("byte", MetadataWire::Byte),
+    ("int", MetadataWire::VarInt),
+    ("long", MetadataWire::VarLong),
+    ("float", MetadataWire::Float),
+    ("string", MetadataWire::String),
+    ("component", MetadataWire::NbtComponent),
+    ("optional_component", MetadataWire::OptionalNbtComponent),
+    ("item_stack", MetadataWire::Slot),
+    ("boolean", MetadataWire::Bool),
+    ("rotations", MetadataWire::Vec3),
+    ("block_pos", MetadataWire::BlockPosition),
+    ("optional_block_pos", MetadataWire::OptionalBlockPosition),
+    ("direction", MetadataWire::Direction),
+    ("optional_uuid", MetadataWire::OptionalUuid),
+    ("block_state", MetadataWire::BlockState),
+    ("optional_block_state", MetadataWire::OptionalBlockState),
+    ("particle", MetadataWire::Particle),
+    ("particles", MetadataWire::Particles),
     ("villager_data", MetadataWire::VillagerData),
     ("optional_unsigned_int", MetadataWire::OptionalUnsignedInt),
     ("pose", MetadataWire::NonnegativeVarInt),
@@ -316,7 +359,7 @@ const REGISTRY_6: &[(&str, MetadataWire)] = &[
     ("chicken_sound_variant", MetadataWire::NonnegativeVarInt),
     ("zombie_nautilus_variant", MetadataWire::NonnegativeVarInt),
     ("optional_global_pos", MetadataWire::OptionalGlobalPosition),
-    ("painting_variant", MetadataWire::Unsupported),
+    ("painting_variant", MetadataWire::PaintingVariant),
     ("sniffer_state", MetadataWire::NonnegativeVarInt),
     ("armadillo_state", MetadataWire::NonnegativeVarInt),
     ("copper_golem_state", MetadataWire::NonnegativeVarInt),
@@ -326,7 +369,7 @@ const REGISTRY_6: &[(&str, MetadataWire)] = &[
     ),
     ("vector3", MetadataWire::Vec3),
     ("quaternion", MetadataWire::Quaternion),
-    ("resolvable_profile", MetadataWire::Unsupported),
+    ("resolvable_profile", MetadataWire::ResolvableProfile),
     ("humanoid_arm", MetadataWire::HumanoidArm),
 ];
 
@@ -354,6 +397,11 @@ pub enum MetadataValue {
     Nbt(Nbt),
     OptionalNbt(Option<Nbt>),
     Slot(Box<Slot>),
+    Particle(Particle),
+    Particles(Vec<Particle>),
+    PaintingVariant(RegistryHolder<PaintingVariant>),
+    WolfVariant(RegistryHolder<WolfVariant>),
+    ResolvableProfile(ResolvableProfile),
     Bool(bool),
     /// Rotations are pitch/yaw/roll; vector3 fields are x/y/z.
     Vec3([f32; 3]),
@@ -433,6 +481,22 @@ fn read_value(
             V::Nbt(value)
         }
         MetadataWire::Slot => V::Slot(Box::new(inventory::read_slot(r, version, b, 0)?)),
+        MetadataWire::Particle => V::Particle(particles::read(r, version, b)?),
+        MetadataWire::Particles => {
+            // Particle nodes charge the shared budget individually; preflight the
+            // count before allocation without charging each node twice.
+            let count = r.count(b.limits.max_collection)?;
+            let mut values = Vec::new();
+            for _ in 0..count {
+                values.push(particles::read(r, version, b)?);
+            }
+            V::Particles(values)
+        }
+        MetadataWire::PaintingVariant => V::PaintingVariant(holders::read_painting(r, version, b)?),
+        MetadataWire::WolfVariant => V::WolfVariant(holders::read_wolf(r, version, b)?),
+        MetadataWire::ResolvableProfile => {
+            V::ResolvableProfile(holders::read_profile(r, version, b)?)
+        }
         MetadataWire::Bool => V::Bool(r.bool()?),
         MetadataWire::Vec3 => V::Vec3([finite(r.f32()?)?, finite(r.f32()?)?, finite(r.f32()?)?]),
         MetadataWire::Quaternion => V::Quaternion([
@@ -534,6 +598,25 @@ fn write_value(
             inventory::write_nbt(Some(n), w, RootFormat::for_version(version), b)?;
         }
         (MetadataWire::Slot, V::Slot(slot)) => inventory::write_slot(slot, w, version, b, 0)?,
+        (MetadataWire::Particle, V::Particle(value)) => particles::write(value, w, version, b)?,
+        (MetadataWire::Particles, V::Particles(values)) => {
+            if values.len() > b.limits.max_collection.min(i32::MAX as usize) {
+                return Err(Error::Limit("metadata particle count"));
+            }
+            w.var_i32(values.len() as i32);
+            for value in values {
+                particles::write(value, w, version, b)?;
+            }
+        }
+        (MetadataWire::PaintingVariant, V::PaintingVariant(value)) => {
+            holders::write_painting(value, w, version, b)?
+        }
+        (MetadataWire::WolfVariant, V::WolfVariant(value)) => {
+            holders::write_wolf(value, w, version, b)?
+        }
+        (MetadataWire::ResolvableProfile, V::ResolvableProfile(value)) => {
+            holders::write_profile(value, w, version, b)?
+        }
         (MetadataWire::Bool, V::Bool(n)) => w.bool(*n),
         (MetadataWire::Vec3, V::Vec3(v)) => {
             for n in v {

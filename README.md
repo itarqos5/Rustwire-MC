@@ -77,7 +77,7 @@ cargo bench --bench codec
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
 - Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
 - `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components; unknown persistent codecs fail explicitly
-- Version-aware entity metadata with shared slot/NBT budgets
+- All known entity-metadata outer serializers, including semantic particles, painting/wolf holders and resolvable profiles, with shared slot/NBT budgets
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
 - Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
@@ -125,7 +125,7 @@ Important wire boundaries are explicit: configuration/anonymous NBT from 764, pe
 
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
-- Item components and entity metadata have explicit partial payload coverage; particles/holders/profiles, recipes, comprehensive command trees and remaining gameplay packets still need codecs
+- Item components have explicit partial payload coverage; nested item particles inherit those limits. Recipes, comprehensive command trees and remaining gameplay packets still need codecs
 - Secure player-chat signing, signature verification, last-seen cache management and acknowledgement-checksum generation remain application responsibilities; unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang secure-chat signing session, mod-loader handshake, world simulation or rendering

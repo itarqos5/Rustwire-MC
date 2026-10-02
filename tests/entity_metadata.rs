@@ -2,6 +2,8 @@ use rustwire_mc::{
     codec::BlockPosition,
     nbt::{Nbt, Tag},
     packet::{
+        entity_metadata::holders::{PlayerSkinPatch, RegistryHolder, ResolvableProfile},
+        entity_metadata::particles::{Particle, ParticleData},
         entity_metadata::*,
         inventory::{ComponentPatch, ItemData, ItemStack, Slot},
         DeathLocation,
@@ -51,9 +53,38 @@ fn payload(name: &str, v: Version) -> Option<(Vec<u8>, MetadataValue)> {
     use MetadataValue as V;
     let mut b = vec![];
     let value = match name {
-        "particle" | "particles" | "resolvable_profile" => return None,
-        "painting_variant" if v.protocol() >= 766 => return None,
-        "wolf_variant" if (766..=769).contains(&v.protocol()) => return None,
+        "particle" => {
+            b.push(0);
+            V::Particle(Particle {
+                kind: if v.protocol() <= 765 {
+                    "ambient_entity_effect"
+                } else {
+                    "angry_villager"
+                },
+                data: ParticleData::Unit,
+            })
+        }
+        "particles" => {
+            b.push(0);
+            V::Particles(vec![])
+        }
+        "resolvable_profile" => {
+            b.extend([0; 8]);
+            V::ResolvableProfile(ResolvableProfile::Partial {
+                name: None,
+                uuid: None,
+                properties: vec![],
+                skin_patch: PlayerSkinPatch::default(),
+            })
+        }
+        "painting_variant" if v.protocol() >= 767 => {
+            b.push(2);
+            V::PaintingVariant(RegistryHolder::RegistryId(1))
+        }
+        "wolf_variant" if (767..=769).contains(&v.protocol()) => {
+            b.push(2);
+            V::WolfVariant(RegistryHolder::RegistryId(1))
+        }
         "byte" => {
             b.push(128);
             V::Byte(-128)
@@ -329,20 +360,18 @@ fn absent_optional_values_and_unsigned_integer_boundary() {
 #[test]
 fn unsupported_values_are_never_guessed_or_skipped() {
     for &v in Version::ALL {
-        for (id, name) in names(v).into_iter().enumerate() {
-            if payload(name, v).is_none() {
-                let mut bytes = vec![1, 0, 0, 1, 1];
-                vint(&mut bytes, id as u64);
-                bytes.push(255);
-                assert!(
-                    matches!(
-                        EntityMetadata::decode(&bytes, v, Limits::default()),
-                        Err(Error::Unsupported(_))
-                    ),
-                    "{v} {name}"
-                );
-            }
-        }
+        let id = names(v)
+            .iter()
+            .position(|name| *name == "particle")
+            .unwrap();
+        let mut bytes = vec![1, 0];
+        vint(&mut bytes, id as u64);
+        vint(&mut bytes, 999);
+        bytes.push(255);
+        assert!(matches!(
+            EntityMetadata::decode(&bytes, v, Limits::default()),
+            Err(Error::Unsupported(_))
+        ));
         assert!(matches!(
             EntityMetadata::decode(&[1, 0, 0xe7, 7, 255], v, Limits::default()),
             Err(Error::Unsupported(_))

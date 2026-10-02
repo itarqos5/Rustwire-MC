@@ -27,6 +27,7 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -38,9 +39,7 @@
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -68,6 +67,7 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -79,9 +79,7 @@
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -110,6 +108,7 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -121,9 +120,7 @@
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -213,23 +210,22 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
           "cat_variant",
+          "wolf_variant",
           "frog_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "wolf_variant",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -320,23 +316,22 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
           "cat_variant",
+          "wolf_variant",
           "frog_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "wolf_variant",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -437,23 +432,22 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
           "cat_variant",
+          "wolf_variant",
           "frog_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "wolf_variant",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -553,23 +547,22 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
           "cat_variant",
+          "wolf_variant",
           "frog_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "wolf_variant",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -698,6 +691,8 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -709,16 +704,13 @@
           "pig_variant",
           "chicken_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -847,6 +839,8 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -858,16 +852,13 @@
           "pig_variant",
           "chicken_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -997,6 +988,8 @@
           "block_state",
           "optional_block_state",
           "compound_tag",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -1008,16 +1001,13 @@
           "pig_variant",
           "chicken_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "vector3",
           "quaternion"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -1146,6 +1136,8 @@
           "optional_uuid",
           "block_state",
           "optional_block_state",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -1157,19 +1149,16 @@
           "pig_variant",
           "chicken_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "copper_golem_state",
           "weathering_copper_golem_state",
           "vector3",
-          "quaternion"
-        ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant",
+          "quaternion",
           "resolvable_profile"
-        ]
+        ],
+        "unsupported": []
       }
     },
     {
@@ -1305,6 +1294,8 @@
           "optional_uuid",
           "block_state",
           "optional_block_state",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -1317,20 +1308,17 @@
           "chicken_variant",
           "zombie_nautilus_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "copper_golem_state",
           "weathering_copper_golem_state",
           "vector3",
           "quaternion",
+          "resolvable_profile",
           "humanoid_arm"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant",
-          "resolvable_profile"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -1474,6 +1462,8 @@
           "optional_uuid",
           "block_state",
           "optional_block_state",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -1490,20 +1480,17 @@
           "chicken_sound_variant",
           "zombie_nautilus_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "copper_golem_state",
           "weathering_copper_golem_state",
           "vector3",
           "quaternion",
+          "resolvable_profile",
           "humanoid_arm"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant",
-          "resolvable_profile"
-        ]
+        "unsupported": []
       }
     },
     {
@@ -1646,6 +1633,8 @@
           "optional_uuid",
           "block_state",
           "optional_block_state",
+          "particle",
+          "particles",
           "villager_data",
           "optional_unsigned_int",
           "pose",
@@ -1662,20 +1651,17 @@
           "chicken_sound_variant",
           "zombie_nautilus_variant",
           "optional_global_pos",
+          "painting_variant",
           "sniffer_state",
           "armadillo_state",
           "copper_golem_state",
           "weathering_copper_golem_state",
           "vector3",
           "quaternion",
+          "resolvable_profile",
           "humanoid_arm"
         ],
-        "unsupported": [
-          "particle",
-          "particles",
-          "painting_variant",
-          "resolvable_profile"
-        ]
+        "unsupported": []
       }
     }
   ]

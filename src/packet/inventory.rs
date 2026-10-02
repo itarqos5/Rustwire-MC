@@ -183,7 +183,7 @@ impl Slot {
 // budget. All NBT roots in a packet additionally share max_nbt_nodes. Nested
 // items use max_nbt_depth (hard-capped at 64) to bound the Rust call stack.
 pub(crate) struct Budget {
-    limits: Limits,
+    pub(crate) limits: Limits,
     remaining: usize,
     nbt_remaining: usize,
 }
@@ -209,12 +209,12 @@ impl Budget {
             Ok(())
         }
     }
-    fn count(&mut self, r: &mut Reader<'_>) -> Result<usize> {
+    pub(crate) fn count(&mut self, r: &mut Reader<'_>) -> Result<usize> {
         let n = r.count(self.remaining)?;
         self.charge(n)?;
         Ok(n)
     }
-    fn write_count(&mut self, n: usize, w: &mut Writer) -> Result<()> {
+    pub(crate) fn write_count(&mut self, n: usize, w: &mut Writer) -> Result<()> {
         if n > i32::MAX as usize {
             return Err(Error::Limit("inventory collection"));
         }
@@ -352,27 +352,7 @@ pub(crate) fn read_slot(
     }
     positive(count, "item count")?;
     let item_id = nonnegative(r.var_i32()?, "item ID")?;
-    let added = b.count(r)?;
-    let removed = b.count(r)?;
-    let mut patch = ComponentPatch::default();
-    let mut seen = BTreeSet::new();
-    for _ in 0..added {
-        let id = r.var_i32()?;
-        let (name, wire) = component_type(version, id)?;
-        if !seen.insert(id) {
-            return Err(Error::Invalid("duplicate item component"));
-        }
-        let value = read_component(r, wire, version, b, depth)?;
-        patch.added.push(Component { name, value });
-    }
-    for _ in 0..removed {
-        let id = r.var_i32()?;
-        let (name, _) = component_type(version, id)?;
-        if !seen.insert(id) {
-            return Err(Error::Invalid("duplicate or conflicting component removal"));
-        }
-        patch.removed.push(name);
-    }
+    let patch = read_patch(r, version, b, depth)?;
     Ok(Slot::Item(ItemStack {
         item_id,
         count,
@@ -414,27 +394,66 @@ pub(crate) fn write_slot(
                 w.var_i32(item.count);
             }
             w.var_i32(item.item_id);
-            b.write_count(patch.added.len(), w)?;
-            b.write_count(patch.removed.len(), w)?;
-            let mut seen = BTreeSet::new();
-            for component in &patch.added {
-                let id = component_id(version, component.name)?;
-                let (_, wire) = component_type(version, id)?;
-                if !seen.insert(id) {
-                    return Err(Error::Invalid("duplicate item component"));
-                }
-                w.var_i32(id);
-                write_component(&component.value, wire, w, version, b, depth)?;
-            }
-            for name in &patch.removed {
-                let id = component_id(version, name)?;
-                if !seen.insert(id) {
-                    return Err(Error::Invalid("duplicate or conflicting component removal"));
-                }
-                w.var_i32(id);
-            }
+            write_patch(patch, w, version, b, depth)?;
         }
         _ => return Err(Error::Unsupported("item data format for selected release")),
+    }
+    b.check_bytes(w)
+}
+pub(crate) fn read_patch(
+    r: &mut Reader<'_>,
+    version: Version,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<ComponentPatch> {
+    let added = b.count(r)?;
+    let removed = b.count(r)?;
+    let mut patch = ComponentPatch::default();
+    let mut seen = BTreeSet::new();
+    for _ in 0..added {
+        let id = r.var_i32()?;
+        let (name, wire) = component_type(version, id)?;
+        if !seen.insert(id) {
+            return Err(Error::Invalid("duplicate item component"));
+        }
+        let value = read_component(r, wire, version, b, depth)?;
+        patch.added.push(Component { name, value });
+    }
+    for _ in 0..removed {
+        let id = r.var_i32()?;
+        let (name, _) = component_type(version, id)?;
+        if !seen.insert(id) {
+            return Err(Error::Invalid("duplicate or conflicting component removal"));
+        }
+        patch.removed.push(name);
+    }
+    Ok(patch)
+}
+pub(crate) fn write_patch(
+    patch: &ComponentPatch,
+    w: &mut Writer,
+    version: Version,
+    b: &mut Budget,
+    depth: usize,
+) -> Result<()> {
+    b.write_count(patch.added.len(), w)?;
+    b.write_count(patch.removed.len(), w)?;
+    let mut seen = BTreeSet::new();
+    for component in &patch.added {
+        let id = component_id(version, component.name)?;
+        let (_, wire) = component_type(version, id)?;
+        if !seen.insert(id) {
+            return Err(Error::Invalid("duplicate item component"));
+        }
+        w.var_i32(id);
+        write_component(&component.value, wire, w, version, b, depth)?;
+    }
+    for name in &patch.removed {
+        let id = component_id(version, name)?;
+        if !seen.insert(id) {
+            return Err(Error::Invalid("duplicate or conflicting component removal"));
+        }
+        w.var_i32(id);
     }
     b.check_bytes(w)
 }

@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 127 tests with all features; 114 applicable tests without default features
+- 141 tests with all features; 128 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -120,3 +120,7 @@ map ordering/duplicate normalization, malformed shapes and resource limits. The
 primitive oracle returned identical results on pinned Paper 1.21.5 and 26.2. These
 fixtures are separate from the earlier live gameplay runs: predicted hashed
 clicks have not yet been exercised end-to-end by those recorded runs.
+
+The particle/holder increment adds 14 tests and removes the intentional missing
+particle-list decoder. The older live-run evidence above is retained unchanged;
+its historical raw-fallback observations are not rewritten as newer test results.
