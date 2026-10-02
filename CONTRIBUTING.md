@@ -33,6 +33,9 @@ Test on the stated minimum Rust version too. Add independent wire fixtures, trun
 ```sh
 python3 tools/fetch_schemas.py
 python3 tools/generate_catalog.py
+python3 tools/generate_item_components.py --check
+python3 tools/generate_entity_metadata.py --check
+python3 tools/report_coverage.py --check
 ```
 
 Python 3 and rustfmt are development-only requirements. The fetcher pins immutable commits and checks SHA-256. Update hashes and PROVENANCE.md deliberately when adding a release. Never silently fall back to a neighboring protocol. A generated packet name is not a typed implementation; update the coverage matrix accurately.

@@ -1,0 +1,184 @@
+{
+  "date": "2026-10-02",
+  "scenario": "bounded-gameplay",
+  "records": [
+    {
+      "version": "1.20.1",
+      "paper_build": 196,
+      "started_utc": "2026-10-02T15:44:21.035342+00:00",
+      "scenario": "bounded-gameplay",
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "client_seconds": 45.652,
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "join",
+        "keepalive",
+        "metadata",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "observed_client_actions": [],
+      "missing_categories": [],
+      "console_failures": [],
+      "client_binary_sha256": "82859da26546517248d1ec592b252c3db5ff8b5d97464ca80b3c275137a6cbca",
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ]
+    },
+    {
+      "version": "1.21.1",
+      "paper_build": 133,
+      "started_utc": "2026-10-02T15:50:41.542585+00:00",
+      "scenario": "bounded-gameplay",
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "client_seconds": 45.364,
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "join",
+        "keepalive",
+        "metadata",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "observed_client_actions": [
+        "movement_sent",
+        "respawn_requested",
+        "selected_slot_sent"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [
+        "UNSUPPORTED name=Some(\"entity_metadata\") reason=complex metadata serializer payload"
+      ],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          8.5,
+          -60.0,
+          8.5
+        ],
+        "server_queried_position": [
+          8.625,
+          -60.0,
+          8.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_binary_sha256": "0b9977d8965029568c8f8304b42e8d9f61e24ae107aee1359a5d7f35e9afeff7",
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ]
+    },
+    {
+      "version": "26.2",
+      "paper_build": 129,
+      "started_utc": "2026-10-02T15:51:43.098140+00:00",
+      "scenario": "bounded-gameplay",
+      "passed": true,
+      "client_exit": 0,
+      "server_exit": 0,
+      "client_seconds": 45.287,
+      "observed_categories": [
+        "block_update",
+        "chat_marker",
+        "chunk",
+        "configuration",
+        "death",
+        "entity_move",
+        "entity_remove",
+        "entity_spawn",
+        "entity_velocity",
+        "health",
+        "inventory",
+        "item_custom",
+        "item_damage",
+        "join",
+        "keepalive",
+        "metadata",
+        "movement_sent",
+        "respawn",
+        "respawn_requested",
+        "selected_slot_sent",
+        "system_chat",
+        "teleport_ack"
+      ],
+      "observed_client_actions": [
+        "movement_sent",
+        "respawn_requested",
+        "selected_slot_sent"
+      ],
+      "missing_categories": [],
+      "console_failures": [],
+      "unsupported_packet_observations": [
+        "UNSUPPORTED name=Some(\"entity_metadata\") reason=complex metadata serializer payload"
+      ],
+      "client_action_server_confirmation": {
+        "initial_position": [
+          4.5,
+          -60.0,
+          -4.5
+        ],
+        "server_queried_position": [
+          4.625,
+          -60.0,
+          -4.5
+        ],
+        "position_delta": [
+          0.125,
+          0.0,
+          0.0
+        ],
+        "movement_confirmed": true,
+        "selected_slot_1_confirmed": true
+      },
+      "client_binary_sha256": "0b9977d8965029568c8f8304b42e8d9f61e24ae107aee1359a5d7f35e9afeff7",
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ]
+    }
+  ],
+  "limitations": [
+    "Incomplete metadata layouts preserve raw bytes and are listed as unsupported",
+    "These are three pinned builds, not exhaustive packet or version testing"
+  ]
+}

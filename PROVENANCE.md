@@ -33,3 +33,13 @@ client ID and an eligible account. No launcher client ID is borrowed. OAuth and
 Minecraft Services may reject an unapproved application even when the flow's
 wire format is correct. Live account authentication is not covered by offline
 tests.
+
+## Additional typed-codec references and corrections
+
+Entity metadata and item-component registries are generated from the same hash-pinned schemas by `generate_entity_metadata.py` and `generate_item_components.py`. `report_coverage.py` reproduces the exact supported/unsupported name lists in `docs/typed-coverage.json`.
+
+- [PrismarineJS lpVec3 implementation](https://github.com/PrismarineJS/node-minecraft-protocol/blob/master/src/datatypes/lpVec3.js): compact mixed-endian velocity/vector wire representation
+- [MCProtocolLib section block updates](https://github.com/GeyserMC/MCProtocolLib/blob/master/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/level/ClientboundSectionBlocksUpdatePacket.java): VarLong section records, correcting an upstream VarInt alias
+- Cached checksum-verified Paper 1.20.1 serializers confirmed respawn keep-data flags and optional global-position fields; Paper 1.21.5 build 114 confirmed the obsolete palette-length allocation overhead. Only protocol facts and original Rust implementations are included here; no proprietary bytecode/source is distributed
+
+Where an upstream schema differs from inspected wire behavior, the specific correction is documented and tested rather than silently treating the schema as infallible. The exact real-server artifacts are recorded in `docs/validation/matrix-download-provenance.json`.

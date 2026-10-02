@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 56 tests with all features; 43 applicable tests without default features
+- 120 tests with all features; 107 applicable tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -16,24 +16,48 @@ The most recent GitHub Actions result must be checked for the exact commit under
 
 ## Actual Paper servers
 
-All used official, checksum-verified downloads, new superflat worlds, offline mode and an actual listener verified as `127.0.0.1:25565`. One server ran at a time. All shut down cleanly; no account login or public listener was used.
+All 14 release-protocol families passed status/ping, offline login, applicable configuration, dimension metadata, teleport acknowledgement, real chunk decoding and keepalive handling. Each used one pinned representative release, a checksum-verified official Paper artifact, an isolated superflat world and a verified 127.0.0.1 listener. All servers shut down cleanly.
 
-| Exact release/build | Protocol | Decoded chunks | Registries | Keepalive replies | Duration |
+| Exact release/build | Protocol | Decoded chunks | Registries | Keepalive replies | Client duration |
 |---|---:|---:|---:|---:|---:|
-| Paper 1.20.1 / 196 | 763 | 77 | 6 legacy | 1 | 20.62 s |
-| Paper 1.21.1 / 133 | 767 | 77 | 11 | 1 | 20.73 s |
-| Paper 26.2 / 129 | 776 | 81 | 29 | 19 | 20.25 s |
+| 1.20.1 / 196 | 763 | 77 | 6 | 1 | 20.76 s |
+| 1.20.2 / 318 | 764 | 77 | 6 | 1 | 20.59 s |
+| 1.20.4 / 499 | 765 | 77 | 6 | 1 | 20.68 s |
+| 1.20.6 / 151 | 766 | 77 | 8 | 1 | 20.79 s |
+| 1.21.1 / 133 | 767 | 77 | 11 | 1 | 20.80 s |
+| 1.21.3 / 83 | 768 | 77 | 12 | 1 | 20.57 s |
+| 1.21.4 / 232 | 769 | 81 | 12 | 1 | 20.77 s |
+| 1.21.5 / 114 (ALPHA) | 770 | 81 | 20 | 1 | 20.78 s |
+| 1.21.6 / 48 | 771 | 81 | 21 | 20 | 20.67 s |
+| 1.21.8 / 60 | 772 | 81 | 21 | 19 | 20.39 s |
+| 1.21.10 / 130 | 773 | 81 | 21 | 19 | 20.04 s |
+| 1.21.11 / 132 | 774 | 81 | 23 | 19 | 20.02 s |
+| 26.1.2 / 74 | 775 | 81 | 28 | 18 | 20.05 s |
+| 26.2 / 129 | 776 | 81 | 29 | 19 | 20.17 s |
 
-Each passed status/ping, offline login, typed overworld metadata (min Y -64, height 384, 24 sections), teleport acknowledgement, chunk decoding and keepalive handling. The two modern versions also completed configuration. Exact client hashes, outputs and artifact provenance are in:
+The 1.21.5 server artifact is labeled **ALPHA** by Paper; Minecraft 1.21.5 itself is a release protocol. The matrix does not independently test every patch alias that shares a protocol.
 
-- [Machine-readable results](docs/validation/results-summary.json)
-- [Text observations](docs/validation/textual-observations.json)
-- [Official artifact URLs and SHA-256 checks](docs/validation/download-provenance.json)
-- [Legacy interoperability findings](docs/validation/interoperability-findings.md)
+- [Full matrix results and client hashes](docs/validation/matrix-results.json)
+- [All 14 pinned Paper/Mojang artifact URLs and SHA-256 checks](docs/validation/matrix-download-provenance.json)
+- [Original three-version connectivity evidence](docs/validation/results-summary.json)
 
-The tested client snapshot is identified by its SHA-256 in the results. Later changes limited to validation guards or documentation do not retroactively change that recorded binary. Re-run the server tests after wire-format changes.
+### Deeper gameplay probes
 
-Paper 1.20.1 testing found two issues that mock roundtrips missed: play settings must wait for Join Game, and its legacy section buffer can contain exactly one zero-padding byte per singleton block palette. Both now have synthetic regression tests. No captured packet/world data is included in the repository.
+Separate 45-second scenarios passed on Paper 1.20.1 build 196, 1.21.1 build 133 and 26.2 build 129. They exercised real typed inventory updates (plain items, damage and custom NBT/components), exact system-chat marker, entity spawn/movement/removal, metadata, block updates, health/damage, death and explicit respawn, plus chunks and keepalives after respawn. Server-side data queries confirmed the client moved +0.125 X and selected hotbar slot 1. Commands operated only on the test player and tagged probe entities in disposable worlds.
+
+[Gameplay results](docs/validation/gameplay-results.json) retain missing-category checks, console failures, binary hashes and observed unsupported payloads. Both modern runs encountered one intentionally unsupported complex metadata payload after respawn and preserved it as raw data. Successful common metadata observations are **not** a claim of complete metadata coverage. The initial probe wrongly searched NBT Debug output for plain text; the modern runs were repeated after fixing the probe to inspect actual NBT strings.
+
+### Interoperability fixes
+
+- Paper 1.20.1 play settings must wait for Join Game
+- Paper 1.20.1 can append one unused zero byte per singleton block palette
+- Paper 1.21.5 build 114 counts removed long-array length prefixes in its section-buffer allocation, leaving a precise zero tail
+- Legacy respawn keep-data is a two-bit byte, not the boolean declared by an upstream schema
+- Legacy optional global-position metadata contains both a dimension identifier and a packed position
+
+The relevant real server serializers were inspected to verify protocol facts. Independent synthetic fixtures cover the corrections; no proprietary implementation source, class files or captured world packets are committed. Both padding allowances are strictly version-scoped and size-checked; nonzero or unexplained trailing data remains an error.
+
+[Original findings](docs/validation/interoperability-findings.md) and [protocol provenance](PROVENANCE.md) provide context. Recorded binary hashes identify the exact tested snapshots; later guard/documentation changes do not retroactively change those hashes.
 
 ### Reproduce on Linux x86-64
 
@@ -41,14 +65,23 @@ Python 3, curl, tar, a C/Rust build toolchain and Java 21 are prerequisites. The
 
 ```sh
 cargo build --examples --features crypto
-python3 tools/paper/prepare.py
+python3 tools/paper/prepare.py --manifest docs/validation/matrix-download-provenance.json
 # Read the Minecraft EULA and linked agreements. Only if you accept them,
 # manually change eula=false to eula=true in each selected test server directory.
-python3 tools/paper/validate.py 1.20.1 1.21.1 26.2
+python3 tools/paper/validate.py  # all releases in the prepared manifest
 python3 tools/paper/summarize.py
 ```
 
 Preparation creates `.rustwire-validation/`, defaults new EULA files to **false**, never starts a server and never accepts terms. Read the [Minecraft EULA](https://www.minecraft.net/en-us/eula) and its linked Microsoft Services Agreement before proceeding. The runner refuses to run without explicit acceptance. Use `--root PATH` during preparation and `RUSTWIRE_VALIDATION_DIR=PATH` for the runner/summarizer to choose another isolated workspace.
+
+For the destructive gameplay scenario, prepare an external validation directory with the same scripts, explicitly accept the terms, and run:
+
+```sh
+cargo build --features crypto --example gameplay_probe
+python3 tools/paper/validate_gameplay.py --mode bounded-gameplay --validation-dir /absolute/path/to/test-workspace --versions 1.20.1 1.21.1 26.2
+```
+
+The gameplay harness creates fresh worlds and requires observed typed events plus server-side action confirmations. It never accepts the EULA automatically. It must not point at a personal or production world.
 
 The runner uses disposable server configuration (1 GiB heap,2 JVM processors, view/simulation distance 2) and snapshots the compiled examples before each group of runs. `RUSTWIRE_PROJECT` can select another checkout; `RUSTWIRE_MIN_SECONDS` defaults to 20. Results go into the isolated validation directory, not the checked-in evidence files. Do not run this against an existing personal server directory; preparation writes test configuration files.
 

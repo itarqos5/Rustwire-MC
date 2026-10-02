@@ -2,7 +2,7 @@
 
 A lean, bounded Minecraft Java networking library in Rust. Cargo package: **`rustwire-mc`**.
 
-Rustwire targets the 14 release-protocol families spanning **1.20 through 26.2**. It implements connection/control packets and semantic chunk/registry codecs, with raw packet access for the remaining gameplay protocol. **This is an initial 0.1 library, not complete typed coverage of every Minecraft packet.**
+Rustwire targets the 14 release-protocol families spanning **1.20 through 26.2**. It implements connection/control, semantic world data, common entity/inventory/chat packets and interaction codecs, with raw packet access for remaining gameplay layouts. **This is an initial 0.1 library, not complete typed coverage of every Minecraft packet.**
 
 ## Quick start
 
@@ -68,6 +68,21 @@ cargo bench --bench codec
 - Chunk coordinates, sections, block-state and biome palettes, non-spanning packed storage, heightmaps, block entities and light data
 - Exact release-specific packet ID/name catalogs, split into `src/catalog/p763.rs` through `p776.rs`; unknown versions fail closed
 
+### Typed gameplay
+
+`Connection::next_typed_event()` adds semantic dispatch while retaining complete raw packets when a nested layout is intentionally unsupported. Malformed known layouts remain errors. `next_event()` keeps the lower-level control/raw interface.
+
+- Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
+- Block/section updates, chunk unload and respawn with dimension metadata
+- Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
+- Full-stack container clicks through 1.21.4; caller-provided hashed click representations from 1.21.5
+- Version-aware entity metadata with shared slot/NBT budgets
+- System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
+- Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
+- Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
+
+This remains partial typed coverage: modern added-item payload coverage ranges from 39/56 layouts in 1.20.5 to 74/111 in 26.2. Complex particles, holders/profiles and secure-chat signing/cache/checksum generation remain incomplete. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
+
 Numeric block-state and biome IDs remain numeric. Dynamic registry names can be looked up with `RegistryStore`; a bundled static block-state-name dataset is not included.
 
 ### Authentication
@@ -84,32 +99,33 @@ You may instead use an application-owned authentication layer and pass its Minec
 
 ## Version coverage
 
-Every row has catalog checks, loopback login/control tests and synthetic chunk roundtrips. “Paper tested” identifies exact releases exercised against real official Paper builds, not every patch alias.
+Every row has catalog checks, loopback login/control tests and synthetic chunk roundtrips. All 14 families also passed real Paper status/login/configuration (when applicable)/chunk/keepalive tests. “Paper tested” names the exact representative release, not every patch alias. Deeper gameplay probes ran on 1.20.1, 1.21.1 and 26.2.
 
 | Protocol | Releases | Paper tested |
 |---|---|---|
 | 763 | 1.20, 1.20.1 | 1.20.1 build 196 |
-| 764 | 1.20.2 | — |
-| 765 | 1.20.3, 1.20.4 | — |
-| 766 | 1.20.5, 1.20.6 | — |
+| 764 | 1.20.2 | 1.20.2 build 318 |
+| 765 | 1.20.3, 1.20.4 | 1.20.4 build 499 |
+| 766 | 1.20.5, 1.20.6 | 1.20.6 build 151 |
 | 767 | 1.21, 1.21.1 | 1.21.1 build 133 |
-| 768 | 1.21.2, 1.21.3 | — |
-| 769 | 1.21.4 | — |
-| 770 | 1.21.5 | — |
-| 771 | 1.21.6 | — |
-| 772 | 1.21.7, 1.21.8 | — |
-| 773 | 1.21.9, 1.21.10 | — |
-| 774 | 1.21.11 | — |
-| 775 | 26.1, 26.1.1, 26.1.2 | — |
+| 768 | 1.21.2, 1.21.3 | 1.21.3 build 83 |
+| 769 | 1.21.4 | 1.21.4 build 232 |
+| 770 | 1.21.5 | 1.21.5 build 114 (ALPHA) |
+| 771 | 1.21.6 | 1.21.6 build 48 |
+| 772 | 1.21.7, 1.21.8 | 1.21.8 build 60 |
+| 773 | 1.21.9, 1.21.10 | 1.21.10 build 130 |
+| 774 | 1.21.11 | 1.21.11 build 132 |
+| 775 | 26.1, 26.1.1, 26.1.2 | 26.1.2 build 74 |
 | 776 | 26.2 | 26.2 build 129 |
 
-Important wire boundaries are explicit: configuration/anonymous NBT from 764, per-registry entry lists from 766, changed position synchronization from 768, typed heightmaps/implicit palette storage lengths from 770, chunk fluid counts from 775, and 26.2 login-session UUID/online-mode metadata at 776. Paper 1.20.1's observed singleton-section zero padding is accepted narrowly; unexplained trailing data remains an error.
+Important wire boundaries are explicit: configuration/anonymous NBT from 764, per-registry entry lists from 766, changed position synchronization from 768, typed heightmaps/implicit palette storage lengths from 770, chunk fluid counts from 775, and 26.2 login-session UUID/online-mode metadata at 776. Observed Paper 1.20.1 and 1.21.5 palette-buffer zero padding is accepted only in the exact version-specific patterns; unexplained trailing data remains an error.
 
 ## Deliberate limits and next work
 
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
-- Inventory/item components, entity metadata, recipes, commands and signed chat do not yet have comprehensive typed codecs; receive/send these through `RawPacket` with the version catalog
+- Item components and entity metadata have explicit partial payload coverage; particles/holders/profiles, recipes, comprehensive command trees and remaining gameplay packets still need codecs
+- Secure player-chat signing, signature verification, last-seen cache management and acknowledgement-checksum generation remain application responsibilities; unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang secure-chat signing session, mod-loader handshake, world simulation or rendering
 - NBT is bounded and owned; large registry/packet processing can still allocate materially. Adjust `Limits` for your application

@@ -4,7 +4,7 @@ This is an early protocol library. Do not assume an independent security audit.
 
 ## Incoming bytes
 
-The default limits cap frames at 2,097,151 bytes and decompressed packets at 8 MiB. Lengths, IDs, UTF-8/UTF-16 lengths, NBT recursion and node budgets are checked. Compressed output must exactly match its advertised size and consume exactly one complete zlib stream. Malformed lengths are rejected before large allocations where possible. The decoder accepts one narrowly identified Paper 1.20.1 zero-padding pattern only for protocol 763.
+The default limits cap frames at 2,097,151 bytes and decompressed packets at 8 MiB. Lengths, IDs, UTF-8/UTF-16 lengths, NBT recursion and node budgets are checked. Compressed output must exactly match its advertised size and consume exactly one complete zlib stream. Malformed lengths are rejected before large allocations where possible. The decoder accepts narrowly identified Paper 1.20.1 and 1.21.5 zero-padding patterns only for protocols 763 and 770, respectively.
 
 A failure during network reading/writing poisons the connection, because resuming a partially read frame or advanced cipher state is unsafe. Create a new connection instead. High-level protocol errors should also be treated as terminal by applications.
 

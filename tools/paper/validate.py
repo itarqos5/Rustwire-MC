@@ -2,16 +2,20 @@
 """Run a server and its clients in the same isolated network namespace."""
 import pathlib,subprocess,time,threading,json,datetime,hashlib,socket,sys,fcntl,os
 ROOT=pathlib.Path(os.environ.get('RUSTWIRE_VALIDATION_DIR',str(pathlib.Path.cwd()/'.rustwire-validation'))).resolve()
-VERSIONS={'1.20.1':('paper-1.20.1-196.jar','java'), '1.21.1':('paper-1.21.1-133.jar','java'), '26.2':('paper-26.2-129.jar',str(ROOT/'jdk25/bin/java'))}
+MANIFEST=json.loads((ROOT/'report/download-provenance.json').read_text())
+VERSIONS={p['version']:(p['download']['name'],str(ROOT/'jdk25/bin/java') if p['version'].startswith('26.') else 'java') for p in MANIFEST['paper']}
 VERS=sys.argv[1:] or list(VERSIONS)
 lock=(ROOT/'one-server.lock').open('w'); fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
 BIN=ROOT/'client-bin';BIN.mkdir(exist_ok=True)
 for name in ['status','offline_chunks']:
  p=pathlib.Path(os.environ.get('RUSTWIRE_PROJECT',str(pathlib.Path(__file__).resolve().parents[2])))/'target/debug/examples'/name
  (BIN/name).write_bytes(p.read_bytes()); (BIN/name).chmod(0o755)
-results=json.loads((ROOT/'results.json').read_text()) if (ROOT/'results.json').exists() else []
+RESULTS=ROOT/os.environ.get('RUSTWIRE_RESULTS_FILE','results.json')
+results=json.loads(RESULTS.read_text()) if RESULTS.exists() else []
 for version in VERS:
  jar,java=VERSIONS[version]; wd=ROOT/'servers'/version
+ expected=next(p['download']['checksums']['sha256'] for p in MANIFEST['paper'] if p['version']==version)
+ if hashlib.sha256((ROOT/'downloads'/jar).read_bytes()).hexdigest()!=expected: raise RuntimeError('Paper artifact checksum changed after preparation')
  assert 'eula=true' in (wd/'eula.txt').read_text().splitlines(), 'Explicit EULA acceptance is required'
  properties=(wd/'server.properties').read_text().splitlines()
  if not all(line in properties for line in ['server-ip=127.0.0.1','online-mode=false','enable-rcon=false','enable-query=false','level-name=test-world']):
@@ -59,6 +63,6 @@ for version in VERS:
    try: server.wait(timeout=45)
    except subprocess.TimeoutExpired: server.terminate();server.wait(timeout=15)
   reader.join(timeout=5)
-  record['server_exit']=server.returncode;record['seconds']=round(time.monotonic()-started,3)
-  results=[r for r in results if r['version']!=version];results.append(record);(ROOT/'results.json').write_text(json.dumps(results,indent=2))
+  record['server_exit']=server.returncode;record['paper_build']=next(p['build'] for p in MANIFEST['paper'] if p['version']==version);record['paper_channel']=next(p['channel'] for p in MANIFEST['paper'] if p['version']==version);record['seconds']=round(time.monotonic()-started,3)
+  results=[r for r in results if r['version']!=version];results.append(record);RESULTS.write_text(json.dumps(results,indent=2))
  print(f'=== STOP {version}: server exit {server.returncode} ===',flush=True)
