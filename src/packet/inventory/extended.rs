@@ -100,25 +100,28 @@ pub struct UseCooldown {
 }
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 #[repr(i32)]
+/// EquipmentSlot's stream-codec IDs, which differ from the ordinal IDs used
+/// by the entity-equipment packet. Verified in every release from 768 to 776.
 pub enum ItemEquipmentSlot {
     MainHand = 0,
-    OffHand = 1,
-    Feet = 2,
-    Legs = 3,
-    Chest = 4,
-    Head = 5,
+    Feet = 1,
+    Legs = 2,
+    Chest = 3,
+    Head = 4,
+    OffHand = 5,
     Body = 6,
+    /// Introduced in protocol 770.
     Saddle = 7,
 }
 impl ItemEquipmentSlot {
     fn from_id(id: i32, version: Version) -> Result<Self> {
         Ok(match id {
             0 => Self::MainHand,
-            1 => Self::OffHand,
-            2 => Self::Feet,
-            3 => Self::Legs,
-            4 => Self::Chest,
-            5 => Self::Head,
+            1 => Self::Feet,
+            2 => Self::Legs,
+            3 => Self::Chest,
+            4 => Self::Head,
+            5 => Self::OffHand,
             6 => Self::Body,
             7 if version.protocol() >= 770 => Self::Saddle,
             _ => return Err(Error::Invalid("item equipment slot in selected release")),

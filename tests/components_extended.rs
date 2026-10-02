@@ -196,7 +196,7 @@ fn equippable_fields_and_saddle_version_boundaries() {
         };
         let payload = format!(
             "{} 00 01 78 01 40000000 01 01 61 01 01 62 01 03 01 02 01 00 01 {} {}",
-            if p >= 770 { "07" } else { "05" },
+            if p >= 770 { "07" } else { "04" },
             if p >= 770 { "01" } else { "" },
             if p >= 771 { "01 03" } else { "" }
         );
@@ -547,6 +547,58 @@ fn every_registered_layout_has_an_implementation() {
     for p in 766..=776 {
         for (name, wire) in component_registry(v(p)) {
             assert_ne!(*wire, ComponentWire::Unsupported, "{p} {name}");
+        }
+    }
+}
+
+// EquipmentSlot.STREAM_CODEC uses getId(), not Java enum ordinal. These bytes
+// were independently verified from each cached release constructor and codec
+// binding (1.21.3,1.21.4,1.21.5,1.21.6,1.21.8,1.21.10,1.21.11,26.1.2,26.2).
+#[test]
+fn equippable_actual_stream_ids_for_every_slot_and_release() {
+    let slots = [
+        (ItemEquipmentSlot::MainHand, "00"),
+        (ItemEquipmentSlot::Feet, "01"),
+        (ItemEquipmentSlot::Legs, "02"),
+        (ItemEquipmentSlot::Chest, "03"),
+        (ItemEquipmentSlot::Head, "04"),
+        (ItemEquipmentSlot::OffHand, "05"),
+        (ItemEquipmentSlot::Body, "06"),
+        (ItemEquipmentSlot::Saddle, "07"),
+    ];
+    for p in 768..=776 {
+        for (equipment_slot, wire_id) in slots {
+            let value = ComponentValue::Equippable(Equippable {
+                slot: equipment_slot,
+                equip_sound: RegistryHolder::RegistryId(0),
+                asset_id: None,
+                camera_overlay: None,
+                allowed_entities: None,
+                dispensable: false,
+                swappable: false,
+                damage_on_hurt: false,
+                equip_on_interact: (p >= 770).then_some(false),
+                shearing: (p >= 771).then_some(EquipmentShearing {
+                    shearable: false,
+                    sound: RegistryHolder::RegistryId(0),
+                }),
+            });
+            let payload = format!(
+                "{wire_id} 01 00 00 00 00 00 00 {} {}",
+                if p >= 770 { "00" } else { "" },
+                if p >= 771 { "00 01" } else { "" }
+            );
+            if equipment_slot == ItemEquipmentSlot::Saddle && p < 770 {
+                assert!(slot("equippable", value)
+                    .encode(v(p), Limits::default())
+                    .is_err());
+                assert!(
+                    Slot::decode(&bytes(p, "equippable", &payload), v(p), Limits::default())
+                        .is_err()
+                );
+            } else {
+                fixture(p, "equippable", &payload, value);
+            }
         }
     }
 }
