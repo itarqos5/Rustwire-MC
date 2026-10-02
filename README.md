@@ -211,3 +211,10 @@ and view controls on all 14 families. Standalone light updates were verified on
 13; Paper 1.20.4 emitted none in the bounded fixture. The report keeps that gap
 explicit. It records 277/280 check groups and 3,421 received-payload roundtrips;
 [exact evidence and limits](VALIDATION.md#live-streamed-world-updates).
+
+### Expanded inventory-hash verification
+
+All seven modern families passed 149 survival-inventory clicks: 142 correct
+predictions without corrections and seven deliberate wrong-hash controls with
+exact authoritative reconciliation. Server inventory state and official-oracle
+hashes were checked independently. [Scenarios, reproducibility and limits](docs/validation/extended-item-hash-report.md).

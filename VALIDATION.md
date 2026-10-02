@@ -393,7 +393,7 @@ The original [Java oracle](tools/paper/ComponentHashExtendedOracle.java) exercis
 artifact hashes, introduction boundaries, defaults, signed byte-width/float
 edge cases, filtered books and intentional unsupported diagnostics. This is
 independent API evidence, not a live click-acceptance result. Fresh positive and
-negative loopback inventory controls for this expanded subset are pending.
+negative loopback inventory controls for this expanded subset are recorded below.
 
 The coherent snapshot passed 301 all-feature tests on stable and Rust 1.88.0,
 286 no-default-feature tests, formatting and strict all-target/all-feature Clippy.
@@ -434,3 +434,29 @@ Use `summarize_chunk_updates.py --help` for merge/compaction commands. The added
 14 acceptance and six compaction tests bring this checkpoint to 64 Python
 checks. All 16 example unit tests passed in no-default/all-feature modes and on
 Rust 1.88.0; CI now runs every example test and every `test_*.py` harness test.
+
+## Live expanded persistent-hash controls
+
+All seven modern families (770–776) passed 149 actual-server inventory clicks
+using frozen production source `fe7db1fb60ff3a8ceec634c4d3b03e74cdc4bc4b`.
+The 142 correct predictions produced zero corrections; seven deliberately
+wrong styled-name hashes each produced exactly one authoritative offhand update
+matching the expected item. Seven following recovery swaps succeeded. These
+recoveries are included in the 142 correct predictions, not additional cases.
+Every received component hash matched the independent official API oracle, and
+every action passed a server-side inventory predicate.
+
+The [detailed report](docs/validation/extended-item-hash-report.md) and
+[149-case evidence](docs/validation/extended-item-hash-results.json) retain
+commands, per-case values, source/binary/log hashes and the two retained run IDs.
+An independent audit re-reads raw logs rather than trusting stored success
+booleans. Sixteen Python tests reject missing, fabricated, mismatched or
+duplicated success/correction/cleanup evidence. With the streamed-world tests,
+this checkpoint passes 80 Python harness tests and 20 example tests (stable
+no-default/all-feature and Rust 1.88.0). Core tests remain 301/286.
+
+The fresh isolated servers used survival mode, no operators and unchanged
+approved EULA copies; all processes exited zero and listeners closed. No
+production decoder/hash correction was needed. Registry-dependent holders,
+translated/click/hover text, other inventories/click modes, online accounts
+and third-party anti-cheat behavior are outside this particular scenario.
