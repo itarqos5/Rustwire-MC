@@ -1184,3 +1184,15 @@ pub(crate) static P764: &[PacketInfo] = &[
         name: "use_item",
     },
 ];
+pub(crate) static P764_RANGES: [(usize, usize); 10] = [
+    (0, 0),
+    (0, 2),
+    (2, 4),
+    (4, 6),
+    (6, 11),
+    (11, 15),
+    (15, 24),
+    (24, 30),
+    (30, 143),
+    (143, 197),
+];

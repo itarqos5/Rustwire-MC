@@ -1544,3 +1544,15 @@ pub(crate) static P775: &[PacketInfo] = &[
         name: "custom_click_action",
     },
 ];
+pub(crate) static P775_RANGES: [(usize, usize); 10] = [
+    (0, 0),
+    (0, 2),
+    (2, 4),
+    (4, 6),
+    (6, 12),
+    (12, 17),
+    (17, 37),
+    (37, 47),
+    (47, 188),
+    (188, 257),
+];

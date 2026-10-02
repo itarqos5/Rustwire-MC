@@ -87,25 +87,34 @@ impl Version {
             _ => unreachable!(),
         }
     }
-    pub fn catalog(self) -> &'static [PacketInfo] {
+    fn table(self) -> (&'static [PacketInfo], &'static [(usize, usize); 10]) {
         use catalog::*;
         match self.0 {
-            763 => P763,
-            764 => P764,
-            765 => P765,
-            766 => P766,
-            767 => P767,
-            768 => P768,
-            769 => P769,
-            770 => P770,
-            771 => P771,
-            772 => P772,
-            773 => P773,
-            774 => P774,
-            775 => P775,
-            776 => P776,
+            763 => (P763, &P763_RANGES),
+            764 => (P764, &P764_RANGES),
+            765 => (P765, &P765_RANGES),
+            766 => (P766, &P766_RANGES),
+            767 => (P767, &P767_RANGES),
+            768 => (P768, &P768_RANGES),
+            769 => (P769, &P769_RANGES),
+            770 => (P770, &P770_RANGES),
+            771 => (P771, &P771_RANGES),
+            772 => (P772, &P772_RANGES),
+            773 => (P773, &P773_RANGES),
+            774 => (P774, &P774_RANGES),
+            775 => (P775, &P775_RANGES),
+            776 => (P776, &P776_RANGES),
             _ => unreachable!(),
         }
+    }
+    pub fn catalog(self) -> &'static [PacketInfo] {
+        self.table().0
+    }
+    /// Packets for one wire state and direction, sorted by numeric ID.
+    pub fn packets(self, state: State, direction: Direction) -> &'static [PacketInfo] {
+        let (catalog, ranges) = self.table();
+        let (start, end) = ranges[state as usize * 2 + direction as usize];
+        &catalog[start..end]
     }
     pub fn packet(
         self,
@@ -113,14 +122,25 @@ impl Version {
         direction: Direction,
         id: i32,
     ) -> Option<&'static PacketInfo> {
-        self.catalog()
-            .iter()
-            .find(|p| p.state == state && p.direction == direction && p.id == id)
+        if id < 0 {
+            return None;
+        }
+        let packets = self.packets(state, direction);
+        // Modern packet IDs are dense. Sparse legacy IDs use a bounded binary fallback.
+        if let Some(packet) = packets.get(id as usize) {
+            if packet.id == id {
+                return Some(packet);
+            }
+        }
+        packets
+            .binary_search_by_key(&id, |p| p.id)
+            .ok()
+            .map(|index| &packets[index])
     }
     pub fn packet_id(self, state: State, direction: Direction, name: &str) -> Result<i32> {
-        self.catalog()
+        self.packets(state, direction)
             .iter()
-            .find(|p| p.state == state && p.direction == direction && p.name == name)
+            .find(|p| p.name == name)
             .map(|p| p.id)
             .ok_or(Error::Unsupported(
                 "packet in selected version/state/direction",

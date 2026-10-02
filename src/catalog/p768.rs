@@ -1412,3 +1412,15 @@ pub(crate) static P768: &[PacketInfo] = &[
         name: "use_item",
     },
 ];
+pub(crate) static P768_RANGES: [(usize, usize); 10] = [
+    (0, 0),
+    (0, 2),
+    (2, 4),
+    (4, 6),
+    (6, 12),
+    (12, 17),
+    (17, 34),
+    (34, 44),
+    (44, 175),
+    (175, 235),
+];

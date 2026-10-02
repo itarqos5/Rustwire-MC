@@ -1436,3 +1436,15 @@ pub(crate) static P770: &[PacketInfo] = &[
         name: "use_item",
     },
 ];
+pub(crate) static P770_RANGES: [(usize, usize); 10] = [
+    (0, 0),
+    (0, 2),
+    (2, 4),
+    (4, 6),
+    (6, 12),
+    (12, 17),
+    (17, 34),
+    (34, 44),
+    (44, 175),
+    (175, 239),
+];

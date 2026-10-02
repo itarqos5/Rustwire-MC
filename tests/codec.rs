@@ -199,3 +199,30 @@ fn compression_threshold_may_exceed_packet_budget() {
     c.set_compression(None).unwrap();
     assert_eq!(c.compression_threshold(), None);
 }
+#[test]
+fn indexed_catalog_lookup_matches_every_generated_entry() {
+    use rustwire_mc::version::{Direction, State};
+    for &v in Version::ALL {
+        for p in v.catalog() {
+            assert_eq!(v.packet(p.state, p.direction, p.id), Some(p));
+            assert_eq!(v.packet_id(p.state, p.direction, p.name).unwrap(), p.id);
+        }
+        for state in [
+            State::Handshake,
+            State::Status,
+            State::Login,
+            State::Configuration,
+            State::Play,
+        ] {
+            for direction in [Direction::Clientbound, Direction::Serverbound] {
+                let packets = v.packets(state, direction);
+                assert!(packets.windows(2).all(|pair| pair[0].id < pair[1].id));
+                assert!(packets
+                    .iter()
+                    .all(|p| p.state == state && p.direction == direction));
+                assert!(v.packet(state, direction, -1).is_none());
+                assert!(v.packet(state, direction, i32::MAX).is_none());
+            }
+        }
+    }
+}

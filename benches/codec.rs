@@ -1,6 +1,7 @@
 use rustwire_mc::{
     codec::{Reader, Writer},
-    Limits,
+    version::{Direction, State},
+    Limits, Version,
 };
 use std::{hint::black_box, time::Instant};
 fn main() {
@@ -19,6 +20,24 @@ fn main() {
     let elapsed = start.elapsed();
     println!(
         "{iterations} 3-byte VarInt decodes in {elapsed:?}; {:.2} ns/op",
+        elapsed.as_nanos() as f64 / iterations as f64
+    );
+    let version = black_box(Version::V26_2);
+    let start = Instant::now();
+    let mut count = 0;
+    for i in 0..iterations {
+        count += version
+            .packet(
+                black_box(State::Play),
+                black_box(Direction::Clientbound),
+                black_box(i % 180),
+            )
+            .is_some() as usize;
+    }
+    black_box(count);
+    let elapsed = start.elapsed();
+    println!(
+        "{iterations} mixed play packet-ID lookups in {elapsed:?}; {:.2} ns/op",
         elapsed.as_nanos() as f64 / iterations as f64
     );
 }

@@ -1058,3 +1058,15 @@ pub(crate) static P763: &[PacketInfo] = &[
         name: "use_item",
     },
 ];
+pub(crate) static P763_RANGES: [(usize, usize); 10] = [
+    (0, 0),
+    (0, 2),
+    (2, 4),
+    (4, 6),
+    (6, 11),
+    (11, 14),
+    (14, 14),
+    (14, 14),
+    (14, 125),
+    (125, 176),
+];
