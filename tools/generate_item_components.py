@@ -8,7 +8,7 @@ uses the checked-in generated module and does not run this script.
 
 The allowlist below is the coverage boundary of inventory.rs. A component that
 is not explicitly recognized is emitted as Unsupported; it is never treated as
-zero bytes or an opaque length-prefixed payload. Template item stacks (775+) are
+zero bytes or an opaque length-prefixed payload. Template item stacks (where used, notably 775) are
 intentionally different from Slot and remain unsupported here.
 """
 import argparse
@@ -70,8 +70,8 @@ def classify(name, shape, protocol):
 
 def generate():
     manifest = json.loads((ROOT / "research/schema-hashes.json").read_text())
-    source = json.loads((ROOT / "research/upstream-commit.json").read_text())
-    newest_source = json.loads((ROOT / "research/26.2-commit.json").read_text())
+    source = {"html_url": 'https://github.com/PrismarineJS/minecraft-data/commit/f5d7d74604d8c6153fd086bfe035e0630a5207cc'}
+    newest_source = {"html_url": 'https://github.com/Complexity-ML/minecraft-data-26.2/commit/2a6a5fd9ebb0d964a73312d11beef596b7ec029b'}
     inputs = []
     for entry in sorted(manifest, key=lambda entry: entry["protocol"]):
         if entry["protocol"] < 766:
