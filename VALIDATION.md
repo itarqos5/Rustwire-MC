@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 387 core tests with all features; 348 applicable core tests without default features
+- 396 core tests with all features; 357 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -678,3 +678,38 @@ integrated snapshot, not asserted by this focused result.
 Integrated with the border-duration correction, this snapshot passed 387
 all-feature tests on stable and Rust 1.88.0, 348 no-default tests, strict
 all-target Clippy, strict rustdoc and formatting.
+
+## Auxiliary containers and merchant offers
+
+The six auxiliary packet families have release-API fixtures across all 14
+protocol families. `docs/validation/container-auxiliary-wire-oracle.json`
+records 1,023 checks: direct serialization, integer-domain inspection,
+re-encoding, merchant cost variants, optional second costs, empty merchant
+headers, required-result rejection and special float bit patterns. These are synthetic offline protocol
+checks, not a live trading/enchanting or inventory-gameplay test. Nonempty
+merchant bodies from 769 onward are decoded and inspected, with modern costs
+re-encoded separately; the Paper outbound sanitizer prevents full offline
+merchant re-encoding. See PROVENANCE.md for the fixture registry context.
+
+Reproduce against separately prepared public artifacts and pinned schemas:
+
+```sh
+python3 tools/paper/validate_container_auxiliary.py \
+  --root ../rustwire-server-validation --schemas research/protocols \
+  --output docs/validation/container-auxiliary-wire-oracle.json \
+  --fixtures tests/fixtures/container-auxiliary.txt
+python3 -m unittest discover -s tools/paper -p 'test_validate_container_auxiliary.py'
+cargo test --locked --test container_auxiliary --test typed
+```
+
+Rust tests check both codec directions against those independent bytes, every
+strict truncation, trailing bytes, exact integer domains, all six packet
+families' version boundaries, identifier and shape errors, aggregate
+collection/NBT/depth/packet budgets and named dispatch. A connection-level test
+verifies whole-raw-packet preservation for an unknown nested merchant component
+and an error for malformed known merchant data. Narrow legacy byte encoders
+reject out-of-range input instead of silently truncating it like Java casts.
+
+The integrated snapshot passed 396 all-feature tests on both stable and Rust
+1.88.0, 357 no-default tests, strict all-target Clippy/rustdoc, formatting and
+105 Python verifier tests. No runtime dependency was added.

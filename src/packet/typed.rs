@@ -13,6 +13,10 @@ use crate::{
 #[derive(Debug, Clone, PartialEq)]
 pub enum InventoryPacket {
     Content(inventory::ContainerContent),
+    Property(inventory::ContainerProperty),
+    Mount(inventory::OpenMountScreen),
+    Cooldown(inventory::SetCooldown),
+    Trades(inventory::MerchantOffers),
     Slot(inventory::SetContainerSlot),
     Open(inventory::OpenScreen),
     Close(inventory::CloseContainer),
@@ -23,6 +27,18 @@ pub enum InventoryPacket {
 impl InventoryPacket {
     pub fn decode(name: &str, bytes: &[u8], version: Version, limits: Limits) -> Result<Self> {
         Ok(match name {
+            "craft_progress_bar" => Self::Property(inventory::ContainerProperty::decode(
+                bytes, version, limits,
+            )?),
+            "open_horse_window" => {
+                Self::Mount(inventory::OpenMountScreen::decode(bytes, version, limits)?)
+            }
+            "set_cooldown" => {
+                Self::Cooldown(inventory::SetCooldown::decode(bytes, version, limits)?)
+            }
+            "trade_list" => {
+                Self::Trades(inventory::MerchantOffers::decode(bytes, version, limits)?)
+            }
             "window_items" => {
                 Self::Content(inventory::ContainerContent::decode(bytes, version, limits)?)
             }
@@ -258,7 +274,11 @@ impl DecodedPacket {
             "block_change" | "multi_block_change" | "unload_chunk" | "respawn" => {
                 Self::World(WorldPacket::decode(name, bytes, version, limits)?)
             }
-            "window_items"
+            "craft_progress_bar"
+            | "open_horse_window"
+            | "set_cooldown"
+            | "trade_list"
+            | "window_items"
             | "set_slot"
             | "open_window"
             | "close_window"

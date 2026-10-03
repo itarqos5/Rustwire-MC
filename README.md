@@ -89,6 +89,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - Streamed lighting, biome-only chunk replacements, compound block-entity updates and view/simulation-distance controls, with dimension and aggregate-allocation limits
 - World particles, legacy/modern explosions, positional/entity sounds, stop-sound filters and world events with shared nested-payload budgets
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets
+- Container properties, horse/mount screens, button/select-trade requests, item/group cooldowns and bounded merchant offers with release-specific exact component costs
 - Typed food/effects, potions, books, attributes, lodestones, fireworks, bees, tools, consumables, equipment/combat components, profiles, trims, instruments, banners and adventure-mode predicates, including release-specific holders and nested matchers
 - Full-stack container clicks through 1.21.4; hashed click representations from 1.21.5, with structured CRC32C derivation for an explicit component subset
 - `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components, plus literal/styled names and lore, food, books, fireworks, lodestones, cooldowns and selected combat/consumption components

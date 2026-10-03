@@ -135,3 +135,19 @@ fn typed_system_chat_dispatch() {
         TypedEvent::Decoded(DecodedPacket::Chat(ChatPacket::System(_)))
     ));
 }
+
+#[test]
+fn unsupported_merchant_component_preserves_raw_and_malformed_does_not() {
+    let v = Version::V1_21_5;
+    let id = v
+        .packet_id(State::Play, Direction::Clientbound, "trade_list")
+        .unwrap();
+    // Container, offer count, cost item ID/count/component count, unknown component.
+    let p = RawPacket::new(id, vec![7, 1, 1, 3, 1, 255, 255, 255, 127, 9, 8, 7, 6]);
+    let expected = p.clone();
+    assert!(matches!(play_connection(p).next_typed_event().unwrap(),
+        TypedEvent::Raw { packet, unsupported: Some(_), name: Some("trade_list"), .. } if packet == expected));
+    assert!(play_connection(RawPacket::new(id, vec![7, 1]))
+        .next_typed_event()
+        .is_err());
+}

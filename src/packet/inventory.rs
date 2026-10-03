@@ -23,6 +23,9 @@ use crate::{
     Error, Limits, Result, Version,
 };
 use std::collections::BTreeSet;
+#[path = "inventory/auxiliary.rs"]
+mod auxiliary;
+pub use auxiliary::*;
 #[path = "inventory/components.rs"]
 mod components;
 #[path = "inventory/extended.rs"]

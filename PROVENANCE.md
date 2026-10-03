@@ -364,3 +364,39 @@ and stored entry spellings are retained. Rejecting duplicate semantic identities
 is `RegistryStore`'s existing uniqueness policy extended to aliases, not a claim
 that the official packet reader rejects duplicate wire entries. No game source,
 binary or private-server capture was added.
+## Auxiliary container and merchant packets
+
+`tools/paper/ContainerAuxiliaryOracle.java` is an original reflection-based
+fixture harness for six packet families across protocols 763–776. The
+reproducible checked report is
+`docs/validation/container-auxiliary-wire-oracle.json`; the mechanically
+extracted Rust fixtures are `tests/fixtures/container-auxiliary.txt`. Prepared
+Paper artifact hashes, the oracle source hash and all 14 pinned schema hashes
+are recorded in the report. No server binaries or implementation code are
+included.
+
+The actual release APIs correct two historical schema boundaries: container
+button fields become signed VarInts at protocol 766, and merchant container IDs
+remain signed VarInts even at 766–767 (their schema incorrectly uses the byte
+ContainerID alias). Property/mount IDs are unsigned bytes through 767 and signed
+VarInts from 768. Mount inventory size changes meaning from slots to columns at
+767; the public codec retains the wire value without deriving a layout.
+Cooldown targets change from numeric item IDs to resource identifiers at 768.
+
+Merchant inputs use ordinary Slots through 765, then item ID, signed count and
+ordered exact component values from 766. Exact costs have no empty sentinel or
+removed-component count. The second cost has a separate boolean presence flag; modern result Slots must
+be nonempty.
+Tests retain nonpositive modern cost counts, signed scalar fields, negative
+zero, infinities and NaN payload bits. Existing Slot validation still applies to
+legacy cost and result stacks; this is not a simulator of merchant game rules.
+
+Merchant bodies are decoded and re-encoded through release APIs through 768.
+For 769+ the full body is decoded and its numeric fields inspected; each modern
+cost is independently re-encoded. Full nonempty merchant re-encoding is not
+claimed for 769+, because Paper's outbound ItemStack sanitizer requires a live
+server. It is neither replaced nor disabled. For 775–776 the isolated stone
+fixture holder is given an explicit empty default-component map via the public
+holder API; this does not load or validate data-pack defaults. The five other
+packet families and empty merchant bodies are decoded and re-encoded across
+all 14 families. No server, world or network connection is started.
