@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 416 core tests with all features; 377 applicable core tests without default features
+- 427 core tests with all features; 388 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -748,3 +748,32 @@ no new upstream serializer or live-server run is asserted here.
 The integrated maps/statistics snapshot passed 416 stable all-feature tests,
 377 no-default tests, strict all-target Clippy/rustdoc and formatting. The exact
 new commit is also checked by the repository’s Rust 1.88 CI job.
+
+## Ordinary entity-control codecs
+
+Nine body tests and two typed-dispatch tests cover 224 standalone Python-encoded
+schema fixtures across protocols 763–776, every one of their 2,478 strict
+prefixes, trailing bytes, exact/undersized byte budgets, collection preflight,
+signed references and damage offsets, all 256 head-angle/animation bytes,
+malformed options/VarInts and floating-point bit preservation. Existing entity
+and typed/raw-fallback regressions also pass, for 19 focused Rust tests total.
+Six Python regression tests check the independent fixture verifier's hash,
+layout, nested-vector and full-protocol validation. The source and evidence
+limits are documented in [the wire audit](docs/entity-control-wire-audit.md).
+
+```sh
+python3 tools/check_entity_control_fixtures.py
+python3 -m unittest discover -s tools -p 'test_check_entity_control_fixtures.py' -v
+cargo test --locked --offline --no-default-features \
+  --test entity_control --test entity_control_typed --test entities --test typed
+```
+
+The isolated staging snapshot passed those checks, formatting, strict focused
+no-default-feature Clippy and strict no-default-feature rustdoc on stable Rust
+1.99. No new release-API or live-server run is claimed. Full integrated feature
+suites and minimum-Rust checks are reported separately.
+
+The integrated entity-control snapshot passed 427 stable all-feature tests,
+388 no-default tests, the 224-fixture schema check, six verifier regressions,
+strict all-target Clippy/rustdoc and formatting. Verifier regressions now run
+in CI without downloaded schemas or game assets. Rust 1.88 is checked by CI.

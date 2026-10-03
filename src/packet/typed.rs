@@ -120,6 +120,7 @@ pub enum DecodedPacket {
     Command(CommandPacket),
     WorldEffect(WorldEffectPacket),
     Entity(EntityPacket),
+    EntityControl(super::entity_control::EntityControlPacket),
     EntityState(EntityStatePacket),
     Player(PlayerPacket),
     Metadata(EntityMetadata),
@@ -256,6 +257,15 @@ impl DecodedPacket {
             "world_event" => Self::WorldEffect(WorldEffectPacket::Event(
                 super::world_effects::WorldEvent::decode(bytes, version, limits)?,
             )),
+            "set_passengers"
+            | "attach_entity"
+            | "entity_head_rotation"
+            | "camera"
+            | "animation"
+            | "damage_event"
+            | "hurt_animation" => Self::EntityControl(
+                super::entity_control::EntityControlPacket::decode(name, bytes, version, limits)?,
+            ),
             "spawn_entity"
             | "rel_entity_move"
             | "entity_move_look"

@@ -5,6 +5,7 @@ pub mod chunk_updates;
 pub mod commands;
 pub mod common;
 pub mod entity;
+pub mod entity_control;
 pub mod entity_metadata;
 pub mod entity_state;
 pub mod interact;

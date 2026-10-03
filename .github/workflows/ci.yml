@@ -26,6 +26,7 @@ jobs:
           components: rustfmt, clippy
       - run: cargo fmt --all -- --check
       - run: python3 -m unittest discover -s tools/paper -p "test_*.py"
+      - run: python3 -m unittest discover -s tools -p "test_*.py"
       - run: python3 verify.py && python3 test_acceptance.py -v
         working-directory: docs/validation/connection-regression-01bf0a0
       - run: cargo clippy --locked --all-targets --all-features -- -D warnings

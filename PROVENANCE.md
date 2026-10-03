@@ -412,3 +412,14 @@ use the library encoder to construct expected wire bytes. This increment used
 no game artifacts or private project material and makes no new release-API or
 live-server interoperability claim. Optional map-canvas validation is explicitly
 an application policy, separate from lossless envelope decoding.
+
+## Ordinary entity-control schema evidence
+
+The seven clientbound entity-control layouts were verified in all fourteen
+hash-pinned schemas. The [wire audit](docs/entity-control-wire-audit.md) documents
+source links, unchanged body shapes, raw scalar-domain choices and a limited
+protocol-776 public implementation cross-check. An original standalone Python
+encoder supplies 224 synthetic fixture bodies; these are schema-derived fixtures,
+not new release-serializer outputs or live-server captures. No game code or
+binaries were copied. Damage registry and source-entity references remain
+unresolved wire values.

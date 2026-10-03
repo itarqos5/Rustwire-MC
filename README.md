@@ -81,6 +81,7 @@ registry changes. Without it, those packets remain raw rather than guessing a
 world height. Standalone block-entity and view/simulation controls need no context.
 
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
+- Passenger lists, entity attachments, head rotation, camera, animation, damage events and hurt animation, with raw entity/registry references and exact-version packet IDs
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Scoreboard objectives/display/scores/reset/teams, boss-bar operations and player-list headers/footers, with release-specific wire boundaries
