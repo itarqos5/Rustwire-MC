@@ -400,3 +400,15 @@ fixture holder is given an explicit empty default-component map via the public
 holder API; this does not load or validate data-pack defaults. The five other
 packet families and empty merchant bodies are decoded and re-encoded across
 all 14 families. No server, world or network connection is started.
+
+## Map and statistics schema-backed envelopes
+
+The new [map/statistics wire audit](docs/map-statistics-wire-audit.md) records
+bounded outer codecs, unresolved numeric IDs and the 764/765 label representation
+boundary from all fourteen hash-pinned schemas. The original read-only
+`tools/verify_map_statistics_schemas.py` checks complete structural equality for
+both packet bodies in every family. Original hand-authored Rust fixtures do not
+use the library encoder to construct expected wire bytes. This increment used
+no game artifacts or private project material and makes no new release-API or
+live-server interoperability claim. Optional map-canvas validation is explicitly
+an application policy, separate from lossless envelope decoding.

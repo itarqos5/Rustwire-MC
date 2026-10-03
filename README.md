@@ -84,6 +84,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Scoreboard objectives/display/scores/reset/teams, boss-bar operations and player-list headers/footers, with release-specific wire boundaries
+- Map-data decorations/pixel patches and statistics envelopes, with unresolved registry IDs, shared resource budgets and opt-in canvas validation
 - Game-state reasons, versioned world clocks/time, spawn/difficulty, all world-border updates, block acknowledgements and player-loaded notifications
 - Block/section updates, chunk unload and respawn with dimension metadata
 - Streamed lighting, biome-only chunk replacements, compound block-entity updates and view/simulation-distance controls, with dimension and aggregate-allocation limits

@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 396 core tests with all features; 357 applicable core tests without default features
+- 416 core tests with all features; 377 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -713,3 +713,38 @@ reject out-of-range input instead of silently truncating it like Java casts.
 The integrated snapshot passed 396 all-feature tests on both stable and Rust
 1.88.0, 357 no-default tests, strict all-target Clippy/rustdoc, formatting and
 105 Python verifier tests. No runtime dependency was added.
+
+## Map and statistics schema-backed codecs
+
+Clientbound `map` and `statistics` now have bounded typed envelopes across all
+fourteen protocol families, with packet helpers and play-state dispatch. The
+[wire audit](docs/map-statistics-wire-audit.md) distinguishes the hash-pinned
+schema evidence and hand-authored fixtures from pending release-API/live-server
+validation. Numeric registry IDs remain unresolved, full scalar wire values and
+statistics duplicates are retained, and map geometry checks are opt-in through
+`MapPatch::validate_canvas()`.
+
+Twenty focused tests cover original fixtures, all-family dispatch and packet IDs,
+every truncation, trailing bytes, malformed counts/booleans/VarInts/labels,
+764/765 representation rejection, shared decoration/color and NBT-node budgets,
+string/depth/byte limits, transactional reads/writes and canvas validation.
+The focused no-default-features suite passed; strict focused Clippy and formatting
+also passed. The schema verifier matched all 28 layouts against their recorded
+SHA-256 values. Commands:
+
+```sh
+cargo test --offline --locked --no-default-features \
+  --test map --test statistics --test map_statistics_typed
+cargo clippy --offline --locked --no-default-features --lib \
+  --test map --test statistics --test map_statistics_typed -- -D warnings
+cargo fmt --all -- --check
+python3 tools/verify_map_statistics_schemas.py
+```
+
+These focused checks used the existing stable toolchain with compact build
+settings. Full integrated feature/MSRV/quality gates are reported separately;
+no new upstream serializer or live-server run is asserted here.
+
+The integrated maps/statistics snapshot passed 416 stable all-feature tests,
+377 no-default tests, strict all-target Clippy/rustdoc and formatting. The exact
+new commit is also checked by the repository’s Rust 1.88 CI job.

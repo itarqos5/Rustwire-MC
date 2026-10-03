@@ -111,6 +111,8 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Map(super::map::MapData),
+    Statistics(super::statistics::Statistics),
     WorldState(super::world_state::WorldStatePacket),
     Scoreboard(Box<super::scoreboard::ScoreboardPacket>),
     Overlay(OverlayPacket),
@@ -164,6 +166,10 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "map" => Self::Map(super::map::MapData::decode(bytes, version, limits)?),
+            "statistics" => Self::Statistics(super::statistics::Statistics::decode(
+                bytes, version, limits,
+            )?),
             "game_state_change"
             | "update_time"
             | "spawn_position"
