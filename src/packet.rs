@@ -8,6 +8,7 @@ pub mod entity;
 pub mod entity_control;
 pub mod entity_metadata;
 pub mod entity_state;
+pub mod hud;
 pub mod interact;
 pub mod inventory;
 pub mod item_hash;

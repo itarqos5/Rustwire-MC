@@ -423,3 +423,14 @@ encoder supplies 224 synthetic fixture bodies; these are schema-derived fixtures
 not new release-serializer outputs or live-server captures. No game code or
 binaries were copied. Damage registry and source-entity references remain
 unresolved wire values.
+
+## HUD and player-feedback schema-backed envelopes
+
+The [HUD wire audit](docs/hud-wire-audit.md) covers ten clientbound play packet
+families over all fourteen pinned protocols. The original read-only
+`tools/verify_hud_schemas.py` checks SHA-256, complete body equality, name-to-type
+dispatch and all 140 fixture IDs. It preserves protocol 775's hand mapper in the
+schema comparison, while the wire API explicitly retains opaque hand VarInts.
+Original hand-authored fixture bodies and malformed/resource-budget tests use
+no library encoder to construct expected wire data. This increment makes no
+new upstream serializer, receiving-client acceptance or live-server claim.

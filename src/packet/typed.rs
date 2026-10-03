@@ -111,6 +111,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Hud(super::hud::HudPacket),
     Map(super::map::MapData),
     Statistics(super::statistics::Statistics),
     WorldState(super::world_state::WorldStatePacket),
@@ -167,6 +168,11 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "clear_titles" | "action_bar" | "set_title_text" | "set_title_subtitle"
+            | "set_title_time" | "open_book" | "experience" | "enter_combat_event"
+            | "end_combat_event" | "death_combat_event" => {
+                Self::Hud(super::hud::HudPacket::decode(name, bytes, version, limits)?)
+            }
             "map" => Self::Map(super::map::MapData::decode(bytes, version, limits)?),
             "statistics" => Self::Statistics(super::statistics::Statistics::decode(
                 bytes, version, limits,

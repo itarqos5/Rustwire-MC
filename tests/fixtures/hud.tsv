@@ -1,0 +1,143 @@
+# Original hand-authored packet bodies; IDs copied from hash-pinned schemas.
+# Schema-backed fixtures only, not release-API output or live packet captures.
+# protocol	packet_name	clientbound_play_id_decimal	body_hex
+763	clear_titles	14	01
+763	action_bar	70	03226122
+763	set_title_text	95	03227422
+763	set_title_subtitle	93	03227322
+763	set_title_time	96	ffffffff0000004600000014
+763	open_book	47	01
+763	experience	86	3f0000000aac02
+763	enter_combat_event	55	
+763	end_combat_event	54	ac02
+763	death_combat_event	56	ac0203226422
+764	clear_titles	15	01
+764	action_bar	72	03226122
+764	set_title_text	97	03227422
+764	set_title_subtitle	95	03227322
+764	set_title_time	98	ffffffff0000004600000014
+764	open_book	48	01
+764	experience	88	3f0000000aac02
+764	enter_combat_event	57	
+764	end_combat_event	56	ac02
+764	death_combat_event	58	ac0203226422
+765	clear_titles	15	01
+765	action_bar	74	08000161
+765	set_title_text	99	08000174
+765	set_title_subtitle	97	08000173
+765	set_title_time	100	ffffffff0000004600000014
+765	open_book	48	01
+765	experience	90	3f0000000aac02
+765	enter_combat_event	57	
+765	end_combat_event	56	ac02
+765	death_combat_event	58	ac0208000164
+766	clear_titles	15	01
+766	action_bar	76	08000161
+766	set_title_text	101	08000174
+766	set_title_subtitle	99	08000173
+766	set_title_time	102	ffffffff0000004600000014
+766	open_book	50	01
+766	experience	92	3f0000000aac02
+766	enter_combat_event	59	
+766	end_combat_event	58	ac02
+766	death_combat_event	60	ac0208000164
+767	clear_titles	15	01
+767	action_bar	76	08000161
+767	set_title_text	101	08000174
+767	set_title_subtitle	99	08000173
+767	set_title_time	102	ffffffff0000004600000014
+767	open_book	50	01
+767	experience	92	3f0000000aac02
+767	enter_combat_event	59	
+767	end_combat_event	58	ac02
+767	death_combat_event	60	ac0208000164
+768	clear_titles	15	01
+768	action_bar	81	08000161
+768	set_title_text	108	08000174
+768	set_title_subtitle	106	08000173
+768	set_title_time	109	ffffffff0000004600000014
+768	open_book	52	01
+768	experience	97	3f0000000aac02
+768	enter_combat_event	61	
+768	end_combat_event	60	ac02
+768	death_combat_event	62	ac0208000164
+769	clear_titles	15	01
+769	action_bar	81	08000161
+769	set_title_text	108	08000174
+769	set_title_subtitle	106	08000173
+769	set_title_time	109	ffffffff0000004600000014
+769	open_book	52	01
+769	experience	97	3f0000000aac02
+769	enter_combat_event	61	
+769	end_combat_event	60	ac02
+769	death_combat_event	62	ac0208000164
+770	clear_titles	14	01
+770	action_bar	80	08000161
+770	set_title_text	107	08000174
+770	set_title_subtitle	105	08000173
+770	set_title_time	108	ffffffff0000004600000014
+770	open_book	51	01
+770	experience	96	3f0000000aac02
+770	enter_combat_event	60	
+770	end_combat_event	59	ac02
+770	death_combat_event	61	ac0208000164
+771	clear_titles	14	01
+771	action_bar	80	08000161
+771	set_title_text	107	08000174
+771	set_title_subtitle	105	08000173
+771	set_title_time	108	ffffffff0000004600000014
+771	open_book	51	01
+771	experience	96	3f0000000aac02
+771	enter_combat_event	60	
+771	end_combat_event	59	ac02
+771	death_combat_event	61	ac0208000164
+772	clear_titles	14	01
+772	action_bar	80	08000161
+772	set_title_text	107	08000174
+772	set_title_subtitle	105	08000173
+772	set_title_time	108	ffffffff0000004600000014
+772	open_book	51	01
+772	experience	96	3f0000000aac02
+772	enter_combat_event	60	
+772	end_combat_event	59	ac02
+772	death_combat_event	61	ac0208000164
+773	clear_titles	14	01
+773	action_bar	85	08000161
+773	set_title_text	112	08000174
+773	set_title_subtitle	110	08000173
+773	set_title_time	113	ffffffff0000004600000014
+773	open_book	56	01
+773	experience	101	3f0000000aac02
+773	enter_combat_event	65	
+773	end_combat_event	64	ac02
+773	death_combat_event	66	ac0208000164
+774	clear_titles	14	01
+774	action_bar	85	08000161
+774	set_title_text	112	08000174
+774	set_title_subtitle	110	08000173
+774	set_title_time	113	ffffffff0000004600000014
+774	open_book	56	01
+774	experience	101	3f0000000aac02
+774	enter_combat_event	65	
+774	end_combat_event	64	ac02
+774	death_combat_event	66	ac0208000164
+775	clear_titles	14	01
+775	action_bar	87	08000161
+775	set_title_text	114	08000174
+775	set_title_subtitle	112	08000173
+775	set_title_time	115	ffffffff0000004600000014
+775	open_book	58	01
+775	experience	103	3f0000000aac02
+775	enter_combat_event	67	
+775	end_combat_event	66	ac02
+775	death_combat_event	68	ac0208000164
+776	clear_titles	14	01
+776	action_bar	87	08000161
+776	set_title_text	114	08000174
+776	set_title_subtitle	112	08000173
+776	set_title_time	115	ffffffff0000004600000014
+776	open_book	58	01
+776	experience	103	3f0000000aac02
+776	enter_combat_event	67	
+776	end_combat_event	66	ac02
+776	death_combat_event	68	ac0208000164

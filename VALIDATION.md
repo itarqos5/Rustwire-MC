@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 427 core tests with all features; 388 applicable core tests without default features
+- 446 core tests with all features; 407 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -777,3 +777,37 @@ The integrated entity-control snapshot passed 427 stable all-feature tests,
 388 no-default tests, the 224-fixture schema check, six verifier regressions,
 strict all-target Clippy/rustdoc and formatting. Verifier regressions now run
 in CI without downloaded schemas or game assets. Rust 1.88 is checked by CI.
+
+## HUD and player-feedback schema-backed codecs
+
+Ten clientbound title/action-bar, book, experience and combat-notification
+families now have bounded typed bodies and play-state dispatch across 763–776.
+The [HUD audit](docs/hud-wire-audit.md) identifies the pinned schema evidence,
+140 original hand-authored body fixtures, raw scalar policies and the exact
+764/765 component boundary. No new release-API or live-server check is claimed.
+
+Nineteen focused Rust tests passed on the existing stable toolchain with both
+no default features and all features. These cover every fixture and packet ID,
+every strict truncation and trailing byte, signed scalar/float-bit preservation,
+malformed wire fields, all resource budgets, transactional stream operations,
+state/direction selection and in-memory connection raw/typed/error behavior.
+The read-only verifier matched all 140 complete layouts and IDs against their
+recorded SHA-256 schemas; eight Python negative-control tests passed. Strict
+focused Clippy and formatting also passed. Commands:
+
+```sh
+cargo test --offline --locked --no-default-features --test hud --test hud_typed
+cargo test --offline --locked --all-features --test hud --test hud_typed
+cargo clippy --offline --locked --no-default-features --lib \
+  --test hud --test hud_typed -- -D warnings
+cargo fmt --all -- --check
+python3 tools/verify_hud_schemas.py
+python3 -m unittest discover -s tools -p 'test_verify_hud_schemas.py'
+```
+
+These focused checks used stable Rust with compact build settings. Full
+integrated quality gates and exact-commit MSRV CI results are reported separately.
+
+The integrated HUD snapshot passed 446 stable all-feature tests, 407 minimal
+tests, all 140 schema/fixture checks, 119 Python verifier tests, strict
+all-target Clippy/rustdoc and formatting. Rust 1.88 is checked in CI.
