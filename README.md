@@ -89,6 +89,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - Title/subtitle/action-bar controls, book opening, experience and combat notifications with bounded JSON/NBT components and typed play dispatch
 - Game-state reasons, versioned world clocks/time, spawn/difficulty, all world-border updates, block acknowledgements and player-loaded notifications
 - Block/section updates, chunk unload and respawn with dimension metadata
+- Block actions/break animations, sign editors, compound NBT queries, item collection, vehicle/look-at controls and version-gated tick/rotation/projectile controls
 - Streamed lighting, biome-only chunk replacements, compound block-entity updates and view/simulation-distance controls, with dimension and aggregate-allocation limits
 - World particles, legacy/modern explosions, positional/entity sounds, stop-sound filters and world events with shared nested-payload budgets
 - Classic inventory NBT, modern component patches, content/set-slot/open/close/selected-slot and cursor/player-slot packets

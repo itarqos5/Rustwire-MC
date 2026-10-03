@@ -434,3 +434,19 @@ schema comparison, while the wire API explicitly retains opaque hand VarInts.
 Original hand-authored fixture bodies and malformed/resource-budget tests use
 no library encoder to construct expected wire data. This increment makes no
 new upstream serializer, receiving-client acceptance or live-server claim.
+
+## World/player-control schema and source audit
+
+The [world-control audit](docs/world-control-wire-audit.md) records all eleven
+new clientbound names, 142 present packet/family combinations and their exact
+IDs against the existing fourteen hash-pinned schemas. The original verifier
+checks structural equality and known absences without modifying schema hashes.
+Version-pinned MCProtocolLib and independent PacketEvents implementations
+corroborate VarInt target anchors for 763–764, where the pinned schema has a
+stale string field. Source inspection also corroborates nullable compound NBT
+and the 773 rotation-relative-flag boundary; exact commits and caveats are
+linked in the audit. No external implementation code is copied.
+
+The 198 original Python-encoded fixture rows are synthetic, independent of the
+Rust encoder: 184 valid bodies plus 14 unknown-anchor cases. No new Minecraft
+release-API execution or live-server validation is claimed for this increment.

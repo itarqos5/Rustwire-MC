@@ -75,14 +75,23 @@ fn every_golden_dispatches_only_in_play() {
 }
 
 #[test]
-fn raw_fallback_remains_for_unimplemented_entity_packets() {
+fn raw_fallback_remains_for_unknown_entity_packets() {
     for &version in Version::ALL {
-        // Other entity-targeted packets remain outside this typed slice.
-        for name in ["collect", "face_player", "future_entity_control"] {
+        // Truly unknown names remain raw even as neighboring codecs are added.
+        assert!(DecodedPacket::decode(
+            State::Play,
+            "future_entity_control",
+            &[255],
+            version,
+            Limits::default()
+        )
+        .unwrap()
+        .is_none());
+        // Newly supported world controls must reject malformed known bodies.
+        for name in ["collect", "face_player"] {
             assert!(
                 DecodedPacket::decode(State::Play, name, &[255], version, Limits::default())
-                    .unwrap()
-                    .is_none()
+                    .is_err()
             );
         }
         assert!(matches!(

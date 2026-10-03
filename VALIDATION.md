@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 446 core tests with all features; 407 applicable core tests without default features
+- 461 core tests with all features; 422 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -811,3 +811,27 @@ integrated quality gates and exact-commit MSRV CI results are reported separatel
 The integrated HUD snapshot passed 446 stable all-feature tests, 407 minimal
 tests, all 140 schema/fixture checks, 119 Python verifier tests, strict
 all-target Clippy/rustdoc and formatting. Rust 1.88 is checked in CI.
+
+## Ordinary world/player-control envelopes
+
+Fifteen new focused Rust tests and sixteen existing typed/world-state tests
+passed for `packet::world_control`, with no default features. Coverage includes
+198 independent synthetic fixture rows, all 3,627 strict prefixes through both
+direct and named typed dispatch, trailing data, all-family packet IDs, absent
+versions, packed position bounds, projectile and rotation representation
+changes, signed/float domains, legacy/modern optional compound NBT and shared
+NBT budgets. Unknown anchor ordinals preserve raw packets only after the
+complete body is valid; wrong NBT roots and malformed known bodies stay errors.
+
+Ten Python verifier regressions passed. The verifier confirms all 142 layouts
+and their IDs against fourteen hash-pinned schemas while explicitly recording
+the early face-player schema correction. Strict focused no-default Clippy,
+strict no-default rustdoc and formatting passed. See the
+[wire audit](docs/world-control-wire-audit.md) for reproducible commands,
+source-level evidence and remaining release-API/live-server validation limits.
+
+The integrated world-control snapshot passed 461 stable all-feature tests,
+422 no-default tests, all 198 fixture checks, 24 root-tool verifier regressions,
+strict all-target Clippy/rustdoc and formatting. A formerly unimplemented-packet
+test now correctly expects malformed `collect`/`face_player` bodies to fail;
+truly unknown names retain raw fallback. Rust 1.88 is checked by CI.

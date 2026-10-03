@@ -111,6 +111,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    WorldControl(super::world_control::WorldControlPacket),
     Hud(super::hud::HudPacket),
     Map(super::map::MapData),
     Statistics(super::statistics::Statistics),
@@ -168,6 +169,19 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "block_break_animation"
+            | "block_action"
+            | "open_sign_entity"
+            | "nbt_query_response"
+            | "collect"
+            | "vehicle_move"
+            | "face_player"
+            | "player_rotation"
+            | "set_projectile_power"
+            | "set_ticking_state"
+            | "step_tick" => Self::WorldControl(super::world_control::WorldControlPacket::decode(
+                name, bytes, version, limits,
+            )?),
             "clear_titles" | "action_bar" | "set_title_text" | "set_title_subtitle"
             | "set_title_time" | "open_book" | "experience" | "enter_combat_event"
             | "end_combat_event" | "death_combat_event" => {
