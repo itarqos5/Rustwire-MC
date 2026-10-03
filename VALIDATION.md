@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 378 core tests with all features; 339 applicable core tests without default features
+- 387 core tests with all features; 348 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -643,3 +643,38 @@ closed listeners, unchanged approved EULAs and empty operator lists. The finaliz
 portable harness passed source/acceptance checks but was not live-rerun. This
 initial-connection regression neither covers online account authentication nor
 closes the standalone 1.20.4 UpdateLight observation gap.
+
+## Registry lookup identifier aliases
+
+`RegistryStore` previously compared raw identifier strings, so `overworld`,
+`:overworld` and `minecraft:overworld` could fail equivalent lookups or evade
+duplicate detection. Registry names had the same issue. Lookup and atomic
+replacement now recognize their shared default namespace. Custom namespaces
+remain distinct; the latest registry spelling and all entry spellings stay in
+the public data, and wire codecs retain their existing representations.
+
+Nine tests in `tests/registry_identifiers.rs` cover all 14 families, default and
+empty-path aliases, modern omitted/scalar NBT, legacy explicit IDs and last-key
+NBT fields, duplicate-name/ID rollback, cross-spelling replacement and public-map
+edits. A hand-authored modern fixture and every truncated prefix are checked
+separately from generated roundtrips. Identifier identity is grounded in the
+existing [release-API oracle record](docs/validation/registry-tags-oracle.json);
+no additional live-server interoperability is claimed.
+
+The focused check passed all 20 tests:
+
+```sh
+cargo test --offline --locked --no-default-features \
+  --test registry_identifiers --test registry_packets --test registry_roots --test tags
+```
+
+This staging snapshot also passed `cargo test --offline --locked
+--no-default-features` (347 tests), `cargo test --offline --locked` (351 tests)
+and `cargo fmt --all -- --check`. Builds used `CARGO_INCREMENTAL=0`,
+`CARGO_PROFILE_DEV_DEBUG=0` and `CARGO_PROFILE_TEST_DEBUG=0` to limit temporary disk
+usage. All-feature, minimum-Rust and strict quality checks are left to the
+integrated snapshot, not asserted by this focused result.
+
+Integrated with the border-duration correction, this snapshot passed 387
+all-feature tests on stable and Rust 1.88.0, 348 no-default tests, strict
+all-target Clippy, strict rustdoc and formatting.

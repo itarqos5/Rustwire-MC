@@ -348,3 +348,19 @@ cached release packet APIs without distributing their implementation text. The
 record all 14 releases, including clock-registry setup for 26.x. Both valid and
 non-gameplay scalar domains are tested; names, field types and version boundaries
 are reported as protocol facts rather than inferred from adjacent releases.
+
+## Registry lookup identifier aliases
+
+Registry lookup, duplicate detection and replacement now reuse the shared
+resource-location identity rules. The existing
+[registry/tag oracle record](docs/validation/registry-tags-oracle.json) establishes
+default namespaces and empty paths through release APIs in all 14 families; this
+increment reuses that evidence and does not claim a new Java or live-server run.
+
+The nine original Rust regressions include hand-authored modern wire bytes,
+every truncation of that valid fixture, all-family wire roundtrips, legacy
+explicit IDs and transactional duplicate/replacement checks. Wire identifiers
+and stored entry spellings are retained. Rejecting duplicate semantic identities
+is `RegistryStore`'s existing uniqueness policy extended to aliases, not a claim
+that the official packet reader rejects duplicate wire entries. No game source,
+binary or private-server capture was added.

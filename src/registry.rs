@@ -8,15 +8,17 @@
 //! Modern packets share `max_nbt_nodes` across all present entry payloads.
 //! The wire entry list retains order and duplicate keys; `RegistryStore::apply`
 //! separately rejects duplicate keys when assigning a usable lookup table.
+//! Lookups, duplicate checks and replacement recognize the default `minecraft:`
+//! namespace; packet identifiers and stored entry spellings remain unchanged.
 mod wire;
 use crate::{
-    codec::{Reader, Writer},
+    codec::{identifier, Reader, Writer},
     frame::RawPacket,
     nbt::{Nbt, RootFormat, Tag, TagType},
     version::{Direction, State},
     Error, Limits, Result, Version,
 };
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 #[derive(Clone, Debug, PartialEq)]
 pub struct RegistryEntry {
@@ -142,15 +144,20 @@ impl Registry {
     pub fn by_id(&self, id: u32) -> Option<&RegistryEntry> {
         self.entries.get(&id)
     }
+    /// Match resource-location identity, including the default namespace,
+    /// without changing the returned entry's spelling.
     pub fn by_key(&self, key: &str) -> Option<(u32, &RegistryEntry)> {
+        let key = identifier::parts(key);
         self.entries
             .iter()
-            .find(|(_, v)| v.key == key)
+            .find(|(_, v)| identifier::parts(&v.key) == key)
             .map(|(&id, v)| (id, v))
     }
 }
 /// Accumulate one configuration epoch. Call `clear` when beginning a new
-/// configuration; a packet replaces its named registry atomically.
+/// configuration; a packet replaces its named registry atomically, including
+/// equivalent default-namespace spellings. The latest registry spelling is kept
+/// as the public map key. Direct map edits bypass `apply`'s uniqueness checks.
 #[derive(Clone, Debug, Default, PartialEq)]
 pub struct RegistryStore {
     pub registries: BTreeMap<String, Registry>,
@@ -160,18 +167,24 @@ impl RegistryStore {
         self.registries.clear();
     }
     pub fn get(&self, name: &str) -> Option<&Registry> {
-        self.registries.get(name)
+        self.registries.get(name).or_else(|| {
+            let name = identifier::parts(name);
+            self.registries
+                .iter()
+                .find(|(key, _)| identifier::parts(key) == name)
+                .map(|(_, registry)| registry)
+        })
     }
     pub fn apply(&mut self, packet: RegistryData) -> Result<()> {
         let updates = match packet {
             RegistryData::Entries { registry, entries } => {
                 let mut result = Registry::default();
-                let mut keys = std::collections::BTreeSet::new();
+                let mut keys = BTreeSet::new();
                 for (id, entry) in entries.into_iter().enumerate() {
                     if id > i32::MAX as usize {
                         return Err(Error::Limit("registry ID"));
                     }
-                    if !keys.insert(entry.key.clone()) {
+                    if !keys.insert(canonical_key(&entry.key)) {
                         return Err(Error::Invalid("duplicate registry key"));
                     }
                     result.entries.insert(id as u32, entry);
@@ -180,6 +193,10 @@ impl RegistryStore {
             }
             RegistryData::Legacy(nbt) => parse_legacy(nbt.root)?,
         };
+        let keys: BTreeSet<_> = updates.keys().map(|key| identifier::parts(key)).collect();
+        self.registries
+            .retain(|key, _| !keys.contains(&identifier::parts(key)));
+        drop(keys);
         self.registries.extend(updates);
         Ok(())
     }
@@ -198,6 +215,11 @@ impl RegistryStore {
         dimension_entry(entry)
     }
 }
+// Used only for duplicate detection. Keep the original strings in public data.
+fn canonical_key(key: &str) -> String {
+    let (namespace, path) = identifier::parts(key);
+    format!("{namespace}:{path}")
+}
 fn dimension_entry(entry: &RegistryEntry) -> Result<DimensionInfo> {
     DimensionInfo::from_nbt(entry.data.as_ref().ok_or(Error::State(
         "dimension data omitted by known packs; supply matching pack data",
@@ -208,6 +230,7 @@ fn parse_legacy(root: Tag) -> Result<BTreeMap<String, Registry>> {
         return Err(Error::Invalid("legacy registry root compound"));
     };
     let mut result = BTreeMap::new();
+    let mut registry_keys = BTreeSet::new();
     for (registry_key, registry_tag) in registries {
         let registry_key = registry_key
             .to_string()
@@ -226,7 +249,7 @@ fn parse_legacy(root: Tag) -> Result<BTreeMap<String, Registry>> {
             return Err(Error::Invalid("legacy registry entry type"));
         }
         let mut registry = Registry::default();
-        let mut keys = std::collections::BTreeSet::new();
+        let mut keys = BTreeSet::new();
         for entry in elements {
             let id = entry
                 .get("id")
@@ -245,7 +268,7 @@ fn parse_legacy(root: Tag) -> Result<BTreeMap<String, Registry>> {
                 .get("element")
                 .ok_or(Error::Invalid("legacy registry entry element"))?
                 .clone();
-            if !keys.insert(key.clone()) || registry.entries.contains_key(&(id as u32)) {
+            if !keys.insert(canonical_key(&key)) || registry.entries.contains_key(&(id as u32)) {
                 return Err(Error::Invalid("duplicate registry entry"));
             }
             registry.entries.insert(
@@ -256,9 +279,10 @@ fn parse_legacy(root: Tag) -> Result<BTreeMap<String, Registry>> {
                 },
             );
         }
-        if result.insert(registry_key, registry).is_some() {
+        if !registry_keys.insert(canonical_key(&registry_key)) {
             return Err(Error::Invalid("duplicate registry"));
         }
+        result.insert(registry_key, registry);
     }
     Ok(result)
 }
