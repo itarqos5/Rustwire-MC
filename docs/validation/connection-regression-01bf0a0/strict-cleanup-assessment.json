@@ -1,0 +1,681 @@
+{
+  "classifier": "source/tools/paper/validate_chunk_updates.py",
+  "classifier_sha256": "00aa559925daafaa568f98d660f8cb6e5d37578825c8cac55f78843733dd6ddf",
+  "harness_sha256": "2e8a46c3f129da594861d64d7d2e1d220560655bbdcaded2c6259329d9a212d5",
+  "gate_version": "paper-generated-remap-classpath-v2",
+  "results": [
+    {
+      "version": "1.20.1",
+      "original_report": "results.json",
+      "original_report_sha256": "8d9c6f44d3b0e8cbcbdf00f9d93ce31141946a3b600807d720d68e74e89924e4",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [],
+        "plugin_initialization_evidence": []
+      }
+    },
+    {
+      "version": "1.20.2",
+      "original_report": "results.json",
+      "original_report_sha256": "8d9c6f44d3b0e8cbcbdf00f9d93ce31141946a3b600807d720d68e74e89924e4",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [],
+        "plugin_initialization_evidence": []
+      }
+    },
+    {
+      "version": "1.20.4",
+      "original_report": "results.json",
+      "original_report_sha256": "8d9c6f44d3b0e8cbcbdf00f9d93ce31141946a3b600807d720d68e74e89924e4",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [],
+        "plugin_initialization_evidence": []
+      }
+    },
+    {
+      "version": "1.20.6",
+      "original_report": "results.json",
+      "original_report_sha256": "8d9c6f44d3b0e8cbcbdf00f9d93ce31141946a3b600807d720d68e74e89924e4",
+      "original_passed": false,
+      "original_cleanup_failure": true,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F.jar",
+            "sha256": "c429a1fe854a3502c7e0f2d02c75581fdda847e8b946319b8a3723a16ca007b6",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F.tiny",
+            "mapping_sha256": "302f4e10f56006ad73c2946fd24aa3b2c0a6b96b76ff861202f6d6edb9e9a1b8",
+            "evidence_route": "four_empty_generated_plugin_indexes",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "09b42a0d3efffa2831aabd066d79d4accf0b4cabf2615d32efc0eb3fcb8c6f88",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "09b42a0d3efffa2831aabd066d79d4accf0b4cabf2615d32efc0eb3fcb8c6f88",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "09b42a0d3efffa2831aabd066d79d4accf0b4cabf2615d32efc0eb3fcb8c6f88",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "09b42a0d3efffa2831aabd066d79d4accf0b4cabf2615d32efc0eb3fcb8c6f88",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "906697C079A34C90E6F75CCDE66D06B398DD3A39A2725CCDB0F30C27CAB6CB5F"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": []
+      }
+    },
+    {
+      "version": "1.21.1",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD.jar",
+            "sha256": "b08418c5ff1042e888b3001eee2f3cdb80d2268b549ecf511913f83582c773c5",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD.tiny",
+            "mapping_sha256": "6a5f4c42b72fb2b51846df864bf27d9ecb373611782ac1f1a1fc633b69598060",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "a8b2ba415905dc75208cedcab2d55031bdf332d100d0c1ce41f996a68147e2e5",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "a8b2ba415905dc75208cedcab2d55031bdf332d100d0c1ce41f996a68147e2e5",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "a8b2ba415905dc75208cedcab2d55031bdf332d100d0c1ce41f996a68147e2e5",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "a8b2ba415905dc75208cedcab2d55031bdf332d100d0c1ce41f996a68147e2e5",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:52:18 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.3",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1.jar",
+            "sha256": "8a83594bedd0f5ec4d7edff89638c07f90451674e23c1be0bde03c08333a8bc4",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1.tiny",
+            "mapping_sha256": "c4723899ccd75c863dbcbe913d0abb6ac44aadd38b6bc2b32eab449e3b53d018",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "e1647b84b05f1e9605ec0f5de490f0b5388d87059a11c5afaee77f7d108c2695",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "e1647b84b05f1e9605ec0f5de490f0b5388d87059a11c5afaee77f7d108c2695",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "e1647b84b05f1e9605ec0f5de490f0b5388d87059a11c5afaee77f7d108c2695",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "e1647b84b05f1e9605ec0f5de490f0b5388d87059a11c5afaee77f7d108c2695",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:52:55 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.4",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D.jar",
+            "sha256": "4871a825fdafbe38584110fd5e15c71148fc3b7516ad0d14511f076f3ba59281",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D.tiny",
+            "mapping_sha256": "2ec83d2a56f49000a1f70072d3731a507852e526667b017779345a72ff9558f2",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "64892caf7aec36a32594594eafdf70ca77eb88c63209c0ff08acc784a15c9c6b",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "64892caf7aec36a32594594eafdf70ca77eb88c63209c0ff08acc784a15c9c6b",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "64892caf7aec36a32594594eafdf70ca77eb88c63209c0ff08acc784a15c9c6b",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "64892caf7aec36a32594594eafdf70ca77eb88c63209c0ff08acc784a15c9c6b",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:53:29 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.5",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826.jar",
+            "sha256": "59aecc1b6995fce35238c47977fbf94c986b5b2a47f4068277ecea64b1673dfb",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826.tiny",
+            "mapping_sha256": "81ec4e8218af8f14e77c39e5b20eacb88b540b1a5c47da37f1049a2f67b1bff9",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "949617da92acf01634e86d335ede350770bb07e91ebe9911cb8ce9a7ba88d9fb",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "949617da92acf01634e86d335ede350770bb07e91ebe9911cb8ce9a7ba88d9fb",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "949617da92acf01634e86d335ede350770bb07e91ebe9911cb8ce9a7ba88d9fb",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "949617da92acf01634e86d335ede350770bb07e91ebe9911cb8ce9a7ba88d9fb",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:54:05 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.6",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32.jar",
+            "sha256": "675ef84199c193419899c53c80861ac368b81046962cdf6554c0d6f1bc9130c3",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32.tiny",
+            "mapping_sha256": "1576371a174485323670722e2689c715a55c6e64fe0c4ff52e0f45b31760b308",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "1963f2bd11138773e602a85eb35a8b9f6ba63d320c966e4f93a7e3ad9b48319e",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "1963f2bd11138773e602a85eb35a8b9f6ba63d320c966e4f93a7e3ad9b48319e",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "1963f2bd11138773e602a85eb35a8b9f6ba63d320c966e4f93a7e3ad9b48319e",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "1963f2bd11138773e602a85eb35a8b9f6ba63d320c966e4f93a7e3ad9b48319e",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:54:41 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.8",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1.jar",
+            "sha256": "fd3d3f42dad873b0bab28ea36e187c33590f460fc7b2555a08819abb9ca84289",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1.tiny",
+            "mapping_sha256": "949a4b4500268abb70e69993975baab12177654a6747f498a3c2cf85aecc0206",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "4df26290517ca83fefc1ecd1f84d5779aa10c4489d11af675a8c520ec8077d1c",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "4df26290517ca83fefc1ecd1f84d5779aa10c4489d11af675a8c520ec8077d1c",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "4df26290517ca83fefc1ecd1f84d5779aa10c4489d11af675a8c520ec8077d1c",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "4df26290517ca83fefc1ecd1f84d5779aa10c4489d11af675a8c520ec8077d1c",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:55:15 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.10",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4.jar",
+            "sha256": "860820534fc53a737747aeec9c07367c2c4185ac8df1e14adc85e3ba594c8e5b",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4.tiny",
+            "mapping_sha256": "5d9498563cd080e34471d36a936d9e3aa885900d348e59707729d5b89cde46ec",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "a72e3a0340d32f3c4c6cd95f0897ec04942dbc8fa08e52a4f19333936dbc6021",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "a72e3a0340d32f3c4c6cd95f0897ec04942dbc8fa08e52a4f19333936dbc6021",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "a72e3a0340d32f3c4c6cd95f0897ec04942dbc8fa08e52a4f19333936dbc6021",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "a72e3a0340d32f3c4c6cd95f0897ec04942dbc8fa08e52a4f19333936dbc6021",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:55:50 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "1.21.11",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [
+          {
+            "path": "plugins/.paper-remapped/remap-classpath/5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE.jar",
+            "sha256": "96cd23107f9196c72cebd29cf57d72d7a20be60c45ee3731f6684d19e0f8c05a",
+            "mapping_path": "plugins/.paper-remapped/mappings/reversed/5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE.tiny",
+            "mapping_sha256": "cfa9564ab26b5586da9dcdb7af40d90d8b1dc0f4a7e1e2157b01fe0a3c0e65aa",
+            "evidence_route": "zero_plugin_startup_log",
+            "empty_indexes": [
+              {
+                "path": "plugins/.paper-remapped/index.json",
+                "sha256": "b4e1852f74bd3f2335a586846d5384e845d3bff8c423fb006985ee5d8bcac97a",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/extra-plugins/index.json",
+                "sha256": "b4e1852f74bd3f2335a586846d5384e845d3bff8c423fb006985ee5d8bcac97a",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/unknown-origin/index.json",
+                "sha256": "b4e1852f74bd3f2335a586846d5384e845d3bff8c423fb006985ee5d8bcac97a",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE"
+                }
+              },
+              {
+                "path": "plugins/.paper-remapped/libraries/index.json",
+                "sha256": "b4e1852f74bd3f2335a586846d5384e845d3bff8c423fb006985ee5d8bcac97a",
+                "contents": {
+                  "hashes": {},
+                  "skippedHashes": [],
+                  "mappingsHash": "5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE"
+                }
+              }
+            ]
+          }
+        ],
+        "plugin_initialization_evidence": [
+          "[23:56:23 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "26.1.2",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [],
+        "plugin_initialization_evidence": [
+          "[23:56:57 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    },
+    {
+      "version": "26.2",
+      "original_report": "continuation-results.json",
+      "original_report_sha256": "4d6610efeb7a0da822e5c56b63480f51f7eead4eccf277b5f1e3aa595811f9d5",
+      "original_passed": true,
+      "original_cleanup_failure": false,
+      "protocol_passed": true,
+      "strict_cleanup_passed": true,
+      "passed": true,
+      "plugin_safety": {
+        "gate_version": "paper-generated-remap-classpath-v2",
+        "passed": true,
+        "installed_or_unrecognized_plugin_jars": [],
+        "generated_remap_classpath_jars": [],
+        "plugin_initialization_evidence": [
+          "[23:57:28 INFO]: [PluginInitializerManager] Initialized 0 plugins"
+        ]
+      }
+    }
+  ],
+  "all_completed_passed": true
+}

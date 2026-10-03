@@ -1,0 +1,133 @@
+compression negotiated: Some(256)
+login RustwireTags
+registry wire: minecraft:worldgen/biome, entries=65, present_nbt=65
+registry wire: minecraft:chat_type, entries=8, present_nbt=8
+registry wire: minecraft:trim_pattern, entries=18, present_nbt=18
+registry wire: minecraft:trim_material, entries=11, present_nbt=11
+registry wire: minecraft:wolf_variant, entries=9, present_nbt=9
+registry wire: minecraft:wolf_sound_variant, entries=7, present_nbt=7
+registry wire: minecraft:pig_variant, entries=3, present_nbt=3
+registry wire: minecraft:frog_variant, entries=3, present_nbt=3
+registry wire: minecraft:cat_variant, entries=11, present_nbt=11
+registry wire: minecraft:cow_variant, entries=3, present_nbt=3
+registry wire: minecraft:chicken_variant, entries=3, present_nbt=3
+registry wire: minecraft:painting_variant, entries=51, present_nbt=51
+registry wire: minecraft:dimension_type, entries=4, present_nbt=4
+registry wire: minecraft:damage_type, entries=49, present_nbt=49
+registry wire: minecraft:banner_pattern, entries=43, present_nbt=43
+registry wire: minecraft:enchantment, entries=42, present_nbt=42
+registry wire: minecraft:jukebox_song, entries=21, present_nbt=21
+registry wire: minecraft:instrument, entries=8, present_nbt=8
+registry wire: minecraft:test_environment, entries=1, present_nbt=1
+registry wire: minecraft:test_instance, entries=1, present_nbt=1
+registry wire: minecraft:dialog, entries=3, present_nbt=3
+tags decoded: state=Configuration, registries=13, tags=589, members=7135, bytes=29011
+configuration complete: 1
+DERIVED_SECTIONS=24
+joined dimension minecraft:overworld: min_y=-64, height=384, sections=24
+teleport acknowledged: 1
+keepalive acknowledged: 1
+chunk 0,-1: 24 sections; first block ID Some(85)
+chunk -1,-1: 24 sections; first block ID Some(85)
+chunk 0,0: 24 sections; first block ID Some(85)
+chunk 0,-2: 24 sections; first block ID Some(85)
+chunk 1,-1: 24 sections; first block ID Some(85)
+chunk 0,1: 24 sections; first block ID Some(85)
+chunk -2,-1: 24 sections; first block ID Some(85)
+chunk -1,0: 24 sections; first block ID Some(85)
+chunk 0,-3: 24 sections; first block ID Some(85)
+chunk 1,-2: 24 sections; first block ID Some(85)
+chunk 2,-1: 24 sections; first block ID Some(85)
+chunk -1,-2: 24 sections; first block ID Some(85)
+chunk 1,0: 24 sections; first block ID Some(85)
+chunk 1,1: 24 sections; first block ID Some(85)
+chunk 2,0: 24 sections; first block ID Some(85)
+chunk 2,-2: 24 sections; first block ID Some(85)
+chunk -1,-3: 24 sections; first block ID Some(85)
+chunk 1,-3: 24 sections; first block ID Some(85)
+chunk 0,2: 24 sections; first block ID Some(85)
+chunk -3,-1: 24 sections; first block ID Some(85)
+chunk 0,-4: 24 sections; first block ID Some(85)
+chunk -1,1: 24 sections; first block ID Some(85)
+chunk 3,-1: 24 sections; first block ID Some(85)
+chunk -2,-2: 24 sections; first block ID Some(85)
+chunk -2,0: 24 sections; first block ID Some(85)
+chunk -3,-2: 24 sections; first block ID Some(85)
+chunk 2,1: 24 sections; first block ID Some(85)
+chunk -2,1: 24 sections; first block ID Some(85)
+chunk 2,-3: 24 sections; first block ID Some(85)
+chunk 3,-2: 24 sections; first block ID Some(85)
+chunk -2,-3: 24 sections; first block ID Some(85)
+chunk 3,0: 24 sections; first block ID Some(85)
+chunk -4,-1: 24 sections; first block ID Some(85)
+chunk -3,0: 24 sections; first block ID Some(85)
+chunk -1,2: 24 sections; first block ID Some(85)
+chunk 1,2: 24 sections; first block ID Some(85)
+chunk -1,-4: 24 sections; first block ID Some(85)
+chunk 1,-4: 24 sections; first block ID Some(85)
+keepalive acknowledged: 2
+chunk 4,-1: 24 sections; first block ID Some(85)
+chunk 0,-5: 24 sections; first block ID Some(85)
+chunk 0,3: 24 sections; first block ID Some(85)
+chunk -4,-2: 24 sections; first block ID Some(85)
+chunk -1,3: 24 sections; first block ID Some(85)
+chunk -3,1: 24 sections; first block ID Some(85)
+chunk 3,-3: 24 sections; first block ID Some(85)
+chunk 4,-2: 24 sections; first block ID Some(85)
+chunk 1,3: 24 sections; first block ID Some(85)
+chunk 2,-4: 24 sections; first block ID Some(85)
+chunk -2,2: 24 sections; first block ID Some(85)
+chunk -2,-4: 24 sections; first block ID Some(85)
+chunk 1,-5: 24 sections; first block ID Some(85)
+chunk -1,-5: 24 sections; first block ID Some(85)
+chunk 2,2: 24 sections; first block ID Some(85)
+chunk -4,0: 24 sections; first block ID Some(85)
+chunk 3,1: 24 sections; first block ID Some(85)
+chunk 4,0: 24 sections; first block ID Some(85)
+chunk -3,-3: 24 sections; first block ID Some(85)
+chunk 2,3: 24 sections; first block ID Some(85)
+chunk -4,-3: 24 sections; first block ID Some(85)
+chunk -2,-5: 24 sections; first block ID Some(85)
+chunk -3,-4: 24 sections; first block ID Some(85)
+chunk 4,-3: 24 sections; first block ID Some(85)
+chunk 3,-4: 24 sections; first block ID Some(85)
+chunk -3,2: 24 sections; first block ID Some(85)
+chunk 4,1: 24 sections; first block ID Some(85)
+chunk -4,1: 24 sections; first block ID Some(85)
+chunk 2,-5: 24 sections; first block ID Some(85)
+chunk 3,2: 24 sections; first block ID Some(85)
+chunk -2,3: 24 sections; first block ID Some(85)
+chunk -4,-4: 24 sections; first block ID Some(85)
+chunk 4,-4: 24 sections; first block ID Some(85)
+chunk 3,3: 24 sections; first block ID Some(85)
+chunk -4,2: 24 sections; first block ID Some(85)
+chunk 3,-5: 24 sections; first block ID Some(85)
+chunk -3,-5: 24 sections; first block ID Some(85)
+chunk 4,2: 24 sections; first block ID Some(85)
+chunk -3,3: 24 sections; first block ID Some(85)
+chunk 4,3: 24 sections; first block ID Some(85)
+chunk -4,3: 24 sections; first block ID Some(85)
+chunk -4,-5: 24 sections; first block ID Some(85)
+chunk 4,-5: 24 sections; first block ID Some(85)
+keepalive acknowledged: 3
+keepalive acknowledged: 4
+keepalive acknowledged: 5
+keepalive acknowledged: 6
+keepalive acknowledged: 7
+keepalive acknowledged: 8
+keepalive acknowledged: 9
+keepalive acknowledged: 10
+keepalive acknowledged: 11
+keepalive acknowledged: 12
+keepalive acknowledged: 13
+keepalive acknowledged: 14
+keepalive acknowledged: 15
+keepalive acknowledged: 16
+keepalive acknowledged: 17
+keepalive acknowledged: 18
+keepalive acknowledged: 19
+keepalive acknowledged: 20
+ROUNDTRIPS registry=21 tags=1 chunks=81 chunk_wire_equal=81
+PROBE_SUMMARY tags_packets=1 tag_registries=13 tags=589 members=7135 modern_registry_entries=364 sections=24 elapsed_ms=20633
+validated: 81 chunks, 20 keepalives, 1 teleports, 21 registry packets, 1 configurations, 21 registries, 20.633844253s
+CLEAN_LOCAL_SHUTDOWN

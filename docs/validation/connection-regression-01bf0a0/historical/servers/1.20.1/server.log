@@ -1,0 +1,92 @@
+Starting org.bukkit.craftbukkit.Main
+*** Warning, you've not updated in a while! ***
+*** Please download a new build as per instructions from https://papermc.io/downloads/paper ***
+System Info: Java 21 (OpenJDK 64-Bit Server VM 21.0.12.1+1-1-deb13u1-Debian) Host: Linux 6.18.44 (amd64)
+Loading libraries, please wait...
+2026-10-02 23:48:18,019 ServerMain WARN Advanced terminal features are not available in this environment
+[23:48:21 INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[23:48:21 INFO]: Found new data pack file/bukkit, loading it automatically
+[23:48:21 ERROR]: Failed to request yggdrasil public key
+com.mojang.authlib.exceptions.AuthenticationUnavailableException: Cannot contact authentication server
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:119) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:91) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilServicesKeyInfo.fetch(YggdrasilServicesKeyInfo.java:94) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilServicesKeyInfo.lambda$get$1(YggdrasilServicesKeyInfo.java:81) ~[authlib-4.0.43.jar:?]
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572) ~[?:?]
+	at java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358) ~[?:?]
+	at java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144) ~[?:?]
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642) ~[?:?]
+	at java.lang.Thread.run(Thread.java:1583) ~[?:?]
+Caused by: java.net.UnknownHostException: api.minecraftservices.com
+	at sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:567) ~[?:?]
+	at java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[?:?]
+	at java.net.Socket.connect(Socket.java:751) ~[?:?]
+	at sun.security.ssl.SSLSocketImpl.connect(SSLSocketImpl.java:304) ~[?:?]
+	at sun.net.NetworkClient.doConnect(NetworkClient.java:178) ~[?:?]
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:539) ~[?:?]
+	at sun.net.www.http.HttpClient.openServer(HttpClient.java:644) ~[?:?]
+	at sun.net.www.protocol.https.HttpsClient.<init>(HttpsClient.java:265) ~[?:?]
+	at sun.net.www.protocol.https.HttpsClient.New(HttpsClient.java:378) ~[?:?]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.getNewHttpClient(AbstractDelegateHttpsURLConnection.java:196) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect0(HttpURLConnection.java:1305) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.plainConnect(HttpURLConnection.java:1146) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.connect(HttpURLConnection.java:1075) ~[?:?]
+	at sun.net.www.protocol.https.AbstractDelegateHttpsURLConnection.connect(AbstractDelegateHttpsURLConnection.java:181) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream0(HttpURLConnection.java:1707) ~[?:?]
+	at sun.net.www.protocol.http.HttpURLConnection.getInputStream(HttpURLConnection.java:1632) ~[?:?]
+	at sun.net.www.protocol.https.HttpsURLConnectionImpl.getInputStream(HttpsURLConnectionImpl.java:223) ~[?:?]
+	at com.mojang.authlib.HttpAuthenticationService.performGetRequest(HttpAuthenticationService.java:140) ~[authlib-4.0.43.jar:?]
+	at com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService.makeRequest(YggdrasilAuthenticationService.java:96) ~[authlib-4.0.43.jar:?]
+	... 9 more
+[23:48:22 INFO]: Loaded 7 recipes
+[23:48:22 INFO]: Starting minecraft server version 1.20.1
+[23:48:22 INFO]: Loading properties
+[23:48:22 INFO]: This server is running Paper version git-Paper-196 (MC: 1.20.1) (Implementing API version 1.20.1-R0.1-SNAPSHOT) (Git: 773dd72)
+[23:48:23 INFO]: Server Ping Player Sample Count: 12
+[23:48:23 INFO]: Using 4 threads for Netty based IO
+[23:48:23 WARN]: [!] The timings profiler has been enabled but has been scheduled for removal from Paper in the future.
+    We recommend installing the spark profiler as a replacement: https://spark.lucko.me/
+    For more information please visit: https://github.com/PaperMC/Paper/issues/8948
+[23:48:23 INFO]: [ChunkTaskScheduler] Chunk system is using 1 I/O threads, 1 worker threads, and gen parallelism of 1 threads
+[23:48:23 INFO]: Default game type: CREATIVE
+[23:48:23 INFO]: Generating keypair
+[23:48:23 INFO]: Starting Minecraft server on 127.0.0.1:25565
+[23:48:23 INFO]: Using default channel type
+[23:48:23 INFO]: Paper: Using libdeflate (Linux x86_64) compression from Velocity.
+[23:48:23 INFO]: Paper: Using OpenSSL 3.0.x (Linux x86_64) cipher from Velocity.
+[23:48:23 WARN]: [io.netty.util.internal.MacAddressUtil] Failed to find a usable hardware address from the network interfaces; using random bytes: ef:f2:8a:54:78:e0:8d:9d
+[23:48:23 WARN]: **** SERVER IS RUNNING IN OFFLINE/INSECURE MODE!
+[23:48:23 WARN]: The server will make no attempt to authenticate usernames. Beware.
+[23:48:23 WARN]: While this makes the game possible to play without internet access, it also opens up the ability for hackers to connect with any username they choose.
+[23:48:23 WARN]: To change this, set "online-mode" to "true" in the server.properties file.
+[23:48:23 INFO]: Preparing level "regression-world"
+[23:48:26 INFO]: Running delayed init tasks
+[23:48:26 INFO]: Done (3.183s)! For help, type "help"
+[23:48:26 INFO]: Timings Reset
+[23:48:26 INFO]: UUID of player RustwireTags is bc30b50b-482f-3ab1-8481-c1caf5b859cc
+[23:48:26 INFO]: [93mRustwireTags joined the game[0m
+[23:48:26 INFO]: RustwireTags[/127.0.0.1:37002] logged in with entity id 1 at ([regression-world]1.5, -60.0, -1.5)
+[23:48:46 INFO]: RustwireTags lost connection: Disconnected
+[23:48:46 INFO]: [93mRustwireTags left the game[0m
+[23:48:46 INFO]: Stopping the server
+[23:48:46 INFO]: Stopping server
+[23:48:46 INFO]: Saving players
+[23:48:47 INFO]: Saving worlds
+[23:48:47 INFO]: Saving chunks for level 'ServerLevel[regression-world]'/minecraft:overworld
+[23:48:47 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'regression-world'
+[23:48:47 INFO]: [ChunkHolderManager] Halted chunk system for world 'regression-world'
+[23:48:47 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'regression-world'
+[23:48:47 INFO]: [ChunkHolderManager] Saved 1089 block chunks, 121 entity chunks, 0 poi chunks in world 'regression-world' in 0.36s
+[23:48:47 INFO]: ThreadedAnvilChunkStorage (regression-world): All chunks are saved
+[23:48:47 INFO]: Saving chunks for level 'ServerLevel[regression-world_nether]'/minecraft:the_nether
+[23:48:47 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'regression-world_nether'
+[23:48:47 INFO]: [ChunkHolderManager] Halted chunk system for world 'regression-world_nether'
+[23:48:47 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'regression-world_nether'
+[23:48:47 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'regression-world_nether' in 0.00s
+[23:48:47 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[23:48:47 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[23:48:47 INFO]: Flushing Chunk IO
+[23:48:47 INFO]: Closing Thread Pool
+2026-10-02 23:48:47,488 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment
+[23:48:47 INFO]: Closing Server

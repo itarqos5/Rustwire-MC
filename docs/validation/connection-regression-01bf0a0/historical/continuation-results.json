@@ -1,0 +1,1143 @@
+{
+  "schema": "rustwire.frozen.initial-connection.v1",
+  "source_commit": "01bf0a0739199949cd4aa584738aaba0e49fadc3",
+  "started_utc": "2026-10-02T22:52:17.071936+00:00",
+  "source_archive_sha256": "8b7c319b6ce7cc668640244dfb79a4eafe29faa655f6336d76acea85ecce871a",
+  "source_manifest_sha256": "0df0bf4ad1dd7dfc263e3cb8721619ec3e5339f19da6b2d9ea8562c7c32c36b8",
+  "manifest_sha256": "a685dbdf9ab5876e78e8dabce50d89517e15dcda9bcebeec541cbc2b236925ef",
+  "harness_sha256": "d07be7b1279a21272ec4c19054bd2ce028855e8921c2ac225f6e81b885f0af3d",
+  "probe_sha256": "ff4e61201c58d706d9f109bbf263c0798e03147973885b5b8dec3c6202841ca9",
+  "binaries": {
+    "registry_tags_probe": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+    "status": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+    "offline_chunks": "95043b0263f2fecf296a29a27eb55a693b0c2f14dfc7ee6a6fea3b2605794239"
+  },
+  "eula_baseline_before": {
+    "1.20.1": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.4": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.6": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.1": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.3": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.4": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.5": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.6": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.8": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.10": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.11": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "26.1.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "26.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb"
+  },
+  "exclusive_lock": "/workspace/scratch/97d5c44865d4/rustwire-server-validation/one-server.lock",
+  "results": [
+    {
+      "version": "1.21.1",
+      "protocol": 767,
+      "passed": true,
+      "started_utc": "2026-10-02T22:52:17.082702+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.1"
+          ],
+          "exit": 0,
+          "seconds": 0.07,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.1/status.log",
+          "log_sha256": "3b2392963bcbca04995342ed2f1154c9127e26378864e347e4fc221349e609ff"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.1",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.634,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.1/registry_tags_probe.log",
+          "log_sha256": "6bd4f91aaf82bf73eeee2cb876bfcda7bdc5bbebc89aaea3f0f517ebb42c0bf0"
+        }
+      ],
+      "paper_build": 133,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "39bd8c00b9e18de91dcabd3cc3dcfa5328685a53b7187a2f63280c22e2d287b9",
+      "mojang_cache_sha256": "e3bc55693e93cda0188f2e60aea28113fc647c5e85a15fa3d1b347349231b4bb",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.1-133.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "8a28c7d5647c6688421455a3cfd4fb64f9d7030ca4b8eee7b2be67c6f3fae8c9",
+      "startup_seconds": 13.903,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1637828"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.1",
+        "protocol": 767
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 77,
+        "keepalives": 1,
+        "teleports": 1,
+        "registry_packets": 11,
+        "configurations": 1,
+        "registries": 11
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 514,
+        "members": 6362,
+        "modern_registry_entries": 314,
+        "sections": 24,
+        "elapsed_ms": 20631
+      },
+      "roundtrips": {
+        "registry": 11,
+        "tags": 1,
+        "chunks": 77,
+        "chunk_wire_equal": 77
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 36.485,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/2C6AB97F550526F9E7C363EC5352500AFA558525BEDA078A5A3F9673CBEC9CFD.jar",
+          "sha256": "b08418c5ff1042e888b3001eee2f3cdb80d2268b549ecf511913f83582c773c5",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "5d3b4b17f80ef44ce76681f59c662e0a4683aafd7433770b2b6a0faf8f195c4c"
+    },
+    {
+      "version": "1.21.3",
+      "protocol": 768,
+      "passed": true,
+      "started_utc": "2026-10-02T22:52:53.634332+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.3"
+          ],
+          "exit": 0,
+          "seconds": 0.07,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.3/status.log",
+          "log_sha256": "bfdfaaa3dc353f30b9f9887716708253f3a3b12ac2babdaf312a9f9854130502"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.3",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.502,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.3/registry_tags_probe.log",
+          "log_sha256": "152a3d38d257cae3a62c91f7e7154bc7ba53292e6c81f57094680d84ca30473c"
+        }
+      ],
+      "paper_build": 83,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "87e973e1d338e869e7fdbc4b8fadc1579d7bb0246a0e0cf6e5700ace6c8bc17e",
+      "mojang_cache_sha256": "e153b89b02c0839cdf5e8c1d57c80dd42a3fffb80c60817632080c041bf8afb5",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.3-83.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "92a9c1fe9a05a68ee4f8f979046a71a52bbe033823fdadbf1f22370490a05bae",
+      "startup_seconds": 11.985,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1647015"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.3",
+        "protocol": 768
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 77,
+        "keepalives": 1,
+        "teleports": 1,
+        "registry_packets": 12,
+        "configurations": 1,
+        "registries": 12
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 542,
+        "members": 6470,
+        "modern_registry_entries": 324,
+        "sections": 24,
+        "elapsed_ms": 20499
+      },
+      "roundtrips": {
+        "registry": 12,
+        "tags": 1,
+        "chunks": 77,
+        "chunk_wire_equal": 77
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 34.333,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/307C87E63C6AE82DEAD6E1CBE6E3677A3322457CF5D29A7D449E6A17624B56B1.jar",
+          "sha256": "8a83594bedd0f5ec4d7edff89638c07f90451674e23c1be0bde03c08333a8bc4",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "d1bc42a945c29385d1693e9782fa49db824c62a1bdcdff3a0bef67340d4f6beb"
+    },
+    {
+      "version": "1.21.4",
+      "protocol": 769,
+      "passed": true,
+      "started_utc": "2026-10-02T22:53:28.036326+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.4"
+          ],
+          "exit": 0,
+          "seconds": 0.088,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.4/status.log",
+          "log_sha256": "f748b206c344ac914a9cebe4166c24b51aadcf55949f0aec7f41e00158057a1c"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.4",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.732,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.4/registry_tags_probe.log",
+          "log_sha256": "85b424b2dafc44759532b60c4594e3b89b58098349ba0e5c6f78994437a3484d"
+        }
+      ],
+      "paper_build": 232,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "5ee4f542f628a14c644410b08c94ea42e772ef4d29fe92973636b6813d4eaffc",
+      "mojang_cache_sha256": "1066970b09e9c671844572291c4a871cc1ac2b85838bf7004fa0e778e10f1358",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.4-232.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "ce2acdd82a0ea825bd3035ffa595376722243d99aa248a71d9a1cf7628140865",
+      "startup_seconds": 12.705,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1651012"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.4",
+        "protocol": 769
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 1,
+        "teleports": 1,
+        "registry_packets": 12,
+        "configurations": 1,
+        "registries": 12
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 546,
+        "members": 6609,
+        "modern_registry_entries": 326,
+        "sections": 24,
+        "elapsed_ms": 20728
+      },
+      "roundtrips": {
+        "registry": 12,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 35.254,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/297DD0ABDAF0D3CAF5EC26D87557BA14A45858405C25551918C8C4314BFA742D.jar",
+          "sha256": "4871a825fdafbe38584110fd5e15c71148fc3b7516ad0d14511f076f3ba59281",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "89988bf47aca390427d4ab1d1275ca137a084898fb38c49cc5a3cc85319cec2e"
+    },
+    {
+      "version": "1.21.5",
+      "protocol": 770,
+      "passed": true,
+      "started_utc": "2026-10-02T22:54:03.363944+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.5"
+          ],
+          "exit": 0,
+          "seconds": 0.079,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.5/status.log",
+          "log_sha256": "3631d9f0c6a385cb46da1172500f39c8101279c56a0d48d1fe0a80182eeec3eb"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.5",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.782,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.5/registry_tags_probe.log",
+          "log_sha256": "9146f7807208fa234956f137efec63b388374b436c3bad0937d142d2429a4405"
+        }
+      ],
+      "paper_build": 114,
+      "paper_channel": "ALPHA",
+      "paper_jar_sha256": "2ae6ae22adf417699746e0f89fc2ef6cb6ee050a5f6608cee58f0535d60b509e",
+      "mojang_cache_sha256": "ae7681dadce21b6b4017d28e7eb567d86b6c100a6969994f540b9e54f812dc29",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.5-114.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "f2862c27fba2c668462cad6b369ac84151d248acbf852c195a82ee18cecedab8",
+      "startup_seconds": 13.48,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1653927"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.5",
+        "protocol": 770
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 1,
+        "teleports": 1,
+        "registry_packets": 20,
+        "configurations": 1,
+        "registries": 20
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 12,
+        "tags": 556,
+        "members": 6701,
+        "modern_registry_entries": 358,
+        "sections": 24,
+        "elapsed_ms": 20778
+      },
+      "roundtrips": {
+        "registry": 20,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 0
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 36.069,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/7879DE7137FE03A2779785B16DA58A2C75F5E15D490D43B3005A271DACBAB826.jar",
+          "sha256": "59aecc1b6995fce35238c47977fbf94c986b5b2a47f4068277ecea64b1673dfb",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "d324a3d32a059158359de8f911fb7763ba308565023a1b581100e8f25386e8b2"
+    },
+    {
+      "version": "1.21.6",
+      "protocol": 771,
+      "passed": true,
+      "started_utc": "2026-10-02T22:54:39.495841+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.6"
+          ],
+          "exit": 0,
+          "seconds": 0.075,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.6/status.log",
+          "log_sha256": "6cecd8dd645db3e9fb451397ff074f2520539337e894ed7060457270d2ffb7ba"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.6",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.788,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.6/registry_tags_probe.log",
+          "log_sha256": "242cf0f3f0b3741cc62a774cfa920384749c0fb7928a033f2e5e5b7731aca461"
+        }
+      ],
+      "paper_build": 48,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "35e2dfa66b3491b9d2f0bb033679fa5aca1e1fdf097e7a06a80ce8afeda5c214",
+      "mojang_cache_sha256": "08abf384c48afb9e822144ad8a99166482857994389269e26c6a04c6c91d9171",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.6-48.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "8883b119283ebac6fc95bd7f17b7902175ac6d6683674ecbc915573185f8abb8",
+      "startup_seconds": 12.18,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1658145"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.6",
+        "protocol": 771
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 19,
+        "teleports": 1,
+        "registry_packets": 21,
+        "configurations": 1,
+        "registries": 21
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 566,
+        "members": 6774,
+        "modern_registry_entries": 362,
+        "sections": 24,
+        "elapsed_ms": 20784
+      },
+      "roundtrips": {
+        "registry": 21,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 34.674,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/D2EFADD87475055C036E3C438747F048458ACE3831E9DB9BBADBA62C52AB2C32.jar",
+          "sha256": "675ef84199c193419899c53c80861ac368b81046962cdf6554c0d6f1bc9130c3",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "3df7b134b2cb1fb4e048e678e09c4935b4d4d2ce45aad1d8d7aa68da86ebe5f1"
+    },
+    {
+      "version": "1.21.8",
+      "protocol": 772,
+      "passed": true,
+      "started_utc": "2026-10-02T22:55:14.232587+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.8"
+          ],
+          "exit": 0,
+          "seconds": 0.085,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.8/status.log",
+          "log_sha256": "d0f539c002e57868e7db8e0bc0008ebeb0729c3cac2cd8502360b93c6f59082c"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.8",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.71,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.8/registry_tags_probe.log",
+          "log_sha256": "3b5f4a387b4e7a4fe97aeed9927a84d0d2db7c3b7dce7c49d4efff69aa98ecba"
+        }
+      ],
+      "paper_build": 60,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "8de7c52c3b02403503d16fac58003f1efef7dd7a0256786843927fa92ee57f1e",
+      "mojang_cache_sha256": "2349d9a8f0d4be2c40e7692890ef46a4b07015e7955b075460d02793be7fbbe7",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.8-60.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "03a0b7cf0d68b83d009709a706f851d2ef3e1ea4f636a20dfcf720e213b22bd4",
+      "startup_seconds": 12.084,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1664023"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.8",
+        "protocol": 772
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 19,
+        "teleports": 1,
+        "registry_packets": 21,
+        "configurations": 1,
+        "registries": 21
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 566,
+        "members": 6775,
+        "modern_registry_entries": 364,
+        "sections": 24,
+        "elapsed_ms": 20707
+      },
+      "roundtrips": {
+        "registry": 21,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 34.607,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/1C1C48C2F6E8E7AB9B8CA0BC4E4644A76A1FE48EC57629E2BBD57F8EB38760F1.jar",
+          "sha256": "fd3d3f42dad873b0bab28ea36e187c33590f460fc7b2555a08819abb9ca84289",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "fd77b94c62c6f02a49e2069933d8d34694e3801097dbf54ed25d3fa641cc14a5"
+    },
+    {
+      "version": "1.21.10",
+      "protocol": 773,
+      "passed": true,
+      "started_utc": "2026-10-02T22:55:48.910428+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.10"
+          ],
+          "exit": 0,
+          "seconds": 0.093,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.10/status.log",
+          "log_sha256": "d64d8b4ba3df565568fe914bb6beba05794273d541d1b896fc6edba43716d3da"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.10",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.636,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.10/registry_tags_probe.log",
+          "log_sha256": "a8977581121502313152320d67ae4bf96d95e99fc483e04f6047bb0c30734ea1"
+        }
+      ],
+      "paper_build": 130,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "158703f75a26f842ea656b3dc6d75bf3d1ec176b97a2c36384d0b80b3871af53",
+      "mojang_cache_sha256": "5bb64dc47379903e8f288bd6a4b276e889075c5c0f4c0b714e958d835c1874e7",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.10-130.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "2694a1c943f4ca657b2d8ebb7908e981185a3dc5928f107de278646d45b64b9f",
+      "startup_seconds": 11.293,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1664179"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.10",
+        "protocol": 773
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 20,
+        "teleports": 1,
+        "registry_packets": 21,
+        "configurations": 1,
+        "registries": 21
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 13,
+        "tags": 589,
+        "members": 7135,
+        "modern_registry_entries": 364,
+        "sections": 24,
+        "elapsed_ms": 20633
+      },
+      "roundtrips": {
+        "registry": 21,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 33.148,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/DD77CBBC155D5ABE33B4AD3AF9DBE78D093FE3BF3C7E034BCECC4719F2A133B4.jar",
+          "sha256": "860820534fc53a737747aeec9c07367c2c4185ac8df1e14adc85e3ba594c8e5b",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "96593513b5924b659de653d66ed4cccb0a4c50ee5495c8e81528b55aec19e808"
+    },
+    {
+      "version": "1.21.11",
+      "protocol": 774,
+      "passed": true,
+      "started_utc": "2026-10-02T22:56:22.125039+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "1.21.11"
+          ],
+          "exit": 0,
+          "seconds": 0.079,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/1.21.11/status.log",
+          "log_sha256": "b4f8905b0d53c8883c4d037c04e4481baf26fa228ccafb4c7c65068749587f10"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "1.21.11",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.921,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/1.21.11/registry_tags_probe.log",
+          "log_sha256": "b9b63f8ff5b90a4ad0e49529f0a8a190070ff29de506b22b9b74d729ed83b3fc"
+        }
+      ],
+      "paper_build": 132,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "5ffef465eeeb5f2a3c23a24419d97c51afd7dbb4923ff42df9a3f58bba1ccfba",
+      "mojang_cache_sha256": "f83b8e093865806f931c7e34aae41b177d4c076335263dd124c75d6d65dd1726",
+      "java_binary_sha256": "6698f6f10143ed8463b06062281c727152d2e0ae2a3569b1716fbb2c6cedf0ba",
+      "java": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n",
+      "command": [
+        "/usr/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.11-132.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "0e516df1aa7db88951cfbcd557c9422438946d9697e80adfa2d26bc10c4788ae",
+      "startup_seconds": 11.477,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1665780"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 1.21.11",
+        "protocol": 774
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 20,
+        "teleports": 1,
+        "registry_packets": 23,
+        "configurations": 1,
+        "registries": 23
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 14,
+        "tags": 602,
+        "members": 7264,
+        "modern_registry_entries": 372,
+        "sections": 24,
+        "elapsed_ms": 20918
+      },
+      "roundtrips": {
+        "registry": 23,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 33.451,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [
+        {
+          "path": "plugins/.paper-remapped/remap-classpath/5028247881868F33795961B8387BB1B13C018B83E4523A77C8A8D8EFCD8F6FEE.jar",
+          "sha256": "96cd23107f9196c72cebd29cf57d72d7a20be60c45ee3731f6684d19e0f8c05a",
+          "classification": "Paper server remapping classpath cache"
+        }
+      ],
+      "ops_empty": true,
+      "server_log_sha256": "32ef06de015c0a807059764461bc1d625a880007b1442ee9c3e586ada5d39758"
+    },
+    {
+      "version": "26.1.2",
+      "protocol": 775,
+      "passed": true,
+      "started_utc": "2026-10-02T22:56:55.640623+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "26.1.2"
+          ],
+          "exit": 0,
+          "seconds": 0.123,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/26.1.2/status.log",
+          "log_sha256": "57a586737781939e7541d094cea212334ac0f84593e26cc9ce5c23ebc0a75f14"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "26.1.2",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.578,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/26.1.2/registry_tags_probe.log",
+          "log_sha256": "361bd6ae46c0397b0b00bdac060436daed9c50494d429b32801498c4a1ce3b3b"
+        }
+      ],
+      "paper_build": 74,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "1d70b1dab9cf4a6de615209a536f3a45a2186240253c428213ce2188ab95e5f7",
+      "mojang_cache_sha256": "cd47e7c38328f64768fd17af8fcd8b22496b40b63d4ffee81e71ae059fedcb42",
+      "java_binary_sha256": "7380ce48ed5013735d2c8414db54adb8f981e7933ff594bd36f3baccddaafba3",
+      "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)\n",
+      "command": [
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/jdk25/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-26.1.2-74.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "e5558ea966735d31b39d6891baa011fc2cf2bbd53101607ad3a1c0e64e299fbb",
+      "startup_seconds": 9.583,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1672245"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 26.1.2",
+        "protocol": 775
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 20,
+        "teleports": 1,
+        "registry_packets": 28,
+        "configurations": 1,
+        "registries": 28
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 15,
+        "tags": 661,
+        "members": 7736,
+        "modern_registry_entries": 383,
+        "sections": 24,
+        "elapsed_ms": 20575
+      },
+      "roundtrips": {
+        "registry": 28,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 31.358,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [],
+      "ops_empty": true,
+      "server_log_sha256": "c014b89a20786466de412ec5783fe94cf005876c8adc2f0a1d6d52f4c9f99983"
+    },
+    {
+      "version": "26.2",
+      "protocol": 776,
+      "passed": true,
+      "started_utc": "2026-10-02T22:57:26.999348+00:00",
+      "tests": [
+        {
+          "name": "status",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/status",
+            "127.0.0.1",
+            "25565",
+            "26.2"
+          ],
+          "exit": 0,
+          "seconds": 0.084,
+          "binary_sha256": "caeeb6da98465ab885b2473f852813edb1be478daca86d9112eac033627d3bb9",
+          "log": "servers/26.2/status.log",
+          "log_sha256": "284cf83ae1ce939159591d94f0e6b7d20a380d2831a263b7d848d30ae9039aae"
+        },
+        {
+          "name": "registry_tags_probe",
+          "command": [
+            "/workspace/scratch/97d5c44865d4/rustwire-server-validation/connection-regression/01bf0a0/bin/registry_tags_probe",
+            "127.0.0.1",
+            "25565",
+            "26.2",
+            "20"
+          ],
+          "exit": 0,
+          "seconds": 20.016,
+          "binary_sha256": "e247082e0ae6a1253faacb66a27532412486686d3540b1f535948d183b80b584",
+          "log": "servers/26.2/registry_tags_probe.log",
+          "log_sha256": "ffe6f7c6e53f0a4fb70d159114b965a5d7b914eaf1d60b4072e6ed9250af7f1e"
+        }
+      ],
+      "paper_build": 129,
+      "paper_channel": "STABLE",
+      "paper_jar_sha256": "b1d8f6bfa1b6101fa8e947b53041cb3bdf5540e7b83b6547ca19ba7edefeb083",
+      "mojang_cache_sha256": "cdacdfb25898de5e4b4b0e5ddcc2722f77067e46605709c2d886c000ebb63ec5",
+      "java_binary_sha256": "7380ce48ed5013735d2c8414db54adb8f981e7933ff594bd36f3baccddaafba3",
+      "java": "openjdk version \"25.0.4.1\" 2026-08-18 LTS\nOpenJDK Runtime Environment Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS)\nOpenJDK 64-Bit Server VM Temurin-25.0.4.1+1 (build 25.0.4.1+1-LTS, mixed mode, sharing)\n",
+      "command": [
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/jdk25/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-26.2-129.jar",
+        "--nogui"
+      ],
+      "eula_copy_before": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "server_properties_before_sha256": "9fb0e8466ddd5a87e215196e09cff8efc54039f50a156f6362fc4b534579c628",
+      "startup_seconds": 8.963,
+      "listeners": [
+        {
+          "address": "0000000000000000FFFF00000100007F:63DD",
+          "inode": "1670951"
+        }
+      ],
+      "status_version": {
+        "name": "Paper 26.2",
+        "protocol": 776
+      },
+      "status_nonce_roundtrip": true,
+      "counters": {
+        "chunks": 81,
+        "keepalives": 19,
+        "teleports": 1,
+        "registry_packets": 29,
+        "configurations": 1,
+        "registries": 29
+      },
+      "semantic": {
+        "tags_packets": 1,
+        "tag_registries": 15,
+        "tags": 697,
+        "members": 8644,
+        "modern_registry_entries": 398,
+        "sections": 24,
+        "elapsed_ms": 20012
+      },
+      "roundtrips": {
+        "registry": 29,
+        "tags": 1,
+        "chunks": 81,
+        "chunk_wire_equal": 81
+      },
+      "dimension": "joined dimension minecraft:overworld: min_y=-64, height=384, sections=24",
+      "server_clean_disconnect": true,
+      "client_clean_shutdown": true,
+      "joined_server_side": true,
+      "server_exit": 0,
+      "forced_shutdown": [],
+      "listeners_after": [],
+      "seconds": 29.936,
+      "eula_baseline_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_copy_after": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+      "eula_unchanged": true,
+      "installed_plugin_jars": [],
+      "paper_remap_caches": [],
+      "ops_empty": true,
+      "server_log_sha256": "0a6d660404b4cd513b1807d38b11d0939e93c40f10ab7282c18c7b9115412978"
+    }
+  ],
+  "finished_utc": "2026-10-02T22:57:56.936584+00:00",
+  "listeners_final": [],
+  "eula_baseline_after": {
+    "1.20.1": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.4": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.20.6": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.1": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.3": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.4": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.5": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.6": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.8": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.10": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "1.21.11": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "26.1.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb",
+    "26.2": "182e2e99f95377f6df44d1060a55982908257109eb558db27745e6334371dacb"
+  },
+  "source_unchanged": true,
+  "binaries_unchanged": true,
+  "all_passed": true
+}

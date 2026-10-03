@@ -1,0 +1,15 @@
+[package]
+name = "rustwire-connection-regression-probe"
+version = "0.0.0"
+edition = "2021"
+
+[features]
+default = ["crypto"]
+crypto = ["rustwire-mc/crypto"]
+
+[dependencies]
+rustwire-mc = { path = "../source", features = ["crypto"] }
+
+[[bin]]
+name = "registry_tags_probe"
+path = "registry_tags_probe.rs"

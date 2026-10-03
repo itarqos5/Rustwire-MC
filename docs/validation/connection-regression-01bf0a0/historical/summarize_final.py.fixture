@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+import datetime,fcntl,hashlib,json,pathlib,subprocess,sys,tarfile
+R=pathlib.Path(__file__).resolve().parent
+sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+subprocess.run([sys.executable,str(R/'audit_completed.py')],check=True)
+a=json.loads((R/'results.json').read_text());b=json.loads((R/'continuation-results.json').read_text());audit=json.loads((R/'strict-cleanup-assessment.json').read_text())
+rows=a['results']+b['results'];assert len(rows)==14 and len({r['version'] for r in rows})==14
+assert audit['all_completed_passed'] and len(audit['results'])==14
+assert a['binaries']==b['binaries'] and b['source_unchanged'] and b['binaries_unchanged'] and not b['listeners_final']
+expected={}
+with tarfile.open(R/'source.tar') as tar:
+    for member in tar.getmembers():
+        if member.isfile(): expected[member.name]=hashlib.sha256(tar.extractfile(member).read()).hexdigest()
+actual={str(p.relative_to(R/'source')):sha(p) for p in sorted((R/'source').rglob('*')) if p.is_file()}
+assert expected==actual, 'Frozen source differs from exact archive'
+assert all(sha(R/'bin'/k)==v for k,v in a['binaries'].items())
+lock=(R.parents[1]/'one-server.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB);fcntl.flock(lock,fcntl.LOCK_UN);lock.close()
+compact={'schema':'rustwire.initial-connection-regression.compact.v1','source_commit':a['source_commit'],'all_14_families_passed':True,'source_archive_sha256':sha(R/'source.tar'),'source_tree_manifest_sha256':sha(R/'evidence/all-snapshot-sha256.json'),'source_exact_archive_unchanged':True,'binaries':a['binaries'],'probe_source_sha256':sha(R/'probe/registry_tags_probe.rs'),'probe_cargo_toml_sha256':sha(R/'probe/Cargo.toml'),'probe_cargo_lock_sha256':sha(R/'probe/Cargo.lock'),'original_cargo_toml_sha256':sha(R/'source/Cargo.toml'),'original_cargo_lock_sha256':sha(R/'source/Cargo.lock'),'plugin_classifier_sha256':audit['classifier_sha256'],'strict_cleanup_assessment_sha256':sha(R/'strict-cleanup-assessment.json'),'original_results_sha256':sha(R/'results.json'),'continuation_results_sha256':sha(R/'continuation-results.json'),'cleanup':{'all_eulas_unchanged':all(r['eula_unchanged'] for r in rows),'all_server_exits_zero':all(r['server_exit']==0 for r in rows),'all_listeners_closed':all(not r['listeners_after'] for r in rows) and not b['listeners_final'],'no_forced_termination':all(not r['forced_shutdown'] for r in rows),'no_operators':all(r['ops_empty'] for r in rows),'all_plugin_audits_pass':audit['all_completed_passed'],'exclusive_lock_reacquired_and_released':True},'caveats':['The first harness stopped after 1.20.6 solely because Paper generated a remapping classpath cache under plugins. Original failed cleanup classification is preserved; exact published strict classifier passes it with mapping and four empty index evidence. No protocol test was retried.','Protocol 763 and 770 full-chunk semantic roundtrips canonicalize the known Paper section-buffer zero padding; byte identity is not claimed for those packets.','This initial/full-chunk regression does not retest or close the earlier 1.20.4 standalone UpdateLight observation gap.','Short status/ping connections are separate from the >=20-second login sessions. Online-mode/account authentication is outside this run.'],'versions':[]}
+for r in rows:
+    assessment=next(x for x in audit['results'] if x['version']==r['version'])
+    compact['versions'].append({'version':r['version'],'protocol':r['protocol'],'paper_build':r['paper_build'],'paper_channel':r['paper_channel'],'passed':assessment['passed'],'status_ping':r['status_nonce_roundtrip'],'login_seconds':r['semantic']['elapsed_ms']/1000,'dimension':r['dimension'],**r['counters'],'tag_registries':r['semantic']['tag_registries'],'tags':r['semantic']['tags'],'tag_members':r['semantic']['members'],'modern_registry_entries':r['semantic']['modern_registry_entries'],'roundtrips':r['roundtrips'],'clean_disconnect':r['client_clean_shutdown'] and r['server_clean_disconnect'],'server_log_sha256':r['server_log_sha256'],'client_log_sha256':r['tests'][1]['log_sha256'],'status_log_sha256':r['tests'][0]['log_sha256'],'original_cleanup_classification_failed':r.get('cleanup_failure',False)})
+compact['totals']={k:sum(r[k] for r in compact['versions']) for k in ['chunks','keepalives','teleports','registry_packets','configurations','tags','tag_members','modern_registry_entries']}
+(R/'compact-results.json').write_text(json.dumps(compact,indent=2)+'\n')
+files=[p for p in R.rglob('*') if p.is_file() and not p.is_symlink() and (p.parent==R or p.parent==R/'probe' or p.parent==R/'evidence' or (p.suffix=='.log' and p.parent.parent==R/'servers')) and p.name!='raw-evidence-sha256.txt']
+(R/'raw-evidence-sha256.txt').write_text(''.join(f'{sha(p)}  {p.relative_to(R)}\n' for p in sorted(files)))
+print(json.dumps({'all_14_families_passed':True,'totals':compact['totals'],'compact_results_sha256':sha(R/'compact-results.json'),'raw_evidence_manifest_sha256':sha(R/'raw-evidence-sha256.txt')}))

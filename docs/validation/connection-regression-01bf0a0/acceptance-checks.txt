@@ -1,0 +1,31 @@
+Offline publication checks (no servers launched, no live regression reruns)
+Python 3.12.14
+{"chunks": 1110, "families": 14, "historical_verified": true}
+test_archived_evidence_accepts (__main__.AcceptanceTests.test_archived_evidence_accepts) ... ok
+test_canonical_wire_exception_is_narrow (__main__.AcceptanceTests.test_canonical_wire_exception_is_narrow) ... ok
+test_every_family_transcript_accepts (__main__.AcceptanceTests.test_every_family_transcript_accepts) ... ok
+test_failed_exit_or_source_binary_cannot_be_waived (__main__.AcceptanceTests.test_failed_exit_or_source_binary_cannot_be_waived) ... ok
+test_historical_amendment_preserves_only_known_cleanup_failure (__main__.AcceptanceTests.test_historical_amendment_preserves_only_known_cleanup_failure) ... ok
+test_no_missing_duplicate_or_extra_families (__main__.AcceptanceTests.test_no_missing_duplicate_or_extra_families) ... ok
+test_rejects_error_marker_even_with_valid_summary (__main__.AcceptanceTests.test_rejects_error_marker_even_with_valid_summary) ... ok
+test_rejects_missing_lifecycle_or_dimension (__main__.AcceptanceTests.test_rejects_missing_lifecycle_or_dimension) ... ok
+test_rejects_missing_observed_keepalive_or_chunk (__main__.AcceptanceTests.test_rejects_missing_observed_keepalive_or_chunk) ... ok
+test_rejects_wrong_counts_and_roundtrips (__main__.AcceptanceTests.test_rejects_wrong_counts_and_roundtrips) ... ok
+test_source_preflight_rejects_archive_mismatch (__main__.AcceptanceTests.test_source_preflight_rejects_archive_mismatch) ... ok
+test_source_preflight_rejects_fixture_mutation (__main__.AcceptanceTests.test_source_preflight_rejects_fixture_mutation) ... ok
+test_source_preflight_rejects_tree_mismatch_even_when_archive_check_passes (__main__.AcceptanceTests.test_source_preflight_rejects_tree_mismatch_even_when_archive_check_passes) ... ok
+test_strict_plugin_classifier_evidence_cannot_be_broadened (__main__.AcceptanceTests.test_strict_plugin_classifier_evidence_cannot_be_broadened) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.020s
+
+OK
+{"source_verified": true}
+Syntax checked: run_verified.py
+Syntax checked: test_acceptance.py
+Syntax checked: verify.py
+Byte-identical: fixtures/registry_tags_probe.rs
+Byte-identical: fixtures/Cargo.toml.fixture
+Byte-identical: fixtures/Cargo.lock.fixture
+Byte-identical: compact-results.json
+Byte-identical: strict-cleanup-assessment.json

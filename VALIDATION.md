@@ -4,7 +4,7 @@ Date: 2026-10-02. The results distinguish fixture/mock evidence from actual serv
 
 ## Automated checks
 
-- 367 core tests with all features; 328 applicable core tests without default features
+- 378 core tests with all features; 339 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -617,3 +617,29 @@ all 154 clientbound goldens and preserve malformed-versus-unsupported behavior.
 This integrated snapshot passed 377 all-feature tests on stable and Rust 1.88.0,
 338 no-default tests, strict Clippy and 99 Python verifier tests. Live HUD/world
 command replay is pending; these results establish wire/API behavior only.
+
+## Frozen all-release connection regression
+
+A later replay against exact source `01bf0a0739199949cd4aa584738aaba0e49fadc3`
+passed all 14 release families: 1,110 semantic full-chunk roundtrips, 125 keepalive
+replies, 14 position acknowledgements, 208 registry packets and 13 applicable
+configuration completions. All 7,526 tags / 90,843 memberships round-tripped
+byte-for-byte. Each connection remained active for at least 20 seconds, deriving
+24 overworld sections from received dimension registries instead of a fixed
+section assumption.
+
+The [self-contained evidence package](docs/validation/connection-regression-01bf0a0/README.md)
+includes all 42 original client/server transcripts, frozen source/probe hashes,
+compact facts, strict acceptance checks and reproduction fixtures. Fourteen
+acceptance tests reject altered counters, missing observations, failed clients,
+source mismatches and broader plugin/cleanup exceptions. No game binaries or
+worlds are included.
+
+A historical harness first misclassified Paper's generated remap cache as a
+plugin after the fourth family. That failure remains recorded. Its cleanup-only
+amendment uses the separately verified exact-hash classifier, and only the ten
+previously untested families were continued. All servers exited normally with
+closed listeners, unchanged approved EULAs and empty operator lists. The finalized
+portable harness passed source/acceptance checks but was not live-rerun. This
+initial-connection regression neither covers online account authentication nor
+closes the standalone 1.20.4 UpdateLight observation gap.

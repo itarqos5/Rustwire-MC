@@ -1,0 +1,2 @@
+{"version":{"name":"Paper 1.20.1","protocol":763},"description":{"text":"Rustwire frozen initial connection regression 1.20.1"},"players":{"max":2,"online":0}}
+round trip: 724.871µs

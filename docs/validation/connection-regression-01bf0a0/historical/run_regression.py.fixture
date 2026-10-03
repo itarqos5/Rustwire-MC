@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Frozen local-only initial connection regression; no gameplay/OP/plugins/new EULA acceptance."""
+import datetime, fcntl, hashlib, json, os, pathlib, re, shutil, subprocess, sys, threading, time
+R = pathlib.Path(__file__).resolve().parent
+VROOT = R.parents[1]
+MANIFEST = json.loads((R/'source/docs/validation/matrix-download-provenance.json').read_text())
+VERSIONS = [i['version'] for i in MANIFEST['paper']]
+ANSI = re.compile(r'\x1b\[[0-?]*[ -/]*[@-~]')
+def sha(p):
+    h=hashlib.sha256()
+    with open(p,'rb') as f:
+        for b in iter(lambda:f.read(1024*1024), b''): h.update(b)
+    return h.hexdigest()
+def now(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def listeners():
+    found=[]
+    for p in ['/proc/net/tcp','/proc/net/tcp6']:
+        for l in pathlib.Path(p).read_text().splitlines()[1:]:
+            x=l.split()
+            if x[1].endswith(':63DD') and x[3]=='0A': found.append({'address':x[1],'inode':x[9]})
+    return found
+def wait_until(test, server, seconds, purpose):
+    until=time.monotonic()+seconds
+    while not test():
+        if server.poll() is not None: raise RuntimeError(f'{purpose}: server exited {server.returncode}')
+        if time.monotonic()>=until: raise RuntimeError(f'{purpose}: exceeded {seconds}s deadline')
+        time.sleep(.1)
+def prepare(version):
+    base=VROOT/'servers'/version; wd=R/'servers'/version; wd.mkdir(parents=True)
+    eula=base/'eula.txt'
+    if 'eula=true' not in eula.read_text().splitlines(): raise RuntimeError('No pre-existing accepted EULA')
+    lines=(base/'server.properties').read_text().splitlines()
+    for line in ['server-ip=127.0.0.1','online-mode=false','enable-rcon=false','enable-query=false']:
+        if line not in lines: raise RuntimeError(f'Unsafe baseline, missing {line}')
+    shutil.copyfile(eula,wd/'eula.txt')
+    edits={'level-name':'regression-world','server-ip':'127.0.0.1','server-port':'25565','online-mode':'false','enable-rcon':'false','enable-query':'false','enable-jmx-monitoring':'false','enforce-secure-profile':'false','view-distance':'2','simulation-distance':'2','max-players':'2','motd':f'Rustwire frozen initial connection regression {version}'}
+    (wd/'server.properties').write_text('\n'.join(l for l in lines if l.partition('=')[0] not in edits)+'\n'+'\n'.join(f'{k}={v}' for k,v in edits.items())+'\n')
+    for n in ['bukkit.yml','spigot.yml']:
+        if (base/n).is_file(): shutil.copyfile(base/n,wd/n)
+    if (base/'config').is_dir(): shutil.copytree(base/'config',wd/'config')
+    # Keep optional bundled profiler disabled; never copy or install plugins.
+    pg=wd/'config/paper-global.yml'
+    if pg.is_file():
+        s=pg.read_text();s=re.sub(r'(spark:\n(?:  [^\n]*\n)*?  enabled:) true',r'\1 false',s);pg.write_text(s)
+    (wd/'plugins/bStats').mkdir(parents=True)
+    (wd/'plugins/bStats/config.yml').write_text('enabled: false\n')
+    for n in ['cache','libraries','versions']:
+        if (base/n).is_dir(): (wd/n).symlink_to(base/n,target_is_directory=True)
+    return base,wd
+
+def run_client(wd,name,args):
+    cmd=[str(R/'bin'/name),'127.0.0.1','25565',*args]
+    start=time.monotonic();code=None
+    try:
+        p=subprocess.run(cmd,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,timeout=90)
+        out=p.stdout;code=p.returncode
+    except subprocess.TimeoutExpired as ex:
+        out=(ex.stdout or b'');out=out.decode(errors='replace') if isinstance(out,bytes) else out
+        out+='\nHARNESS_TIMEOUT=90\n';code=-100
+    path=wd/f'{name}.log';path.write_text(out)
+    record={'name':name,'command':cmd,'exit':code,'seconds':round(time.monotonic()-start,3),'binary_sha256':sha(R/'bin'/name),'log':str(path.relative_to(R)),'log_sha256':sha(path)}
+    for line in out.splitlines():
+        if any(x in line for x in ['PROBE_SUMMARY','ROUNDTRIPS','validated:','DERIVED_SECTIONS','Error:','tags decoded:']): print(version, line,flush=True)
+    if code!=0: record['error_output']=out[-4000:]
+    return record,out
+
+lock=(VROOT/'one-server.lock').open('a+')
+fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+if listeners(): raise RuntimeError(f'25565 listener already exists: {listeners()}')
+if (R/'results.json').exists(): raise RuntimeError('Refusing to overwrite prior run; use a new directory rather than hiding retries')
+eula_before={v:sha(VROOT/'servers'/v/'eula.txt') for v in VERSIONS}
+source_before={str(p.relative_to(R/'source')):sha(p) for p in sorted((R/'source').rglob('*')) if p.is_file()}
+(R/'evidence/all-snapshot-sha256.json').write_text(json.dumps(source_before,indent=2)+'\n')
+report={'schema':'rustwire.frozen.initial-connection.v1','source_commit':'01bf0a0739199949cd4aa584738aaba0e49fadc3','started_utc':now(),'source_archive_sha256':sha(R/'source.tar'),'source_manifest_sha256':sha(R/'evidence/all-snapshot-sha256.json'),'manifest_sha256':sha(R/'source/docs/validation/matrix-download-provenance.json'),'harness_sha256':sha(__file__),'probe_sha256':sha(R/'probe/registry_tags_probe.rs'),'binaries':{p.name:sha(p) for p in (R/'bin').iterdir()},'eula_baseline_before':eula_before,'exclusive_lock':str(VROOT/'one-server.lock'),'results':[]}
+for index,version in enumerate(VERSIONS):
+    rec={'version':version,'protocol':763+index,'passed':False,'started_utc':now(),'tests':[]};start=time.monotonic();server=None;reader=None;server_lines=[];forced=[];wd=None
+    print(f'=== START {version} ===',flush=True)
+    try:
+        if listeners(): raise RuntimeError('Prior server listener remains')
+        base,wd=prepare(version)
+        artifact=next(a for a in MANIFEST['paper'] if a['version']==version);jar=VROOT/'downloads'/artifact['download']['name'];jarsha=sha(jar)
+        if jarsha!=artifact['download']['checksums']['sha256']: raise RuntimeError('Paper SHA mismatch')
+        mojang=next(a for a in MANIFEST['mojang'] if a['version']==version);cache=base/'cache'/mojang['name']
+        if sha(cache)!=mojang['sha256']: raise RuntimeError('Cached official Mojang SHA mismatch')
+        java=str(VROOT/'jdk25/bin/java') if version.startswith('26.') else shutil.which('java')
+        cmd=[java,'-Xms256M','-Xmx1024M','-XX:ActiveProcessorCount=2','-jar',str(jar),'--nogui']
+        rec.update({'paper_build':artifact['build'],'paper_channel':artifact['channel'],'paper_jar_sha256':jarsha,'mojang_cache_sha256':sha(cache),'java_binary_sha256':sha(java),'java':subprocess.run([java,'-version'],stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True).stdout,'command':cmd,'eula_copy_before':sha(wd/'eula.txt'),'server_properties_before_sha256':sha(wd/'server.properties')})
+        assert rec['eula_copy_before']==eula_before[version]
+        server=subprocess.Popen(cmd,cwd=wd,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True,bufsize=1)
+        ready=threading.Event()
+        def consume():
+            with (wd/'server.log').open('w') as log:
+                for raw in server.stdout:
+                    log.write(raw);log.flush();line=ANSI.sub('',raw).strip();server_lines.append(line)
+                    if 'Done (' in line: ready.set()
+                    if any(s in line for s in ['Starting Minecraft server on','Done (','RustwireTags joined','RustwireTags lost connection']):print(version,line,flush=True)
+        reader=threading.Thread(target=consume,daemon=True);reader.start()
+        wait_until(ready.is_set,server,180,'startup')
+        rec['startup_seconds']=round(time.monotonic()-start,3)
+        found=listeners();rec['listeners']=found
+        if not found or not all(x['address'] in ['0100007F:63DD','0000000000000000FFFF00000100007F:63DD'] for x in found): raise RuntimeError(f'Listener not exclusively 127.0.0.1: {found}')
+        test,out=run_client(wd,'status',[version]);rec['tests'].append(test)
+        if test['exit']!=0: raise RuntimeError('status/ping failed')
+        status=json.loads(out.splitlines()[0]);rec['status_version']=status['version'];rec['status_nonce_roundtrip']=True
+        if status['version']['protocol']!=rec['protocol']: raise RuntimeError('Status protocol differs from representative family')
+        test,out=run_client(wd,'registry_tags_probe',[version,'20']);rec['tests'].append(test)
+        if test['exit']!=0: raise RuntimeError('combined registry/tag/chunk probe failed')
+        summary=re.search(r'validated: (\d+) chunks, (\d+) keepalives, (\d+) teleports, (\d+) registry packets, (\d+) configurations, (\d+) registries,',out)
+        if not summary: raise RuntimeError('Missing probe counters')
+        rec['counters']=dict(zip(['chunks','keepalives','teleports','registry_packets','configurations','registries'],map(int,summary.groups())))
+        for marker,key in [('PROBE_SUMMARY','semantic'),('ROUNDTRIPS','roundtrips')]:
+            line=next(l for l in out.splitlines() if l.startswith(marker));rec[key]={k:int(v) for k,v in re.findall(r'(\w+)=(\d+)',line)}
+        rec['dimension']=next(l for l in out.splitlines() if l.startswith('joined dimension'))
+        if rec['semantic']['elapsed_ms']<20000 or rec['counters']['keepalives']<1 or rec['roundtrips']['tags']<1: raise RuntimeError('Minimum duration/keepalive/tag verification missing')
+        wait_until(lambda:any('RustwireTags lost connection: Disconnected' in l for l in server_lines),server,10,'server acknowledgement of clean disconnect')
+        rec['server_clean_disconnect']=True;rec['client_clean_shutdown']='CLEAN_LOCAL_SHUTDOWN' in out
+        rec['joined_server_side']=any('RustwireTags joined the game' in l for l in server_lines)
+        rec['passed']=rec['client_clean_shutdown'] and rec['joined_server_side']
+    except Exception as ex:
+        rec['error']=f'{type(ex).__name__}: {ex}'
+        print(f'FAMILY_FAILURE {version}: {rec["error"]}',flush=True)
+    finally:
+        if server is not None and server.poll() is None:
+            try: server.stdin.write('stop\n');server.stdin.flush()
+            except (OSError,BrokenPipeError): pass
+            try: server.wait(timeout=60)
+            except subprocess.TimeoutExpired:
+                forced.append('terminate');server.terminate()
+                try: server.wait(timeout=10)
+                except subprocess.TimeoutExpired: forced.append('kill');server.kill();server.wait(timeout=5)
+        if reader: reader.join(timeout=5)
+        rec.update({'server_exit':None if server is None else server.returncode,'forced_shutdown':forced,'listeners_after':listeners(),'seconds':round(time.monotonic()-start,3),'eula_baseline_after':sha(VROOT/'servers'/version/'eula.txt')})
+        if wd:
+            rec['eula_copy_after']=sha(wd/'eula.txt');rec['eula_unchanged']=rec['eula_copy_after']==rec['eula_baseline_after']==eula_before[version]
+            rec['installed_plugin_jars']=[str(p.relative_to(wd)) for p in (wd/'plugins').rglob('*.jar')]
+            rec['ops_empty']=not (wd/'ops.json').exists() or json.loads((wd/'ops.json').read_text())==[]
+            if (wd/'server.log').exists(): rec['server_log_sha256']=sha(wd/'server.log')
+        if rec['listeners_after'] or forced or rec['server_exit']!=0 or not rec.get('eula_unchanged',False) or rec.get('installed_plugin_jars') or not rec.get('ops_empty',False): rec['passed']=False;rec['cleanup_failure']=True
+        report['results'].append(rec)
+        (R/'results.json').write_text(json.dumps(report,indent=2)+'\n')
+        print(f'=== RESULT {version} passed={rec["passed"]} server_exit={rec["server_exit"]} seconds={rec["seconds"]} ===',flush=True)
+        if rec.get('cleanup_failure'): raise RuntimeError(f'{version}: cleanup failure, do not start another server')
+report['finished_utc']=now();report['listeners_final']=listeners();report['eula_baseline_after']={v:sha(VROOT/'servers'/v/'eula.txt') for v in VERSIONS}
+source_after={str(p.relative_to(R/'source')):sha(p) for p in sorted((R/'source').rglob('*')) if p.is_file()}
+report['source_unchanged']=source_before==source_after
+report['binaries_unchanged']=all(sha(R/'bin'/name)==value for name,value in report['binaries'].items())
+report['all_passed']=len(report['results'])==14 and all(r['passed'] for r in report['results']) and report['source_unchanged'] and report['binaries_unchanged'] and report['eula_baseline_before']==report['eula_baseline_after'] and not report['listeners_final']
+(R/'results.json').write_text(json.dumps(report,indent=2)+'\n')
+fcntl.flock(lock,fcntl.LOCK_UN);lock.close()
+print('ALL_COMPLETE all_passed='+str(report['all_passed']),flush=True)
+sys.exit(0 if report['all_passed'] else 1)
