@@ -42,7 +42,7 @@ macro_rules! codec {
 mod border;
 mod timing;
 pub use border::{
-    InitializeWorldBorder, WorldBorderCenter, WorldBorderLerpSize, WorldBorderSize,
+    BorderDuration, InitializeWorldBorder, WorldBorderCenter, WorldBorderLerpSize, WorldBorderSize,
     WorldBorderWarningDelay, WorldBorderWarningDistance,
 };
 pub use timing::{ClockUpdate, TimeData, UpdateTime};

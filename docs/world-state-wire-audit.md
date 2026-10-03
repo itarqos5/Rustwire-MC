@@ -20,9 +20,9 @@ unknown game reasons retain its raw fallback after fixed-body validation.
 | Spawn position, 773–776 | dimension resource identifier, packed block position, f32 yaw, f32 pitch |
 | Difficulty, 763–770 | unsigned byte difficulty, boolean locked |
 | Difficulty, 771–776 | signed VarInt difficulty, boolean locked |
-| Border initialization | four f64s, **VarLong** milliseconds, three signed VarInts |
+| Border initialization | four f64s, **VarLong** duration (milliseconds through 773; ticks from 774), three signed VarInts |
 | Border center/size | two/one f64s |
-| Border interpolation | two f64s, **VarLong** milliseconds |
+| Border interpolation | two f64s, **VarLong** duration (milliseconds through 773; ticks from 774) |
 | Border warning distance/time | signed VarInt scalar |
 | Block-change acknowledgement | signed VarInt sequence; catalog name `acknowledge_player_digging` |
 | Player loaded | empty serverbound body, present exactly from 769 |
@@ -98,3 +98,25 @@ this addition: stable no-default (309 tests), stable default (313), stable
 all-features (347), Rust 1.88 no-default (309), Rust 1.88 all-features (347), strict
 all-target/all-feature Clippy, strict all-feature rustdoc and formatting. Broad
 connection-dispatch coverage is left to integration with the parent change.
+
+## Border-duration semantic correction
+
+A bounded 26.2 smoke replay exposed a misleading `duration_ms` API label even
+though all serializer bytes round-tripped. Cached command and moving-border
+APIs independently establish the unit switch at protocol 774 (1.21.11): older
+releases use wall-clock milliseconds; newer releases track game ticks. The
+[all-release semantic facts](validation/world-border-duration-units.json) contain
+only API observations and jar hashes, with the verifier hash for reproduction:
+
+```sh
+python3 tools/paper/verify_border_units.py --runtime-root /path/to/rustwire-server-validation \
+  --output /path/to/new/border-units.json
+```
+
+`InitializeWorldBorder::duration` and `WorldBorderLerpSize::duration` now carry
+`BorderDuration::Milliseconds(i64)` or `BorderDuration::Ticks(i64)`. Decoding
+selects the exact release unit and encoding rejects a mismatched variant. No
+20-TPS assumption or lossy conversion is applied. The new regression tests both
+packet types, every supported release, signed extrema and values above 32 bits.
+The initial failed smoke remains preserved outside this evidence package; a
+corrected frozen-source live matrix is still pending at this checkpoint.

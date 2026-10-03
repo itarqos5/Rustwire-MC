@@ -111,7 +111,7 @@ fn semantic_assertions(value: &WorldStatePacket, v: Version) {
                 (p.x, p.z, p.old_diameter, p.new_diameter),
                 (-1.25, 2.5, -3.5, 4.75)
             );
-            assert_eq!(p.duration_ms, 1 << 40);
+            assert_eq!(p.duration, BorderDuration::from_wire(1 << 40, v));
             assert_eq!(
                 (p.portal_teleport_boundary, p.warning_blocks, p.warning_time),
                 (-1, i32::MIN, i32::MAX)
@@ -124,7 +124,7 @@ fn semantic_assertions(value: &WorldStatePacket, v: Version) {
         WorldStatePacket::BorderLerp(p) => {
             assert_eq!(p.old_diameter, -1.25);
             assert_eq!(p.new_diameter, f64::INFINITY);
-            assert_eq!(p.duration_ms, i64::MIN);
+            assert_eq!(p.duration, BorderDuration::from_wire(i64::MIN, v));
         }
         WorldStatePacket::BorderSize(p) => assert_eq!(p.diameter, -3.5),
         WorldStatePacket::BorderWarningDelay(p) => assert_eq!(p.warning_time, i32::MIN),
@@ -464,11 +464,11 @@ fn signed_border_duration_and_sequence_domains() {
             let p = WorldBorderLerpSize {
                 old_diameter: f64::from_bits(0xfff8_0000_0000_4321),
                 new_diameter: -0.0,
-                duration_ms: n,
+                duration: BorderDuration::from_wire(n, v),
             };
             let b = p.encode(v, Limits::default()).unwrap();
             let q = WorldBorderLerpSize::decode(&b, v, Limits::default()).unwrap();
-            assert_eq!(q.duration_ms, n);
+            assert_eq!(q.duration.raw_value(), n);
             assert_eq!(q.old_diameter.to_bits(), p.old_diameter.to_bits());
             assert_eq!(q.new_diameter.to_bits(), p.new_diameter.to_bits());
         }
@@ -518,4 +518,63 @@ fn player_loaded_presence_direction_and_empty_body() {
         WorldStatePacket::decode("unknown", &[], Version::V26_2, Limits::default()),
         Err(Error::Unsupported(_))
     ));
+}
+
+#[test]
+fn border_duration_units_switch_at_774_without_implicit_conversion() {
+    for &v in Version::ALL {
+        for n in [i64::MIN, -1, 0, 1, 3_000_000_000, i64::MAX] {
+            let expected = if v.protocol() >= 774 {
+                BorderDuration::Ticks(n)
+            } else {
+                BorderDuration::Milliseconds(n)
+            };
+            assert_eq!(BorderDuration::from_wire(n, v), expected);
+            assert_eq!(expected.raw_value(), n);
+            let wrong = if v.protocol() >= 774 {
+                BorderDuration::Milliseconds(n)
+            } else {
+                BorderDuration::Ticks(n)
+            };
+            let mut lerp = WorldBorderLerpSize {
+                old_diameter: 512.0,
+                new_diameter: 2048.0,
+                duration: expected,
+            };
+            let bytes = lerp.encode(v, Limits::default()).unwrap();
+            assert_eq!(
+                WorldBorderLerpSize::decode(&bytes, v, Limits::default())
+                    .unwrap()
+                    .duration,
+                expected
+            );
+            lerp.duration = wrong;
+            assert!(matches!(
+                lerp.encode(v, Limits::default()),
+                Err(Error::Invalid(_))
+            ));
+            let mut init = InitializeWorldBorder {
+                x: 0.0,
+                z: 0.0,
+                old_diameter: 512.0,
+                new_diameter: 2048.0,
+                duration: expected,
+                portal_teleport_boundary: 29999984,
+                warning_blocks: 5,
+                warning_time: 15,
+            };
+            let bytes = init.encode(v, Limits::default()).unwrap();
+            assert_eq!(
+                InitializeWorldBorder::decode(&bytes, v, Limits::default())
+                    .unwrap()
+                    .duration,
+                expected
+            );
+            init.duration = wrong;
+            assert!(matches!(
+                init.encode(v, Limits::default()),
+                Err(Error::Invalid(_))
+            ));
+        }
+    }
 }
