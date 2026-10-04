@@ -151,11 +151,40 @@ impl<S: Read + Write> Connection<S> {
         username: &str,
         uuid: [u8; 16],
     ) -> Result<()> {
+        self.start_login_intent(host, port, username, uuid, packet::HandshakeIntent::Login)
+    }
+    /// Begin an explicitly approved transfer on this new destination connection.
+    /// Requires protocol 766 or later and the initial Handshake state. This does
+    /// not reconnect, follow a received transfer, copy cookies/resource packs,
+    /// or change the server's encryption/session-authentication requirements.
+    pub fn start_transfer_login(
+        &mut self,
+        host: &str,
+        port: u16,
+        username: &str,
+        uuid: [u8; 16],
+    ) -> Result<()> {
+        self.start_login_intent(
+            host,
+            port,
+            username,
+            uuid,
+            packet::HandshakeIntent::Transfer,
+        )
+    }
+    fn start_login_intent(
+        &mut self,
+        host: &str,
+        port: u16,
+        username: &str,
+        uuid: [u8; 16],
+        intent: packet::HandshakeIntent,
+    ) -> Result<()> {
         if self.state != State::Handshake {
             return Err(Error::State("login already started"));
         }
         // Validate both packets before writing either one.
-        let handshake = packet::handshake(self.version, host, port, State::Login)?;
+        let handshake = packet::handshake_with_intent(self.version, host, port, intent)?;
         let start = packet::login_start(self.version, username, uuid)?;
         // Frame budgets can fail even when the individual fields are valid.
         // Preflight both encodings before any externally visible write.

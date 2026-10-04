@@ -389,3 +389,12 @@ nested collections and strings. Unsupported kinds preserve the original raw
 packet; malformed bodies and budget violations remain errors. The
 [wire audit](docs/debug-values-wire-audit.md) explains corrected goal/path layouts,
 versioned PathType ordinals, registry references and validation boundaries.
+
+### Explicit transfer login
+
+After approving a destination and creating its connection, applications can use
+`Connection::start_transfer_login` from 1.20.5 onward. The lower-level
+`packet::handshake_with_intent` exposes all three handshake intentions. Existing
+login calls still use ordinary intent 2; no transfer, cookie forwarding or
+authentication-policy change is automatic. See the
+[wire and preflight audit](docs/transfer-handshake-wire-audit.md).

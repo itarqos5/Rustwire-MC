@@ -53,18 +53,50 @@ pub fn named(version: Version, state: State, name: &str, data: Vec<u8>) -> Resul
         data,
     ))
 }
-pub fn handshake(version: Version, host: &str, port: u16, next: State) -> Result<RawPacket> {
-    let next = match next {
-        State::Status => 1,
-        State::Login => 2,
-        _ => return Err(Error::State("handshake next state")),
+/// A handshake intention is distinct from the following protocol state.
+/// Both ordinary login and an explicitly accepted transfer enter Login.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum HandshakeIntent {
+    Status,
+    Login,
+    /// Available from protocol 766 (Minecraft 1.20.5). The application owns
+    /// destination approval, transport creation and any cross-server state.
+    Transfer,
+}
+/// Encode an explicit handshake intention without opening a connection.
+pub fn handshake_with_intent(
+    version: Version,
+    host: &str,
+    port: u16,
+    intent: HandshakeIntent,
+) -> Result<RawPacket> {
+    let next = match intent {
+        HandshakeIntent::Status => 1,
+        HandshakeIntent::Login => 2,
+        HandshakeIntent::Transfer if version.protocol() >= 766 => 3,
+        HandshakeIntent::Transfer => {
+            return Err(Error::Unsupported("transfer handshake before protocol 766"));
+        }
     };
     let mut w = Writer::new();
     w.var_i32(version.protocol());
     w.string(host, 255)?;
     w.u16(port);
     w.var_i32(next);
-    Ok(RawPacket::new(0, w.into_inner()))
+    Ok(RawPacket::new(
+        version.packet_id(State::Handshake, Direction::Serverbound, "set_protocol")?,
+        w.into_inner(),
+    ))
+}
+/// Compatibility helper for ordinary status or login handshakes.
+/// Use [`handshake_with_intent`] to explicitly request transfer intent.
+pub fn handshake(version: Version, host: &str, port: u16, next: State) -> Result<RawPacket> {
+    let intent = match next {
+        State::Status => HandshakeIntent::Status,
+        State::Login => HandshakeIntent::Login,
+        _ => return Err(Error::State("handshake next state")),
+    };
+    handshake_with_intent(version, host, port, intent)
 }
 pub fn login_start(version: Version, username: &str, uuid: [u8; 16]) -> Result<RawPacket> {
     if username.is_empty()
