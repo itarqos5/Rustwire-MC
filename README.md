@@ -379,3 +379,13 @@ or responding. Modern registry references remain unresolved; see the
 highlight positions with exact version/direction gates and bounded text/NBT.
 Applications retain control of sending and applying these requests; see the
 [wire audit](docs/game-test-wire-audit.md) for scope and validation limits.
+
+### Modern debug values
+
+`packet::debug_values` adds typed block, chunk, entity and event envelopes for
+1.21.9–26.2. All 15 serializable subscription kinds retain diagnostic scalars,
+float bits, list order and duplicate entries. Shared per-body budgets bound
+nested collections and strings. Unsupported kinds preserve the original raw
+packet; malformed bodies and budget violations remain errors. The
+[wire audit](docs/debug-values-wire-audit.md) explains corrected goal/path layouts,
+versioned PathType ordinals, registry references and validation boundaries.

@@ -115,6 +115,7 @@ pub enum OverlayPacket {
 pub enum DecodedPacket {
     GameTest(super::game_test::GameTestPacket),
     DebugSample(super::debug::DebugSample),
+    DebugValue(Box<super::debug_values::DebugValuePacket>),
     CustomPayload(super::custom_payload::CustomPayload),
     Dialog(super::dialog::DialogPacket),
     GameRules(super::game_rules::GameRuleValues),
@@ -204,6 +205,11 @@ impl DecodedPacket {
             "game_test_highlight_pos" | "test_instance_block_status" => Self::GameTest(
                 super::game_test::GameTestPacket::decode(name, bytes, version, limits)?,
             ),
+            "debug_block_value" | "debug_chunk_value" | "debug_entity_value" | "debug_event" => {
+                Self::DebugValue(Box::new(super::debug_values::DebugValuePacket::decode(
+                    name, bytes, version, limits,
+                )?))
+            }
             "debug_sample" => {
                 Self::DebugSample(super::debug::DebugSample::decode(bytes, version, limits)?)
             }
