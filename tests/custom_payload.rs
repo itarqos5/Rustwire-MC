@@ -284,3 +284,49 @@ fn malformed_header_and_state_gates() {
         b"\x01x"
     );
 }
+
+#[test]
+fn output_budgets_precede_channel_syntax_scans() {
+    use rustwire_mc::Error;
+    let value = CustomPayloadRef {
+        channel: "UPPER",
+        data: &[],
+    };
+    let v = Version::V26_2;
+    let state = State::Play;
+    for limits in [
+        Limits {
+            max_packet: 0,
+            ..Limits::default()
+        },
+        Limits {
+            max_string_chars: 1,
+            ..Limits::default()
+        },
+    ] {
+        assert!(matches!(
+            value.encode(v, state, Direction::Clientbound, limits),
+            Err(Error::Limit(_))
+        ));
+        let mut w = Writer::new();
+        w.u8(7);
+        assert!(matches!(
+            value.write(&mut w, v, state, Direction::Clientbound, limits),
+            Err(Error::Limit(_))
+        ));
+        assert_eq!(w.as_slice(), &[7]);
+    }
+    let payload = vec![0; CustomPayload::MAX_SERVERBOUND_BYTES + 1];
+    let oversized = CustomPayloadRef {
+        channel: "UPPER",
+        data: &payload,
+    };
+    assert!(matches!(
+        oversized.encode(v, state, Direction::Serverbound, Limits::default()),
+        Err(Error::Limit(_))
+    ));
+    assert!(matches!(
+        value.encode(v, state, Direction::Clientbound, Limits::default()),
+        Err(Error::Invalid(_))
+    ));
+}

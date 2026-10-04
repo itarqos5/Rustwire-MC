@@ -81,9 +81,9 @@ impl<'a> CustomPayloadRef<'a> {
         limits: Limits,
     ) -> Result<Vec<u8>> {
         supported(version, state)?;
-        identifier::validate(self.channel, version)?;
         if self.channel.len() > 32767.min(limits.max_string_chars) {
-            // Identifier validation guarantees ASCII, so bytes equal UTF-16 units.
+            // Valid identifiers are ASCII. Reject oversized inputs before scanning
+            // their syntax; bytes then equal the UTF-16 character count.
             return Err(Error::Limit("custom payload channel length"));
         }
         if self.data.len() > maximum(direction) {
@@ -96,6 +96,7 @@ impl<'a> CustomPayloadRef<'a> {
         if size > limits.max_packet {
             return Err(Error::Limit("custom payload packet bytes"));
         }
+        identifier::validate(self.channel, version)?;
         let mut w = Writer::with_capacity(size);
         w.string(self.channel, 32767.min(limits.max_string_chars))?;
         w.raw(self.data);

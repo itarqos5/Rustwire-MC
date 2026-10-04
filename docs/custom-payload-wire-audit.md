@@ -9,7 +9,9 @@ length prefix**. Known and unknown channel data remains opaque.
 
 `CustomPayloadRef::decode` borrows both the channel and data directly from the
 already delimited packet body. Owned decoding checks all bounds before copying.
-Encoding validates the complete body size before reserving one output buffer.
+Encoding checks channel, data and whole-body sizes before scanning channel syntax
+or reserving one output buffer. Oversized caller-supplied values therefore fail
+at their cheap length checks.
 Both types expose an atomic writer and exact state/direction packet builder.
 Incoming typed dispatch exposes `DecodedPacket::CustomPayload` in configuration
 and play. No channel registration, handler execution, plugin negotiation or
