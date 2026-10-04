@@ -1,8 +1,8 @@
 //! Bounded recipe-book control envelopes, without recipe execution or storage.
 //!
 //! Registry keys through 767 and display IDs from 768 are distinct wire domains.
-//! Legacy declarations are provided separately by `recipe_declarations`. Modern
-//! displays/additions and ghost responses are outside this control module.
+//! Legacy declarations are in [`super::recipe_declarations`]. Modern displays,
+//! additions and ghost responses are in [`super::recipe_display`].
 //! See `docs/recipe-control-wire-audit.md`.
 use crate::{
     codec::{identifier, Reader, Writer},
@@ -405,7 +405,7 @@ impl Body for RecipeBookRemove {
 packet!(RecipeBookRemove, Clientbound, "recipe_book_remove");
 
 /// Only the legacy (763–767) ghost-recipe response. Modern responses contain an
-/// unimplemented RecipeDisplay and are deliberately not represented by this type.
+/// RecipeDisplay and are represented separately by `recipe_display::CraftRecipeResponse`.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct LegacyCraftRecipeResponse {
     /// Raw one-byte ID; use `RecipeWindowId::LegacyByte(id).legacy_signed()` for a signed view.

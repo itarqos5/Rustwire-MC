@@ -266,3 +266,14 @@ slot count. Component-slot counts are VarInts from **766**, as corroborated by
 release-era ViaVersion and PacketEvents; the shared inventory codec is corrected
 accordingly. Independent count-128/count-300 fixtures distinguish this from the
 previous signed-byte assumption.
+
+### Modern recipe displays (768–776)
+
+`packet::recipe_display` adds bounded SlotDisplay/RecipeDisplay payloads,
+`RecipeBookAdd`, and modern `CraftRecipeResponse`, with a separate modern typed
+dispatch family preserving legacy control APIs. It supports recursive composites,
+versioned smithing patterns, shifted groups, holder-set requirements, and the
+775–776 item-template boundary. The pinned 776 Slot leaf is explicitly corrected
+from independent and static official-release evidence. Unknown unframed kinds or
+components preserve the full raw packet. Modern recipe declarations remain a
+separate unsupported slice. See [the wire audit](docs/recipe-display-wire-audit.md).

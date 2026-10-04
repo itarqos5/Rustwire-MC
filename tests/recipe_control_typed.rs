@@ -59,16 +59,12 @@ fn clientbound_dispatch_is_direction_and_state_scoped() {
     }
 }
 #[test]
-fn modern_declaration_add_and_display_bodies_are_explicitly_unimplemented() {
+fn modern_recipe_declarations_remain_unimplemented() {
     for &v in Version::ALL {
         let names = if v.protocol() < 768 {
             vec![]
         } else {
-            vec![
-                "declare_recipes",
-                "recipe_book_add",
-                "craft_recipe_response",
-            ]
+            vec!["declare_recipes"]
         };
         for name in names {
             v.packet_id(State::Play, Direction::Clientbound, name)
@@ -186,13 +182,10 @@ fn connection_preserves_unknown_enum_raw_and_rejects_malformed_known_bodies() {
     }
 }
 #[test]
-fn connection_retains_unimplemented_modern_display_packets_without_claiming_validation() {
+fn connection_retains_unimplemented_modern_declarations_without_claiming_validation() {
     for &v in Version::ALL.iter().filter(|v| v.protocol() >= 768) {
-        for name in [
-            "craft_recipe_response",
-            "recipe_book_add",
-            "declare_recipes",
-        ] {
+        {
+            let name = "declare_recipes";
             let original = RawPacket::new(
                 v.packet_id(State::Play, Direction::Clientbound, name)
                     .unwrap(),

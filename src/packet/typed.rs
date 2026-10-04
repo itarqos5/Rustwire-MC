@@ -115,6 +115,7 @@ pub enum OverlayPacket {
 pub enum DecodedPacket {
     LegacyRecipes(super::recipe_declarations::LegacyDeclareRecipes),
     RecipeControl(super::recipe::RecipeControlPacket),
+    RecipeDisplay(Box<super::recipe_display::RecipeDisplayPacket>),
     ServerData(super::server_metadata::ServerData),
     PingResponse(super::server_metadata::PingResponse),
     Advancement(super::advancements::AdvancementPacket),
@@ -187,6 +188,9 @@ impl DecodedPacket {
             "craft_recipe_response" if version.protocol() < 768 => Self::RecipeControl(
                 super::recipe::RecipeControlPacket::decode(name, bytes, version, limits)?,
             ),
+            "recipe_book_add" | "craft_recipe_response" => Self::RecipeDisplay(Box::new(
+                super::recipe_display::RecipeDisplayPacket::decode(name, bytes, version, limits)?,
+            )),
             "server_data" => Self::ServerData(super::server_metadata::ServerData::decode(
                 bytes, version, limits,
             )?),

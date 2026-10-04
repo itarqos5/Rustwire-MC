@@ -524,3 +524,17 @@ accepted bodies across every kind/version and 13 unsupported-serializer bodies;
 all 14,337 strict prefixes of supported fixtures are rejected. These are not
 executed upstream serializers, official release-API outputs or captured traffic.
 Modern declaration formats at 768+ remain outside this increment.
+
+## Modern recipe displays and additions
+
+The display/addition/modern ghost-response slice uses the existing immutable
+protocol-schema pins, checked by `tools/check_recipe_display_fixtures.py`, plus
+source-level PacketEvents v2.13.0 and Minestom 2026.09.12-26.2 inspection. The
+protocol-776 `SlotDisplay.item_stack` schema discrepancy is resolved by static
+inspection of SHA-256-verified official 26.2 codec composition: item template,
+ID then VarInt count then patch. The same inspection confirms the trim holder.
+Only original code, original synthetic fixtures, factual audit text and source
+URL/hash metadata are included; upstream implementation text and official binary
+artifacts/disassembly are not vendored. Evidence is not an executed serializer or
+network capture. See [the audit](docs/recipe-display-wire-audit.md) and
+[source manifest](docs/validation/recipe-display-source-audit.json).

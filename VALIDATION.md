@@ -956,3 +956,37 @@ and the five-family declaration audit. A clean copy without downloaded schemas
 passed all 49 root-tool and 105 existing Paper-validation Python tests. The
 official 1.20.6 static registry cross-check is recorded in the wire audit; it is
 not an executed serializer or live-server test.
+
+## Modern recipe displays (protocols 768–776)
+
+The additive display slice checks 23 outer schema bodies, 18 modern display
+unions, and 18 complete modern packet/family combinations. Its 256 original
+Python-generated fixtures cover 103 slot payloads, 45 recipe payloads, 45 ghost
+responses, and 63 addition bodies. Rust rejects all 9,893 strict prefixes,
+trailing bytes, malformed known shapes, and undersized budgets, and checks exact
+body/ID re-encoding. Aggregate collection/NBT budgets, display/item depth, explicit
+version domains, signed group encoding, unknown framed scalars, reserved flags,
+state scope, and Connection whole-raw fallback are covered separately.
+
+The focused commands are:
+
+```sh
+python3 tools/check_recipe_display_fixtures.py
+python3 -m unittest discover -s tools -p 'test_check_recipe_display_fixtures.py'
+cargo test --locked --offline --no-default-features --test recipe_display --test recipe_display_typed
+cargo test --locked --offline --all-features --test recipe_display --test recipe_display_typed
+```
+
+The Python unit tests use constructed schema documents and committed fixture
+IDs; they require neither ignored research files nor network access. The first
+command is the separate actual pinned-schema audit. Static official 26.2
+inspection and independent source checks are described in
+[the wire audit](docs/recipe-display-wire-audit.md); they are not live tests or
+executed release-API fixture validation. No modern declaration support is claimed.
+
+Integrated verification with legacy recipes and the protocol-766 slot fix passed
+520 all-feature and 481 no-default Rust tests, strict Clippy/rustdoc/formatting,
+the full pinned display audit and all 55 root-tool Python tests. A clean copy
+without downloaded schemas also passed those 55 tests and 105 existing Paper
+validation tests. This integration was tested without the separate NBT writer
+preflight hardening, keeping the two changes independently reviewable.

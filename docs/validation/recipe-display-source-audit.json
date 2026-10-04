@@ -1,0 +1,164 @@
+{
+  "evidence": "Independent source inspection and static official class-descriptor/codec-composition inspection. No upstream serializer or game runtime executed. Original synthetic fixtures, not release-API output or captures. No upstream source or class dumps vendored.",
+  "schema_protocols": [
+    768,
+    769,
+    770,
+    771,
+    772,
+    773,
+    774,
+    775,
+    776
+  ],
+  "outer_layouts_checked": 23,
+  "modern_complete_packet_family_combinations": 18,
+  "synthetic_fixture_rows": 256,
+  "strict_truncation_prefixes": 9893,
+  "inspected_sources": [
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/RecipeDisplayEntry.java",
+      "sha256": "ea2107087a51612c4f51610d3c808624c5280954bb69627547238ffb7c86ad3c"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/FurnaceRecipeDisplay.java",
+      "sha256": "aa0ec6d7717a20fae51e153aac5a96bc328fb2b3390684a73cd0b0b0cee23129"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/RecipeDisplay.java",
+      "sha256": "64dfb51a57bc8bf4e143ffe5964cd533830f212d26ebebf81340f1cf032f52b5"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/RecipeDisplayType.java",
+      "sha256": "fd5ae5649a9d754f3f278120873cb496dcc7ce8a3ab5ef8b1816ca5235fa98ec"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/RecipeDisplayTypes.java",
+      "sha256": "bbc055daa373fd980f4273db743a59f6e689f663f7136fcdcb439e5f73073c7a"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/ShapedCraftingRecipeDisplay.java",
+      "sha256": "8a67963161a8d2b529a4b44ff611cfe4cd8a8e8a3d1689296fb2b986c83e6f24"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/ShapelessCraftingRecipeDisplay.java",
+      "sha256": "68c9d0dccfbd1473df6fbe75214798d4202a4289551b15333d2ffce50eaabd45"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/SmithingRecipeDisplay.java",
+      "sha256": "517fee383ff6b3f9f7e18e57c4249f53c53aeca312b5cdc9be043cc00559f2c0"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/StaticRecipeDisplayType.java",
+      "sha256": "9e2a62f18a143f8ae8228177dd92459501a4ebd96f09a37e989e69084bb55f72"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/StonecutterRecipeDisplay.java",
+      "sha256": "fefbf041a162060ae26dbca457432ffabecc015b10d55b436379b08fa7abb1b0"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/AnyFuelSlotDisplay.java",
+      "sha256": "8da3d0f094b64de447e9aaee7b2a8d444ec11a15418dfa059832b535f602ae90"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/CompositeSlotDisplay.java",
+      "sha256": "89784fe5bef6bf4999820d355eb5db48e074c02b6e57e79b2438becf2255240b"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/DyedSlotDisplay.java",
+      "sha256": "9047873e257d2ff9d275f58ad79f3d5504c3a9ea043cd6c416b1ad614dd3857f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/EmptySlotDisplay.java",
+      "sha256": "b34b6130138d6dc0330a5a216a19ba738218ab8ef3f34fe794573d8a8ad2da34"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/ItemSlotDisplay.java",
+      "sha256": "8c84d7560941545dec0ec9f6ed24964c35c598765d9cad2bd864d56b407e5a62"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/ItemStackSlotDisplay.java",
+      "sha256": "94006e49278dc1b99d0327e95310c3ad031dea936f6158dd62e082b58a68e260"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/OnlyWithComponentSlotDisplay.java",
+      "sha256": "921a9e7198315b8d956093449a072f6ecf484ad7083a9f752026ad71f49b0e4f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/SlotDisplay.java",
+      "sha256": "fcc19aae4680376fffd1a63e14f12098ee1a31ffb461ba1b936022f0fd0a6cbe"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/SlotDisplayType.java",
+      "sha256": "f4749e721fb8153a845c4cab68134f587771ea9dd9256646e20d48a3d7975a1f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/SlotDisplayTypes.java",
+      "sha256": "ca25c33c048eea1c16b6568f6909b72d526520424e989f5c771d800d53397814"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/SmithingTrimSlotDisplay.java",
+      "sha256": "07a4583abae0fbbc99c438f4cb4ebd88d9aaec36421f91f58dd248ddab680e3f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/StaticSlotDisplayType.java",
+      "sha256": "dc1369f3a7b49ad08bb7ac9b518946e839b40456115023ceb217dc4aa9efce94"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/TagSlotDisplay.java",
+      "sha256": "19dec5d29904cdf2375f47c03beeda382d70f4ecd5ac4cce776e461221811173"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/WithAnyPotionSlotDisplay.java",
+      "sha256": "29c559a6ba768db5d414da54edc829d0782aa7097ee9f445fe40dace24c49bd4"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/display/slot/WithRemainderSlotDisplay.java",
+      "sha256": "7aa6bcb926ba0b5fd10d2748363f68d3786af4636762a865c8eb58541c0a4671"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerRecipeBookAdd.java",
+      "sha256": "9a0ad80c50e548b7a2c0af4118ce8fc69a3453bdef9995af4062fd99560a6aa0"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/MinecraftServer.java",
+      "sha256": "bafb70606f859802cf22c83a0d703e9292f4cde94dbbbe792568f9cecf082e97"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/command/builder/arguments/minecraft/ArgumentItemStack.java",
+      "sha256": "14312a8fe330929de944ecb3322957b87deb9d7ab2627794e8ddd1eb118db6fd"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/item/ItemStack.java",
+      "sha256": "9767c7df22b284b627c5f47e233c97cedb688c029e61967cc97c53809b3599a3"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/item/ItemStackImpl.java",
+      "sha256": "f7e31056ef9c82982b4b28ca684e78493ba03d299e019f0cef2e0e286a39c145"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/network/packet/server/play/RecipeBookAddPacket.java",
+      "sha256": "1c8c3ccda58dd97d811d62a019171058eddef72dbfc6eb7541722fede6817744"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/Minestom/Minestom/aba93bdb5096179bd66dc35c9849d9f0bacdc17e/src/main/java/net/minestom/server/recipe/display/SlotDisplay.java",
+      "sha256": "4015d19e2cf34b933de247c42d4c6209079a15c164f82970528d0b0ae754c9fc"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "sha256": "07e5374fc05a0b1414e9fc796370193a656d3ff685a094fdf49deea3698f66ff"
+    }
+  ],
+  "official_static_artifact": {
+    "version": "26.2",
+    "url": "https://piston-data.mojang.com/v1/objects/823e2250d24b3ddac457a60c92a6a941943fcd6a/server.jar",
+    "bundler_sha256": "cdacdfb25898de5e4b4b0e5ddcc2722f77067e46605709c2d886c000ebb63ec5",
+    "inner_path": "META-INF/versions/26.2/server-26.2.jar",
+    "inner_sha256": "183c0499c5f855570ee487dd38e141a53f0121f83a0b07a3bac2d8b6698823e8"
+  },
+  "official_protocol_facts": [
+    "SlotDisplay.ItemStackSlotDisplay uses ItemStackTemplate.STREAM_CODEC",
+    "ItemStackTemplate.STREAM_CODEC is composed of Item.STREAM_CODEC, VAR_INT count, DataComponentPatch.STREAM_CODEC in that order",
+    "SlotDisplay.SmithingTrimDemoSlotDisplay uses two SlotDisplay codecs followed by TrimPattern.STREAM_CODEC"
+  ]
+}
