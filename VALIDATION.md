@@ -1054,3 +1054,18 @@ all-feature and 499 no-default Rust tests, strict Clippy/rustdoc/formatting and
 the nine-family declaration audit. All 67 root-tool and 105 existing Paper
 validation Python tests passed in a clean copy without downloaded schemas.
 MSRV and cross-platform execution remain separate exact-commit CI gates.
+
+## Modern minecart movement envelopes
+
+Twenty-seven original fixtures cover all nine modern families and every one of
+1,593 strict prefixes, exact output/packet IDs, floating-point bit preservation,
+byte-angle identities, state/version gates, whole-body/collection limits,
+impossible/overflow counts, stale-schema rejection and bounded mutations.
+Four self-contained Python regressions verify schema discrepancy/mapping/hash
+checks without downloaded inputs. [Evidence and commands](docs/minecart-wire-audit.md).
+
+The integrated suite passed 541 all-feature and 502 no-default Rust tests,
+strict Clippy/rustdoc/formatting and the pinned discrepancy/fixture audit. All
+71 root-tool and 105 existing Paper-validator Python tests passed in a clean
+copy without downloaded schemas. Exact-commit CI separately covers MSRV and
+operating systems; no new live minecart behavior was tested.

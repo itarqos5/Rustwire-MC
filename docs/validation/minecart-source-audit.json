@@ -1,0 +1,20 @@
+{
+  "method": "Independent immutable source inspection and separately documented official 26.2 static binding evidence; no game execution",
+  "sources": [
+    {
+      "name": "PacketEvents minecart",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerMoveMinecart.java",
+      "sha256": "ee52e03089d552aefbe7d5007c285a64970ef06fad9c70f2bd7b726c50e47f65"
+    },
+    {
+      "name": "MCProtocolLib 1.21.2-1 minecart",
+      "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/667e02d38cd4a79d46640312cd599123609633ac/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/ClientboundMoveMinecartPacket.java",
+      "sha256": "77844375a7749ac3170eaeddcb6c485cc6a9668c7b1568b5f1b4ab739de35aff"
+    },
+    {
+      "name": "PacketEvents Vector3d",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/util/Vector3d.java",
+      "sha256": "bfcfa00524f000b06e7cb1cff0f5b8da02fc793a736ddef8747766432dc90daa"
+    }
+  ]
+}

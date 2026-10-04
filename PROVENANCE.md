@@ -560,3 +560,12 @@ source, game artifacts and class dumps are not. This is source/static evidence
 and synthetic validation, not executed release-API output or live gameplay.
 See [the audit](docs/recipe-properties-wire-audit.md) and
 [source manifest](docs/validation/recipe-properties-source-audit.json).
+
+## Modern minecart movement
+
+The [minecart audit](docs/minecart-wire-audit.md) explicitly rejects the pinned
+schemas' float-only step widths in favor of immutable independent implementations
+and official 26.2 static codec bindings: six doubles, two angle bytes and a float.
+Nine present/five absent layouts remain hash-checked unchanged. The 27 original
+Python fixtures are synthetic; no game code, disassembly or runtime result is
+redistributed or claimed.

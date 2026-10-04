@@ -1,7 +1,8 @@
 //! Ordinary clientbound entity-control bodies for protocols 763–776.
 //!
-//! These seven layouts are identical in all fourteen hash-pinned schemas; packet
-//! IDs still come from the exact version catalog. Entity references, damage
+//! Seven baseline layouts cover all fourteen release families. Minecart motion
+//! is available from 768 with independently audited f64 vectors and byte angles.
+//! Packet IDs come from the exact version catalog. Entity references, damage
 //! registry references, animation codes and floating-point values retain their
 //! raw wire values. This module does not resolve registries, validate entity
 //! existence or simulate riding, leashing, camera or damage behavior.
@@ -249,7 +250,75 @@ impl Body for HurtAnimation {
     }
 }
 
+/// One interpolation step, retaining its complete wire precision. No interpolation
+/// or movement simulation is performed. Yaw/pitch are lossless byte angles.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct MinecartStep {
+    pub position: [f64; 3],
+    pub velocity: [f64; 3],
+    pub yaw: Angle,
+    pub pitch: Angle,
+    pub weight: f32,
+}
+/// Modern minecart motion (768+). Pinned schemas incorrectly describe f32
+/// vectors/angles; release-aligned sources and official static evidence establish
+/// six f64 values, two angle bytes and an f32 weight (54 bytes per step).
+#[derive(Debug, Clone, PartialEq)]
+pub struct MoveMinecart {
+    pub entity_id: i32,
+    pub steps: Vec<MinecartStep>,
+}
+impl Body for MoveMinecart {
+    fn read(r: &mut Reader<'_>) -> Result<Self> {
+        let entity_id = r.var_i32()?;
+        let n = r.count(r.limits.max_collection)?;
+        if n > r.remaining().len() / 54 {
+            return Err(Error::Eof);
+        }
+        let mut steps = Vec::with_capacity(n);
+        for _ in 0..n {
+            steps.push(MinecartStep {
+                position: [r.f64()?, r.f64()?, r.f64()?],
+                velocity: [r.f64()?, r.f64()?, r.f64()?],
+                yaw: Angle(r.u8()?),
+                pitch: Angle(r.u8()?),
+                weight: r.f32()?,
+            });
+        }
+        Ok(Self { entity_id, steps })
+    }
+    fn write(&self, w: &mut Writer, limits: Limits) -> Result<()> {
+        let n = self.steps.len();
+        if n > limits.max_collection.min(i32::MAX as usize) {
+            return Err(Error::Limit("minecart step count"));
+        }
+        let size = n
+            .checked_mul(54)
+            .and_then(|n| n.checked_add(varint_len(self.entity_id)))
+            .and_then(|n| n.checked_add(varint_len(self.steps.len() as i32)))
+            .ok_or(Error::Limit("minecart packet bytes"))?;
+        if size > limits.max_packet {
+            return Err(Error::Limit("minecart packet bytes"));
+        }
+        w.var_i32(self.entity_id);
+        w.var_i32(n as i32);
+        for step in &self.steps {
+            for &n in &step.position {
+                w.f64(n);
+            }
+            for &n in &step.velocity {
+                w.f64(n);
+            }
+            w.u8(step.yaw.0);
+            w.u8(step.pitch.0);
+            w.f32(step.weight);
+        }
+        Ok(())
+    }
+}
+
 codec!(
+    MoveMinecart => "move_minecart",
     SetPassengers => "set_passengers",
     AttachEntity => "attach_entity",
     EntityHeadRotation => "entity_head_rotation",
@@ -261,6 +330,7 @@ codec!(
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum EntityControlPacket {
+    Minecart(MoveMinecart),
     Passengers(SetPassengers),
     Attach(AttachEntity),
     HeadRotation(EntityHeadRotation),
@@ -272,6 +342,7 @@ pub enum EntityControlPacket {
 impl EntityControlPacket {
     pub fn decode(name: &str, bytes: &[u8], version: Version, limits: Limits) -> Result<Self> {
         Ok(match name {
+            "move_minecart" => Self::Minecart(MoveMinecart::decode(bytes, version, limits)?),
             "set_passengers" => Self::Passengers(SetPassengers::decode(bytes, version, limits)?),
             "attach_entity" => Self::Attach(AttachEntity::decode(bytes, version, limits)?),
             "entity_head_rotation" => {
@@ -286,6 +357,7 @@ impl EntityControlPacket {
     }
     pub fn encode(&self, version: Version, limits: Limits) -> Result<Vec<u8>> {
         match self {
+            Self::Minecart(value) => value.encode(version, limits),
             Self::Passengers(value) => value.encode(version, limits),
             Self::Attach(value) => value.encode(version, limits),
             Self::HeadRotation(value) => value.encode(version, limits),
@@ -297,6 +369,7 @@ impl EntityControlPacket {
     }
     pub fn packet(&self, version: Version, limits: Limits) -> Result<RawPacket> {
         match self {
+            Self::Minecart(value) => value.packet(version, limits),
             Self::Passengers(value) => value.packet(version, limits),
             Self::Attach(value) => value.packet(version, limits),
             Self::HeadRotation(value) => value.packet(version, limits),

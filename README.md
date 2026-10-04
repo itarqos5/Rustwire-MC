@@ -296,3 +296,11 @@ packet collection/NBT budgets and the existing versioned display codecs, while
 legacy serializer declarations stay separate. This closes the modern declaration
 wire boundary previously left open above; recipe execution and registry resolution
 remain application responsibilities. See [the audit](docs/recipe-properties-wire-audit.md).
+
+### Modern minecart motion
+
+`MoveMinecart` adds bounded interpolation-step envelopes from protocol 768,
+retaining double-precision position/velocity and raw byte angles. Independent
+sources and official static bindings correct stale schema field widths. The
+codec does not simulate rails or interpolate movement.
+[Wire audit](docs/minecart-wire-audit.md).

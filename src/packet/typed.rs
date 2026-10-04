@@ -324,7 +324,8 @@ impl DecodedPacket {
             | "camera"
             | "animation"
             | "damage_event"
-            | "hurt_animation" => Self::EntityControl(
+            | "hurt_animation"
+            | "move_minecart" => Self::EntityControl(
                 super::entity_control::EntityControlPacket::decode(name, bytes, version, limits)?,
             ),
             "spawn_entity"
