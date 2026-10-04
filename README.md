@@ -320,3 +320,10 @@ UUID/named identities, optional RGB icons, full signed coordinates and raw
 azimuth bits. Even removal retains the full wire body; unknown location payloads
 preserve the original packet. No rendering or tracking state is simulated.
 [Wire audit](docs/waypoint-wire-audit.md).
+
+### Game-rule values and updates
+
+`packet::game_rules` adds bounded identifier/text rule lists in both directions
+for 26.1–26.2, plus the empty low-disk notification. Values and duplicate wire
+entries remain explicit; no game-rule parsing, application or permission decision
+is made. [Wire audit](docs/game-rule-wire-audit.md).

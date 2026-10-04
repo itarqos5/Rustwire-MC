@@ -1,0 +1,20 @@
+{
+  "method": "Immutable independent source inspection and narrow official static cross-checks; not execution",
+  "sources": [
+    {
+      "name": "WrapperPlayServerGameRuleValues",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerGameRuleValues.java",
+      "sha256": "e4c5fd7f181058143eb62f202db4a8272ed89355b53bd51da384637f00ba2165"
+    },
+    {
+      "name": "WrapperPlayClientSetGameRule",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSetGameRule.java",
+      "sha256": "fa4bc23e1af883bc781812cac7aade83f20ad478727b12f3b63a95b5cb0c4563"
+    },
+    {
+      "name": "WrapperPlayServerLowDiskSpaceWarning",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerLowDiskSpaceWarning.java",
+      "sha256": "7dcaf0f2dd92c6c2ddcfe6b4adfa6561a7d60f95ba15e2444fb7533006579edd"
+    }
+  ]
+}

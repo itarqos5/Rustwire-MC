@@ -586,3 +586,11 @@ hash-pinned layouts, immutable independent implementations and narrow official
 26.2 static class bindings. Its 306 original Python fixtures cover all operation,
 identity, icon-color and location combinations plus float bit patterns. No game
 runtime, live capture or renderer acceptance result is claimed.
+
+## Game-rule string envelopes
+
+The [game-rule audit](docs/game-rule-wire-audit.md) checks both supported release
+families and all earlier absences, independent immutable source hashes and a
+narrow official static map-codec binding. Fourteen original Python fixtures are
+synthetic and contain no captured game/account state. Rule values stay textual;
+receiver registry resolution and map replacement semantics are not simulated.

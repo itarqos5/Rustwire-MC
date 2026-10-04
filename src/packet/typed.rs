@@ -113,6 +113,8 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    GameRules(super::game_rules::GameRuleValues),
+    LowDiskSpaceWarning,
     Waypoint(super::waypoint::TrackedWaypoint),
     LegacyRecipes(super::recipe_declarations::LegacyDeclareRecipes),
     ModernRecipes(super::recipe_properties::ModernDeclareRecipes),
@@ -179,6 +181,13 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "game_rule_values" => Self::GameRules(super::game_rules::GameRuleValues::decode(
+                bytes, version, limits,
+            )?),
+            "low_disk_space_warning" => {
+                super::game_rules::LowDiskSpaceWarning::decode(bytes, version, limits)?;
+                Self::LowDiskSpaceWarning
+            }
             "tracked_waypoint" => Self::Waypoint(super::waypoint::TrackedWaypoint::decode(
                 bytes, version, limits,
             )?),

@@ -1100,3 +1100,17 @@ strict Clippy/rustdoc/formatting and the complete waypoint schema/fixture audit.
 All 81 root-tool and 105 existing Paper-validator Python tests passed in a clean
 copy without downloaded schemas. Exact-commit CI separately verifies MSRV and
 operating systems; no live rendering or tracking behavior was tested.
+
+## Game-rule values/updates and low-disk warning
+
+Four Rust tests exercise 14 original fixtures and 1,860 strict prefixes, packet
+IDs and typed direction/state scope, duplicate/raw values, empty-body limits,
+aggregate count and UTF-16/string/byte caps, malformed data, transactional I/O
+and bounded mutations. Four Python regressions use synthetic schemas rather
+than downloaded caches. [Evidence and reproduction](docs/game-rule-wire-audit.md).
+
+Integrated verification passed 557 all-feature and 518 no-default Rust tests,
+strict Clippy/rustdoc/formatting and the complete schema/fixture audit. All
+85 root-tool and 105 existing Paper-validator Python tests passed in a clean
+copy without downloaded schemas. MSRV and cross-platform execution remain
+separate exact-commit CI gates. No live settings or disk state were changed.
