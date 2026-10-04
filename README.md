@@ -277,3 +277,12 @@ versioned smithing patterns, shifted groups, holder-set requirements, and the
 from independent and static official-release evidence. Unknown unframed kinds or
 components preserve the full raw packet. Modern recipe declarations remain a
 separate unsupported slice. See [the wire audit](docs/recipe-display-wire-audit.md).
+
+### Serverbound editing and queries
+
+`packet::editing` provides sign/book/anvil/beacon requests, creative-slot updates
+and block/entity NBT queries for all fourteen families. Book wire limits are
+versioned; modern creative updates explicitly retain length-framed component
+bytes rather than guessing their payload semantics. These are bounded request
+codecs, with no implicit editing, permission grants or game-state simulation.
+[Layouts, source evidence and limits](docs/editing-wire-audit.md).

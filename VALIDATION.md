@@ -1008,3 +1008,20 @@ Minecraft interoperability claim.
 
 The integrated suites passed 523 all-feature and 484 no-default Rust tests,
 strict all-target/all-feature Clippy, rustdoc with warnings denied and formatting.
+
+## Serverbound editing and query packets
+
+Seven request families cover all fourteen supported releases. The independent
+fixture checker validates 98 outer layouts and emits 217 original rows; Rust
+checks all 2,139 strict prefixes, exact re-encoding and packet IDs, semantic
+fields, caller/release string and page limits, aggregate component budgets,
+framing-version errors, malformed bodies, bounded mutations and transactional
+reads/writes. Six self-contained Python negative regressions require no ignored
+schema cache or network. [Evidence and reproduction](docs/editing-wire-audit.md).
+
+Integrated verification passed 530 all-feature and 491 no-default Rust tests,
+strict Clippy, rustdoc and formatting, plus the full pinned fixture audit. All
+61 root-tool and 105 existing Paper-validator Python tests passed in a clean
+copy without downloaded schemas. MSRV and operating-system coverage remain
+separate exact-commit CI gates. No runtime game serializer or live editing
+acceptance test was performed.

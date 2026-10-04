@@ -538,3 +538,12 @@ URL/hash metadata are included; upstream implementation text and official binary
 artifacts/disassembly are not vendored. Evidence is not an executed serializer or
 network capture. See [the audit](docs/recipe-display-wire-audit.md) and
 [source manifest](docs/validation/recipe-display-source-audit.json).
+
+## Editing and query request envelopes
+
+The [editing audit](docs/editing-wire-audit.md) checks 98 hash-pinned outer packet
+layouts and records immutable independent source hashes, book-limit boundaries,
+creative component framing, and a signedness disagreement resolved by narrow
+official static class inspection. Its 217 original Python fixtures are synthetic,
+not captures or executed game serializers. Original code and factual source
+metadata are published; official binaries/mappings/disassembly are not vendored.

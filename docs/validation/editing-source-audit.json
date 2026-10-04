@@ -1,0 +1,50 @@
+{
+  "method": "Independent implementation source inspection, not runtime execution",
+  "sources": [
+    {
+      "name": "UpdateSign",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientUpdateSign.java",
+      "sha256": "f84303671bce067c8f775ba010aa2b05f7f022d9dfb1e05942f7c7b1bf0030fc"
+    },
+    {
+      "name": "EditBook",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientEditBook.java",
+      "sha256": "a4b3d645036bce3f66d4937f2b055960e20ff58229b6a2470cc2843d6754c754"
+    },
+    {
+      "name": "NameItem",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientNameItem.java",
+      "sha256": "d37327050fc0f825cdccf2e54da200326371178913b879319c46094d75440e23"
+    },
+    {
+      "name": "SetBeaconEffect",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSetBeaconEffect.java",
+      "sha256": "546b4dfe9766ba010f6008315f0a8cb28b61a5b30a456c243a5425c6252fbf97"
+    },
+    {
+      "name": "QueryBlockNBT",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientQueryBlockNBT.java",
+      "sha256": "888ca043619bc3013ef7b473b2ae70ed961bc7b4a9af225fa4e5d382bae3e440"
+    },
+    {
+      "name": "QueryEntityNBT",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientQueryEntityNBT.java",
+      "sha256": "ea21c187cb86eaf9e2fd1ab18cacb2ec8118257f093e38a60350517777648d89"
+    },
+    {
+      "name": "CreativeInventoryAction",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientCreativeInventoryAction.java",
+      "sha256": "f064e4e2abab615d5dae33c27e98c61ee03644f56d026f59c42076cbed88be70"
+    },
+    {
+      "name": "ItemStackSerialization",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/item/ItemStackSerialization.java",
+      "sha256": "ed847ef190db83424ec056151951f3f875bab73444d2f6a55bad58eaf3f89945"
+    },
+    {
+      "name": "PatchableComponentMap",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/component/PatchableComponentMap.java",
+      "sha256": "5be126097d37d20f823e878b0e1686dfb20270a783f9d7f5520a566a931adbbe"
+    }
+  ]
+}
