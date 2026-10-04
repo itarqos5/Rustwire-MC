@@ -221,6 +221,21 @@ roundtrips**, with no decode, raw-gate, value or console failures.
 ordinary pig sounds used positional packets. These checks do not establish
 rendering, physics or complete coverage of every command parser/tooltip value.
 
+### Fresh bounded HUD/control replay
+
+On 2026-10-04, a single source-bound client passed a new isolated Paper replay on
+**1.20.1, 1.21.1 and 26.2**, with **60 byte-identical received-payload roundtrips**.
+It verified title/subtitle/action-bar values, timing, clear/reset, experience,
+facing and an observed death/respawn/position-acknowledgement cycle. Supported
+versions also passed ordered tick-rate/freeze/step/unfreeze/restore controls;
+26.2 additionally passed absolute rotation. Every server shut down cleanly.
+
+[Scenario, reproduction and limits](docs/hud-control-live-validation.md) and
+[hash-pinned evidence](docs/validation/hud-control-live-results.json) identify
+library baseline `243e390d`, the new probe sources, build command/toolchain and
+one binary. This is fresh coverage of the stated subset on three releases;
+it does not refresh the older Grim matrix or establish a complete game client.
+
 ### Streamed-world verification
 
 Fresh real-server checks verified full chunks, block entities, biome replacements

@@ -1188,3 +1188,45 @@ downloaded schemas; its separate audit covers all 28 hash-pinned directional
 layouts. See the [wire audit](docs/vehicle-movement-wire-audit.md) for reproduction
 and exact static release/source evidence. No new live-server, release-API,
 full-feature, MSRV or performance result is claimed by this increment.
+
+## Fresh HUD/control live replay (2026-10-04)
+
+The [bounded scenario and reproduction guide](docs/hud-control-live-validation.md)
+has fresh [machine-readable evidence](docs/validation/hud-control-live-results.json)
+for Paper 1.20.1 build 196, 1.21.1 build 133 and 26.2 build 129. The same frozen
+client binary yielded 13, 22 and 25 byte-exact received-body roundtrips,
+respectively: **60 total**. The deliberately required packet-family sets contain
+8, 10 and 11 families respectively. Extra packet observations do not count as
+full semantic coverage.
+
+Seven HUD families are value-gated on all three releases: title, subtitle,
+action bar, title times, clear/reset, experience and death notifications.
+Look-at controls are value-gated on all three; tick-rate/frozen/step controls on
+1.21.1 and 26.2; absolute rotation on 26.2. Each run verifies the received respawn
+packet and subsequent acknowledged server position after sending the respawn
+request. The tick sequence must restore unfrozen 20 TPS after the frozen step.
+There were no decode/value/roundtrip/console errors. Both client and server exited
+zero in every run, and each listener was verified closed.
+
+The library/Cargo snapshot is exactly `243e390dc0605aaf287766ab6a6e43e57a6932fb`.
+The newly authored probe, runner, builder and acceptance tests have separate
+SHA-256 identities; the report does not attribute those new files to the old
+library commit. The build receipt binds the unchanged source set, Cargo-reported
+executable, Rust/Cargo versions and all-feature build command to the tested binary.
+The source receipt is an audit record, not a malicious-build attestation.
+
+Local checks passed 638 all-feature and 599 no-default-feature library/integration
+tests; 20 example tests in each feature mode; 121 Paper-tool and 166 root-tool
+Python tests; the existing 14 historical connection acceptance controls; the
+packet-API report check; strict all-target Clippy, rustdoc and formatting. Sixteen
+new Python controls exercise missing/wrong/reordered/malformed observations,
+startup-value substitution, terminal roundtrip counts, respawn lifecycle proof,
+independent cleanup attempts, source/binary receipts and Cargo artifact selection.
+MSRV, default-feature and cross-platform results remain exact-published-head CI
+checks and are not implied by these local counts.
+
+No library wire implementation changed in this milestone. The new real-server
+coverage supplements the original fixture-only HUD/world-control audits; it does
+not establish all fourteen families, book opening, enter/end combat, entity-target
+facing, relative rotation, vehicle/projectile simulation, rendering, general
+physics, new Grim results or live Microsoft account authentication.

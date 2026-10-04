@@ -1,0 +1,1707 @@
+{
+  "build_receipt": {
+    "method": "cargo build --locked --all-features --example hud_control_probe",
+    "source_base_commit": "243e390dc0605aaf287766ab6a6e43e57a6932fb",
+    "source_sha256": {
+      "Cargo.lock": "fe984cd82b655cff880add1b1f123a5841b9710bc7a6a441d36bdddd8085fa72",
+      "Cargo.toml": "0e0cbe7cf940d344f98178b29f9f6b15f919d680339c0e8672e72d1c4d97d859",
+      "examples/hud_control_probe.rs": "128c85b42e5d09cdcf8f90d1ec9897a90821384a6236d764e78df1423ee59fd1",
+      "src/auth.rs": "0dd5f948e1022a592bd5828a56468d96a80f9b89da298c02191d157c9b2337b7",
+      "src/auth/http_tests.rs": "acbb24e3afceda8c2189d9bb3dc3b6a5fa5c5e48e04bec988dcf705ffd753fd2",
+      "src/catalog/mod.rs": "1bbbb4d36cedc043c814d7fdd130a12924d6bdce741f87a0771067ae1fd74280",
+      "src/catalog/p763.rs": "ed1d1406fd9fb8c47d3022e843b877a421154b34024ddafa86e2db72e1bdb41a",
+      "src/catalog/p764.rs": "9c7b1c918fae8c6dbcff4a2ad01c7cb7eb7441a71c1e229ab83099f06c068bf8",
+      "src/catalog/p765.rs": "62ec3ec79799e8f2b401cdefe5cdc5f343a2d039f6df3c658e94dceab133bf12",
+      "src/catalog/p766.rs": "a36746882b09c518102393891227e07d31db24a584229175fd78234c75b3e464",
+      "src/catalog/p767.rs": "bc2e5db586d231eea252e00046fbdb2d3260832d528757ba1fa62482dbf884d1",
+      "src/catalog/p768.rs": "04341836153846227fa1650ef83dad4e71aa727864bee5c7372e9d5fe972a1b4",
+      "src/catalog/p769.rs": "8c5995d44320ef9a131f1cb989688251718dbe3111ff2294e8e35e2f10fef948",
+      "src/catalog/p770.rs": "9960ad834dbcb144ad48641ee5a58bca0aa83476624ce4b006e1dc7c54ea8e26",
+      "src/catalog/p771.rs": "0725ab1c25e180b1202f642e2e95179b7848fdf4d0db9775e5fed625adb955c2",
+      "src/catalog/p772.rs": "6aaf9746ae114a310e9ed70915ea02eef55cdafca13e25a26c2479bbcad76b51",
+      "src/catalog/p773.rs": "acefb2d5ab6bb1f5eac7726aaff67c1a79272f08cc4c4da2d1bc490dadce3735",
+      "src/catalog/p774.rs": "6dd2bfe8386f32dc31b7f6deadfd0614548e27c29bf808072ead19ede22fd4e9",
+      "src/catalog/p775.rs": "c27408ba00dc1af89b996ea9d56747c5197e08e619f903475647a50749c627a9",
+      "src/catalog/p776.rs": "cd268de032fb50983e7e430afe89d69af6e7f4747c2da267c9f752f42f920c47",
+      "src/chunk.rs": "f5a1c9f455a5b44b292af0443757d4d6ed4e9db804f50b0fe9f9a0e972fddd32",
+      "src/codec.rs": "e67fa139c11feb6d56222d594f686deb00f48519f5e132a18979f5ad8cbee053",
+      "src/codec/identifier.rs": "ad31a047732c0635d9e8ed9b2dfedd9b93e57e4311a8f931a2c5380dae8b3af6",
+      "src/connection.rs": "7c92f9dbea6707b8dd591526c46349b50a343da531f066f59a72d6380e68bfa8",
+      "src/crypto.rs": "46d5ae2f8f06666315a1dc42c2c0f59d5b06e8b3c9dac7dfc875c09fc4e8476c",
+      "src/error.rs": "e1e248e85c301215f7f6329199a3d8731dfa7b65ef65ff9b5ce32f739e147cc2",
+      "src/frame.rs": "01b34d49b2be42598b5189b009089b283a1a067c19a7ee6ad9888870a828f695",
+      "src/lib.rs": "12b878b98668e998b9698540f308d8e245b77b36474b7db5def2f8c326eda212",
+      "src/nbt.rs": "4a7764a95ff8c9207914b4209e6e1daeb2d7baa510ed64da8712427f3f2a948f",
+      "src/packet.rs": "186c70ea7a2c3e3f5d17427df6d9b94ede2e226437a070c205b1367c133ae182",
+      "src/packet/advancements.rs": "9307fd19c1c055c4ee2c748331895236cee13206557ce54cdb4296b7aced1ccf",
+      "src/packet/blocks.rs": "a8f6fdb819aa61829e4247da4ea084589a8a364ff295ce0d6c047d640fa978f4",
+      "src/packet/chat.rs": "fd76394e44e07c3a71971b2c65a791976ff495e4a18737ab3e41ff167fa9dcb3",
+      "src/packet/chat/signed.rs": "e97b54da96e56e11648829ebeb4208dc2909aee8659f758f52979ccf9d326c38",
+      "src/packet/chat/state.rs": "a8846b7339940795c2fd680fecacab384e674118d42a65ae3fb40308ae31b9e5",
+      "src/packet/chunk_updates.rs": "e06516690bafb80aa84eb641a596650b99b5cbb06e2ac2ecf56450daae967d3f",
+      "src/packet/client_control.rs": "ed890927eb875125053def1249be772c7c163af70d2da0f51b078ecea01386cb",
+      "src/packet/commands.rs": "690cd62b077c6b40b7074a45de8e50d39b1920ed146e6d83984eda0dee77eaf2",
+      "src/packet/commands/registry.rs": "fef00fbabdd3894b183fb30b6ae3c34907c4627c218669f8bdc6510fc975fc5e",
+      "src/packet/common.rs": "95cf35338a2b8b7d566961819732a40e8685a83dd00bf68a67c8c760c0944a54",
+      "src/packet/custom_payload.rs": "d2706caf5e62ee6de1b25fb1b5d312368140893287d3088bc887b61e65246bb5",
+      "src/packet/debug.rs": "6a5606aa17446b640dd09832909734d2cd528f22f326c05a99a83624f5c55d35",
+      "src/packet/debug_values.rs": "94147609cc52eaba918681931ce5d3543d72e58eb71399abbe0fc2cf4fb04794",
+      "src/packet/dialog.rs": "d0120790e8d6f348ea7a3fd5de9776240f72bd21133dbddb9d808056f18e3baa",
+      "src/packet/editing.rs": "87bd7ba072c36a2cf83fd854e012c7a708829768654f5568343c7f914fedc575",
+      "src/packet/entity.rs": "962dbaa0f6d234f25851f4c18c618e26ccbbc0e6f404939e0d3ab0dec9c01537",
+      "src/packet/entity_control.rs": "e8cff06b29bfcefaa41d1ceec3e34eeea6503fadd91bc30fb32f4bbe18f1edeb",
+      "src/packet/entity_metadata.rs": "d15d34d3cd4dac810c99e8d93222937bc7918a06d9730cf80eb0efd716481582",
+      "src/packet/entity_metadata/holders.rs": "31d4e73c98305d22de7955d93255ed214840a96264ed80c4fca5195b511dd899",
+      "src/packet/entity_metadata/particles.rs": "8a888f5bc9b92c39098e3447d9fe7251cbef62bd9287de6a0e279ddd1dad5dea",
+      "src/packet/entity_state.rs": "b8c5a6842e3becbe7bb12d498ab46729b4b33634bfc798b46384f0cdcd4cf327",
+      "src/packet/game_rules.rs": "6e80f5122a1c76cbe737ed3ba32ff502710128ea97a7b1469aac7cf1987659db",
+      "src/packet/game_test.rs": "003cf63e0502802918f12f54da4c910668387e697121b9046180ddeb05b8efc7",
+      "src/packet/hud.rs": "b156aaf6f8bf6c38f35fcdfe9d395c07650601402af6223be106063691d7a69a",
+      "src/packet/interact.rs": "e57e0b4ffc11b433ba79ba3608eb6d23efc856564740882e23978462de59e87a",
+      "src/packet/inventory.rs": "537067c1b3726ca07ccf2abbb7edea5ea844c36a430c931f89dcae6f5797438e",
+      "src/packet/inventory/auxiliary.rs": "177baa7e17bce75adf63bec93475593dc7aadf904f514a18c3bced1738660106",
+      "src/packet/inventory/components.rs": "b2b24951c987cf64444439a9d5fdd89e54c329c57243899cf08a108437672db0",
+      "src/packet/inventory/extended.rs": "51c1419c00ff429aaa9a8c86513438c9becd78e84cf97143a59a9ca14427921b",
+      "src/packet/inventory/extended_holders.rs": "da7cc7b02520e7a1bf97c17c3143fe654240ddd24f4d0ab15c5489285d44c8b3",
+      "src/packet/inventory/predicates.rs": "585fbc23d7a0791868534c5db386395ff36e556f11bd18ef863b213c7112e1e2",
+      "src/packet/item_components.rs": "1ff9c7546467a81942b33b94e045f6d3f3a5e7a22f1c5a12fd648dcfe0c1d1bb",
+      "src/packet/item_hash.rs": "052d63bbeaaca6fee56ee6261972390585e56e240e4567ce60ca2d7529120eef",
+      "src/packet/item_hash/ordinary.rs": "9ff7db52cc444b9efb8100cdb9c94e66309831b4fd418cb7c0f44fdfc5c1124d",
+      "src/packet/item_hash/text.rs": "48927e9f74e1a19fa9dab025b782ad4e18c545efef6e74f2c749db84d415d8cf",
+      "src/packet/map.rs": "78b80c89d26ace5d2e94ac93592a1488759164038e7c078c4dc52d839d7ef48d",
+      "src/packet/movement.rs": "be8fe1e4bcf4ccdebb082e6da971fe9008855d71b23681924cb2e6d6e3f7b8b9",
+      "src/packet/movement/vehicle.rs": "bcdec8cc16689c39b7aba225bb9ba126994067b0d91b1390f2037cedaf154133",
+      "src/packet/overlay.rs": "762a6d3a1705cc14dc967acbed3744918586714d0f9b4fa93710599baa54f503",
+      "src/packet/player.rs": "79c82cec3945f6f88b9f54f33a6e8a0c40cbffb9b4f38e7976c49a016de5221e",
+      "src/packet/recipe.rs": "0c43d096b0e00340de26b5ad2a52635fc1a6849f3699fdb10d07e0a170950017",
+      "src/packet/recipe_declarations.rs": "565bc00ce9c644354b606f3fd91acfec69b8c4e2836eb01ca4332a8b4b0565f9",
+      "src/packet/recipe_display.rs": "16e3e6897e680367f41aa28022ff06002b0d3457b3249258072f1577d3f2f878",
+      "src/packet/recipe_properties.rs": "2de789a71fb37a1f6e5cd03e62935876b1a677a160b4930b79ac13934e4f8cb9",
+      "src/packet/scoreboard.rs": "52a1c05718d3f05abc2ff7ece413509acfa0e8cbf99913ddb6043b5562d88b40",
+      "src/packet/scoreboard/objective.rs": "c8ea606e01201ae5eb269eb5d59d601d071f820a4a54fad60db31ab58737fdd2",
+      "src/packet/scoreboard/score.rs": "84e5ffd1fd0f0ffa6b152905c3e069092d6b8589ca52563566b050e582e86b4e",
+      "src/packet/scoreboard/team.rs": "725657d7eaaa51fc085a7539908a7774d672cb6fb72d42d6788589cef5db8651",
+      "src/packet/server_metadata.rs": "3cd71c14af147ae4633a947651685b7d74ab6c6ad2789501432333d7a6bb4e18",
+      "src/packet/statistics.rs": "97517a3d49c9ba5430638980e02ed5991847d6c9680821557de9f1fa1f8c7883",
+      "src/packet/tags.rs": "4e8150964580ea2117c40da4f09e146b2a9b1415d62008ba6a97bfe9557efe44",
+      "src/packet/typed.rs": "77c219cf1d688900c0ba4e85539890db7a8b97ade921a4caff301b0078c79f88",
+      "src/packet/waypoint.rs": "e629cd32caffa03bd63c70b78c026a3c047f669225b9fc550bb7393be5cab595",
+      "src/packet/world.rs": "2a4aafbb1204a9bc188315a84fc8ca3bd87320bd91a9811ef530ca7865e80bcb",
+      "src/packet/world_control.rs": "8d3dd4f79af3e73c857d7d102ccc7a5c2ab4686f11c3b8361b856833c2238083",
+      "src/packet/world_edit.rs": "f6cffb35d3e15bdae28c611604a5cde3203d99c41b0bff7c3cba0e1eafb8af64",
+      "src/packet/world_effects.rs": "c62b3ad979e85c9568bbdb50a73212404f4149abf3da14766778bccbd47be3ba",
+      "src/packet/world_state.rs": "c399a0c835ed78db95ab157560fe575cf55a46998e74b95db02f96637689adb7",
+      "src/packet/world_state/border.rs": "8b5e9ce95284a21d71e6b55813b0850987838c9ec7c1cfe5b8fae5c482014925",
+      "src/packet/world_state/timing.rs": "efa23b662599fee52b98f845dd700ba36430c93aca04a138172e0ee08974e036",
+      "src/registry.rs": "1435f09c5f2fa0960179f672d68b7f56dd9be7fb2c88d7050b7a515bc126171e",
+      "src/registry/wire.rs": "e95489068f946c75189fd79dfcaaa74d0384a6cde02a23d9b6f43ff3622f77d6",
+      "src/version.rs": "637f00665a9ee927596bbbfb7f31ded2e7e65ec6d82387637fb9e4b76a791c5e",
+      "tools/paper/build_hud_probe.py": "e018d3f3bc38926c75b5ce739eb2e6356d2801d0f8b75f16bec847fc541316aa",
+      "tools/paper/test_validate_hud_controls.py": "565d95b6df81009a18bd0a5357db1716d46ba3f2c1bf2b90b3fc831f9a545ca7",
+      "tools/paper/validate_gameplay.py": "3a7e96bc88f88c9299916329e17b4a4b33dec8fd86fd0bcd9ace89eebdf64327",
+      "tools/paper/validate_hud_controls.py": "fa8ec7b613c84a7489592188ce38854f23b5de5051e7f72d773bbd8b3440502f"
+    },
+    "command": [
+      "cargo",
+      "build",
+      "--locked",
+      "--all-features",
+      "--example",
+      "hud_control_probe",
+      "--manifest-path",
+      "/workspace/scratch/97d5c44865d4/rustwire-mc/Cargo.toml",
+      "--target-dir",
+      "/workspace/scratch/97d5c44865d4/rustwire-mc/target",
+      "--message-format=json-render-diagnostics"
+    ],
+    "binary_path": "/workspace/scratch/97d5c44865d4/rustwire-mc/target/debug/examples/hud_control_probe",
+    "cargo_version": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "rustc_version": "rustc 1.99.0 (b940084d7 2026-09-28)\nbinary: rustc\ncommit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4\ncommit-date: 2026-09-28\nhost: x86_64-unknown-linux-gnu\nrelease: 1.99.0\nLLVM version: 23.1.1",
+    "created_utc": "2026-10-04T23:06:38.237994+00:00",
+    "binary_sha256": "cd0702836eb7486bd5892927ca660030037ce23b5417dd0984c8ceb273e759ca"
+  },
+  "source_base_commit": "243e390dc0605aaf287766ab6a6e43e57a6932fb",
+  "library_snapshot_matches_base_commit": true,
+  "harness_attribution": "Probe/harness are separately hash-pinned in source_sha256; source_base_commit attributes only the library and Cargo files",
+  "scenario": "bounded-hud-controls",
+  "created_utc": "2026-10-04T23:07:43.053387+00:00",
+  "command_sources": [
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-20-3",
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-2"
+  ],
+  "library_source_sha256": {
+    "src/auth/http_tests.rs": "acbb24e3afceda8c2189d9bb3dc3b6a5fa5c5e48e04bec988dcf705ffd753fd2",
+    "src/auth.rs": "0dd5f948e1022a592bd5828a56468d96a80f9b89da298c02191d157c9b2337b7",
+    "src/catalog/mod.rs": "1bbbb4d36cedc043c814d7fdd130a12924d6bdce741f87a0771067ae1fd74280",
+    "src/catalog/p763.rs": "ed1d1406fd9fb8c47d3022e843b877a421154b34024ddafa86e2db72e1bdb41a",
+    "src/catalog/p764.rs": "9c7b1c918fae8c6dbcff4a2ad01c7cb7eb7441a71c1e229ab83099f06c068bf8",
+    "src/catalog/p765.rs": "62ec3ec79799e8f2b401cdefe5cdc5f343a2d039f6df3c658e94dceab133bf12",
+    "src/catalog/p766.rs": "a36746882b09c518102393891227e07d31db24a584229175fd78234c75b3e464",
+    "src/catalog/p767.rs": "bc2e5db586d231eea252e00046fbdb2d3260832d528757ba1fa62482dbf884d1",
+    "src/catalog/p768.rs": "04341836153846227fa1650ef83dad4e71aa727864bee5c7372e9d5fe972a1b4",
+    "src/catalog/p769.rs": "8c5995d44320ef9a131f1cb989688251718dbe3111ff2294e8e35e2f10fef948",
+    "src/catalog/p770.rs": "9960ad834dbcb144ad48641ee5a58bca0aa83476624ce4b006e1dc7c54ea8e26",
+    "src/catalog/p771.rs": "0725ab1c25e180b1202f642e2e95179b7848fdf4d0db9775e5fed625adb955c2",
+    "src/catalog/p772.rs": "6aaf9746ae114a310e9ed70915ea02eef55cdafca13e25a26c2479bbcad76b51",
+    "src/catalog/p773.rs": "acefb2d5ab6bb1f5eac7726aaff67c1a79272f08cc4c4da2d1bc490dadce3735",
+    "src/catalog/p774.rs": "6dd2bfe8386f32dc31b7f6deadfd0614548e27c29bf808072ead19ede22fd4e9",
+    "src/catalog/p775.rs": "c27408ba00dc1af89b996ea9d56747c5197e08e619f903475647a50749c627a9",
+    "src/catalog/p776.rs": "cd268de032fb50983e7e430afe89d69af6e7f4747c2da267c9f752f42f920c47",
+    "src/chunk.rs": "f5a1c9f455a5b44b292af0443757d4d6ed4e9db804f50b0fe9f9a0e972fddd32",
+    "src/codec/identifier.rs": "ad31a047732c0635d9e8ed9b2dfedd9b93e57e4311a8f931a2c5380dae8b3af6",
+    "src/codec.rs": "e67fa139c11feb6d56222d594f686deb00f48519f5e132a18979f5ad8cbee053",
+    "src/connection.rs": "7c92f9dbea6707b8dd591526c46349b50a343da531f066f59a72d6380e68bfa8",
+    "src/crypto.rs": "46d5ae2f8f06666315a1dc42c2c0f59d5b06e8b3c9dac7dfc875c09fc4e8476c",
+    "src/error.rs": "e1e248e85c301215f7f6329199a3d8731dfa7b65ef65ff9b5ce32f739e147cc2",
+    "src/frame.rs": "01b34d49b2be42598b5189b009089b283a1a067c19a7ee6ad9888870a828f695",
+    "src/lib.rs": "12b878b98668e998b9698540f308d8e245b77b36474b7db5def2f8c326eda212",
+    "src/nbt.rs": "4a7764a95ff8c9207914b4209e6e1daeb2d7baa510ed64da8712427f3f2a948f",
+    "src/packet/advancements.rs": "9307fd19c1c055c4ee2c748331895236cee13206557ce54cdb4296b7aced1ccf",
+    "src/packet/blocks.rs": "a8f6fdb819aa61829e4247da4ea084589a8a364ff295ce0d6c047d640fa978f4",
+    "src/packet/chat/signed.rs": "e97b54da96e56e11648829ebeb4208dc2909aee8659f758f52979ccf9d326c38",
+    "src/packet/chat/state.rs": "a8846b7339940795c2fd680fecacab384e674118d42a65ae3fb40308ae31b9e5",
+    "src/packet/chat.rs": "fd76394e44e07c3a71971b2c65a791976ff495e4a18737ab3e41ff167fa9dcb3",
+    "src/packet/chunk_updates.rs": "e06516690bafb80aa84eb641a596650b99b5cbb06e2ac2ecf56450daae967d3f",
+    "src/packet/client_control.rs": "ed890927eb875125053def1249be772c7c163af70d2da0f51b078ecea01386cb",
+    "src/packet/commands/registry.rs": "fef00fbabdd3894b183fb30b6ae3c34907c4627c218669f8bdc6510fc975fc5e",
+    "src/packet/commands.rs": "690cd62b077c6b40b7074a45de8e50d39b1920ed146e6d83984eda0dee77eaf2",
+    "src/packet/common.rs": "95cf35338a2b8b7d566961819732a40e8685a83dd00bf68a67c8c760c0944a54",
+    "src/packet/custom_payload.rs": "d2706caf5e62ee6de1b25fb1b5d312368140893287d3088bc887b61e65246bb5",
+    "src/packet/debug.rs": "6a5606aa17446b640dd09832909734d2cd528f22f326c05a99a83624f5c55d35",
+    "src/packet/debug_values.rs": "94147609cc52eaba918681931ce5d3543d72e58eb71399abbe0fc2cf4fb04794",
+    "src/packet/dialog.rs": "d0120790e8d6f348ea7a3fd5de9776240f72bd21133dbddb9d808056f18e3baa",
+    "src/packet/editing.rs": "87bd7ba072c36a2cf83fd854e012c7a708829768654f5568343c7f914fedc575",
+    "src/packet/entity.rs": "962dbaa0f6d234f25851f4c18c618e26ccbbc0e6f404939e0d3ab0dec9c01537",
+    "src/packet/entity_control.rs": "e8cff06b29bfcefaa41d1ceec3e34eeea6503fadd91bc30fb32f4bbe18f1edeb",
+    "src/packet/entity_metadata/holders.rs": "31d4e73c98305d22de7955d93255ed214840a96264ed80c4fca5195b511dd899",
+    "src/packet/entity_metadata/particles.rs": "8a888f5bc9b92c39098e3447d9fe7251cbef62bd9287de6a0e279ddd1dad5dea",
+    "src/packet/entity_metadata.rs": "d15d34d3cd4dac810c99e8d93222937bc7918a06d9730cf80eb0efd716481582",
+    "src/packet/entity_state.rs": "b8c5a6842e3becbe7bb12d498ab46729b4b33634bfc798b46384f0cdcd4cf327",
+    "src/packet/game_rules.rs": "6e80f5122a1c76cbe737ed3ba32ff502710128ea97a7b1469aac7cf1987659db",
+    "src/packet/game_test.rs": "003cf63e0502802918f12f54da4c910668387e697121b9046180ddeb05b8efc7",
+    "src/packet/hud.rs": "b156aaf6f8bf6c38f35fcdfe9d395c07650601402af6223be106063691d7a69a",
+    "src/packet/interact.rs": "e57e0b4ffc11b433ba79ba3608eb6d23efc856564740882e23978462de59e87a",
+    "src/packet/inventory/auxiliary.rs": "177baa7e17bce75adf63bec93475593dc7aadf904f514a18c3bced1738660106",
+    "src/packet/inventory/components.rs": "b2b24951c987cf64444439a9d5fdd89e54c329c57243899cf08a108437672db0",
+    "src/packet/inventory/extended.rs": "51c1419c00ff429aaa9a8c86513438c9becd78e84cf97143a59a9ca14427921b",
+    "src/packet/inventory/extended_holders.rs": "da7cc7b02520e7a1bf97c17c3143fe654240ddd24f4d0ab15c5489285d44c8b3",
+    "src/packet/inventory/predicates.rs": "585fbc23d7a0791868534c5db386395ff36e556f11bd18ef863b213c7112e1e2",
+    "src/packet/inventory.rs": "537067c1b3726ca07ccf2abbb7edea5ea844c36a430c931f89dcae6f5797438e",
+    "src/packet/item_components.rs": "1ff9c7546467a81942b33b94e045f6d3f3a5e7a22f1c5a12fd648dcfe0c1d1bb",
+    "src/packet/item_hash/ordinary.rs": "9ff7db52cc444b9efb8100cdb9c94e66309831b4fd418cb7c0f44fdfc5c1124d",
+    "src/packet/item_hash/text.rs": "48927e9f74e1a19fa9dab025b782ad4e18c545efef6e74f2c749db84d415d8cf",
+    "src/packet/item_hash.rs": "052d63bbeaaca6fee56ee6261972390585e56e240e4567ce60ca2d7529120eef",
+    "src/packet/map.rs": "78b80c89d26ace5d2e94ac93592a1488759164038e7c078c4dc52d839d7ef48d",
+    "src/packet/movement/vehicle.rs": "bcdec8cc16689c39b7aba225bb9ba126994067b0d91b1390f2037cedaf154133",
+    "src/packet/movement.rs": "be8fe1e4bcf4ccdebb082e6da971fe9008855d71b23681924cb2e6d6e3f7b8b9",
+    "src/packet/overlay.rs": "762a6d3a1705cc14dc967acbed3744918586714d0f9b4fa93710599baa54f503",
+    "src/packet/player.rs": "79c82cec3945f6f88b9f54f33a6e8a0c40cbffb9b4f38e7976c49a016de5221e",
+    "src/packet/recipe.rs": "0c43d096b0e00340de26b5ad2a52635fc1a6849f3699fdb10d07e0a170950017",
+    "src/packet/recipe_declarations.rs": "565bc00ce9c644354b606f3fd91acfec69b8c4e2836eb01ca4332a8b4b0565f9",
+    "src/packet/recipe_display.rs": "16e3e6897e680367f41aa28022ff06002b0d3457b3249258072f1577d3f2f878",
+    "src/packet/recipe_properties.rs": "2de789a71fb37a1f6e5cd03e62935876b1a677a160b4930b79ac13934e4f8cb9",
+    "src/packet/scoreboard/objective.rs": "c8ea606e01201ae5eb269eb5d59d601d071f820a4a54fad60db31ab58737fdd2",
+    "src/packet/scoreboard/score.rs": "84e5ffd1fd0f0ffa6b152905c3e069092d6b8589ca52563566b050e582e86b4e",
+    "src/packet/scoreboard/team.rs": "725657d7eaaa51fc085a7539908a7774d672cb6fb72d42d6788589cef5db8651",
+    "src/packet/scoreboard.rs": "52a1c05718d3f05abc2ff7ece413509acfa0e8cbf99913ddb6043b5562d88b40",
+    "src/packet/server_metadata.rs": "3cd71c14af147ae4633a947651685b7d74ab6c6ad2789501432333d7a6bb4e18",
+    "src/packet/statistics.rs": "97517a3d49c9ba5430638980e02ed5991847d6c9680821557de9f1fa1f8c7883",
+    "src/packet/tags.rs": "4e8150964580ea2117c40da4f09e146b2a9b1415d62008ba6a97bfe9557efe44",
+    "src/packet/typed.rs": "77c219cf1d688900c0ba4e85539890db7a8b97ade921a4caff301b0078c79f88",
+    "src/packet/waypoint.rs": "e629cd32caffa03bd63c70b78c026a3c047f669225b9fc550bb7393be5cab595",
+    "src/packet/world.rs": "2a4aafbb1204a9bc188315a84fc8ca3bd87320bd91a9811ef530ca7865e80bcb",
+    "src/packet/world_control.rs": "8d3dd4f79af3e73c857d7d102ccc7a5c2ab4686f11c3b8361b856833c2238083",
+    "src/packet/world_edit.rs": "f6cffb35d3e15bdae28c611604a5cde3203d99c41b0bff7c3cba0e1eafb8af64",
+    "src/packet/world_effects.rs": "c62b3ad979e85c9568bbdb50a73212404f4149abf3da14766778bccbd47be3ba",
+    "src/packet/world_state/border.rs": "8b5e9ce95284a21d71e6b55813b0850987838c9ec7c1cfe5b8fae5c482014925",
+    "src/packet/world_state/timing.rs": "efa23b662599fee52b98f845dd700ba36430c93aca04a138172e0ee08974e036",
+    "src/packet/world_state.rs": "c399a0c835ed78db95ab157560fe575cf55a46998e74b95db02f96637689adb7",
+    "src/packet.rs": "186c70ea7a2c3e3f5d17427df6d9b94ede2e226437a070c205b1367c133ae182",
+    "src/registry/wire.rs": "e95489068f946c75189fd79dfcaaa74d0384a6cde02a23d9b6f43ff3622f77d6",
+    "src/registry.rs": "1435f09c5f2fa0960179f672d68b7f56dd9be7fb2c88d7050b7a515bc126171e",
+    "src/version.rs": "637f00665a9ee927596bbbfb7f31ded2e7e65ec6d82387637fb9e4b76a791c5e"
+  },
+  "cargo_source_sha256": {
+    "Cargo.toml": "0e0cbe7cf940d344f98178b29f9f6b15f919d680339c0e8672e72d1c4d97d859",
+    "Cargo.lock": "fe984cd82b655cff880add1b1f123a5841b9710bc7a6a441d36bdddd8085fa72"
+  },
+  "source_sha256": {
+    "examples/hud_control_probe.rs": "128c85b42e5d09cdcf8f90d1ec9897a90821384a6236d764e78df1423ee59fd1",
+    "tools/paper/validate_hud_controls.py": "fa8ec7b613c84a7489592188ce38854f23b5de5051e7f72d773bbd8b3440502f",
+    "tools/paper/test_validate_hud_controls.py": "565d95b6df81009a18bd0a5357db1716d46ba3f2c1bf2b90b3fc831f9a545ca7",
+    "tools/paper/validate_gameplay.py": "3a7e96bc88f88c9299916329e17b4a4b33dec8fd86fd0bcd9ace89eebdf64327",
+    "tools/paper/build_hud_probe.py": "e018d3f3bc38926c75b5ce739eb2e6356d2801d0f8b75f16bec847fc541316aa"
+  },
+  "records": [
+    {
+      "version": "1.20.1",
+      "protocol": 763,
+      "paper_build": 196,
+      "started_utc": "2026-10-04T23:07:43.120740+00:00",
+      "server_jar_sha256": "234a9b32098100c6fc116664d64e36ccdb58b5b649af0f80bcccb08b0255eaea",
+      "client_binary_sha256": "cd0702836eb7486bd5892927ca660030037ce23b5417dd0984c8ceb273e759ca",
+      "server_command": [
+        "java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.20.1-196.jar",
+        "--nogui"
+      ],
+      "commands": [
+        {
+          "name": "platform",
+          "command": "execute at Rustwire run fill -2 199 -2 6 199 2 minecraft:stone replace",
+          "sent_seconds": 18.411,
+          "server_output_in_window": [
+            "[00:08:01 INFO]: Successfully filled 45 block(s)"
+          ]
+        },
+        {
+          "name": "face",
+          "command": "tp Rustwire 0.5 200 0.5 facing 10.5 200 0.5",
+          "sent_seconds": 18.911,
+          "server_output_in_window": [
+            "[00:08:02 INFO]: Teleported Rustwire to 0.500000, 200.000000, 0.500000"
+          ]
+        },
+        {
+          "name": "title_time",
+          "command": "title Rustwire times 7 31 11",
+          "sent_seconds": 19.665,
+          "server_output_in_window": [
+            "[00:08:02 INFO]: Changed title display times for Rustwire"
+          ]
+        },
+        {
+          "name": "subtitle",
+          "command": "title Rustwire subtitle {\"text\":\"RUSTWIRE_SUBTITLE\"}",
+          "sent_seconds": 19.917,
+          "server_output_in_window": [
+            "[00:08:03 INFO]: Showing new subtitle for Rustwire"
+          ]
+        },
+        {
+          "name": "title",
+          "command": "title Rustwire title {\"text\":\"RUSTWIRE_TITLE\"}",
+          "sent_seconds": 20.167,
+          "server_output_in_window": [
+            "[00:08:03 INFO]: Showing new title for Rustwire"
+          ]
+        },
+        {
+          "name": "actionbar",
+          "command": "title Rustwire actionbar {\"text\":\"RUSTWIRE_ACTIONBAR\"}",
+          "sent_seconds": 20.418,
+          "server_output_in_window": [
+            "[00:08:03 INFO]: Showing new actionbar title for Rustwire"
+          ]
+        },
+        {
+          "name": "clear",
+          "command": "title Rustwire clear",
+          "sent_seconds": 20.668,
+          "server_output_in_window": [
+            "[00:08:03 INFO]: Cleared titles for Rustwire"
+          ]
+        },
+        {
+          "name": "reset",
+          "command": "title Rustwire reset",
+          "sent_seconds": 20.918,
+          "server_output_in_window": [
+            "[00:08:04 INFO]: Reset title options for Rustwire"
+          ]
+        },
+        {
+          "name": "experience_levels",
+          "command": "experience set Rustwire 12 levels",
+          "sent_seconds": 21.168,
+          "server_output_in_window": [
+            "[00:08:04 INFO]: Set 12 experience levels on Rustwire"
+          ]
+        },
+        {
+          "name": "experience_points",
+          "command": "experience set Rustwire 3 points",
+          "sent_seconds": 21.419,
+          "server_output_in_window": [
+            "[00:08:04 INFO]: Set 3 experience points on Rustwire"
+          ]
+        },
+        {
+          "name": "death",
+          "command": "kill Rustwire",
+          "sent_seconds": 22.169,
+          "server_output_in_window": [
+            "[00:08:05 INFO]: Rustwire was killed",
+            "[00:08:05 INFO]: Killed Rustwire"
+          ]
+        },
+        {
+          "name": "finish",
+          "command": "tellraw Rustwire {\"text\":\"RUSTWIRE_HUD_DONE\"}",
+          "sent_seconds": 24.175,
+          "server_output_in_window": [
+            "[00:08:07 INFO]: Rustwire lost connection: Disconnected",
+            "[00:08:07 INFO]: Rustwire left the game",
+            "[00:08:07 INFO]: Stopping the server",
+            "[00:08:07 INFO]: Stopping server",
+            "[00:08:07 INFO]: Saving players",
+            "[00:08:07 INFO]: Saving worlds",
+            "[00:08:07 INFO]: Saving chunks for level 'ServerLevel[gameplay-world]'/minecraft:overworld",
+            "[00:08:07 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'gameplay-world'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Halted chunk system for world 'gameplay-world'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'gameplay-world'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Saved 986 block chunks, 141 entity chunks, 0 poi chunks in world 'gameplay-world' in 0.33s",
+            "[00:08:07 INFO]: ThreadedAnvilChunkStorage (gameplay-world): All chunks are saved",
+            "[00:08:07 INFO]: Saving chunks for level 'ServerLevel[gameplay-world_nether]'/minecraft:the_nether",
+            "[00:08:07 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'gameplay-world_nether'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Halted chunk system for world 'gameplay-world_nether'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'gameplay-world_nether'",
+            "[00:08:07 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'gameplay-world_nether' in 0.00s",
+            "[00:08:07 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved",
+            "[00:08:07 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved",
+            "[00:08:07 INFO]: Flushing Chunk IO",
+            "[00:08:07 INFO]: Closing Thread Pool",
+            "2026-10-05 00:08:07,976 Log4j2-AsyncAppenderEventDispatcher-1-Async WARN Advanced terminal features are not available in this environment",
+            "[00:08:07 INFO]: Closing Server"
+          ]
+        }
+      ],
+      "passed": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "cleanup_errors": [],
+      "server_exit": 0,
+      "client_exit": 0,
+      "client_output": [
+        "PROBE_READY",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=face_player equal=true",
+        "VALUE category=face anchor=Feet x=10.5 y=200 z=0.5 entity=false",
+        "VALUE category=wire_roundtrip packet=set_title_time equal=true",
+        "VALUE category=title_time fade_in=7 stay=31 fade_out=11",
+        "VALUE category=wire_roundtrip packet=set_title_subtitle equal=true",
+        "VALUE category=subtitle fixture=true",
+        "VALUE category=wire_roundtrip packet=set_title_text equal=true",
+        "VALUE category=title fixture=true",
+        "VALUE category=wire_roundtrip packet=action_bar equal=true",
+        "VALUE category=actionbar fixture=true",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=false",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=true",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=3dc6318c",
+        "VALUE category=wire_roundtrip packet=death_combat_event equal=true",
+        "VALUE category=death own_entity=true player_text=true",
+        "LIFECYCLE event=death_received",
+        "ACTION kind=respawn",
+        "LIFECYCLE event=respawn_received",
+        "LIFECYCLE event=respawn_position_acknowledged",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "PROBE_DONE protocol=763 roundtrips=13"
+      ],
+      "seconds": 25.147,
+      "value_checks": {
+        "passed": true,
+        "observations": {
+          "wire_roundtrip": [
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "face_player",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_time",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_subtitle",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_text",
+              "equal": "true"
+            },
+            {
+              "packet": "action_bar",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "death_combat_event",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            }
+          ],
+          "experience": [
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "3dc6318c"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            }
+          ],
+          "face": [
+            {
+              "anchor": "Feet",
+              "x": "10.5",
+              "y": "200",
+              "z": "0.5",
+              "entity": "false"
+            }
+          ],
+          "title_time": [
+            {
+              "fade_in": "7",
+              "stay": "31",
+              "fade_out": "11"
+            }
+          ],
+          "subtitle": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "title": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "actionbar": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "clear": [
+            {
+              "reset": "false"
+            },
+            {
+              "reset": "true"
+            }
+          ],
+          "death": [
+            {
+              "own_entity": "true",
+              "player_text": "true"
+            }
+          ]
+        },
+        "expected": {
+          "title": {
+            "fixture": "true"
+          },
+          "subtitle": {
+            "fixture": "true"
+          },
+          "actionbar": {
+            "fixture": "true"
+          },
+          "title_time": {
+            "fade_in": "7",
+            "stay": "31",
+            "fade_out": "11"
+          },
+          "experience": {
+            "level": "12",
+            "total": "0",
+            "bar_bits": "3dc6318c"
+          },
+          "death": {
+            "own_entity": "true",
+            "player_text": "true"
+          },
+          "face": {
+            "anchor": "Feet",
+            "x": "10.5",
+            "y": "200",
+            "z": "0.5",
+            "entity": "false"
+          }
+        },
+        "missing_or_wrong": [],
+        "protocol_errors": [],
+        "malformed_lines": [],
+        "client_lifecycle_complete": true,
+        "explicitly_unexercised": [
+          "HUD open_book, enter_combat_event, end_combat_event",
+          "World-control packets outside face/rotation/ticking/step",
+          "Rendering and player physics"
+        ]
+      },
+      "console_failures": [],
+      "commands_complete": true,
+      "listener_closed": true
+    },
+    {
+      "version": "1.21.1",
+      "protocol": 767,
+      "paper_build": 133,
+      "started_utc": "2026-10-04T23:08:08.393610+00:00",
+      "server_jar_sha256": "39bd8c00b9e18de91dcabd3cc3dcfa5328685a53b7187a2f63280c22e2d287b9",
+      "client_binary_sha256": "cd0702836eb7486bd5892927ca660030037ce23b5417dd0984c8ceb273e759ca",
+      "server_command": [
+        "java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-1.21.1-133.jar",
+        "--nogui"
+      ],
+      "commands": [
+        {
+          "name": "platform",
+          "command": "execute at Rustwire run fill -2 199 -2 6 199 2 minecraft:stone replace",
+          "sent_seconds": 21.004,
+          "server_output_in_window": [
+            "[00:08:29 INFO]: Successfully filled 45 block(s)"
+          ]
+        },
+        {
+          "name": "face",
+          "command": "tp Rustwire 0.5 200 0.5 facing 10.5 200 0.5",
+          "sent_seconds": 21.504,
+          "server_output_in_window": [
+            "[00:08:29 INFO]: Teleported Rustwire to 0.500000, 200.000000, 0.500000"
+          ]
+        },
+        {
+          "name": "title_time",
+          "command": "title Rustwire times 7 31 11",
+          "sent_seconds": 22.254,
+          "server_output_in_window": [
+            "[00:08:30 INFO]: Changed title display times for Rustwire"
+          ]
+        },
+        {
+          "name": "subtitle",
+          "command": "title Rustwire subtitle {\"text\":\"RUSTWIRE_SUBTITLE\"}",
+          "sent_seconds": 22.508,
+          "server_output_in_window": []
+        },
+        {
+          "name": "title",
+          "command": "title Rustwire title {\"text\":\"RUSTWIRE_TITLE\"}",
+          "sent_seconds": 22.773,
+          "server_output_in_window": [
+            "[00:08:31 INFO]: Showing new subtitle for Rustwire",
+            "[00:08:31 INFO]: Showing new title for Rustwire"
+          ]
+        },
+        {
+          "name": "actionbar",
+          "command": "title Rustwire actionbar {\"text\":\"RUSTWIRE_ACTIONBAR\"}",
+          "sent_seconds": 23.035,
+          "server_output_in_window": [
+            "[00:08:31 INFO]: Showing new actionbar title for Rustwire"
+          ]
+        },
+        {
+          "name": "clear",
+          "command": "title Rustwire clear",
+          "sent_seconds": 23.285,
+          "server_output_in_window": [
+            "[00:08:31 INFO]: Cleared titles for Rustwire"
+          ]
+        },
+        {
+          "name": "reset",
+          "command": "title Rustwire reset",
+          "sent_seconds": 23.535,
+          "server_output_in_window": [
+            "[00:08:32 INFO]: Reset title options for Rustwire"
+          ]
+        },
+        {
+          "name": "experience_levels",
+          "command": "experience set Rustwire 12 levels",
+          "sent_seconds": 23.786,
+          "server_output_in_window": [
+            "[00:08:32 INFO]: Set 12 experience levels on Rustwire"
+          ]
+        },
+        {
+          "name": "experience_points",
+          "command": "experience set Rustwire 3 points",
+          "sent_seconds": 24.036,
+          "server_output_in_window": [
+            "[00:08:32 INFO]: Set 3 experience points on Rustwire"
+          ]
+        },
+        {
+          "name": "tick_rate",
+          "command": "tick rate 25",
+          "sent_seconds": 24.786,
+          "server_output_in_window": [
+            "[00:08:33 INFO]: Set the target tick rate to 25.0 per second"
+          ]
+        },
+        {
+          "name": "tick_freeze",
+          "command": "tick freeze",
+          "sent_seconds": 25.29,
+          "server_output_in_window": [
+            "[00:08:33 INFO]: The game is frozen"
+          ]
+        },
+        {
+          "name": "tick_step",
+          "command": "tick step 7t",
+          "sent_seconds": 25.798,
+          "server_output_in_window": [
+            "[00:08:34 INFO]: Stepping 7 tick(s)"
+          ]
+        },
+        {
+          "name": "tick_unfreeze",
+          "command": "tick unfreeze",
+          "sent_seconds": 26.298,
+          "server_output_in_window": [
+            "[00:08:34 INFO]: The game is running normally"
+          ]
+        },
+        {
+          "name": "tick_restore",
+          "command": "tick rate 20",
+          "sent_seconds": 26.798,
+          "server_output_in_window": [
+            "[00:08:35 INFO]: Set the target tick rate to 20.0 per second"
+          ]
+        },
+        {
+          "name": "death",
+          "command": "kill Rustwire",
+          "sent_seconds": 27.298,
+          "server_output_in_window": [
+            "[00:08:35 INFO]: Rustwire was killed",
+            "[00:08:36 INFO]: Killed Rustwire"
+          ]
+        },
+        {
+          "name": "finish",
+          "command": "tellraw Rustwire {\"text\":\"RUSTWIRE_HUD_DONE\"}",
+          "sent_seconds": 29.299,
+          "server_output_in_window": [
+            "[00:08:37 INFO]: Rustwire lost connection: Disconnected",
+            "[00:08:37 INFO]: Rustwire left the game",
+            "[00:08:37 INFO]: Stopping the server",
+            "[00:08:37 INFO]: Stopping server",
+            "[00:08:37 INFO]: Saving players",
+            "[00:08:37 INFO]: Saving worlds",
+            "[00:08:37 INFO]: Saving chunks for level 'ServerLevel[gameplay-world]'/minecraft:overworld",
+            "[00:08:37 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'gameplay-world'",
+            "[00:08:37 INFO]: [ChunkHolderManager] Halted chunk system for world 'gameplay-world'",
+            "[00:08:37 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'gameplay-world'",
+            "[00:08:39 INFO]: [ChunkHolderManager] Saved 1089 block chunks, 132 entity chunks, 0 poi chunks in world 'gameplay-world' in 1.10s",
+            "[00:08:39 INFO]: Saving chunks for level 'ServerLevel[gameplay-world_nether]'/minecraft:the_nether",
+            "[00:08:39 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'gameplay-world_nether'",
+            "[00:08:39 INFO]: [ChunkHolderManager] Halted chunk system for world 'gameplay-world_nether'",
+            "[00:08:39 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'gameplay-world_nether'",
+            "[00:08:39 INFO]: [ChunkHolderManager] Saved 841 block chunks, 49 entity chunks, 0 poi chunks in world 'gameplay-world_nether' in 0.19s",
+            "[00:08:39 INFO]: ThreadedAnvilChunkStorage (gameplay-world): All chunks are saved",
+            "[00:08:39 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved",
+            "[00:08:39 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved"
+          ]
+        }
+      ],
+      "passed": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "cleanup_errors": [],
+      "server_exit": 0,
+      "client_exit": 0,
+      "client_output": [
+        "PROBE_READY",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=0",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=face_player equal=true",
+        "VALUE category=face anchor=Feet x=10.5 y=200 z=0.5 entity=false",
+        "VALUE category=wire_roundtrip packet=set_title_time equal=true",
+        "VALUE category=title_time fade_in=7 stay=31 fade_out=11",
+        "VALUE category=wire_roundtrip packet=set_title_subtitle equal=true",
+        "VALUE category=subtitle fixture=true",
+        "VALUE category=wire_roundtrip packet=set_title_text equal=true",
+        "VALUE category=title fixture=true",
+        "VALUE category=wire_roundtrip packet=action_bar equal=true",
+        "VALUE category=actionbar fixture=true",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=false",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=true",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=3dc6318c",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=false",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=true",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=7",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=false",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=death_combat_event equal=true",
+        "VALUE category=death own_entity=true player_text=true",
+        "LIFECYCLE event=death_received",
+        "ACTION kind=respawn",
+        "LIFECYCLE event=respawn_received",
+        "LIFECYCLE event=respawn_position_acknowledged",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=0",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "PROBE_DONE protocol=767 roundtrips=22"
+      ],
+      "seconds": 31.259,
+      "value_checks": {
+        "passed": true,
+        "observations": {
+          "wire_roundtrip": [
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "face_player",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_time",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_subtitle",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_text",
+              "equal": "true"
+            },
+            {
+              "packet": "action_bar",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "death_combat_event",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            }
+          ],
+          "ticking": [
+            {
+              "rate": "20",
+              "frozen": "false"
+            },
+            {
+              "rate": "25",
+              "frozen": "false"
+            },
+            {
+              "rate": "25",
+              "frozen": "true"
+            },
+            {
+              "rate": "25",
+              "frozen": "false"
+            },
+            {
+              "rate": "20",
+              "frozen": "false"
+            },
+            {
+              "rate": "20",
+              "frozen": "false"
+            }
+          ],
+          "step": [
+            {
+              "ticks": "0"
+            },
+            {
+              "ticks": "7"
+            },
+            {
+              "ticks": "0"
+            }
+          ],
+          "experience": [
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "3dc6318c"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            }
+          ],
+          "face": [
+            {
+              "anchor": "Feet",
+              "x": "10.5",
+              "y": "200",
+              "z": "0.5",
+              "entity": "false"
+            }
+          ],
+          "title_time": [
+            {
+              "fade_in": "7",
+              "stay": "31",
+              "fade_out": "11"
+            }
+          ],
+          "subtitle": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "title": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "actionbar": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "clear": [
+            {
+              "reset": "false"
+            },
+            {
+              "reset": "true"
+            }
+          ],
+          "death": [
+            {
+              "own_entity": "true",
+              "player_text": "true"
+            }
+          ]
+        },
+        "expected": {
+          "title": {
+            "fixture": "true"
+          },
+          "subtitle": {
+            "fixture": "true"
+          },
+          "actionbar": {
+            "fixture": "true"
+          },
+          "title_time": {
+            "fade_in": "7",
+            "stay": "31",
+            "fade_out": "11"
+          },
+          "experience": {
+            "level": "12",
+            "total": "0",
+            "bar_bits": "3dc6318c"
+          },
+          "death": {
+            "own_entity": "true",
+            "player_text": "true"
+          },
+          "face": {
+            "anchor": "Feet",
+            "x": "10.5",
+            "y": "200",
+            "z": "0.5",
+            "entity": "false"
+          },
+          "step": {
+            "ticks": "7"
+          }
+        },
+        "missing_or_wrong": [],
+        "protocol_errors": [],
+        "malformed_lines": [],
+        "client_lifecycle_complete": true,
+        "explicitly_unexercised": [
+          "HUD open_book, enter_combat_event, end_combat_event",
+          "World-control packets outside face/rotation/ticking/step",
+          "Rendering and player physics"
+        ]
+      },
+      "console_failures": [],
+      "commands_complete": true,
+      "listener_closed": true
+    },
+    {
+      "version": "26.2",
+      "protocol": 776,
+      "paper_build": 129,
+      "started_utc": "2026-10-04T23:08:39.792452+00:00",
+      "server_jar_sha256": "b1d8f6bfa1b6101fa8e947b53041cb3bdf5540e7b83b6547ca19ba7edefeb083",
+      "client_binary_sha256": "cd0702836eb7486bd5892927ca660030037ce23b5417dd0984c8ceb273e759ca",
+      "server_command": [
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/jdk25/bin/java",
+        "-Xms256M",
+        "-Xmx1024M",
+        "-XX:ActiveProcessorCount=2",
+        "-jar",
+        "/workspace/scratch/97d5c44865d4/rustwire-server-validation/downloads/paper-26.2-129.jar",
+        "--nogui"
+      ],
+      "commands": [
+        {
+          "name": "platform",
+          "command": "execute at Rustwire run fill -2 199 -2 6 199 2 minecraft:stone replace",
+          "sent_seconds": 20.851,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:00 INFO]: Successfully filled 45 block(s)"
+          ]
+        },
+        {
+          "name": "face",
+          "command": "tp Rustwire 0.5 200 0.5 facing 10.5 200 0.5",
+          "sent_seconds": 21.352,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:01 INFO]: Teleported Rustwire to 0.500000, 200.000000, 0.500000"
+          ]
+        },
+        {
+          "name": "title_time",
+          "command": "title Rustwire times 7 31 11",
+          "sent_seconds": 22.104,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:01 INFO]: Changed title display times for Rustwire"
+          ]
+        },
+        {
+          "name": "subtitle",
+          "command": "title Rustwire subtitle {\"text\":\"RUSTWIRE_SUBTITLE\"}",
+          "sent_seconds": 22.356,
+          "server_output_in_window": [
+            "> title Rustwire subtitle {\"text\":\"RUSTWIRE_SUBTITLE\"}>",
+            "",
+            "[00:09:02 INFO]: Showing new subtitle for Rustwire"
+          ]
+        },
+        {
+          "name": "title",
+          "command": "title Rustwire title {\"text\":\"RUSTWIRE_TITLE\"}",
+          "sent_seconds": 22.606,
+          "server_output_in_window": [
+            "> title Rustwire title {\"text\":\"RUSTWIRE_TITLE\"}>",
+            "",
+            "[00:09:02 INFO]: Showing new title for Rustwire"
+          ]
+        },
+        {
+          "name": "actionbar",
+          "command": "title Rustwire actionbar {\"text\":\"RUSTWIRE_ACTIONBAR\"}",
+          "sent_seconds": 22.856,
+          "server_output_in_window": [
+            "> title Rustwire actionbar {\"text\":\"RUSTWIRE_ACTIONBAR\"}>",
+            "",
+            "[00:09:02 INFO]: Showing new actionbar title for Rustwire"
+          ]
+        },
+        {
+          "name": "clear",
+          "command": "title Rustwire clear",
+          "sent_seconds": 23.106,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:02 INFO]: Cleared titles for Rustwire"
+          ]
+        },
+        {
+          "name": "reset",
+          "command": "title Rustwire reset",
+          "sent_seconds": 23.357,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:03 INFO]: Reset title options for Rustwire"
+          ]
+        },
+        {
+          "name": "experience_levels",
+          "command": "experience set Rustwire 12 levels",
+          "sent_seconds": 23.607,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:03 INFO]: Set 12 experience levels on Rustwire"
+          ]
+        },
+        {
+          "name": "experience_points",
+          "command": "experience set Rustwire 3 points",
+          "sent_seconds": 23.857,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:03 INFO]: Set 3 experience points on Rustwire"
+          ]
+        },
+        {
+          "name": "rotation",
+          "command": "rotate Rustwire 37 -12",
+          "sent_seconds": 24.607,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:04 INFO]: Rotated Rustwire"
+          ]
+        },
+        {
+          "name": "tick_rate",
+          "command": "tick rate 25",
+          "sent_seconds": 25.108,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:04 INFO]: Set the target tick rate to 25.0 per second"
+          ]
+        },
+        {
+          "name": "tick_freeze",
+          "command": "tick freeze",
+          "sent_seconds": 25.608,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:05 INFO]: The game is frozen"
+          ]
+        },
+        {
+          "name": "tick_step",
+          "command": "tick step 7t",
+          "sent_seconds": 26.109,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:05 INFO]: Stepping 7 tick(s)"
+          ]
+        },
+        {
+          "name": "tick_unfreeze",
+          "command": "tick unfreeze",
+          "sent_seconds": 26.61,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:06 INFO]: The game is running normally"
+          ]
+        },
+        {
+          "name": "tick_restore",
+          "command": "tick rate 20",
+          "sent_seconds": 27.11,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:06 INFO]: Set the target tick rate to 20.0 per second"
+          ]
+        },
+        {
+          "name": "death",
+          "command": "kill Rustwire",
+          "sent_seconds": 27.611,
+          "server_output_in_window": [
+            "> >",
+            "",
+            "[00:09:07 INFO]: Rustwire was killed",
+            ">",
+            "",
+            "[00:09:07 INFO]: Killed Rustwire"
+          ]
+        },
+        {
+          "name": "finish",
+          "command": "tellraw Rustwire {\"text\":\"RUSTWIRE_HUD_DONE\"}",
+          "sent_seconds": 29.611,
+          "server_output_in_window": [
+            "> tellraw Rustwire {\"text\":\"RUSTWIRE_HUD_DONE\"}>",
+            "",
+            "[00:09:09 INFO]: Rustwire lost connection: Disconnected",
+            "> >",
+            "",
+            "[00:09:09 INFO]: Rustwire left the game",
+            ">",
+            "",
+            "[00:09:09 INFO]: Stopping the server",
+            ">",
+            "",
+            "[00:09:09 INFO]: Stopping server",
+            ">",
+            "",
+            "[00:09:09 INFO]: Saving players",
+            ">",
+            "",
+            "[00:09:09 INFO]: Saving worlds",
+            ">",
+            "",
+            "[00:09:09 INFO]: Saving chunks for level 'ServerLevel[gameplay-world]'/minecraft:overworld",
+            ">",
+            "",
+            "[00:09:09 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'minecraft:overworld'",
+            ">",
+            "",
+            "[00:09:09 INFO]: [ChunkHolderManager] Halted chunk system for world 'minecraft:overworld'",
+            ">",
+            "",
+            "[00:09:09 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'minecraft:overworld'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Saved 1155 block chunks, 143 entity chunks, 0 poi chunks in world 'minecraft:overworld' in 0.52s",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'minecraft:overworld'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'minecraft:overworld'",
+            ">",
+            "",
+            "[00:09:10 INFO]: Saving chunks for level 'ServerLevel[gameplay-world]'/minecraft:the_nether",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Waiting 60s for chunk system to halt for world 'minecraft:the_nether'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Halted chunk system for world 'minecraft:the_nether'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Saving all chunkholders for world 'minecraft:the_nether'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Saved 0 block chunks, 0 entity chunks, 0 poi chunks in world 'minecraft:the_nether' in 0.00s",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Waiting 60s for chunk I/O to halt for world 'minecraft:the_nether'",
+            ">",
+            "",
+            "[00:09:10 INFO]: [ChunkHolderManager] Halted I/O scheduler for world 'minecraft:the_nether'",
+            ">",
+            "",
+            "[00:09:10 INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved",
+            ">",
+            "",
+            "[00:09:10 INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved",
+            ">",
+            "",
+            "[00:09:10 INFO]: ThreadedAnvilChunkStorage: All dimensions are saved",
+            ">",
+            "",
+            "[00:09:10 INFO]: Waiting for all RegionFile I/O tasks to complete...",
+            ">",
+            "",
+            "[00:09:10 INFO]: All RegionFile I/O tasks to complete",
+            ">",
+            "",
+            "[00:09:10 INFO]: [MoonriseCommon] Awaiting termination of worker pool for up to 60s...",
+            ">",
+            "",
+            "[00:09:10 INFO]: [MoonriseCommon] Awaiting termination of I/O pool for up to 60s...",
+            ">"
+          ]
+        }
+      ],
+      "passed": true,
+      "listeners": [
+        "0000000000000000FFFF00000100007F:63DD"
+      ],
+      "cleanup_errors": [],
+      "server_exit": 0,
+      "client_exit": 0,
+      "client_output": [
+        "PROBE_READY",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=0",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=0",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=face_player equal=true",
+        "VALUE category=face anchor=Feet x=10.5 y=200 z=0.5 entity=false",
+        "VALUE category=wire_roundtrip packet=set_title_time equal=true",
+        "VALUE category=title_time fade_in=7 stay=31 fade_out=11",
+        "VALUE category=wire_roundtrip packet=set_title_subtitle equal=true",
+        "VALUE category=subtitle fixture=true",
+        "VALUE category=wire_roundtrip packet=set_title_text equal=true",
+        "VALUE category=title fixture=true",
+        "VALUE category=wire_roundtrip packet=action_bar equal=true",
+        "VALUE category=actionbar fixture=true",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=false",
+        "VALUE category=wire_roundtrip packet=clear_titles equal=true",
+        "VALUE category=clear reset=true",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=12 total=0 bar_bits=3dc6318c",
+        "VALUE category=wire_roundtrip packet=player_rotation equal=true",
+        "VALUE category=rotation yaw=37 pitch=-12 relative_yaw=false relative_pitch=false",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=false",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=true",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=7",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=25 frozen=false",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=death_combat_event equal=true",
+        "VALUE category=death own_entity=true player_text=true",
+        "LIFECYCLE event=death_received",
+        "ACTION kind=respawn",
+        "LIFECYCLE event=respawn_received",
+        "LIFECYCLE event=respawn_position_acknowledged",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "VALUE category=wire_roundtrip packet=set_ticking_state equal=true",
+        "VALUE category=ticking rate=20 frozen=false",
+        "VALUE category=wire_roundtrip packet=step_tick equal=true",
+        "VALUE category=step ticks=0",
+        "VALUE category=wire_roundtrip packet=experience equal=true",
+        "VALUE category=experience level=0 total=0 bar_bits=00000000",
+        "PROBE_DONE protocol=776 roundtrips=25"
+      ],
+      "seconds": 30.766,
+      "value_checks": {
+        "passed": true,
+        "observations": {
+          "wire_roundtrip": [
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "face_player",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_time",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_subtitle",
+              "equal": "true"
+            },
+            {
+              "packet": "set_title_text",
+              "equal": "true"
+            },
+            {
+              "packet": "action_bar",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "clear_titles",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "player_rotation",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "death_combat_event",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            },
+            {
+              "packet": "set_ticking_state",
+              "equal": "true"
+            },
+            {
+              "packet": "step_tick",
+              "equal": "true"
+            },
+            {
+              "packet": "experience",
+              "equal": "true"
+            }
+          ],
+          "ticking": [
+            {
+              "rate": "20",
+              "frozen": "false"
+            },
+            {
+              "rate": "20",
+              "frozen": "false"
+            },
+            {
+              "rate": "25",
+              "frozen": "false"
+            },
+            {
+              "rate": "25",
+              "frozen": "true"
+            },
+            {
+              "rate": "25",
+              "frozen": "false"
+            },
+            {
+              "rate": "20",
+              "frozen": "false"
+            },
+            {
+              "rate": "20",
+              "frozen": "false"
+            }
+          ],
+          "step": [
+            {
+              "ticks": "0"
+            },
+            {
+              "ticks": "0"
+            },
+            {
+              "ticks": "7"
+            },
+            {
+              "ticks": "0"
+            }
+          ],
+          "experience": [
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "12",
+              "total": "0",
+              "bar_bits": "3dc6318c"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            },
+            {
+              "level": "0",
+              "total": "0",
+              "bar_bits": "00000000"
+            }
+          ],
+          "face": [
+            {
+              "anchor": "Feet",
+              "x": "10.5",
+              "y": "200",
+              "z": "0.5",
+              "entity": "false"
+            }
+          ],
+          "title_time": [
+            {
+              "fade_in": "7",
+              "stay": "31",
+              "fade_out": "11"
+            }
+          ],
+          "subtitle": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "title": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "actionbar": [
+            {
+              "fixture": "true"
+            }
+          ],
+          "clear": [
+            {
+              "reset": "false"
+            },
+            {
+              "reset": "true"
+            }
+          ],
+          "rotation": [
+            {
+              "yaw": "37",
+              "pitch": "-12",
+              "relative_yaw": "false",
+              "relative_pitch": "false"
+            }
+          ],
+          "death": [
+            {
+              "own_entity": "true",
+              "player_text": "true"
+            }
+          ]
+        },
+        "expected": {
+          "title": {
+            "fixture": "true"
+          },
+          "subtitle": {
+            "fixture": "true"
+          },
+          "actionbar": {
+            "fixture": "true"
+          },
+          "title_time": {
+            "fade_in": "7",
+            "stay": "31",
+            "fade_out": "11"
+          },
+          "experience": {
+            "level": "12",
+            "total": "0",
+            "bar_bits": "3dc6318c"
+          },
+          "death": {
+            "own_entity": "true",
+            "player_text": "true"
+          },
+          "face": {
+            "anchor": "Feet",
+            "x": "10.5",
+            "y": "200",
+            "z": "0.5",
+            "entity": "false"
+          },
+          "rotation": {
+            "yaw": "37",
+            "pitch": "-12",
+            "relative_yaw": "false",
+            "relative_pitch": "false"
+          },
+          "step": {
+            "ticks": "7"
+          }
+        },
+        "missing_or_wrong": [],
+        "protocol_errors": [],
+        "malformed_lines": [],
+        "client_lifecycle_complete": true,
+        "explicitly_unexercised": [
+          "HUD open_book, enter_combat_event, end_combat_event",
+          "World-control packets outside face/rotation/ticking/step",
+          "Rendering and player physics"
+        ]
+      },
+      "console_failures": [],
+      "commands_complete": true,
+      "listener_closed": true
+    }
+  ]
+}

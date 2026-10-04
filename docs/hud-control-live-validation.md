@@ -4,6 +4,16 @@ The optional `hud_control_probe` and `validate_hud_controls.py` pair exercise
 real incoming packets on disposable, loopback-only, offline Paper servers. This
 is receive-side protocol validation, not a rendered client or a physics model.
 
+## Recorded result
+
+The 2026-10-04 [report](validation/hud-control-live-results.json) passed on pinned
+Paper 1.20.1 build 196, 1.21.1 build 133 and 26.2 build 129. One binary produced
+13, 22 and 25 byte-identical incoming-payload roundtrips (60 total), with all
+required values, ordered lifecycle/tick transitions and cleanup gates passing.
+The report's library baseline is `243e390dc0605aaf287766ab6a6e43e57a6932fb`;
+probe/harness additions are separately hash-pinned. See [VALIDATION](../VALIDATION.md#fresh-hudcontrol-live-replay-2026-10-04)
+for local regression counts and exact limitations.
+
 ## Scenario and gates
 
 The console fixture sets a title, subtitle and action bar; custom title timing;

@@ -1,5 +1,13 @@
 # World and player control wire audit
 
+## Subsequent bounded live supplement
+
+The original increment below used synthetic/source-level evidence. A later
+2026-10-04 [live replay](hud-control-live-validation.md) supplements it for an
+explicit subset on Paper 1.20.1, 1.21.1 and 26.2; see the
+[exact results](validation/hud-control-live-results.json). This does not upgrade
+unexercised packet families or semantics to live-validated status.
+
 ## Scope and evidence
 
 `packet::world_control` implements eleven ordinary clientbound play envelopes,
