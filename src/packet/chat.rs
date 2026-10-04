@@ -355,7 +355,9 @@ impl UnsignedChatMessage {
 }
 /// Sends the dedicated unsigned-command packet introduced in 1.20.5. `command`
 /// excludes the leading slash. Commands requiring signed arguments are outside
-/// this API; the server may reject them. Legacy command signing is unsupported.
+/// this API; the server may reject them. Use [`signed::SignedChatCommand`] for
+/// signed-command envelopes, including legacy protocols 763–765. Signing and
+/// certificate trust remain application responsibilities.
 pub fn unsigned_command(version: Version, command: &str) -> Result<RawPacket> {
     if version.protocol() < 766 {
         return Err(Error::Unsupported(

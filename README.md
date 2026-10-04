@@ -111,6 +111,8 @@ world height. Standalone block-entity and view/simulation controls need no conte
 
 All known vanilla added-item outer payload layouts are implemented: 56/56 in 1.20.5 through 111/111 in 26.2, together with all known outer metadata serializers. Registry resolution, game-specific NBT predicate semantics and persistent component-hash derivation retain explicit limits. Secure-chat certificate trust, the cryptographic provider and session/index policy remain application responsibilities. [Exact per-family supported and unsupported names](docs/typed-coverage.json) are reproducible with `python3 tools/report_coverage.py`.
 
+The [packet API table](docs/packet-api-coverage.tsv) lists exact state, direction and protocol/ID bindings. It inventories receive/send entrypoints, rather than proving full runtime conformance or symmetric client/server codecs.
+
 Numeric block-state and biome IDs remain numeric. Dynamic registry names can be looked up with `RegistryStore`; a bundled static block-state-name dataset is not included.
 
 ### Authentication
@@ -154,7 +156,7 @@ Important wire boundaries are explicit: configuration/anonymous NBT from 764, pe
 
 Rustwire is a protocol building block, not a full game client, bot, proxy or server.
 
-- Known component wire layouts are implemented; registry identities, NBT-backed predicate semantics and many persistent component-hash forms remain application responsibilities. Recipes and remaining gameplay packets still need codecs; the command tree describes syntax but does not execute commands or replace Brigadier parsing
+- Known component wire layouts are implemented; registry identities, NBT-backed predicate semantics and many persistent component-hash forms remain application responsibilities. The [client-role API inventory](docs/packet-api-coverage.md) distinguishes incoming dispatch, outbound builders and remaining validation/application boundaries; the command tree describes syntax but does not execute commands or replace Brigadier parsing
 - Secure-chat certificates, private-key signing/verification providers and session/index policy remain application responsibilities. Canonical signing-input and acknowledgement/cache helpers do not establish trust. Unsigned sending requires an explicit allowed-by-server policy
 - Resource-pack consent/downloads, code-of-conduct acceptance, transfers and custom login plugins are application decisions. Examples stop clearly on conduct/resource-pack challenges rather than accepting them
 - No automatic SRV lookup, proxy connector, async-runtime adapter, reconnect policy, Mojang chat-certificate acquisition, mod-loader handshake, world simulation or rendering
