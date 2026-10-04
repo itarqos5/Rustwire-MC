@@ -113,6 +113,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    CustomPayload(super::custom_payload::CustomPayload),
     Dialog(super::dialog::DialogPacket),
     GameRules(super::game_rules::GameRuleValues),
     LowDiskSpaceWarning,
@@ -174,6 +175,17 @@ impl DecodedPacket {
     ) -> Result<Option<Self>> {
         if !matches!(state, State::Configuration | State::Play) {
             return Ok(None);
+        }
+        if name == "custom_payload" {
+            return Ok(Some(Self::CustomPayload(
+                super::custom_payload::CustomPayload::decode(
+                    bytes,
+                    version,
+                    state,
+                    crate::version::Direction::Clientbound,
+                    limits,
+                )?,
+            )));
         }
         if let Some(dialog) =
             super::dialog::DialogPacket::decode(state, name, bytes, version, limits)?

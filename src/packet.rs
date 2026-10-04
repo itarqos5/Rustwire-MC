@@ -6,6 +6,7 @@ pub mod chunk_updates;
 pub mod client_control;
 pub mod commands;
 pub mod common;
+pub mod custom_payload;
 pub mod dialog;
 pub mod editing;
 pub mod entity;
@@ -318,11 +319,9 @@ pub fn custom_payload(
     channel: &str,
     payload: &[u8],
 ) -> Result<RawPacket> {
-    if payload.len() > 32767 {
-        return Err(Error::Limit("serverbound custom payload"));
+    custom_payload::CustomPayloadRef {
+        channel,
+        data: payload,
     }
-    let mut w = Writer::new();
-    w.string(channel, 32767)?;
-    w.raw(payload);
-    named(version, state, "custom_payload", w.into_inner())
+    .packet(version, state, Direction::Serverbound, Limits::default())
 }

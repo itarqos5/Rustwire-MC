@@ -351,3 +351,11 @@ read-only official 26.2 class-binding evidence.
 Configuration chat-reset notifications from 1.20.5 onward are available as
 `ResetChat` and typed common events. Parsing has no chat-cache or network side
 effects; see the [versioned envelope audit](docs/reset-chat-wire-audit.md).
+
+### Plugin and mod-channel envelopes
+
+`packet::custom_payload` supplies bounded owned and zero-copy borrowed envelopes
+in both directions for play and configuration. Incoming typed events retain
+opaque channel bytes without running handlers or responding. Encoding preflights
+channel and payload budgets before allocation; the [wire audit](docs/custom-payload-wire-audit.md)
+explains exact state/version limits and channel-specific interpretation boundaries.
