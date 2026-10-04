@@ -155,8 +155,10 @@ remaining input before vector allocation; recursive/large entries grow only as
 their bodies decode rather than bulk-reserving an attacker-declared capacity.
 Encode paths preflight
 strings/count minima against the remaining packet budget, return no partial
-body, and use existing bounded slot/template codecs. Further shared NBT
-pre-allocation hardening is a separate change, not part of this display increment.
+body, and use existing bounded slot/template codecs. The subsequent shared NBT
+writer hardening preflights modified-UTF-8 strings and primitive arrays before
+temporary output growth. Its separate regressions cover both atomic public
+writes and early rejection before the variable payload is appended.
 
 Tests additionally cover invalid booleans, negative/overflow counts and IDs,
 unknown nested components, impossible counts, aggregation across multiple

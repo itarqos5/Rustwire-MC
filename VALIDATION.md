@@ -990,3 +990,21 @@ the full pinned display audit and all 55 root-tool Python tests. A clean copy
 without downloaded schemas also passed those 55 tests and 105 existing Paper
 validation tests. This integration was tested without the separate NBT writer
 preflight hardening, keeping the two changes independently reviewable.
+
+## NBT variable-payload write preflight
+
+The shared NBT encoder now checks remaining byte budget before appending
+modified-UTF-8 strings or byte/int/long-array payloads to its temporary output.
+Checked arithmetic includes the wire length prefixes. This preserves successful
+wire bytes and atomic public writes while avoiding temporary output growth for
+an already oversized variable payload.
+
+Two direct internal regressions demonstrate the distinction: both failed on the
+previous writer because it grew the temporary output before reporting the limit;
+both pass with preflight. A separate public regression exercises all four payload
+kinds at exact and undersized byte caps and verifies unchanged caller output on
+error. This is bounded-allocation behavior, not a throughput benchmark or a new
+Minecraft interoperability claim.
+
+The integrated suites passed 523 all-feature and 484 no-default Rust tests,
+strict all-target/all-feature Clippy, rustdoc with warnings denied and formatting.

@@ -331,6 +331,11 @@ fn write_string(w: &mut Writer, s: &NbtString, limits: Limits) -> Result<()> {
     if len > u16::MAX as usize {
         return Err(Error::Limit("NBT modified UTF-8 byte length"));
     }
+    preflight(
+        w,
+        len.checked_add(2).ok_or(Error::Limit("NBT byte size"))?,
+        limits,
+    )?;
     w.u16(len as u16);
     for &u in &s.0 {
         if (1..0x80).contains(&u) {
@@ -420,6 +425,15 @@ fn read_tag(r: &mut Reader<'_>, kind: TagType, depth: usize, b: &mut Budget) -> 
         }
     })
 }
+fn preflight(w: &Writer, additional: usize, limits: Limits) -> Result<()> {
+    if additional > limits.max_packet.saturating_sub(w.as_slice().len())
+        || w.as_slice().len() > limits.max_packet
+    {
+        Err(Error::Limit("NBT byte size"))
+    } else {
+        Ok(())
+    }
+}
 fn write_tag(w: &mut Writer, tag: &Tag, depth: usize, b: &mut Budget) -> Result<()> {
     b.depth(depth)?;
     b.charge(1)?;
@@ -434,6 +448,13 @@ fn write_tag(w: &mut Writer, tag: &Tag, depth: usize, b: &mut Budget) -> Result<
         Tag::ByteArray(v) => {
             b.collection(v.len())?;
             b.charge(v.len())?;
+            preflight(
+                w,
+                v.len()
+                    .checked_add(4)
+                    .ok_or(Error::Limit("NBT byte size"))?,
+                b.limits,
+            )?;
             w.i32(v.len() as i32);
             for x in v {
                 w.u8(*x as u8);
@@ -442,6 +463,14 @@ fn write_tag(w: &mut Writer, tag: &Tag, depth: usize, b: &mut Budget) -> Result<
         Tag::IntArray(v) => {
             b.collection(v.len())?;
             b.charge(v.len())?;
+            preflight(
+                w,
+                v.len()
+                    .checked_mul(4)
+                    .and_then(|n| n.checked_add(4))
+                    .ok_or(Error::Limit("NBT byte size"))?,
+                b.limits,
+            )?;
             w.i32(v.len() as i32);
             for x in v {
                 w.i32(*x);
@@ -450,6 +479,14 @@ fn write_tag(w: &mut Writer, tag: &Tag, depth: usize, b: &mut Budget) -> Result<
         Tag::LongArray(v) => {
             b.collection(v.len())?;
             b.charge(v.len())?;
+            preflight(
+                w,
+                v.len()
+                    .checked_mul(8)
+                    .and_then(|n| n.checked_add(4))
+                    .ok_or(Error::Limit("NBT byte size"))?,
+                b.limits,
+            )?;
             w.i32(v.len() as i32);
             for x in v {
                 w.i64(*x);
@@ -483,4 +520,53 @@ fn write_tag(w: &mut Writer, tag: &Tag, depth: usize, b: &mut Budget) -> Result<
         return Err(Error::Limit("NBT byte size"));
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod write_preflight_tests {
+    use super::*;
+
+    #[test]
+    fn string_preflight_rejects_before_growing_temporary_output() {
+        let text = NbtString::from("\0\u{07ff}\u{0800}".repeat(256));
+        for max_packet in [0, 3, 4, 128] {
+            let mut writer = Writer::new();
+            writer.raw(&[11, 22, 33]);
+            assert!(matches!(
+                write_string(
+                    &mut writer,
+                    &text,
+                    Limits {
+                        max_packet,
+                        ..Limits::default()
+                    }
+                ),
+                Err(Error::Limit(_))
+            ));
+            assert_eq!(writer.as_slice(), [11, 22, 33]);
+        }
+    }
+
+    #[test]
+    fn primitive_array_preflight_rejects_before_growing_temporary_output() {
+        for tag in [
+            Tag::ByteArray(vec![7; 256]),
+            Tag::IntArray(vec![7; 256]),
+            Tag::LongArray(vec![7; 256]),
+        ] {
+            for max_packet in [0, 3, 4, 128] {
+                let mut writer = Writer::new();
+                writer.raw(&[11, 22, 33]);
+                let mut budget = Budget::new(Limits {
+                    max_packet,
+                    ..Limits::default()
+                });
+                assert!(matches!(
+                    write_tag(&mut writer, &tag, 0, &mut budget),
+                    Err(Error::Limit(_))
+                ));
+                assert_eq!(writer.as_slice(), [11, 22, 33]);
+            }
+        }
+    }
 }
