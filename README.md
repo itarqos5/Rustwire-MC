@@ -335,3 +335,13 @@ across all fourteen families. It preserves 64-bit VarLong structure seeds, raw
 flags/coordinates and exact jigsaw priority boundaries. Commands and block-state
 expressions remain data; no world edits or permission decisions are performed.
 [Wire audit](docs/world-edit-wire-audit.md).
+
+### Dialog and custom-click envelopes
+
+`packet::dialog` adds state-explicit clear/show dialog codecs and custom-click
+request builders for protocols 771–776. Configuration uses direct dialog NBT;
+play uses registry holders. Opaque payloads are bounded and never rendered or
+executed. The [wire audit](docs/dialog-wire-audit.md) documents the corrected
+length-framed TAG_End optional payload, exact state/ID gates, conservative depth
+policy and receiver-allocation limitations, with per-family source pins and
+read-only official 26.2 class-binding evidence.

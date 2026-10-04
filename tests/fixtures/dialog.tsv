@@ -1,0 +1,104 @@
+# Original synthetic dialog wire fixtures; custom-click corrects a pinned schema defect.
+# protocol	state	direction	name	case	packet_id	body_hex
+771	configuration	toClient	clear_dialog	empty	17	
+771	configuration	toClient	show_dialog	empty_compound	18	0a00
+771	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+771	configuration	toServer	custom_click_action	absent	8	03783a790100
+771	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+771	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+771	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+771	play	toClient	clear_dialog	empty	132	
+771	play	toClient	show_dialog	empty_compound	133	000a00
+771	play	toClient	show_dialog	opaque	133	000a0800047479706500017800
+771	play	toClient	show_dialog	first_reference	133	01
+771	play	toClient	show_dialog	reference_127	133	8001
+771	play	toClient	show_dialog	maximum_reference	133	ffffffff07
+771	play	toServer	custom_click_action	absent	65	03783a790100
+771	play	toServer	custom_click_action	empty_compound	65	03783a79020a00
+771	play	toServer	custom_click_action	byte	65	03783a7902017f
+771	play	toServer	custom_click_action	string	65	03783a79050800026869
+772	configuration	toClient	clear_dialog	empty	17	
+772	configuration	toClient	show_dialog	empty_compound	18	0a00
+772	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+772	configuration	toServer	custom_click_action	absent	8	03783a790100
+772	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+772	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+772	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+772	play	toClient	clear_dialog	empty	132	
+772	play	toClient	show_dialog	empty_compound	133	000a00
+772	play	toClient	show_dialog	opaque	133	000a0800047479706500017800
+772	play	toClient	show_dialog	first_reference	133	01
+772	play	toClient	show_dialog	reference_127	133	8001
+772	play	toClient	show_dialog	maximum_reference	133	ffffffff07
+772	play	toServer	custom_click_action	absent	65	03783a790100
+772	play	toServer	custom_click_action	empty_compound	65	03783a79020a00
+772	play	toServer	custom_click_action	byte	65	03783a7902017f
+772	play	toServer	custom_click_action	string	65	03783a79050800026869
+773	configuration	toClient	clear_dialog	empty	17	
+773	configuration	toClient	show_dialog	empty_compound	18	0a00
+773	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+773	configuration	toServer	custom_click_action	absent	8	03783a790100
+773	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+773	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+773	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+773	play	toClient	clear_dialog	empty	137	
+773	play	toClient	show_dialog	empty_compound	138	000a00
+773	play	toClient	show_dialog	opaque	138	000a0800047479706500017800
+773	play	toClient	show_dialog	first_reference	138	01
+773	play	toClient	show_dialog	reference_127	138	8001
+773	play	toClient	show_dialog	maximum_reference	138	ffffffff07
+773	play	toServer	custom_click_action	absent	65	03783a790100
+773	play	toServer	custom_click_action	empty_compound	65	03783a79020a00
+773	play	toServer	custom_click_action	byte	65	03783a7902017f
+773	play	toServer	custom_click_action	string	65	03783a79050800026869
+774	configuration	toClient	clear_dialog	empty	17	
+774	configuration	toClient	show_dialog	empty_compound	18	0a00
+774	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+774	configuration	toServer	custom_click_action	absent	8	03783a790100
+774	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+774	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+774	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+774	play	toClient	clear_dialog	empty	137	
+774	play	toClient	show_dialog	empty_compound	138	000a00
+774	play	toClient	show_dialog	opaque	138	000a0800047479706500017800
+774	play	toClient	show_dialog	first_reference	138	01
+774	play	toClient	show_dialog	reference_127	138	8001
+774	play	toClient	show_dialog	maximum_reference	138	ffffffff07
+774	play	toServer	custom_click_action	absent	65	03783a790100
+774	play	toServer	custom_click_action	empty_compound	65	03783a79020a00
+774	play	toServer	custom_click_action	byte	65	03783a7902017f
+774	play	toServer	custom_click_action	string	65	03783a79050800026869
+775	configuration	toClient	clear_dialog	empty	17	
+775	configuration	toClient	show_dialog	empty_compound	18	0a00
+775	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+775	configuration	toServer	custom_click_action	absent	8	03783a790100
+775	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+775	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+775	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+775	play	toClient	clear_dialog	empty	139	
+775	play	toClient	show_dialog	empty_compound	140	000a00
+775	play	toClient	show_dialog	opaque	140	000a0800047479706500017800
+775	play	toClient	show_dialog	first_reference	140	01
+775	play	toClient	show_dialog	reference_127	140	8001
+775	play	toClient	show_dialog	maximum_reference	140	ffffffff07
+775	play	toServer	custom_click_action	absent	68	03783a790100
+775	play	toServer	custom_click_action	empty_compound	68	03783a79020a00
+775	play	toServer	custom_click_action	byte	68	03783a7902017f
+775	play	toServer	custom_click_action	string	68	03783a79050800026869
+776	configuration	toClient	clear_dialog	empty	17	
+776	configuration	toClient	show_dialog	empty_compound	18	0a00
+776	configuration	toClient	show_dialog	opaque	18	0a0800047479706500017800
+776	configuration	toServer	custom_click_action	absent	8	03783a790100
+776	configuration	toServer	custom_click_action	empty_compound	8	03783a79020a00
+776	configuration	toServer	custom_click_action	byte	8	03783a7902017f
+776	configuration	toServer	custom_click_action	string	8	03783a79050800026869
+776	play	toClient	clear_dialog	empty	139	
+776	play	toClient	show_dialog	empty_compound	140	000a00
+776	play	toClient	show_dialog	opaque	140	000a0800047479706500017800
+776	play	toClient	show_dialog	first_reference	140	01
+776	play	toClient	show_dialog	reference_127	140	8001
+776	play	toClient	show_dialog	maximum_reference	140	ffffffff07
+776	play	toServer	custom_click_action	absent	68	03783a790100
+776	play	toServer	custom_click_action	empty_compound	68	03783a79020a00
+776	play	toServer	custom_click_action	byte	68	03783a7902017f
+776	play	toServer	custom_click_action	string	68	03783a79050800026869

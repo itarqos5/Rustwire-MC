@@ -602,3 +602,16 @@ while correcting their structure-seed width and flags interpretation using
 immutable independent sources and official static endpoint evidence. Its 196
 original Python fixtures include full signed 64-bit seeds and raw flag bytes;
 no commands, structure generators or live world edits are executed.
+
+## Dialog and custom-click envelopes
+
+The [dialog audit](docs/dialog-wire-audit.md) checks 36 present packet/state/
+direction layouts and older-family absences against unchanged pinned schemas.
+All six supported protocols have independent Minestom serializer and generated
+protocol-version declarations at immutable commits. Those sources and narrow
+static official 26.2 class bindings correct the schemas' custom-click boolean
+option to length-framed anonymous NBT with TAG_End absence. The existing 26.2
+custom-click packet-ID correction is retained. The
+[source facts](docs/validation/dialog-wire-facts.json) record immutable Git blob
+hashes and official class hashes without implementation text. The 102 original
+Python fixtures are synthetic, not captures or executed serializer output.

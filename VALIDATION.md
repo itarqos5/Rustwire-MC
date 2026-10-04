@@ -1128,3 +1128,34 @@ strict Clippy/rustdoc/formatting and the complete world-edit schema/fixture audi
 All 89 root-tool and 105 existing Paper-validator Python tests passed from a
 clean copy without downloaded schemas. MSRV and operating-system checks are
 separate exact-commit CI gates; no live commands or world edits were executed.
+
+## Dialog and custom-click focused validation
+
+The [dialog audit](docs/dialog-wire-audit.md) adds three state-explicit packet
+families across 36 supported state/direction combinations in protocols 771–776.
+Eleven new Rust tests pass, including 102 independent fixtures and all 588 strict
+prefixes, exact 65,536-byte custom-click framing limits, TAG_End absence,
+malformed/trailing input, transactional streams, shared caller budgets,
+conservative root-at-zero depth limits, explicit configuration/play differences
+and unchanged raw fallback for unsupported unframed item data.
+
+Focused minimal/all-feature tests, strict all-feature Clippy/rustdoc and formatting
+passed. Ten Python controls also pass in a temporary clean copy with no cached
+schema directory and socket networking disabled; the separate real pinned-schema
+check passes all fourteen input families. The optional static checker passes
+against the existing hash-verified official 26.2 inner JAR and eleven class
+hashes using javap alone. The JVM's 32,768 allocation quota is not reproduced,
+and no receiving-server, executed-serializer or live-gameplay claim is made.
+Exact-commit MSRV and integrated full suites remain separate integration gates.
+
+On the frozen 243786cd5d3eb6c6c3afc9beda5f2711492a855b baseline plus this dialog
+increment, the complete locked/offline suites passed **525 minimal tests** and
+**564 all-feature tests**, with zero failures or ignored tests. These totals do
+not include later independently integrated packet increments.
+
+Integrated with the game-rule/world-edit increments, dialog verification passed
+573 all-feature and 534 no-default Rust tests, all 99 root-tool and 105 existing
+Paper-validator Python tests in a schema-free clean copy, and strict Clippy,
+rustdoc and formatting. The optional static-binding verifier independently passed
+the official 26.2 inner-JAR hash, 11 class hashes and expected codec/framing
+bindings. These are not executed game serializers or live dialog acceptance tests.

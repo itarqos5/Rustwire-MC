@@ -113,6 +113,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Dialog(super::dialog::DialogPacket),
     GameRules(super::game_rules::GameRuleValues),
     LowDiskSpaceWarning,
     Waypoint(super::waypoint::TrackedWaypoint),
@@ -173,6 +174,11 @@ impl DecodedPacket {
     ) -> Result<Option<Self>> {
         if !matches!(state, State::Configuration | State::Play) {
             return Ok(None);
+        }
+        if let Some(dialog) =
+            super::dialog::DialogPacket::decode(state, name, bytes, version, limits)?
+        {
+            return Ok(Some(Self::Dialog(dialog)));
         }
         if let Some(common) = CommonPacket::decode(name, bytes, version, limits)? {
             return Ok(Some(Self::Common(common)));

@@ -6,6 +6,7 @@ pub mod chunk_updates;
 pub mod client_control;
 pub mod commands;
 pub mod common;
+pub mod dialog;
 pub mod editing;
 pub mod entity;
 pub mod entity_control;
