@@ -8,12 +8,12 @@ import subprocess
 import validate_hud_controls as live
 
 
-def artifact_executable(output):
+def artifact_executable(output, name="hud_control_probe"):
     paths = []
     for line in output.splitlines():
         artifact = json.loads(line)
         if (artifact.get("reason") == "compiler-artifact"
-                and artifact.get("target", {}).get("name") == "hud_control_probe"
+                and artifact.get("target", {}).get("name") == name
                 and "example" in artifact.get("target", {}).get("kind", [])
                 and artifact.get("executable")):
             paths.append(Path(artifact["executable"]))

@@ -21,6 +21,8 @@ import threading
 import time
 import zipfile
 
+import build_grim_probe as build
+
 
 PROJECT = Path(__file__).resolve().parents[2]
 VERSIONS = {"1.21.1": "1FIGlM6Q", "1.21.5": "1FIGlM6Q", "26.1.2": "YJEwvStg", "26.2": "YJEwvStg"}
@@ -35,6 +37,7 @@ COMMAND_FAILURE = re.compile(
 RUNTIME_FAILURE = re.compile(
     r"Error (?:occurred while|loading|enabling|disabling)|Exception in thread|"
     r"An error occurred while processing a packet|caught an unhandled exception|Failed to (?:load|enable) Grim|"
+    r"Could not pass event .+ to GrimAC|\bjava\.lang\.[A-Za-z]*(?:Exception|Error)\b|"
     r"\b(?:DecoderException|EncoderException|NoClassDefFoundError|UnsupportedClassVersionError)\b", re.IGNORECASE,
 )
 
@@ -54,12 +57,18 @@ def arguments():
     parser.add_argument("--validation-dir", type=Path, default=Path(os.environ.get("RUSTWIRE_VALIDATION_DIR", str(PROJECT.parent / "rustwire-server-validation"))))
     parser.add_argument("--grim-dir", type=Path, default=PROJECT.parent / "rustwire-grim-validation")
     parser.add_argument("--client", type=Path, default=PROJECT / "target/release/examples/grim_probe")
+    parser.add_argument("--source-root", type=Path, default=PROJECT)
+    parser.add_argument("--source-commit", help="Exact library baseline commit for the required build receipt")
+    parser.add_argument("--build-receipt", type=Path)
     parser.add_argument("--prepare-only", action="store_true", help="Verify artifacts and prepare new worlds without launching any process")
     parser.add_argument("--client-timeout", type=int, default=100)
     args = parser.parse_args()
     args.validation_dir = args.validation_dir.resolve()
     args.grim_dir = args.grim_dir.resolve()
     args.client = args.client.resolve()
+    args.source_root = args.source_root.resolve()
+    if not args.prepare_only and (args.build_receipt is None or args.source_commit is None or not re.fullmatch("[0-9a-f]{40}", args.source_commit)):
+        parser.error("running requires --build-receipt and an exact --source-commit")
     for path in [args.validation_dir, args.grim_dir]:
         if path == PROJECT or PROJECT in path.parents:
             parser.error("worlds and runtime evidence must be outside the source repository")
@@ -260,14 +269,15 @@ def command_output(record, name):
 
 def position(text):
     number = r"([-+\d.eE]+)"
-    match = re.search(r"following entity data: \[" + number + r"d,\s*" + number + r"d,\s*" + number + r"d\]", text)
+    match = re.search(r"\bRustwire has the following entity data: \[" + number + r"d,\s*" + number + r"d,\s*" + number + r"d\]", text)
     return [float(value) for value in match.groups()] if match else None
 
 
 def wind_inventory(text, offhand_query=False):
     """Plain wind-charge stacks have no nested custom components in this test."""
     entries = []
-    for compound in re.findall(r"\{[^{}]*\}", text):
+    owned = "\n".join(re.findall(r"\bRustwire has the following entity data: (.+)", text))
+    for compound in re.findall(r"\{[^{}]*\}", owned):
         if '"minecraft:wind_charge"' not in compound:
             continue
         slot = re.search(r"\bSlot:\s*(-?\d+)b", compound)
@@ -322,27 +332,47 @@ def assess(record, server_lines, client_lines):
         "server_clean_exit": record["server_exit"] == 0,
         "client_clean_exit": record["client_exit"] == 0,
         "ready_seen": record.get("ready_seen", False),
-        "all_scenario_commands_sent": len(record["commands"]) == len(scenario(record.get("version", "1.21.1"))),
+        "all_scenario_commands_sent": [(x["name"], x["command"], x["phase"]) for x in record["commands"]] == [(name, command, phase) for name, command, _, phase in scenario(record.get("version", "1.21.1"))],
         "plugin_version_confirmed": "Grim Version:" in version_output and record["grim_version"] in version_output,
         "player_tracked": "Profile for Rustwire" in profile_output and "Version:" in profile_output and "exempt or offline" not in profile_output,
         "prediction_debug_enabled": "Console output for Rustwire is now enabled" in command_output(record, "grim_prediction_debug"),
-        "survival_confirmed": bool(re.search(r"following entity data:\s*0\s*$", command_output(record, "initial_survival"), re.MULTILINE)),
+        "survival_confirmed": bool(re.search(r"\bRustwire has the following entity data:\s*0\s*$", command_output(record, "initial_survival"), re.MULTILINE)),
         "no_ops_or_permission_grants": record.get("no_ops_or_permission_grants", False),
         "check_configuration_unchanged": record.get("check_configuration_unchanged", False),
         "no_flags_outside_negative_control": not record["legitimate_flags"],
         "negative_control_flagged": any(flag["check"].replace(" ", "").rstrip("*") == "BadPacketsF" for flag in record["negative_flags"]),
+        "only_expected_negative_flag": len(record["negative_flags"]) == 1 and record["negative_flags"][0]["check"].replace(" ", "").rstrip("*") == "BadPacketsF",
+        "listener_closed": record.get("listener_closed", False),
+        "cleanup_succeeded": not record.get("cleanup_errors", []),
+        "complete_log_capture": record.get("readers_drained", False),
         "all_client_actions_observed": {"walk", "inventory", "wind", "negative"}.issubset(record["observed_client_actions"]),
         "walking_confirmed": delta is not None and all(math.isfinite(value) for value in delta) and math.hypot(delta[0], delta[2]) > 0.05 and abs(delta[1]) < 0.1,
+        "walking_fixture_displacement": (start is not None and end is not None
+            and all(math.isclose(value, expected, rel_tol=0, abs_tol=1e-7) for value, expected in zip(start, [0.5, -60.0, 0.5]))
+            and all(math.isclose(value, expected, rel_tol=0, abs_tol=1e-7) for value, expected in zip(end, [0.5, -60.0, 4.8134259902859675]))),
         "initial_wind_stack_confirmed": {"slot": 0, "count": 8} in initial_inventory,
         "offhand_swap_confirmed": {"slot": -106, "count": 8} in swapped_inventory,
         "two_wind_uses_confirmed": {"slot": -106, "count": 6} in after_wind_inventory,
-        "wind_entities_confirmed": wind_count is not None and wind_count >= 2,
+        "wind_entities_confirmed": wind_count == 2,
         "no_console_command_errors": not record["console_failures"],
         "no_runtime_errors": not record["runtime_failure_lines"],
     }
     record["acceptance_checks"] = checks
     record["failed_checks"] = [name for name, passed in checks.items() if not passed]
     record["passed"] = not record.get("error") and not record["failed_checks"]
+
+
+def capture_output(process, path, consume):
+    """A partial log is never evidence of zero flags."""
+    try:
+        with path.open("w") as output:
+            for raw in process.stdout:
+                output.write(raw)
+                output.flush()
+                consume(raw)
+        return {"eof": True}
+    except Exception as exc:
+        return {"eof": False, "error": f"{type(exc).__name__}: {exc}"}
 
 
 def run_server(args, world, record, client_binary):
@@ -352,31 +382,32 @@ def run_server(args, world, record, client_binary):
     unexpected_flag = threading.Event()
     started = time.monotonic()
     record["client_binary_sha256"] = digest(client_binary)
+    if record["client_binary_sha256"] != record["expected_client_binary_sha256"]:
+        raise RuntimeError("frozen client no longer matches build receipt")
     record["client_command"] = [str(client_binary), "127.0.0.1", "25565", record["version"]]
 
+    reader_states = {}
     def read_output(process, label, timeline):
-        with (world / f"grim-{label}.log").open("w") as output:
-            for raw in process.stdout:
-                output.write(raw)
-                output.flush()
-                line = ANSI.sub("", raw).strip()
-                timeline.append({"seconds": round(time.monotonic() - started, 6), "utc": utc_now(), "line": line})
-                if label == "server":
-                    if "Done (" in line:
-                        server_ready.set()
-                    if "Rustwire joined the game" in line:
-                        joined.set()
-                    if FLAG.search(line) or "joined the game" in line or "lost connection" in line:
-                        print(f"{record['version']} {line}", flush=True)
-                    if FLAG.search(line):
-                        phase = record["commands"][-1]["phase"] if record["commands"] else "startup"
-                        if phase != "negative":
-                            unexpected_flag.set()
-                else:
-                    if "GRIM_PROBE_READY" in line:
-                        probe_ready.set()
-                    if "GRIM_ACTION" in line or "GRIM_PROBE" in line:
-                        print(f"{record['version']} {line}", flush=True)
+        def consume(raw):
+            line = ANSI.sub("", raw).strip()
+            timeline.append({"seconds": round(time.monotonic() - started, 6), "utc": utc_now(), "line": line})
+            if label == "server":
+                if "Done (" in line:
+                    server_ready.set()
+                if "Rustwire joined the game" in line:
+                    joined.set()
+                if FLAG.search(line) or "joined the game" in line or "lost connection" in line:
+                    print(f"{record['version']} {line}", flush=True)
+                if FLAG.search(line):
+                    phase = record["commands"][-1]["phase"] if record["commands"] else "startup"
+                    if phase != "negative":
+                        unexpected_flag.set()
+            else:
+                if "GRIM_PROBE_READY" in line:
+                    probe_ready.set()
+                if "GRIM_ACTION" in line or "GRIM_PROBE" in line:
+                    print(f"{record['version']} {line}", flush=True)
+        reader_states[label] = capture_output(process, world / f"grim-{label}.log", consume)
 
     def start_reader(process, label, timeline):
         reader = threading.Thread(target=read_output, args=(process, label, timeline), daemon=True)
@@ -435,10 +466,25 @@ def run_server(args, world, record, client_binary):
         record["error"] = f"{type(exc).__name__}: {exc}"
         print(f"GRIM FAIL {record['version']}: {record['error']}", flush=True)
     finally:
-        stop_process(client)
-        stop_process(server, "stop")
+        record["cleanup_errors"] = []
+        for process, polite in [(client, None), (server, "stop")]:
+            try:
+                stop_process(process, polite)
+            except Exception as exc:
+                record["cleanup_errors"].append(f"{type(exc).__name__}: {exc}")
+        try:
+            record["listener_closed"] = not listeners(require_present=False)
+        except Exception as exc:
+            record["listener_closed"] = False
+            record["cleanup_errors"].append(f"listener check: {exc}")
         for reader in readers:
             reader.join(timeout=5)
+        record["reader_status"] = dict(reader_states)
+        record["readers_drained"] = (len(readers) == 2 and not any(r.is_alive() for r in readers)
+                                      and set(reader_states) == {"server", "client"}
+                                      and all(state.get("eof") for state in reader_states.values()))
+        server_lines = [dict(row) for row in server_lines]
+        client_lines = [dict(row) for row in client_lines]
         record["server_exit"] = None if server is None else server.returncode
         record["client_exit"] = None if client is None else client.returncode
         record["seconds"] = round(time.monotonic() - started, 6)
@@ -457,6 +503,10 @@ def main():
     args = arguments()
     if not args.validation_dir.is_dir():
         raise RuntimeError("Prepare the approved baseline Paper workspace first")
+    receipt = None
+    if not args.prepare_only:
+        receipt = json.loads(args.build_receipt.read_text())
+        build.verify_receipt(receipt, args.source_root, args.client, args.source_commit)
     paper = json.loads((PROJECT / "docs/validation/matrix-download-provenance.json").read_text())
     grim = json.loads((PROJECT / "docs/validation/grim-download-provenance.json").read_text())
     with (args.validation_dir / "one-server.lock").open("a") as lock:
@@ -464,7 +514,7 @@ def main():
         stamp = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
         run_dir = args.grim_dir / "runs" / stamp
         run_dir.mkdir(parents=True)
-        results = {"scenario": args.mode, "created_utc": utc_now(), "prepare_only": args.prepare_only, "records": []}
+        results = {"scenario": args.mode, "created_utc": utc_now(), "prepare_only": args.prepare_only, "build_receipt": receipt, "records": []}
         (run_dir / "grim-download-provenance.json").write_text(json.dumps(grim, indent=2) + "\n")
         client_binary = None
         if not args.prepare_only:
@@ -472,10 +522,12 @@ def main():
             client_binary = run_dir / "client-bin/grim_probe"
             shutil.copyfile(args.client, client_binary)
             client_binary.chmod(0o755)
+            build.verify_receipt(receipt, args.source_root, client_binary, args.source_commit)
         for version in args.versions:
             try:
                 world, record = prepare_server(args, run_dir, version, paper, grim)
                 if not args.prepare_only:
+                    record["expected_client_binary_sha256"] = receipt["binary_sha256"]
                     record = run_server(args, world, record, client_binary)
                 else:
                     record["prepared"] = True

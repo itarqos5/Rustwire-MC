@@ -99,7 +99,11 @@ Both 26.x servers require the pinned Java 25 runtime; earlier targets use Java
 21. The runner expects Python 3, curl, a built client and Linux socket inspection.
 
 ```sh
-cargo build --release --example grim_probe
+SOURCE_COMMIT=$(git rev-parse HEAD)
+python3 tools/paper/build_grim_probe.py \
+  --source-root . --source-commit "$SOURCE_COMMIT" \
+  --target-dir ../rustwire-grim-target \
+  --output ../rustwire-grim-build-receipt.json
 
 # Optional: artifact/configuration preparation only; no server is launched.
 python3 tools/paper/validate_grim.py --mode bounded-grim --prepare-only \
@@ -110,12 +114,24 @@ python3 tools/paper/validate_grim.py --mode bounded-grim --prepare-only \
 python3 tools/paper/validate_grim.py --mode bounded-grim \
   --validation-dir /absolute/path/to/rustwire-server-validation \
   --grim-dir /absolute/path/to/rustwire-grim-validation \
-  --client target/release/examples/grim_probe \
+  --client ../rustwire-grim-target/release/examples/grim_probe \
+  --source-root . --source-commit "$SOURCE_COMMIT" \
+  --build-receipt ../rustwire-grim-build-receipt.json \
   --versions 1.21.1 1.21.5 26.2 26.1.2
 ```
 
-`--client PATH` selects another compatible headless executable. The runner
-snapshots the executable before launch and records its SHA-256. It downloads
+`--client PATH` must match the source-bound build receipt. With a custom Cargo
+target, use the executable path printed by the builder. It selects Cargo's
+reported executable and records the unchanged source set, build command,
+Rust/Cargo versions and binary hash. This release build uses default features,
+disables LTO and uses 16 codegen units to avoid a large validation-only rebuild;
+it is not a general library performance benchmark. The runner verifies the
+library baseline, executing harness/manifests and binary, rechecks the copied
+snapshot, then requires its hash to match before each launch. The same copied
+binary is used for the complete matrix. This is local build provenance, not a
+cryptographic attestation against a malicious toolchain or forged receipt.
+
+The runner downloads
 only absent pinned official Grim artifacts and verifies all publisher hashes;
 an existing mismatched artifact is rejected. No mutable “latest” download is
 used. Runtime artifacts and raw logs remain outside the repository.
@@ -214,3 +230,18 @@ python3 -m unittest discover -s tools/paper -p test_validate_grim.py -v
 * [Pinned alpha artifact](https://modrinth.com/plugin/grimac/version/YJEwvStg)
 * [Console commands](https://github.com/GrimAnticheat/Grim/wiki/Commands)
 * [Permissions and exemptions](https://github.com/GrimAnticheat/Grim/wiki/Permissions)
+
+## Hardened refresh gates
+
+The current runner also requires exactly one expected BadPacketsF control flag,
+with no other flag hidden inside that window; exact ordered command contents and
+phases; the fixture's server-confirmed displacement and exactly two projectiles;
+Rustwire-bound NBT/survival evidence; independent cleanup attempts; and a verified
+closed listener. Both log readers must reach EOF successfully and finish before
+assessment. A partial or failed log capture cannot prove zero flags. Bukkit
+Grim event failures and Java runtime exceptions fail the runtime gate.
+
+Twenty-two offline Grim controls cover these gates and source/binary/harness
+receipt mismatches. This strengthens evidence collection without changing client
+movement, Grim checks, thresholds, exemptions or punishments. Historical results
+above retain their original twenty-check scope and original binary identity.

@@ -5,6 +5,12 @@ import copy
 import importlib.util
 from pathlib import Path
 import unittest
+from unittest import mock
+import tempfile
+import hashlib
+import io
+from types import SimpleNamespace
+import build_grim_probe as build
 
 
 SPEC = importlib.util.spec_from_file_location("validate_grim", Path(__file__).with_name("validate_grim.py"))
@@ -25,7 +31,7 @@ def clean_fixture(version="1.21.1"):
         "grim_prediction_debug": "Console output for Rustwire is now enabled",
         "initial_survival": "Rustwire has the following entity data: 0",
         "initial_position": "Rustwire has the following entity data: [0.5d, -60.0d, 0.5d]",
-        "walk_position": "Rustwire has the following entity data: [0.5d, -60.0d, 4.5d]",
+        "walk_position": "Rustwire has the following entity data: [0.5d, -60.0d, 4.8134259902859675d]",
         "initial_inventory": 'Rustwire has the following entity data: [{Slot: 0b, id: "minecraft:wind_charge", count: 8}]',
         "swapped_inventory": 'Rustwire has the following entity data: {' + slot + 'id: "minecraft:wind_charge", count: 8}',
         "wind_inventory": 'Rustwire has the following entity data: {' + slot + 'id: "minecraft:wind_charge", count: 6}',
@@ -44,6 +50,7 @@ def clean_fixture(version="1.21.1"):
         "version": version, "commands": commands, "seconds": 99.0, "server_exit": 0,
         "client_exit": 0, "ready_seen": True, "grim_version": "2.3.73",
         "no_ops_or_permission_grants": True, "check_configuration_unchanged": True,
+        "listener_closed": True, "cleanup_errors": [], "readers_drained": True,
     }
     return record, server, client
 
@@ -133,7 +140,7 @@ class AssessmentTests(unittest.TestCase):
 
     def test_missing_position_and_projectile_evidence_rejected(self):
         fixture = clean_fixture()
-        fixture[1][:] = [row for row in fixture[1] if "count: 2" not in row["line"] and "4.5d" not in row["line"]]
+        fixture[1][:] = [row for row in fixture[1] if "count: 2" not in row["line"] and "4.8134259902859675d" not in row["line"]]
         record = self.assert_rejected(fixture, "wind_entities_confirmed")
         self.assertIn("walking_confirmed", record["failed_checks"])
 
@@ -141,6 +148,89 @@ class AssessmentTests(unittest.TestCase):
         fixture = clean_fixture()
         fixture[1].append({"seconds": 20.2, "utc": "synthetic", "line": "[packetevents] PacketEvents caught an unhandled exception while calling your listener."})
         self.assert_rejected(fixture, "no_runtime_errors")
+
+    def test_unexpected_or_duplicate_negative_flags_fail(self):
+        for check in ["Simulation", "BadPacketsF"]:
+            fixture = clean_fixture()
+            begin = next(command["sent_seconds"] for command in fixture[0]["commands"] if command["name"] == "negative_begin")
+            fixture[1].append({"seconds": begin + 0.2, "utc": "synthetic", "line": f"Grim » Rustwire failed {check} (x1) test"})
+            self.assert_rejected(fixture, "only_expected_negative_flag")
+
+    def test_listener_or_cleanup_failure_rejected(self):
+        for field, value, check in [("listener_closed", False, "listener_closed"), ("cleanup_errors", ["client stop failed"], "cleanup_succeeded")]:
+            fixture = clean_fixture()
+            fixture[0][field] = value
+            self.assert_rejected(fixture, check)
+
+    def test_receipt_binds_binary_and_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            binary = root / "probe"
+            binary.write_bytes(b"binary")
+            receipt = {"method": build.METHOD, "source_base_commit": "a" * 40,
+                       "source_sha256": {"library": "hash"}, "binary_sha256": hashlib.sha256(b"binary").hexdigest(),
+                       "cargo_version": "cargo", "rustc_version": "rustc"}
+            with mock.patch.object(build, "verify_library"), mock.patch.object(build, "verify_harness"), mock.patch.object(build, "sources", return_value={"library": "hash"}):
+                self.assertTrue(build.verify_receipt(receipt, root, binary, "a" * 40))
+                for key in receipt:
+                    bad = receipt.copy(); bad[key] = None
+                    with self.subTest(key=key), self.assertRaises(RuntimeError):
+                        build.verify_receipt(bad, root, binary, "a" * 40)
+
+    def test_wrong_player_nbt_does_not_count(self):
+        fixture = clean_fixture()
+        for row in fixture[1]:
+            row["line"] = row["line"].replace("Rustwire has the following entity data", "OtherPlayer has the following entity data")
+        result = self.assert_rejected(fixture, "walking_confirmed")
+        for check in ["initial_wind_stack_confirmed", "offhand_swap_confirmed", "two_wind_uses_confirmed", "survival_confirmed"]:
+            self.assertIn(check, result["failed_checks"])
+
+    def test_command_order_content_and_phase_are_exact(self):
+        for field in ["name", "command", "phase"]:
+            fixture = clean_fixture(); fixture[0]["commands"][0][field] = "wrong"
+            self.assert_rejected(fixture, "all_scenario_commands_sent")
+        fixture = clean_fixture(); fixture[0]["commands"][:2] = reversed(fixture[0]["commands"][:2])
+        self.assert_rejected(fixture, "all_scenario_commands_sent")
+
+    def test_bukkit_and_java_runtime_failures_rejected(self):
+        for line in ["Could not pass event PlayerMoveEvent to GrimAC v2.3.73", "java.lang.NullPointerException: fixture", "java.lang.NoSuchMethodError: fixture"]:
+            fixture = clean_fixture()
+            fixture[1].append({"seconds": 20.2, "utc": "synthetic", "line": line})
+            self.assert_rejected(fixture, "no_runtime_errors")
+
+    def test_partial_log_cannot_prove_zero_flags(self):
+        fixture = clean_fixture(); fixture[0]["readers_drained"] = False
+        self.assert_rejected(fixture, "complete_log_capture")
+        writer = mock.MagicMock()
+        writer.write.side_effect = [None, OSError("disk full")]
+        path = mock.MagicMock()
+        path.open.return_value.__enter__.return_value = writer
+        consumed = []
+        process = SimpleNamespace(stdout=io.StringIO("positive evidence\nlate Simulation flag\n"))
+        state = GRIM.capture_output(process, path, consumed.append)
+        self.assertFalse(state["eof"])
+        self.assertIn("disk full", state["error"])
+        self.assertEqual(consumed, ["positive evidence\n"])
+
+    def test_exact_fixture_displacement_and_projectile_count(self):
+        fixture = clean_fixture()
+        for row in fixture[1]: row["line"] = row["line"].replace("4.8134259902859675d", "4.0d")
+        self.assert_rejected(fixture, "walking_fixture_displacement")
+        fixture = clean_fixture()
+        for row in fixture[1]: row["line"] = row["line"].replace("count: 2", "count: 3")
+        self.assert_rejected(fixture, "wind_entities_confirmed")
+
+    def test_invoked_harness_matches_receipted_snapshot(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "snapshot"; invoked = Path(directory) / "invoked"
+            root.mkdir(); invoked.mkdir()
+            (root / "runner.py").write_text("original")
+            (invoked / "runner.py").write_text("original")
+            with mock.patch.object(build, "PROJECT", invoked), mock.patch.object(build, "HARNESS", ["runner.py"]):
+                build.verify_harness(root)
+                (invoked / "runner.py").write_text("different")
+                with self.assertRaisesRegex(RuntimeError, "invoked harness/manifest differs"):
+                    build.verify_harness(root)
 
     def test_configuration_sources_remain_native(self):
         for version in GRIM.VERSIONS:
