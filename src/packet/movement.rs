@@ -1,14 +1,16 @@
-//! The four ordinary serverbound player movement forms.
+//! Ordinary serverbound player and vehicle movement envelopes.
 //!
 //! This module encodes reported positions and rotations. It does not simulate
 //! gravity, collision, friction, input, or a 20 Hz client clock; callers own
-//! those behaviors. Vehicle movement uses separate packets.
+//! those behaviors. [`VehicleMovement`] has its own versioned wire layout.
+mod vehicle;
 use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,
     version::State,
     Error, Limits, Result, Version,
 };
+pub use vehicle::VehicleMovement;
 
 #[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct PlayerMovement {

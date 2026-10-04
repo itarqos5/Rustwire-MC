@@ -1176,3 +1176,15 @@ release-aligned implementation inspection covers each present family; official
 static orb inspection is limited to 1.20.6. No upstream serializer or game runtime
 was executed. See the [audit](docs/legacy-spawn-wire-audit.md) for commands, source
 identities and all evidence limits.
+
+## Serverbound vehicle movement
+
+Nine focused Rust tests exercise 108 independently Python-encoded fixtures
+(66 outbound plus 42 preserved clientbound), all 3,504 strict prefixes, every
+invalid ground byte, exact packet budgets, version-shape rejection, directional
+IDs, complete outbound frames, floating-bit semantics and transactional I/O.
+Ten clean-checkout Python regressions check the fixture verifier without any
+downloaded schemas; its separate audit covers all 28 hash-pinned directional
+layouts. See the [wire audit](docs/vehicle-movement-wire-audit.md) for reproduction
+and exact static release/source evidence. No new live-server, release-API,
+full-feature, MSRV or performance result is claimed by this increment.

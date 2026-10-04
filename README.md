@@ -105,6 +105,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
 - Signed-message, signed-command and public chat-session envelopes, plus canonical signing input and a caller-owned signing-provider hook
 - Bounded last-seen tracking, version-aware acknowledgement checksums and transactional packed-signature cache resolution, after explicit application display/trust decisions
+- Serverbound vehicle-movement reports with explicit ground-state presence from 1.21.4, separate from unchanged clientbound corrections
 - Typed hand swings, digging, use-block/use-item, entity interaction/actions, respawn/statistics commands, player input/abilities and tick-end packets
 - Tags, resource-pack offers/status replies, cookies, transfers, server links and code-of-conduct payloads, with no implicit consent or URL navigation
 

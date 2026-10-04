@@ -635,3 +635,14 @@ cover every present family and the first removal boundaries. Static official
 [source facts](docs/validation/legacy-spawn-wire-facts.json) record hashes and
 URLs without redistributing upstream implementations or game artifacts. The
 62 original Python fixtures are synthetic, not captures or executed serializers.
+
+## Serverbound vehicle movement
+
+The distinct `movement::VehicleMovement` envelope covers all fourteen families.
+Immutable MCProtocolLib protocol-768/769 release implementations confirm that
+the ground-state boolean begins at 769. Static official 1.20.6 and 26.2 codecs
+corroborate the historical/modern bodies and the unchanged 32-byte clientbound
+layout; modern vehicle vectors remain three f64s. The [wire audit](docs/vehicle-movement-wire-audit.md)
+records exact primary-source links and artifact hashes. The 108 original Python
+fixtures include both directions; no game implementation or disassembly is
+distributed, and no release API or server was executed for this increment.
