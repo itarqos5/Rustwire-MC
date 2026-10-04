@@ -62,6 +62,8 @@ impl InventoryPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum ChatPacket {
+    Suggestions(super::server_metadata::ChatSuggestions),
+    Hide(super::server_metadata::HideMessage),
     System(chat::SystemChat),
     Disguised(chat::DisguisedChat),
     Player(Box<chat::PlayerChat>),
@@ -111,6 +113,8 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    ServerData(super::server_metadata::ServerData),
+    PingResponse(super::server_metadata::PingResponse),
     Advancement(super::advancements::AdvancementPacket),
     WorldControl(super::world_control::WorldControlPacket),
     Hud(super::hud::HudPacket),
@@ -170,6 +174,18 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "server_data" => Self::ServerData(super::server_metadata::ServerData::decode(
+                bytes, version, limits,
+            )?),
+            "ping_response" => Self::PingResponse(super::server_metadata::PingResponse::decode(
+                bytes, version, limits,
+            )?),
+            "chat_suggestions" => Self::Chat(ChatPacket::Suggestions(
+                super::server_metadata::ChatSuggestions::decode(bytes, version, limits)?,
+            )),
+            "hide_message" => Self::Chat(ChatPacket::Hide(
+                super::server_metadata::HideMessage::decode(bytes, version, limits)?,
+            )),
             "advancements" | "select_advancement_tab" => Self::Advancement(
                 super::advancements::AdvancementPacket::decode(name, bytes, version, limits)?,
             ),

@@ -462,3 +462,15 @@ Independent clarification sources are MCProtocolLib
 progress timestamp units and template icon ordering, not a vanilla release
 oracle. Original fixtures are independently assembled Python bytes; no upstream
 implementation code, game binary or packet capture is copied.
+
+## Server and chat metadata envelopes
+
+The [server/chat metadata audit](docs/server-metadata-wire-audit.md) records six
+new bounded packet families and their exact version/state/direction boundaries.
+`tools/verify_server_metadata_schemas.py` hash-checks all fourteen schemas and
+independently constructs 310 original synthetic wire fixtures. Pinned Azalea,
+MCProtocolLib and Minestom source reads corroborate packed signatures, suggestion
+actions and report-detail limits omitted from schema types. This is source-level
+corroboration, not an executed release oracle or live-server result. Only protocol
+facts and original Rust/Python test code were added; no upstream implementation
+code, game binaries or packet captures were copied.

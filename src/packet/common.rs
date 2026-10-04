@@ -126,6 +126,7 @@ impl StoredCookie {
         Ok(Self { key, value })
     }
 }
+pub use super::server_metadata::{CustomReportDetails, ReportDetail};
 // Preserve the original public paths while the complete codecs live separately.
 pub use super::tags::{RegistryTag, TaggedRegistry, UpdateTags};
 #[derive(Debug, Clone, PartialEq)]
@@ -140,6 +141,7 @@ pub struct ServerLink {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum CommonPacket {
+    CustomReportDetails(CustomReportDetails),
     ResourcePack(ResourcePackOffer),
     RemoveResourcePack(Option<[u8; 16]>),
     Transfer(Transfer),
@@ -160,6 +162,9 @@ impl CommonPacket {
         limits: Limits,
     ) -> Result<Option<Self>> {
         let packet = match name {
+            "custom_report_details" => {
+                Self::CustomReportDetails(CustomReportDetails::decode(bytes, version, limits)?)
+            }
             "resource_pack_send" | "add_resource_pack" => {
                 Self::ResourcePack(ResourcePackOffer::decode(bytes, version, limits)?)
             }

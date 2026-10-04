@@ -100,6 +100,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - `HashedItemStack::from_slot` derives verified hashes for ordinary scalar, damage, custom-data NBT, block-state, custom-model-data and tooltip components, plus literal/styled names and lore, food, books, fireworks, lodestones, cooldowns and selected combat/consumption components
 - Persistent hash support is an explicit subset: numeric registry references, translated/click/hover text and unknown persistent codecs fail rather than producing guessed checksums
 - All known entity-metadata outer serializers, including semantic particles, painting/wolf holders and resolvable profiles, with shared slot/NBT budgets
+- Server MOTD/icon data, bounded custom report metadata, chat suggestions/deletion and play ping envelopes with no automatic reporting or trust-policy changes
 - System/disguised/signed-player-chat envelope decoding; signatures are retained but not authenticated
 - Signed-message, signed-command and public chat-session envelopes, plus canonical signing input and a caller-owned signing-provider hook
 - Bounded last-seen tracking, version-aware acknowledgement checksums and transactional packed-signature cache resolution, after explicit application display/trust decisions

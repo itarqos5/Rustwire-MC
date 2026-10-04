@@ -4,7 +4,7 @@ Updated: 2026-10-04. Historical sections retain their original source commits. T
 
 ## Automated checks
 
-- 478 core tests with all features; 439 applicable core tests without default features
+- 488 core tests with all features; 449 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -866,3 +866,37 @@ The integrated advancement snapshot passed 478 stable all-feature tests,
 439 no-default tests, all 42 schema-layout checks, exact regeneration of the
 84 fixture rows, strict all-target Clippy/rustdoc and formatting. Rust 1.88
 and all three supported CI operating systems are checked on the exact commit.
+
+## Server and chat metadata focused validation
+
+The [wire audit](docs/server-metadata-wire-audit.md) adds six packet families:
+server data, custom report details, chat suggestions, packed message deletion,
+play ping response and matching serverbound ping request. All fourteen pinned
+schemas pass structural, alias, name/type, state/direction and ID checks. There
+are 310 independently encoded synthetic fixtures and 5,601 strict body prefixes;
+no release serializer or live server was run for this increment.
+
+Focused stable-Rust validation passed with locked, offline dependencies:
+
+- 10 new Rust tests (eight body/dispatch/budget tests and two in-memory connection
+  tests), together with 25 existing common/chat/cache/typed regressions, under
+  both no-default-features and all-features
+- Eight standalone Python audit regressions and deterministic fixture check
+- Focused no-default-features and all-features Clippy with warnings denied
+- No-default-features rustdoc with warnings denied and formatting check
+
+Tests check exact version boundaries, all fixture IDs, state/direction dispatch,
+UTF-16 and collection limits, strict booleans and actions, invalid lengths and
+VarInts, NBT depth/nodes, packet-wide aggregate bytes, opaque icon data, duplicate
+report-key retention, packed-reference/cache separation, complete i64 domains
+and transactional reads/writes. Connection tests confirm these metadata packets
+produce no automatic writes and malformed metadata does not silently fall back.
+No-default and all-feature checks use Rust 1.99 stable. Full integrated suites
+and exact-commit Rust 1.88 CI remain separate integration gates; this focused
+validation does not claim they ran here.
+
+Integrated metadata validation passed 488 stable all-feature tests, 449 minimal
+tests, all 310 fixture checks, strict all-target Clippy/rustdoc and formatting.
+All 137 Python verifier regressions also passed in a clean copy with no
+downloaded schemas; real upstream schema validation remains a separate audit.
+Rust 1.88 and platform coverage are checked by exact-commit CI.
