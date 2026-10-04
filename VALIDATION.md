@@ -1159,3 +1159,20 @@ Paper-validator Python tests in a schema-free clean copy, and strict Clippy,
 rustdoc and formatting. The optional static-binding verifier independently passed
 the official 26.2 inner-JAR hash, 11 class hashes and expected codec/framing
 bindings. These are not executed game serializers or live dialog acceptance tests.
+
+## Legacy spawn focused validation
+
+Six new Rust tests pass over 62 independent synthetic fixtures and all 1,910
+strict prefixes, direct/family/typed dispatch, exact packet IDs, every version
+and state boundary, signed/float/angle/UUID wire domains, malformed VarInts and
+packet budgets. Nine existing entity/typed regressions also pass. Fourteen
+Python controls pass in an isolated copy with no schema directory and socket
+networking disabled. Exact hash-pinned checks verify eight present and twenty
+absent type/mapper/switch combinations across all fourteen families.
+
+Strict focused minimal-feature Clippy/rustdoc and formatting pass on Rust 1.99.
+Full feature suites, exact MSRV and CI remain integration-owned. Independent
+release-aligned implementation inspection covers each present family; official
+static orb inspection is limited to 1.20.6. No upstream serializer or game runtime
+was executed. See the [audit](docs/legacy-spawn-wire-audit.md) for commands, source
+identities and all evidence limits.

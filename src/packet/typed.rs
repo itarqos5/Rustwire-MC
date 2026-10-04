@@ -365,6 +365,8 @@ impl DecodedPacket {
                 super::entity_control::EntityControlPacket::decode(name, bytes, version, limits)?,
             ),
             "spawn_entity"
+            | "spawn_entity_experience_orb"
+            | "named_entity_spawn"
             | "rel_entity_move"
             | "entity_move_look"
             | "entity_look"

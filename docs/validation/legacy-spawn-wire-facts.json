@@ -1,0 +1,335 @@
+{
+  "description": "Original source-location/hash metadata and factual wire observations only. Upstream source/game artifacts are not included. No source serializer was executed.",
+  "schema_protocols": [
+    763,
+    764,
+    765,
+    766,
+    767,
+    768,
+    769,
+    770,
+    771,
+    772,
+    773,
+    774,
+    775,
+    776
+  ],
+  "schema_presence": {
+    "spawn_entity_experience_orb": [
+      763,
+      764,
+      765,
+      766,
+      767,
+      768,
+      769
+    ],
+    "named_entity_spawn": [
+      763
+    ]
+  },
+  "independent_implementation": {
+    "repository": "https://github.com/GeyserMC/MCProtocolLib",
+    "records": [
+      {
+        "protocol": 763,
+        "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "sha256": "04d8802168b25b79653d9e5bea2e55174a3ce86eaa386aced9a40bbf3914ef22",
+            "git_blob_sha1": "4628b85df002bd848c9bdfc074557299235034d7"
+          },
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "517b38e8cae61134575fbca0617fd6b58ab57410584c27aee79e21e152031f98",
+            "git_blob_sha1": "9b39894cb9f46c0056a42eec88054679e9a85729"
+          },
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddPlayerPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddPlayerPacket.java",
+            "sha256": "43c35bdf7076516c34e6d88f85bfe6f432453ada588d18a18517416da794ac39",
+            "git_blob_sha1": "012f64a498450ced6a51b025a7d953c31a037ba0"
+          }
+        ],
+        "release_reference": "tag 1.20-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.20-1",
+        "declared_minecraft_version": "1.20",
+        "orb_registered": true,
+        "player_registered": true,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ],
+        "player_read_order": [
+          "signed VarInt entityId",
+          "UUID uuid",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "byte yaw",
+          "byte pitch"
+        ]
+      },
+      {
+        "protocol": 764,
+        "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "sha256": "28fa65362f65c324eb72c3dba98ae6000986bc89cb58d1b2b9d054c56ae4fdf8",
+            "git_blob_sha1": "a9bdfa0ddc82385f0b3d675120c6814cfa036d96"
+          },
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "517b38e8cae61134575fbca0617fd6b58ab57410584c27aee79e21e152031f98",
+            "git_blob_sha1": "9b39894cb9f46c0056a42eec88054679e9a85729"
+          }
+        ],
+        "release_reference": "tag 1.20.2-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.20.2-1",
+        "declared_minecraft_version": "1.20.2",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 765,
+        "commit": "5103ededc8c4d9d1f65a00b023579cee77edd35b",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/5103ededc8c4d9d1f65a00b023579cee77edd35b/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+            "sha256": "177d9684880673c676d9ea673b7eebc4f274b6746b2c30f0257ea1c9794ce345",
+            "git_blob_sha1": "1145f01f9535d457014e69fbe0ae6cc4489a2821"
+          },
+          {
+            "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/5103ededc8c4d9d1f65a00b023579cee77edd35b/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "517b38e8cae61134575fbca0617fd6b58ab57410584c27aee79e21e152031f98",
+            "git_blob_sha1": "9b39894cb9f46c0056a42eec88054679e9a85729"
+          }
+        ],
+        "release_reference": "PR #772 release 1.20.4-1 merge commit (no extant tag assumed)",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/pull/772",
+        "declared_minecraft_version": "1.20.4",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 766,
+        "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "sha256": "ee6ef73ee541b7107312038e3f3b60c6ba32a94e757b2ae72ac45bf7d98cac43",
+            "git_blob_sha1": "cb02421e3186f40f6801ea34af95e74f220b2f02"
+          },
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "b3eda95ba8263d5c156fc91b7d188bece8b27465d5d7a96ddf70865f72a51def",
+            "git_blob_sha1": "d5531bbbf7e7d9e52c74d5ade30c7022b016ef2f"
+          }
+        ],
+        "release_reference": "tag 1.20.6-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.20.6-1",
+        "declared_minecraft_version": "1.20.6",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 767,
+        "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "sha256": "e84c9095bb50bf8b40588607eba12f94892b707a390e5b8e82e088f76d9e6a8b",
+            "git_blob_sha1": "f3ccc98af55433917d42955fcca8e552018922bd"
+          },
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "b3eda95ba8263d5c156fc91b7d188bece8b27465d5d7a96ddf70865f72a51def",
+            "git_blob_sha1": "d5531bbbf7e7d9e52c74d5ade30c7022b016ef2f"
+          }
+        ],
+        "release_reference": "tag 1.21-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.21-1",
+        "declared_minecraft_version": "1.21",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 768,
+        "commit": "667e02d38cd4a79d46640312cd599123609633ac",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/667e02d38cd4a79d46640312cd599123609633ac/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "sha256": "93ae69a2e3698c61a799427449e97d4d527deafbe44f9e655282a4f896664434",
+            "git_blob_sha1": "93408bf6112be2dfa8608ffce13933f064e00a9a"
+          },
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/667e02d38cd4a79d46640312cd599123609633ac/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "dada8ade69e22e280c68eeab03c7b185e37eaa9b52fefba586cd1c5f263c0918",
+            "git_blob_sha1": "ece0a369f86c52160a1ad16b455009a1881baa24"
+          }
+        ],
+        "release_reference": "tag 1.21.2-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.21.2-1",
+        "declared_minecraft_version": "1.21.3",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 769,
+        "commit": "7cc247026c6bff700c644d545942f7733ebb6ad0",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/7cc247026c6bff700c644d545942f7733ebb6ad0/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "sha256": "eda2f5113352461ed6d72b5065e1ea433818037e76701fb805e90e65c4b6aac5",
+            "git_blob_sha1": "5b55befd0290970b14272ee87b9f538aaf3898df"
+          },
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/7cc247026c6bff700c644d545942f7733ebb6ad0/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/entity/spawn/ClientboundAddExperienceOrbPacket.java",
+            "sha256": "dada8ade69e22e280c68eeab03c7b185e37eaa9b52fefba586cd1c5f263c0918",
+            "git_blob_sha1": "ece0a369f86c52160a1ad16b455009a1881baa24"
+          }
+        ],
+        "release_reference": "tag 1.21.4-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.21.4-1",
+        "declared_minecraft_version": "1.21.4",
+        "orb_registered": true,
+        "player_registered": false,
+        "orb_read_order": [
+          "signed VarInt entityId",
+          "f64 x",
+          "f64 y",
+          "f64 z",
+          "signed i16 exp"
+        ]
+      },
+      {
+        "protocol": 770,
+        "commit": "f4004310698f9e3793e6619a6db89ae0a7784a4d",
+        "tree_truncated": false,
+        "files": [
+          {
+            "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+            "sha256": "c72f2321a7d5f92f772e86e2e7262c39c8cc4faa086194e328b0e1226d33a23d",
+            "git_blob_sha1": "371e4ac27effce8fba7e3d27be90b0f396573534"
+          }
+        ],
+        "release_reference": "tag 1.21.5-1",
+        "release_url": "https://github.com/GeyserMC/MCProtocolLib/releases/tag/1.21.5-1",
+        "declared_minecraft_version": "1.21.5",
+        "orb_registered": false,
+        "player_registered": false
+      }
+    ]
+  },
+  "official_static": {
+    "release": "1.20.6",
+    "protocol": 766,
+    "artifact": {
+      "version": "1.20.6",
+      "url": "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar",
+      "bundler_sha256": "c6d01d018ca782e506f0ec60652d47fd565078be9122b625c1681bc86c29c7ec",
+      "inner_path": "META-INF/versions/1.20.6/server-1.20.6.jar",
+      "inner_sha256": "bb610daa96b3784645b78fd7c0b887291414c9605cd913fc79cf985f523f4f5b"
+    },
+    "mappings": {
+      "version": "1.20.6",
+      "version_metadata_url": "https://piston-meta.mojang.com/v1/packages/84c5b02d36a9be4560597687f9e2d19d69fada5d/1.20.6.json",
+      "version_metadata_sha1": "84c5b02d36a9be4560597687f9e2d19d69fada5d",
+      "mappings_url": "https://piston-data.mojang.com/v1/objects/9e96100f573a46ef44caab3e716d5eb974594bb7/server.txt",
+      "mappings_sha1": "9e96100f573a46ef44caab3e716d5eb974594bb7",
+      "mappings_sha256": "4e5068e40a89c673b5541192ad7eab96289f6dcae704f577f8992bdf7c984aa3"
+    },
+    "classes": [
+      {
+        "entry": "ack.class",
+        "mapped_name": "net.minecraft.network.protocol.game.ClientboundAddExperienceOrbPacket",
+        "sha256": "a82d570354a48806058fb79e42e0d23d2c0fdbac2613c76e6c5d8d480b4cae24"
+      },
+      {
+        "entry": "wm.class",
+        "mapped_name": "net.minecraft.network.FriendlyByteBuf",
+        "sha256": "c6f2d2f7e69c801ef67facd3c5aabad314dff457f59c7459ce705ec89fe1b313"
+      }
+    ],
+    "observations": [
+      "Mapped orb packet constructor reads VarInt entity ID, three doubles and a signed short in this order.",
+      "Mapped writer emits the same fields/widths in the same order.",
+      "FriendlyByteBuf mappings identify obfuscated readVarInt, writeVarInt, writeDouble and writeShort methods."
+    ],
+    "limitations": [
+      "Static javap inspection only; no official serializers or server runtime executed.",
+      "No official static player packet inspection and no official all-release equivalence claim."
+    ]
+  },
+  "fixtures": {
+    "path": "tests/fixtures/legacy-spawn.tsv",
+    "rows": 62,
+    "strict_prefixes": 1910,
+    "kind": "Original standalone Python encoded synthetic bodies",
+    "sha256": "f76afe4e66f469dd261cdbd89e57bc8c58742ef435525feba972435001b3b01f"
+  }
+}

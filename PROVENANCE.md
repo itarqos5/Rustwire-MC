@@ -624,3 +624,14 @@ records a guarded removal of two phantom serverbound metadata entries in the
 independent PacketEvents version mapper agree on the eight actual serverbound
 configuration entries. Raw schema hashes stay unchanged; generated IDs in all
 other groups and the existing protocol-776 correction are preserved.
+
+## Legacy experience-orb and player spawn packets
+
+The [legacy-spawn audit](docs/legacy-spawn-wire-audit.md) verifies eight present
+and twenty absent packet/family combinations against unchanged pinned schemas.
+Immutable MCProtocolLib readers/writers and protocol declarations independently
+cover every present family and the first removal boundaries. Static official
+1.20.6 class inspection confirms the orb widths/order. The
+[source facts](docs/validation/legacy-spawn-wire-facts.json) record hashes and
+URLs without redistributing upstream implementations or game artifacts. The
+62 original Python fixtures are synthetic, not captures or executed serializers.

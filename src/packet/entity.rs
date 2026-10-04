@@ -250,6 +250,78 @@ impl Body for SpawnEntity {
         Ok(())
     }
 }
+/// Legacy experience-orb spawn, present only in protocols 763–769.
+/// The signed entity reference, signed short value and all coordinate bits are
+/// retained as wire data; this codec does not enforce gameplay-valid values.
+#[derive(Debug, Clone, PartialEq)]
+pub struct SpawnExperienceOrb {
+    pub entity_id: i32,
+    pub position: [f64; 3],
+    /// The schema's `count` field is the orb's experience value, not a list length.
+    pub value: i16,
+}
+impl Body for SpawnExperienceOrb {
+    fn read(r: &mut Reader<'_>, v: Version) -> Result<Self> {
+        v.packet_id(
+            State::Play,
+            Direction::Clientbound,
+            "spawn_entity_experience_orb",
+        )?;
+        Ok(Self {
+            entity_id: r.var_i32()?,
+            position: [r.f64()?, r.f64()?, r.f64()?],
+            value: r.i16()?,
+        })
+    }
+    fn write(&self, w: &mut Writer, v: Version, _: Limits) -> Result<()> {
+        v.packet_id(
+            State::Play,
+            Direction::Clientbound,
+            "spawn_entity_experience_orb",
+        )?;
+        w.var_i32(self.entity_id);
+        for value in self.position {
+            w.f64(value);
+        }
+        w.i16(self.value);
+        Ok(())
+    }
+}
+
+/// Legacy `named_entity_spawn`, present only in protocol 763 (1.20/1.20.1).
+/// UUID bytes, signed entity references, coordinate bits and byte angles are
+/// retained without registry lookup, entity simulation or gameplay validation.
+#[derive(Debug, Clone, PartialEq)]
+pub struct SpawnPlayer {
+    pub entity_id: i32,
+    pub uuid: [u8; 16],
+    pub position: [f64; 3],
+    pub yaw: Angle,
+    pub pitch: Angle,
+}
+impl Body for SpawnPlayer {
+    fn read(r: &mut Reader<'_>, v: Version) -> Result<Self> {
+        v.packet_id(State::Play, Direction::Clientbound, "named_entity_spawn")?;
+        Ok(Self {
+            entity_id: r.var_i32()?,
+            uuid: r.uuid()?,
+            position: [r.f64()?, r.f64()?, r.f64()?],
+            yaw: Angle(r.u8()?),
+            pitch: Angle(r.u8()?),
+        })
+    }
+    fn write(&self, w: &mut Writer, v: Version, _: Limits) -> Result<()> {
+        v.packet_id(State::Play, Direction::Clientbound, "named_entity_spawn")?;
+        w.var_i32(self.entity_id);
+        w.raw(&self.uuid);
+        for value in self.position {
+            w.f64(value);
+        }
+        w.u8(self.yaw.0);
+        w.u8(self.pitch.0);
+        Ok(())
+    }
+}
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RelativeMove {
     pub entity_id: i32,
@@ -620,6 +692,8 @@ impl Body for PlayerAbilities {
 }
 codec!(
     SpawnEntity,
+    SpawnExperienceOrb,
+    SpawnPlayer,
     RelativeMove,
     EntityLook,
     MoveAndLook,
@@ -636,6 +710,8 @@ codec!(
 #[derive(Debug, Clone, PartialEq)]
 pub enum EntityPacket {
     Spawn(SpawnEntity),
+    ExperienceOrb(SpawnExperienceOrb),
+    PlayerSpawn(SpawnPlayer),
     Move(RelativeMove),
     Look(EntityLook),
     MoveLook(MoveAndLook),
@@ -651,6 +727,10 @@ impl EntityPacket {
     pub fn decode(name: &str, bytes: &[u8], version: Version, limits: Limits) -> Result<Self> {
         Ok(match name {
             "spawn_entity" => Self::Spawn(SpawnEntity::decode(bytes, version, limits)?),
+            "spawn_entity_experience_orb" => {
+                Self::ExperienceOrb(SpawnExperienceOrb::decode(bytes, version, limits)?)
+            }
+            "named_entity_spawn" => Self::PlayerSpawn(SpawnPlayer::decode(bytes, version, limits)?),
             "rel_entity_move" => Self::Move(RelativeMove::decode(bytes, version, limits)?),
             "entity_look" => Self::Look(EntityLook::decode(bytes, version, limits)?),
             "entity_move_look" => Self::MoveLook(MoveAndLook::decode(bytes, version, limits)?),
@@ -674,6 +754,8 @@ impl EntityPacket {
     pub fn encode(&self, version: Version, limits: Limits) -> Result<RawPacket> {
         let (name, body) = match self {
             Self::Spawn(p) => ("spawn_entity", p.encode(version, limits)?),
+            Self::ExperienceOrb(p) => ("spawn_entity_experience_orb", p.encode(version, limits)?),
+            Self::PlayerSpawn(p) => ("named_entity_spawn", p.encode(version, limits)?),
             Self::Move(p) => ("rel_entity_move", p.encode(version, limits)?),
             Self::Look(p) => ("entity_look", p.encode(version, limits)?),
             Self::MoveLook(p) => ("entity_move_look", p.encode(version, limits)?),

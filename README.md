@@ -81,6 +81,7 @@ registry changes. Without it, those packets remain raw rather than guessing a
 world height. Standalone block-entity and view/simulation controls need no context.
 
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
+- Legacy experience-orb spawns through protocol 769 and player spawns in protocol 763, with exact absence gates and lossless fixed-size wire fields
 - Passenger lists, entity attachments, head rotation, camera, animation, damage events and hurt animation, with raw entity/registry references and exact-version packet IDs
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
 - Advancement definitions/removals/progress and tab notifications with shared text/icon budgets and exact item-template boundaries
