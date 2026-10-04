@@ -1,0 +1,107 @@
+{
+  "evidence": "Read-only primary-source and static class inspection; no game or release serializer execution.",
+  "sources": [
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSetTestBlock.java",
+      "sha256": "a9f67d2860bcb8ef5e2b3efbcc56ca093d377d3e57c5d1e4fe8fd79eebcc45d2"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientTestInstanceBlockAction.java",
+      "sha256": "545cdb553edcaaa51039992f6af95b9cb85f3065d6d116348f762f64b144ee7d"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerGameTestHighlightPos.java",
+      "sha256": "71754c0580b2812f67cd89b0419bc469b12127b16f5e8b15c0867906b1872e71"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerTestInstanceBlockStatus.java",
+      "sha256": "4dbb7217bc06ffddff1c00f1a672295850d07bcc7e40ce0d56895d377ec25331"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/TestInstanceData.java",
+      "sha256": "ea578fa1d30ce2149b7b02de1c4b8487c1a7fcc19fc710545789f812e111e1d2"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/ClientboundTestInstanceBlockStatus.java",
+      "sha256": "fb81854f845b9c18e11d4c5f2f3f4be85530448eb78c907f61ff3de3600e4bde"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/serverbound/level/ServerboundSetTestBlockPacket.java",
+      "sha256": "a12cc7c52452ad613564e4c23f34b79da799745b53275151879450e0993c56c7"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/serverbound/level/ServerboundTestInstanceBlockActionPacket.java",
+      "sha256": "905ea8e28a35ce08625eb9980534840e22f5f9c864389619dde347c1f4b88b86"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/level/block/TestInstanceBlockEntity.java",
+      "sha256": "fe8b37deeba85c0f7d0c102324c3a0c5c97739457e17b3e31da9ab28c8138d17"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftTypes.java",
+      "sha256": "6e1af7c6d404a9c207bd823d43db5ed03a05f995bcc8de6528db2e16f4054bf3"
+    },
+    {
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+      "sha256": "c72f2321a7d5f92f772e86e2e7262c39c8cc4faa086194e328b0e1226d33a23d"
+    }
+  ],
+  "official_static_artifact": {
+    "version": "26.2",
+    "url": "https://piston-data.mojang.com/v1/objects/823e2250d24b3ddac457a60c92a6a941943fcd6a/server.jar",
+    "bundler_sha256": "cdacdfb25898de5e4b4b0e5ddcc2722f77067e46605709c2d886c000ebb63ec5",
+    "inner_path": "META-INF/versions/26.2/server-26.2.jar",
+    "inner_sha256": "183c0499c5f855570ee487dd38e141a53f0121f83a0b07a3bac2d8b6698823e8",
+    "classes": [
+      {
+        "name": "net/minecraft/network/protocol/game/ClientboundGameTestHighlightPosPacket.class",
+        "sha256": "eb466f30e6ca1c930012d039c463142e57d06fb06179a9ff8b85e96db8fb26db"
+      },
+      {
+        "name": "net/minecraft/network/protocol/game/ClientboundTestInstanceBlockStatus.class",
+        "sha256": "f5e47fcee004ced3f17e8fc59ad7a971464ff49daff6e69f9679330ef7c64d33"
+      },
+      {
+        "name": "net/minecraft/network/protocol/game/ServerboundSetTestBlockPacket.class",
+        "sha256": "f47434cf4bf716d116c75522a318fb7ea4f09bdf6ba862569b5f78bb4a73afc6"
+      },
+      {
+        "name": "net/minecraft/network/protocol/game/ServerboundTestInstanceBlockActionPacket.class",
+        "sha256": "0f48777f5666a8feab322ab42b1068736f1e0839c4edc0740967e49302dad6f2"
+      },
+      {
+        "name": "net/minecraft/network/protocol/game/ServerboundTestInstanceBlockActionPacket$Action.class",
+        "sha256": "213e36d46941142c0d768b3b486299af3d40eab89d402411c2c1119a9c05e498"
+      },
+      {
+        "name": "net/minecraft/world/level/block/entity/TestInstanceBlockEntity$Data.class",
+        "sha256": "6b955d6d25742f7c30209b5d8e1d2a3c9c7ae5b4437847ca2e588d88eed13cdd"
+      },
+      {
+        "name": "net/minecraft/world/level/block/entity/TestInstanceBlockEntity$Status.class",
+        "sha256": "5a7677c3c7de592dd83af294a16497f7434f48cd25e3fac364dfb8d1e4af8bf2"
+      },
+      {
+        "name": "net/minecraft/world/level/block/state/properties/TestBlockMode.class",
+        "sha256": "26829616a6bea5c0a3ace6f7f0907cd39ee73d9742e0e59b8aff448bd6f8206f"
+      },
+      {
+        "name": "net/minecraft/core/Vec3i.class",
+        "sha256": "9bc98157117fd8e54333c6007f6105816ef23dcdf510a79c4edae6ac9bcc5590"
+      },
+      {
+        "name": "net/minecraft/world/level/block/Rotation.class",
+        "sha256": "1b5303fba7b7cefec73e028f3dafcb5a216fb3aa05bf6f1b6f05a271d97bb6d1"
+      }
+    ]
+  },
+  "bindings": [
+    "Vec3i.STREAM_CODEC is three VAR_INT fields, not three fixed i32 fields.",
+    "Status packet contains a component plus optional Vec3i.",
+    "Set-test-block packet contains packed BlockPos, TestBlockMode and UTF-8 string.",
+    "Action packet contains packed BlockPos, Action and unconditional TestInstanceBlockEntity.Data.",
+    "Data contains optional registry key, Vec3i, rotation, ignore-entities boolean, status and optional component.",
+    "Highlight packet contains two packed BlockPos fields."
+  ],
+  "catalog_correction": "Protocol-776 test_instance_block_action is ID65 (0x41), preserving the previously audited spectator-omission correction; the pinned raw schema has ID64."
+}

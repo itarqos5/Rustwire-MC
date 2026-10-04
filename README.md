@@ -372,3 +372,10 @@ see the [common-state regression audit](docs/common-state-wire-audit.md).
 subscription requests. Incoming samples become typed events without subscribing
 or responding. Modern registry references remain unresolved; see the
 [wire audit](docs/debug-samples-wire-audit.md) for exact limits and exclusions.
+
+### Game-test editor and status envelopes
+
+`packet::game_test` covers test-block updates, instance actions/status and
+highlight positions with exact version/direction gates and bounded text/NBT.
+Applications retain control of sending and applying these requests; see the
+[wire audit](docs/game-test-wire-audit.md) for scope and validation limits.
