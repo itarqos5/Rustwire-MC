@@ -37,7 +37,7 @@ COMMAND_FAILURE = re.compile(
 RUNTIME_FAILURE = re.compile(
     r"Error (?:occurred while|loading|enabling|disabling)|Exception in thread|"
     r"An error occurred while processing a packet|caught an unhandled exception|Failed to (?:load|enable) Grim|"
-    r"Could not pass event .+ to GrimAC|\bjava\.lang\.[A-Za-z]*(?:Exception|Error)\b|"
+    r"\bRustwire moved (?:too quickly|wrongly)!|Could not pass event .+ to GrimAC|\bjava\.lang\.[A-Za-z]*(?:Exception|Error)\b|"
     r"\b(?:DecoderException|EncoderException|NoClassDefFoundError|UnsupportedClassVersionError)\b", re.IGNORECASE,
 )
 
@@ -179,7 +179,7 @@ def prepare_server(args, run_dir, version, paper_manifest, grim_manifest):
         "server_command": [java, "-Xms256M", "-Xmx1024M", "-XX:ActiveProcessorCount=2", "-jar", str(paper_jar), "--nogui"],
         "baseline_kind": "headless Rustwire client on ordinary native Paper; no graphical vanilla comparison",
         "negative_control_kind": "bounded duplicate sprint state (BadPacketsF), not an invalid-movement simulation control",
-        "started_utc": utc_now(), "launched": False, "passed": False, "commands": [],
+        "started_utc": utc_now(), "launched": False, "passed": False, "commands": [], "bootstrap_commands": [],
     }
 
 
@@ -229,6 +229,13 @@ def stop_process(process, polite=None):
         except subprocess.TimeoutExpired:
             process.kill()
             process.wait(timeout=5)
+
+
+def bootstrap(version):
+    """Deterministic ordinary spawn before the test player joins."""
+    radius = "minecraft:respawn_radius" if version.startswith("26.") else "spawnRadius"
+    return [("spawn_center", "setworldspawn 0 -60 0"),
+            ("spawn_radius", f"gamerule {radius} 0"), ("spawn_radius_query", f"gamerule {radius}")]
 
 
 def scenario(version="1.21.1"):
@@ -290,6 +297,11 @@ def wind_inventory(text, offhand_query=False):
 
 
 def assess(record, server_lines, client_lines):
+    for index, command in enumerate(record.get("bootstrap_commands", [])):
+        commands = record["bootstrap_commands"]
+        end = commands[index + 1]["sent_seconds"] if index + 1 < len(commands) else record["bootstrap_end_seconds"]
+        command["server_output_in_window"] = [row["line"] for row in server_lines if command["sent_seconds"] <= row["seconds"] < end]
+        command["console_failure_lines"] = [line for line in command["server_output_in_window"] if COMMAND_FAILURE.search(line)]
     for index, command in enumerate(record["commands"]):
         end = record["commands"][index + 1]["sent_seconds"] if index + 1 < len(record["commands"]) else record["seconds"]
         command["server_output_in_window"] = [row["line"] for row in server_lines if command["sent_seconds"] <= row["seconds"] < end]
@@ -308,7 +320,7 @@ def assess(record, server_lines, client_lines):
     # flags by starting the acceptance window later, or by dropping late flags.
     record["legitimate_flags"] = [flag for flag in flags if flag["phase"] != "negative"]
     record["negative_flags"] = [flag for flag in flags if flag["phase"] == "negative"]
-    record["console_failures"] = [{"command": cmd["name"], "lines": cmd["console_failure_lines"]} for cmd in record["commands"] if cmd["console_failure_lines"]]
+    record["console_failures"] = [{"command": cmd["name"], "lines": cmd["console_failure_lines"]} for cmd in [*record.get("bootstrap_commands", []), *record["commands"]] if cmd["console_failure_lines"]]
     record["runtime_failure_lines"] = [row for row in server_lines if RUNTIME_FAILURE.search(row["line"])]
     record["observed_client_actions"] = sorted({phase for row in client_lines for phase in ACTION.findall(row["line"])})
     start = position(command_output(record, "initial_position"))
@@ -328,7 +340,23 @@ def assess(record, server_lines, client_lines):
         "after_wind_inventory": after_wind_inventory, "wind_entity_count": wind_count,
         "offhand_nbt_location": "equipment.offhand" if offhand_query else "Inventory[{Slot:-106b}]",
     }
+    bootstrap_rows = record.get("bootstrap_commands", [])
+    radius_name = "minecraft:respawn_radius" if record["version"].startswith("26.") else "spawnRadius"
+    radius_output = "\n".join(next((row["server_output_in_window"] for row in bootstrap_rows if row["name"] == "spawn_radius"), []))
+    radius_query = "\n".join(next((row["server_output_in_window"] for row in bootstrap_rows if row["name"] == "spawn_radius_query"), []))
+    spawn_output = "\n".join(next((row["server_output_in_window"] for row in bootstrap_rows if row["name"] == "spawn_center"), []))
+    spawn_match = re.search(r"Set the world spawn point(?: for \S+)? to (.+)", spawn_output)
+    spawn_values = [] if spawn_match is None else [float(value) for value in re.findall(r"-?\d+(?:\.\d+)?", spawn_match.group(1))[:3]]
+    teleport = next((row["line"] for row in client_lines if row["line"].startswith("GRIM_TELEPORT ")), "")
+    teleport_position = re.search(r"position=(\[[^]]+\])", teleport)
+    initial_client_position = None if teleport_position is None else json.loads(teleport_position.group(1))
+    record["initial_client_position"] = initial_client_position
     checks = {
+        "bootstrap_commands_exact": [(row["name"], row["command"]) for row in bootstrap_rows] == bootstrap(record["version"]),
+        "spawn_center_confirmed": spawn_values == [0.0, -60.0, 0.0],
+        "spawn_radius_zero_confirmed": (bool(re.search(re.escape(radius_name) + r".*(?:set to:?|=)\s*0\b", radius_output))
+                                        and bool(re.search(re.escape(radius_name) + r".*(?:set to:?|=)\s*0\b", radius_query))),
+        "initial_spawn_at_fixture": initial_client_position == [0.5, -60.0, 0.5],
         "server_clean_exit": record["server_exit"] == 0,
         "client_clean_exit": record["client_exit"] == 0,
         "ready_seen": record.get("ready_seen", False),
@@ -438,6 +466,13 @@ def run_server(args, world, record, client_binary):
         start_reader(server, "server", server_lines)
         wait_for(server_ready, [server], 180, "Paper/Grim startup")
         record["listeners"] = listeners()
+        for name, command in bootstrap(record["version"]):
+            record["bootstrap_commands"].append({"name": name, "command": command,
+                "sent_seconds": round(time.monotonic() - started, 6), "sent_utc": utc_now()})
+            server.stdin.write(command + "\n"); server.stdin.flush()
+            time.sleep(0.5)
+            ensure_alive([server], "pre-join spawn setup")
+        record["bootstrap_end_seconds"] = round(time.monotonic() - started, 6)
         client = subprocess.Popen(record["client_command"], cwd=world, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
         client_started = time.monotonic()
         start_reader(client, "client", client_lines)

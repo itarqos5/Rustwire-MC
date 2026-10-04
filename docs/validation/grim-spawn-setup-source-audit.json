@@ -1,0 +1,64 @@
+{
+  "scope": "Static diagnosis of the retained 2026-10-04 Paper 1.21.1 setup failure; not a graphical vanilla-client reproduction or general large-teleport conformance claim",
+  "artifact_manifest": "docs/validation/matrix-download-provenance.json",
+  "method": "Read-only javap inspection of the exact extracted official Paper jars; no decompiled implementation copied into the repository",
+  "paper_extracted_sha256": {
+    "1.21.1": "020b6831758cfbaad2890d77eb05d664758319c12a1b190f6abf40323e96120e",
+    "1.21.5": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+    "26.1.2": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+    "26.2": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff"
+  },
+  "observed_failure": {
+    "version": "1.21.1",
+    "initial_position": [
+      10.5,
+      -60.0,
+      5.5
+    ],
+    "fixture_position": [
+      0.5,
+      -60.0,
+      0.5
+    ],
+    "server_warning_delta": [
+      -10.0,
+      0.0,
+      -5.0
+    ],
+    "squared_distance": 125.0,
+    "ordinary_movement_threshold": 100.0,
+    "grim_flags": 0,
+    "client_response": "Probe rejected the additional correction and stopped before gameplay"
+  },
+  "paper_1_21_1_findings": [
+    "ServerGamePacketListenerImpl.tick calls resetPosition; resetPosition writes firstGoodXYZ.",
+    "internalTeleport changes player position and sets awaitingPositionFromClient without updating firstGoodXYZ.",
+    "handleAcceptTeleportPacket updates lastGoodXYZ and clears awaitingPositionFromClient, but firstGoodXYZ remains until the next listener tick.",
+    "handleMovePlayer ignores position movement while awaitingPositionFromClient is non-null; after acceptance it validates against firstGoodXYZ.",
+    "The logged delta matches the previous random spawn baseline, consistent with an accepted ACK followed by the normal immediate position reply in the same server tick, rather than position overtaking ACK."
+  ],
+  "fixture_setup": {
+    "all_versions": "setworldspawn 0 -60 0 (omit orientation because optional argument shapes differ)",
+    "1.21.1_and_1.21.5": [
+      "gamerule spawnRadius 0",
+      "gamerule spawnRadius"
+    ],
+    "26.1.2_and_26.2": [
+      "gamerule minecraft:respawn_radius 0",
+      "gamerule minecraft:respawn_radius"
+    ],
+    "readback": "Both command responses and the actual first teleport position are required by acceptance",
+    "unchanged": [
+      "Client ACK then resolved PosRot ordering",
+      "Two stationary floor-contact settling ticks",
+      "Unexpected correction rejection",
+      "Grim checks, thresholds, exemptions and punishment configuration"
+    ]
+  },
+  "spawn_source_findings": [
+    "Older ServerPlayer.adjustSpawnLocation reads the ordinary radius through MinecraftServer.getSpawnRadius and GameRules.RULE_SPAWN_RADIUS.",
+    "Modern ServerPlayer.adjustSpawnLocation delegates to PlayerSpawnFinder.findSpawn, which reads GameRules.RESPAWN_RADIUS; the identifier is respawn_radius, not spawn_radius.",
+    "The randomized candidate count is derived from (2r+1)^2; zero leaves one candidate.",
+    "Modern GameRuleCommand registers both the namespaced and short rule identifiers."
+  ]
+}

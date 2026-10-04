@@ -46,7 +46,15 @@ def clean_fixture(version="1.21.1"):
         {"seconds": 0.0, "line": f"GRIM_ACTION phase={phase}", "utc": "synthetic"}
         for phase in ["walk", "inventory", "wind", "negative"]
     ]
+    bootstrap = [{"name": name, "command": command, "sent_seconds": 5.0 + i}
+                 for i, (name, command) in enumerate(GRIM.bootstrap(version))]
+    radius = "minecraft:respawn_radius" if version.startswith("26.") else "spawnRadius"
+    server.extend([{"seconds": 5.1, "utc": "synthetic", "line": "Set the world spawn point to 0, -60, 0 [0.0]"},
+                   {"seconds": 6.1, "utc": "synthetic", "line": f"Gamerule {radius} is now set to: 0"},
+                   {"seconds": 7.1, "utc": "synthetic", "line": f"Gamerule {radius} is currently set to: 0"}])
+    client.insert(0, {"seconds": 9.0, "utc": "synthetic", "line": "GRIM_TELEPORT id=1 position=[0.5, -60.0, 0.5] rotation=[0.0, 0.0]"})
     record = {
+        "bootstrap_commands": bootstrap, "bootstrap_end_seconds": 9.0,
         "version": version, "commands": commands, "seconds": 99.0, "server_exit": 0,
         "client_exit": 0, "ready_seen": True, "grim_version": "2.3.73",
         "no_ops_or_permission_grants": True, "check_configuration_unchanged": True,
@@ -193,7 +201,7 @@ class AssessmentTests(unittest.TestCase):
         self.assert_rejected(fixture, "all_scenario_commands_sent")
 
     def test_bukkit_and_java_runtime_failures_rejected(self):
-        for line in ["Could not pass event PlayerMoveEvent to GrimAC v2.3.73", "java.lang.NullPointerException: fixture", "java.lang.NoSuchMethodError: fixture"]:
+        for line in ["Could not pass event PlayerMoveEvent to GrimAC v2.3.73", "java.lang.NullPointerException: fixture", "java.lang.NoSuchMethodError: fixture", "Rustwire moved too quickly! -10.0,0.0,-5.0", "Rustwire moved wrongly!"]:
             fixture = clean_fixture()
             fixture[1].append({"seconds": 20.2, "utc": "synthetic", "line": line})
             self.assert_rejected(fixture, "no_runtime_errors")
@@ -231,6 +239,25 @@ class AssessmentTests(unittest.TestCase):
                 (invoked / "runner.py").write_text("different")
                 with self.assertRaisesRegex(RuntimeError, "invoked harness/manifest differs"):
                     build.verify_harness(root)
+
+    def test_prejoin_spawn_settings_and_observed_position_required(self):
+        for version in GRIM.VERSIONS:
+            fixture = clean_fixture(version)
+            self.assertTrue(self.assess(fixture)["passed"])
+            fixture[2][0]["line"] = fixture[2][0]["line"].replace("[0.5, -60.0, 0.5]", "[10.5, -60.0, 5.5]")
+            self.assert_rejected(fixture, "initial_spawn_at_fixture")
+            fixture = clean_fixture(version)
+            fixture[0]["bootstrap_commands"][1]["command"] += " wrong"
+            self.assert_rejected(fixture, "bootstrap_commands_exact")
+            fixture = clean_fixture(version)
+            for row in fixture[1]: row["line"] = row["line"].replace("is now set to: 0", "is now set to: 10")
+            self.assert_rejected(fixture, "spawn_radius_zero_confirmed")
+            fixture = clean_fixture(version)
+            for row in fixture[1]: row["line"] = row["line"].replace("is currently set to: 0", "is currently set to: 10")
+            self.assert_rejected(fixture, "spawn_radius_zero_confirmed")
+            fixture = clean_fixture(version)
+            for row in fixture[1]: row["line"] = row["line"].replace("spawn point to 0, -60, 0", "spawn point to 10, -60, 0")
+            self.assert_rejected(fixture, "spawn_center_confirmed")
 
     def test_configuration_sources_remain_native(self):
         for version in GRIM.VERSIONS:

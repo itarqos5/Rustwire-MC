@@ -241,7 +241,32 @@ closed listener. Both log readers must reach EOF successfully and finish before
 assessment. A partial or failed log capture cannot prove zero flags. Bukkit
 Grim event failures and Java runtime exceptions fail the runtime gate.
 
-Twenty-two offline Grim controls cover these gates and source/binary/harness
+Twenty-three offline Grim controls cover these gates and source/binary/harness
 receipt mismatches. This strengthens evidence collection without changing client
 movement, Grim checks, thresholds, exemptions or punishments. Historical results
 above retain their original twenty-check scope and original binary identity.
+
+## Deterministic pre-join fixture setup
+
+The refresh exposed a setup limitation on Paper 1.21.1: a random initial spawn
+at (10.5, -60, 5.5) followed by the fixed fixture teleport produced a vanilla
+“moved too quickly” warning and a correction. The client rejected the correction
+and stopped before gameplay; Grim itself emitted no flag. The failed attempt is
+retained separately from subsequent results.
+
+Read-only inspection of the pinned server implementation shows a per-tick
+baseline race: teleport acceptance updates `lastGoodXYZ`, while movement checks
+still use `firstGoodXYZ` until the next listener tick. The observed squared delta
+was 125 against the ordinary threshold of 100. Movement overtaking the ACK would
+instead be ignored while the server awaited teleport acceptance. This supports
+a setup race with the normal immediate ACK/position reply; no graphical vanilla
+client was run to reproduce it. [Exact source/artifact audit](grim-spawn-setup-source-audit.json).
+
+Before joining, the harness now sets the disposable world spawn to (0, -60, 0),
+sets its ordinary spawn-randomization radius to zero and queries it back. The
+modern command uses `minecraft:respawn_radius`; older releases use `spawnRadius`.
+It checks command responses and requires the first client teleport to be the
+intended center. The fixture teleport, client response ordering, floor settling,
+and strict correction rejection remain unchanged. No anti-cheat setting changes.
+This removes irrelevant spawn variation from the narrow walking/inventory/use
+fixture; it does not establish general large-teleport compatibility.
