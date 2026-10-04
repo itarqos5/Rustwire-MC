@@ -451,11 +451,9 @@ pub(crate) fn read_slot(
             data: ItemData::Legacy(nbt),
         }));
     }
-    let count = if version.protocol() == 766 {
-        r.u8()? as i8 as i32
-    } else {
-        r.var_i32()?
-    };
+    // Official protocol-766 ItemStack stream bindings use VarInt already.
+    // The pinned 766 schema's i8 is stale; see docs/slot-count-wire-audit.md.
+    let count = r.var_i32()?;
     if count == 0 {
         return Ok(Slot::Empty);
     }
@@ -486,7 +484,7 @@ pub(crate) fn write_slot(
     };
     nonnegative(item.item_id, "item ID")?;
     positive(item.count, "item count")?;
-    if version.protocol() <= 766 && item.count > 127 {
+    if version.protocol() <= 765 && item.count > 127 {
         return Err(Error::Invalid("signed-byte item count"));
     }
     match (&item.data, version.protocol()) {
@@ -497,11 +495,7 @@ pub(crate) fn write_slot(
             write_nbt(nbt.as_ref(), w, RootFormat::for_version(version), b)?;
         }
         (ItemData::Components(patch), 766..=776) => {
-            if version.protocol() == 766 {
-                w.u8(item.count as u8);
-            } else {
-                w.var_i32(item.count);
-            }
+            w.var_i32(item.count);
             w.var_i32(item.item_id);
             write_patch(patch, w, version, b, depth)?;
         }

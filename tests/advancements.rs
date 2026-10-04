@@ -351,13 +351,19 @@ fn all_changed_version_shapes_are_explicit() {
         AdvancementIcon::Slot(Slot::Item(item)) if item.item_id == 0 && item.count == 300));
     assert!(expected(old).encode(new, Limits::default()).is_err());
     assert!(expected(new).encode(old, Limits::default()).is_err());
-    // The 766 signed-byte count and 767 VarInt count agree for small positive
-    // counts; the independently assembled extended-count fixture below does not.
+    // Protocols 766 and 767 both use VarInt slot counts. Exercise a count
+    // whose encoding differs from the stale protocol-766 schema's signed byte.
     let mut b = full(Version::V1_21);
     b.splice(23..24, [0x80, 1]);
     let value = Advancements::decode(&b, Version::V1_21, Limits::default()).unwrap();
-    assert!(value.encode(Version::V1_20_5, Limits::default()).is_err());
-    assert!(Advancements::decode(&b, Version::V1_20_5, Limits::default()).is_err());
+    assert_eq!(
+        value.encode(Version::V1_20_5, Limits::default()).unwrap(),
+        b
+    );
+    assert_eq!(
+        Advancements::decode(&b, Version::V1_20_5, Limits::default()).unwrap(),
+        value
+    );
 }
 
 #[test]

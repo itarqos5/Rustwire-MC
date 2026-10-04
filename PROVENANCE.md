@@ -474,3 +474,12 @@ actions and report-detail limits omitted from schema types. This is source-level
 corroboration, not an executed release oracle or live-server result. Only protocol
 facts and original Rust/Python test code were added; no upstream implementation
 code, game binaries or packet captures were copied.
+
+## Protocol-766 component-slot correction
+
+The [slot-count audit](docs/slot-count-wire-audit.md) records official 1.20.6
+bundle, inner archive and mappings hashes, mapped stream bindings and reproducible
+static inspection commands. This primary evidence corrects the stale pinned
+schema's `i8`: component-slot counts are VarInts already at protocol 766.
+Original count-128/300 fixtures distinguish the encodings; earlier small-count
+live checks did not. This increment executes no game serializer or server.

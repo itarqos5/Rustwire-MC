@@ -31,8 +31,10 @@ hand-specified bodies assembled with Python standard-library primitives in
 No Rustwire codec is used to generate their bytes. Packet IDs come from the
 hash-checked schemas. Fixtures are neither captures nor runtime-oracle output.
 
-No new live-server, Mojang release-API or official serializer validation was
-performed. No game binaries, decompiled game code or private captures were used.
+The original advancement fixture audit performed no live-server or official
+serializer validation. The later [slot count correction](slot-count-wire-audit.md)
+uses read-only static inspection of the official 1.20.6 release to resolve the
+stale protocol-766 schema; no game code was executed or redistributed.
 
 ## Exact layout boundaries
 
@@ -41,7 +43,7 @@ performed. No game binaries, decompiled game code or private captures were used.
 | 763 | Present, possibly empty | JSON string | Classic named-NBT slot | Absent |
 | 764 | Absent | JSON string | Classic anonymous-NBT slot | Absent |
 | 765 | Absent | Anonymous NBT | Classic anonymous-NBT slot | Absent |
-| 766 | Absent | Anonymous NBT | Component slot, signed-byte count | Absent |
+| 766 | Absent | Anonymous NBT | Component slot, VarInt count | Absent |
 | 767–769 | Absent | Anonymous NBT | Component slot, VarInt count | Absent |
 | 770–774 | Absent | Anonymous NBT | Component slot, VarInt count | Present |
 | 775–776 | Absent | Anonymous NBT | ItemStackTemplate | Present |

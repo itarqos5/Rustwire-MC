@@ -68,12 +68,12 @@ fn empty_and_plain_slots_all_releases() {
             }),
         );
     }
-    // Count 128 is multi-byte VarInt from 767; 766 uses signed i8 and rejects it.
-    check_slot(767, "80 01 05 00 00", modern(128, vec![], vec![]));
-    assert!(Slot::decode(&decode("80 01 05 00 00"), v(766), Limits::default()).is_err());
-    assert!(modern(128, vec![], vec![])
-        .encode(v(766), Limits::default())
-        .is_err());
+    // Official protocol-766 stream bindings use VarInt, despite the pinned
+    // schema's i8. See docs/slot-count-wire-audit.md.
+    for protocol in 766..=776 {
+        check_slot(protocol, "80 01 05 00 00", modern(128, vec![], vec![]));
+        check_slot(protocol, "ac 02 05 00 00", modern(300, vec![], vec![]));
+    }
 }
 #[test]
 fn classic_nbt_named_to_anonymous_boundary() {
