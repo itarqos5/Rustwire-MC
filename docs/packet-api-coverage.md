@@ -72,10 +72,10 @@ The script reads only checked-in catalogs/source and needs no network or ignored
 schema downloads. Running it without `--check` refreshes the table. Its outgoing
 API mapping is deliberately explicit: a new packet name requires an audited
 entrypoint rather than being labelled implemented merely because it exists in
-a schema. Six self-contained checks cover the snapshot, separate states and
+a schema. Eight self-contained checks cover the snapshot, separate states and
 directions, dimension-context/legacy exceptions, removed incoming dispatch,
 unknown outgoing APIs, wrong outgoing states, and malformed/duplicate catalog
-entries. CI checks for table drift.
+entries, and platform-independent source paths and explicit UTF-8 source reads. CI checks for table drift.
 
 These guards are routing checks. They do not parse Rust semantically, prove every
 conditional version branch, or replace the per-family wire fixtures, official

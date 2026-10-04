@@ -1,6 +1,8 @@
 import copy
 import unittest
-from report_packet_api_coverage import ROOT, inputs, records, render
+from pathlib import Path, PurePosixPath, PureWindowsPath
+from unittest.mock import patch
+from report_packet_api_coverage import ROOT, inputs, records, render, source_key
 
 
 class PacketApiCoverage(unittest.TestCase):
@@ -8,11 +10,29 @@ class PacketApiCoverage(unittest.TestCase):
     def setUpClass(cls):
         cls.catalogs, cls.sources = inputs()
 
+    def test_source_keys_are_platform_independent(self):
+        for path_type, root in [(PurePosixPath, '/project'), (PureWindowsPath, 'C:/project')]:
+            base=path_type(root)
+            self.assertEqual(source_key(base/'src'/'packet'/'typed.rs',base),'src/packet/typed.rs')
+
+    def test_source_reads_explicitly_use_utf8(self):
+        original=Path.read_text
+        encodings=[]
+        def checked(path,*args,**kwargs):
+            encodings.append(kwargs.get('encoding'))
+            return original(path,*args,**kwargs)
+        with patch.object(Path,'read_text',checked):
+            catalogs,sources=inputs()
+        self.assertEqual(len(catalogs),14)
+        self.assertIn('src/packet/typed.rs',sources)
+        self.assertTrue(encodings)
+        self.assertEqual(set(encodings),{'utf-8'})
+
     def test_full_inventory_matches_checked_snapshot(self):
         rows=records(self.catalogs,self.sources)
         self.assertEqual(len(rows),267)
         self.assertEqual(sum(len(r['protocol_ids']) for r in rows),3233)
-        self.assertEqual(render(rows),(ROOT/'docs/packet-api-coverage.tsv').read_text())
+        self.assertEqual(render(rows),(ROOT/'docs/packet-api-coverage.tsv').read_text(encoding='utf-8'))
         self.assertEqual(len({(r['state'],r['direction'],r['name']) for r in rows}),267)
 
     def test_state_direction_and_legacy_exception_remain_separate(self):

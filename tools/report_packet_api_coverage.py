@@ -11,9 +11,13 @@ import pathlib
 import re
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 
+def source_key(path, root):
+    return path.relative_to(root).as_posix()
+
+
 def inputs():
-    catalogs = {p: (ROOT / f'src/catalog/p{p}.rs').read_text() for p in range(763, 777)}
-    sources = {str(p.relative_to(ROOT)): p.read_text() for p in (ROOT / 'src').rglob('*.rs') if 'catalog' not in p.parts}
+    catalogs = {p: (ROOT / f'src/catalog/p{p}.rs').read_text(encoding='utf-8') for p in range(763, 777)}
+    sources = {source_key(p, ROOT): p.read_text(encoding='utf-8') for p in (ROOT / 'src').rglob('*.rs') if 'catalog' not in p.parts}
     return (catalogs, sources)
 
 def records(catalogs, sources):
@@ -170,10 +174,10 @@ def main():
     result = render(rows)
     path = ROOT / 'docs/packet-api-coverage.tsv'
     if args.check:
-        if path.read_text() != result:
+        if path.read_text(encoding='utf-8') != result:
             raise SystemExit('Packet API coverage snapshot is stale')
     else:
-        path.write_text(result)
+        path.write_text(result, encoding='utf-8')
     print(f"Verified {len(rows)} state/direction/name bindings and {sum((len(r['protocol_ids']) for r in rows))} versioned rows; not a wire-conformance claim")
 if __name__ == '__main__':
     main()
