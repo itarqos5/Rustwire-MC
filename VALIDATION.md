@@ -1069,3 +1069,19 @@ strict Clippy/rustdoc/formatting and the pinned discrepancy/fixture audit. All
 71 root-tool and 105 existing Paper-validator Python tests passed in a clean
 copy without downloaded schemas. Exact-commit CI separately covers MSRV and
 operating systems; no new live minecart behavior was tested.
+
+## Player/UI control requests
+
+Twelve request families contribute 362 original fixtures and 1,621 strict-prefix
+checks, explicit packet/family gates, corrected 26.2 spectator IDs, difficulty
+widths, optional-marker signed boundaries, bundle-index validation, transactional
+I/O, exact byte caps and bounded mutation coverage. Six isolated Python verifier
+regressions require no downloaded schema cache. The
+[wire audit](docs/client-control-wire-audit.md) separates static/source/fixture
+proof from unperformed live gameplay and permission checks.
+
+Integrated verification passed 547 all-feature and 508 no-default Rust tests,
+strict Clippy/rustdoc/formatting and the complete pinned-schema fixture check.
+All 77 root-tool and 105 existing Paper-validator Python tests passed from a
+clean copy without downloaded schemas. Exact-commit CI is the separate MSRV
+and cross-platform gate. No new live game-state changes were exercised.

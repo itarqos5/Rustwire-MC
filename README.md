@@ -304,3 +304,11 @@ retaining double-precision position/velocity and raw byte angles. Independent
 sources and official static bindings correct stale schema field widths. The
 codec does not simulate rails or interpolate movement.
 [Wire audit](docs/minecart-wire-audit.md).
+
+### Player/UI control requests
+
+`packet::client_control` adds boat paddles, item/bundle selection, crafter-slot
+state, difficulty/game-mode requests and explicit UUID/entity/optional-entity
+spectator forms. Version gates preserve historical packet identities and the
+existing corrected 26.2 catalog. These helpers serialize intent without making
+permission or game-state decisions. [Wire audit](docs/client-control-wire-audit.md).

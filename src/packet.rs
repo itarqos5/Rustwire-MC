@@ -3,6 +3,7 @@ pub mod advancements;
 pub mod blocks;
 pub mod chat;
 pub mod chunk_updates;
+pub mod client_control;
 pub mod commands;
 pub mod common;
 pub mod editing;

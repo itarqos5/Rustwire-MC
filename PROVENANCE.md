@@ -569,3 +569,12 @@ and official 26.2 static codec bindings: six doubles, two angle bytes and a floa
 Nine present/five absent layouts remain hash-checked unchanged. The 27 original
 Python fixtures are synthetic; no game code, disassembly or runtime result is
 redistributed or claimed.
+
+## Player/UI control request envelopes
+
+The [client-control audit](docs/client-control-wire-audit.md) checks 106 present
+pinned schema bodies and the existing explicit protocol-776 spectator correction,
+for 107 supported packet/family combinations. Immutable independent wrapper
+sources and narrow official static checks establish scalar widths, optional
+markers and bundle-index validity. The 362 Python-generated fixtures are original
+synthetic data, not captured traffic or executed upstream serializers.

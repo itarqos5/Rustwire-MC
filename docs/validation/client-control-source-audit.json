@@ -1,0 +1,60 @@
+{
+  "method": "Independent source inspection, not upstream execution; narrow official 26.2 static findings documented separately",
+  "sources": [
+    {
+      "name": "SteerBoat",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSteerBoat.java",
+      "sha256": "6c784d8df3cb48c1df74f0871deba7635f67dce0506a92d3512cef957fd96e25"
+    },
+    {
+      "name": "Spectate",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSpectate.java",
+      "sha256": "847c171f8384cac295ce1d4412aaa984a024818fc71a2a97c51df20fe8917b66"
+    },
+    {
+      "name": "SpectateEntity",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSpectateEntity.java",
+      "sha256": "351467e9d52e56e0b5e4bf29f7efbda2ef897c30114b61b8780c6565c5df9e3e"
+    },
+    {
+      "name": "PickItem",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientPickItem.java",
+      "sha256": "901b248136d0ed27bc2b0b4ee9b4ef9df28f501b46bf0d82ff929044f1739a1c"
+    },
+    {
+      "name": "PickItemFromBlock",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientPickItemFromBlock.java",
+      "sha256": "2c1b55fafe0b8ee47b52d45c474b52cb6477849948de9d34263cb780961884f1"
+    },
+    {
+      "name": "PickItemFromEntity",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientPickItemFromEntity.java",
+      "sha256": "450a8664f8268dd12651814f739d3cb27ed7cee73a45a2297345322e52e78c96"
+    },
+    {
+      "name": "SelectBundleItem",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSelectBundleItem.java",
+      "sha256": "4be42d1849dc606cac0b9e64e33b7ae2a0a210f31671554639d77180558d570b"
+    },
+    {
+      "name": "SlotStateChange",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSlotStateChange.java",
+      "sha256": "e2d8864196def3710f3d6f0a381c20478f65f5c1d41d28c65c518d348d714caa"
+    },
+    {
+      "name": "SetDifficulty",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSetDifficulty.java",
+      "sha256": "20fcf06a372b7ea357468f07114fbe9c6034b282da111532b99734c82ced4c97"
+    },
+    {
+      "name": "LockDifficulty",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientLockDifficulty.java",
+      "sha256": "c25874db3aa00d95781a3697584d06624e8fb4346e64de449041e65c5f0f9d06"
+    },
+    {
+      "name": "ChangeGameMode",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientChangeGameMode.java",
+      "sha256": "b0e7faa6d1e010a807fe37a44876bfd0973fe797920427ff9bd3c412e7bd1490"
+    }
+  ]
+}
