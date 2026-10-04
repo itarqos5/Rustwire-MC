@@ -498,3 +498,29 @@ vanilla schema bug. Immutable URLs and inspected-source hashes are recorded in
 [the source manifest](docs/validation/recipe-control-source-audit.json).
 No external implementation code is copied and no new game/runtime oracle or
 live-server interoperability claim is made.
+
+## Legacy recipe declaration expansion (protocols 763–767)
+
+`src/packet/recipe_declarations.rs` is an original bounded implementation based
+on the five existing SHA-256-pinned declaration schemas and independently
+version-pinned MCProtocolLib, PacketEvents and ViaVersion source inspection.
+The [wire audit](docs/legacy-recipe-wire-audit.md) and
+[source manifest](docs/validation/legacy-recipe-source-audit.json) record exact
+field/version boundaries, full source URLs/hashes and conflicting evidence.
+No external source code, game binaries or captures are vendored.
+
+The legacy declaration registry has 23 supported kinds. The pinned schemas'
+obsolete `crafting_special_banneraddpattern` shifts numeric IDs from 11 onward;
+the independently corroborated table instead has shield decoration=11,
+smelting=15 and decorated pot=22. Named unknown/custom serializers remain raw.
+The 766 schema's i8 item count also disagrees with release-era ViaVersion 4.10.2
+and PacketEvents v2.4.0/v2.5.0: the shared inventory codec now uses VarInt counts
+from 766. MCProtocolLib's corresponding slot helpers are separately recorded as
+conflicting evidence, not used as corroboration for the corrected count.
+
+`tools/check_legacy_recipe_fixtures.py` is an original Python fixture encoder and
+full declaration/direct-alias checker. Its 144 synthetic rows include 131
+accepted bodies across every kind/version and 13 unsupported-serializer bodies;
+all 14,337 strict prefixes of supported fixtures are rejected. These are not
+executed upstream serializers, official release-API outputs or captured traffic.
+Modern declaration formats at 768+ remain outside this increment.

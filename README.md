@@ -248,3 +248,21 @@ modern settings/removal packets have typed dispatch. Registry keys and modern
 display IDs are explicitly versioned; legacy window bytes are retained losslessly.
 Recipe declarations, modern displays/additions and crafting execution remain
 outside this slice. [Exact boundaries and schema/source evidence](docs/recipe-control-wire-audit.md).
+
+### Legacy recipe declarations (763–767)
+
+`packet::recipe_declarations::LegacyDeclareRecipes` adds the clientbound legacy
+`declare_recipes` body for protocols 763–767, including all 23 audited vanilla
+serializer kinds, ingredient alternatives, outputs and shared bounded item/NBT/
+component payloads. Its separate `DecodedPacket::LegacyRecipes` branch is
+Play-only. Unknown unframed serializers/components preserve the whole raw packet;
+known malformed bodies remain errors. Modern declarations (768+) remain raw and
+unimplemented. This extends the earlier recipe-control scope; it does not
+execute crafting or maintain a recipe registry.
+
+The [legacy wire audit](docs/legacy-recipe-wire-audit.md) documents two checked
+schema discrepancies: obsolete banner-add-pattern serializer IDs and the 766
+slot count. Component-slot counts are VarInts from **766**, as corroborated by
+release-era ViaVersion and PacketEvents; the shared inventory codec is corrected
+accordingly. Independent count-128/count-300 fixtures distinguish this from the
+previous signed-byte assumption.

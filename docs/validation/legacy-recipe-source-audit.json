@@ -1,0 +1,419 @@
+{
+  "evidence": "Independent public source inspection only. No upstream serializer execution, vanilla release APIs, captured traffic, or receiving-client/gameplay validation. Source code is not vendored.",
+  "protocols": [
+    763,
+    764,
+    765,
+    766,
+    767
+  ],
+  "known_serializer_kinds": 23,
+  "schema_discrepancies": [
+    "Obsolete crafting_special_banneraddpattern shifts serializer numeric IDs from 11 onward in pinned 766/767 schemas.",
+    "Pinned 766 Slot itemCount i8 disagrees with release-era ViaVersion and PacketEvents VarInt. MCProtocolLib helpers also disagree at 766 and 767."
+  ],
+  "fixtures": {
+    "rows": 144,
+    "accepted": 131,
+    "unsupported": 13,
+    "strict_prefixes": 14337
+  },
+  "inspected_sources": [
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20-1",
+      "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "sha256": "df43a612f235e5da754ab49fb7adcfce68dea5aaddaafb473035f61e26fd162d"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20-1",
+      "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/CraftingBookCategory.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/CraftingBookCategory.java",
+      "sha256": "edc9ab3ff249449c863450214600eee69da6fa1e93f7c5d772548919383cdd37"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20-1",
+      "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "sha256": "d4fd5f17da22c888a52d578e330610cd0ac73b71fcc17a77a97deecfa9550757"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20-1",
+      "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "sha256": "d36cf7db174ffd584f9eee5ecd84200b132838a5490697f90f66ea0922dd8c3d"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.2-1",
+      "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "sha256": "d7cfe5e80f780b156515357daf4fad811b4f9f559e2ef59b6d2c233878d6f0cd"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.2-1",
+      "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/CraftingBookCategory.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/CraftingBookCategory.java",
+      "sha256": "edc9ab3ff249449c863450214600eee69da6fa1e93f7c5d772548919383cdd37"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.2-1",
+      "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "sha256": "d4fd5f17da22c888a52d578e330610cd0ac73b71fcc17a77a97deecfa9550757"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.2-1",
+      "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "sha256": "d36cf7db174ffd584f9eee5ecd84200b132838a5490697f90f66ea0922dd8c3d"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.6-1",
+      "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodecHelper.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodecHelper.java",
+      "sha256": "59bd5ba1b0cabd4465308e737dc7785c3c01aff57d5d1ad41b61de3860a9ac9c"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.6-1",
+      "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/CraftingBookCategory.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/CraftingBookCategory.java",
+      "sha256": "aaed00cae79d01e38f0023e855e03ad0e172f591e495cdc855cbb28301d2c6da"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.6-1",
+      "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/RecipeType.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/RecipeType.java",
+      "sha256": "1736c736d82c532e82aa63b03d7d4ea64a8c96e9e7403bb5dd924f387bab45ca"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.6-1",
+      "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "sha256": "e8572460ea8b4b87c0719286c49dab257073bb3f570bc347c2490da568a358c3"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.21-1",
+      "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodecHelper.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodecHelper.java",
+      "sha256": "3ad9a022f12ddf5b3b1c9595fd3972cdeb4cc67e30828f2703b4f341a27f05b6"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.21-1",
+      "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/CraftingBookCategory.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/CraftingBookCategory.java",
+      "sha256": "aaed00cae79d01e38f0023e855e03ad0e172f591e495cdc855cbb28301d2c6da"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.21-1",
+      "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/RecipeType.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/data/game/recipe/RecipeType.java",
+      "sha256": "1736c736d82c532e82aa63b03d7d4ea64a8c96e9e7403bb5dd924f387bab45ca"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.21-1",
+      "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "sha256": "a9acf56006bb8322d8b3ecf7f6ff862ed45782561e312b84992f151c6685e676"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/CookingCategory.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/CookingCategory.java",
+      "sha256": "7f75c83c6b13d2b03f9a640f6a27cb4f3a194d7e803764689d921ba713145364"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/CraftingCategory.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/CraftingCategory.java",
+      "sha256": "eda7bd34316d865130aef371365f6982fb9904b4b77abac5e21ecad78fea38f1"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/Ingredient.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/Ingredient.java",
+      "sha256": "90981e506370832102b52f0d245d1c6ad89fb89161e3b1ff2c83436a30e320c5"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/Recipe.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/Recipe.java",
+      "sha256": "744e4a32b536f2cc479752846e613b8d907878b0613c6ab00170acf9114b9ec0"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/RecipeSerializers.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/RecipeSerializers.java",
+      "sha256": "e667ce2abed7d8c53bba4596de83c58d3b83484c79a8b27a89123fe24abf6b75"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/CookedRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/CookedRecipeData.java",
+      "sha256": "a25b24fccb0cd7bffe9100348fd2bc1df532474477606067518ad829a122a255"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/ShapedRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/ShapedRecipeData.java",
+      "sha256": "ea693cc1a45f8e5e48fdec5538f6370f6f1e9fd7859af0ab37f126e0f25a7629"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/ShapelessRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/ShapelessRecipeData.java",
+      "sha256": "746e94ef6dfb497e50c927aa97f40ae0c4e9e15ceda159f03068f0f52d81f755"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SimpleRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SimpleRecipeData.java",
+      "sha256": "e64e44ba8a1d5b7b596c7870976b2e3c005c337b9e6e86c3701bc9e73499af65"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SmithingRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SmithingRecipeData.java",
+      "sha256": "814454c1ca72dbfdc9d5709eb7b3ef23f261057bba79cdc46e1cea5f0af4c539"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SmithingTrimRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/SmithingTrimRecipeData.java",
+      "sha256": "ff92877ebd57b5f0b88c06d4023937af8092129f9582beea02824f220971d332"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/StoneCuttingRecipeData.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/recipe/data/StoneCuttingRecipeData.java",
+      "sha256": "8b56e1415eeac5de9c62101fe242a418b61580befd77c96c572935386219253a"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "mappings/registries/legacy_recipe_serializer.json",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/mappings/registries/legacy_recipe_serializer.json",
+      "sha256": "d4097985edebe6434826362c106e931ced873673845b5a3250f355e58d6519b4"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/item/ItemStackSerialization.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/item/ItemStackSerialization.java",
+      "sha256": "ed847ef190db83424ec056151951f3f875bab73444d2f6a55bad58eaf3f89945"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.4.0",
+      "commit": "34008779580983a1de719825dacc5b50a67edf7b",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "url": "https://github.com/retrooper/packetevents/blob/34008779580983a1de719825dacc5b50a67edf7b/api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "sha256": "ba876baff94ded5327dc2617e8404ae0a5614fcfb5570abf08ceb8078dd450db"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.5.0",
+      "commit": "ab8faf358c43ada5a812c365249a024b50f4ddca",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "url": "https://github.com/retrooper/packetevents/blob/ab8faf358c43ada5a812c365249a024b50f4ddca/api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "sha256": "9656a32708ede705d6f2d2dcdec06e5f5eed7da9a2948465dd389c1b539337ac"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "commit": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/723fbb3d54fd4e6ec01633dd346d5f677c93be6e/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "sha256": "177d9684880673c676d9ea673b7eebc4f274b6746b2c30f0257ea1c9794ce345",
+      "version_label": "1.20.4 / protocol 765; commit-pinned, not a release tag"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "commit": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/723fbb3d54fd4e6ec01633dd346d5f677c93be6e/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodecHelper.java",
+      "sha256": "f2ee8716d3e498fc27dd66a558470badb422f7c1d1ed7b8157d7747fd45c2fbe",
+      "version_label": "1.20.4 / protocol 765; commit-pinned, not a release tag"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "commit": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/723fbb3d54fd4e6ec01633dd346d5f677c93be6e/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/clientbound/ClientboundUpdateRecipesPacket.java",
+      "sha256": "dcae16091b18efb0e13394f3df8475312bb6dad00ca47c5d9df54615e715017e",
+      "version_label": "1.20.4 / protocol 765; commit-pinned, not a release tag"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "commit": "723fbb3d54fd4e6ec01633dd346d5f677c93be6e",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/723fbb3d54fd4e6ec01633dd346d5f677c93be6e/src/main/java/com/github/steveice10/mc/protocol/data/game/recipe/RecipeType.java",
+      "sha256": "d4fd5f17da22c888a52d578e330610cd0ac73b71fcc17a77a97deecfa9550757",
+      "version_label": "1.20.4 / protocol 765; commit-pinned, not a release tag"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "4.10.2",
+      "commit": "113bf1e2751935ae2ddbc72a9f67c5df00e958cd",
+      "path": "api/src/main/java/com/viaversion/viaversion/api/type/types/item/ItemType1_20_5.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/113bf1e2751935ae2ddbc72a9f67c5df00e958cd/api/src/main/java/com/viaversion/viaversion/api/type/types/item/ItemType1_20_5.java",
+      "sha256": "4dfd35b50b31c7bf83a4b6ae7fea81d5b09a0565ced75030768d301de5429ef1"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "4.10.2",
+      "commit": "113bf1e2751935ae2ddbc72a9f67c5df00e958cd",
+      "path": "common/src/main/java/com/viaversion/viaversion/protocols/protocol1_19_3to1_19_1/rewriter/RecipeRewriter1_19_3.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/113bf1e2751935ae2ddbc72a9f67c5df00e958cd/common/src/main/java/com/viaversion/viaversion/protocols/protocol1_19_3to1_19_1/rewriter/RecipeRewriter1_19_3.java",
+      "sha256": "b12beacd03dc69b42be4ed72a8eac184ed53d05fffe5ea5821b684c4fe021d19"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "4.10.2",
+      "commit": "113bf1e2751935ae2ddbc72a9f67c5df00e958cd",
+      "path": "common/src/main/java/com/viaversion/viaversion/protocols/protocol1_19_4to1_19_3/rewriter/RecipeRewriter1_19_4.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/113bf1e2751935ae2ddbc72a9f67c5df00e958cd/common/src/main/java/com/viaversion/viaversion/protocols/protocol1_19_4to1_19_3/rewriter/RecipeRewriter1_19_4.java",
+      "sha256": "bd4581992b870801f4ec6cc1300576a22b0fd91c2510a956bda7dcec9d87a33b"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "4.10.2",
+      "commit": "113bf1e2751935ae2ddbc72a9f67c5df00e958cd",
+      "path": "common/src/main/java/com/viaversion/viaversion/protocols/protocol1_20_3to1_20_2/rewriter/RecipeRewriter1_20_3.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/113bf1e2751935ae2ddbc72a9f67c5df00e958cd/common/src/main/java/com/viaversion/viaversion/protocols/protocol1_20_3to1_20_2/rewriter/RecipeRewriter1_20_3.java",
+      "sha256": "8c66228bded27f2167b2273177c4f02977ed025107a1053e5fee67960a5ac107"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "4.10.2",
+      "commit": "113bf1e2751935ae2ddbc72a9f67c5df00e958cd",
+      "path": "common/src/main/java/com/viaversion/viaversion/rewriter/RecipeRewriter.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/113bf1e2751935ae2ddbc72a9f67c5df00e958cd/common/src/main/java/com/viaversion/viaversion/rewriter/RecipeRewriter.java",
+      "sha256": "664360829320f715ca834082af898e85dac23f67e9e70c9a928eba8c900aff4b"
+    },
+    {
+      "project": "ViaVersion",
+      "ref": "5.0.0",
+      "commit": "0a55311e1cbd143936ea84464c941eb9d04a7c62",
+      "path": "api/src/main/java/com/viaversion/viaversion/api/type/types/item/ItemType1_20_5.java",
+      "url": "https://github.com/ViaVersion/ViaVersion/blob/0a55311e1cbd143936ea84464c941eb9d04a7c62/api/src/main/java/com/viaversion/viaversion/api/type/types/item/ItemType1_20_5.java",
+      "sha256": "7cb162158e11fcc1a62d75d1f3fa7dd2945bd00680c381de9a2479212fe1caaa"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/protocol/nbt/codec/NBTCodec.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/nbt/codec/NBTCodec.java",
+      "sha256": "03beaa083379128d84cea1bc8ea6e29f494ca9b606d63c5ed454a8f19f3828ca"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/PacketWrapper.java",
+      "sha256": "07e5374fc05a0b1414e9fc796370193a656d3ff685a094fdf49deea3698f66ff"
+    },
+    {
+      "project": "PacketEvents",
+      "ref": "v2.13.0",
+      "commit": "1063d4e71cff72b9fe022f37b51faad9536815b7",
+      "path": "api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerDeclareRecipes.java",
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerDeclareRecipes.java",
+      "sha256": "133988f2208617f817c852cd8eb18f8125336baa1ddda60580b41cae7ceb90c4"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20-1",
+      "commit": "caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "sha256": "04d8802168b25b79653d9e5bea2e55174a3ce86eaa386aced9a40bbf3914ef22"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.2-1",
+      "commit": "a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8",
+      "path": "src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/a0cd1e1cef2e4ef3987381376ddaaacc8e20cab8/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "sha256": "28fa65362f65c324eb72c3dba98ae6000986bc89cb58d1b2b9d054c56ae4fdf8"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.20.6-1",
+      "commit": "8dbdffc0004746122efd1fbe63d1c1620a8336db",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/8dbdffc0004746122efd1fbe63d1c1620a8336db/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+      "sha256": "ee6ef73ee541b7107312038e3f3b60c6ba32a94e757b2ae72ac45bf7d98cac43"
+    },
+    {
+      "project": "MCProtocolLib",
+      "ref": "1.21-1",
+      "commit": "e71d7df8c127b7196fd81dd392034d7d97acbb4e",
+      "path": "protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+      "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+      "sha256": "e84c9095bb50bf8b40588607eba12f94892b707a390e5b8e82e088f76d9e6a8b"
+    }
+  ]
+}

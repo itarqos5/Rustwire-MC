@@ -59,10 +59,10 @@ fn clientbound_dispatch_is_direction_and_state_scoped() {
     }
 }
 #[test]
-fn declaration_add_and_modern_display_bodies_are_explicitly_unimplemented() {
+fn modern_declaration_add_and_display_bodies_are_explicitly_unimplemented() {
     for &v in Version::ALL {
         let names = if v.protocol() < 768 {
-            vec!["declare_recipes"]
+            vec![]
         } else {
             vec![
                 "declare_recipes",

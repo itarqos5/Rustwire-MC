@@ -1,8 +1,9 @@
 //! Bounded recipe-book control envelopes, without recipe execution or storage.
 //!
 //! Registry keys through 767 and display IDs from 768 are distinct wire domains.
-//! Recipe declarations, modern recipe displays/additions, and modern ghost-recipe
-//! responses remain unimplemented. See `docs/recipe-control-wire-audit.md`.
+//! Legacy declarations are provided separately by `recipe_declarations`. Modern
+//! displays/additions and ghost responses are outside this control module.
+//! See `docs/recipe-control-wire-audit.md`.
 use crate::{
     codec::{identifier, Reader, Writer},
     frame::RawPacket,

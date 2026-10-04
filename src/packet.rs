@@ -18,6 +18,7 @@ pub mod movement;
 pub mod overlay;
 pub mod player;
 pub mod recipe;
+pub mod recipe_declarations;
 pub mod scoreboard;
 pub mod server_metadata;
 pub mod statistics;

@@ -160,3 +160,12 @@ all-target/all-feature Clippy, strict all-feature rustdoc, formatting, the real
 79-layout audit and nine self-contained Python regressions passed. MSRV execution
 remains a separate CI gate. No new live server, receiving-client acceptance,
 release-API oracle or crafting gameplay validation is claimed.
+
+## Subsequent legacy declaration increment
+
+The earlier declaration exclusion describes the control-only increment.
+`packet::recipe_declarations` now separately implements legacy `declare_recipes`
+for protocols 763–767. Its [separate audit](legacy-recipe-wire-audit.md) covers
+23 vanilla kinds, shared bounded slots and the serializer-ID/766-slot-count
+discrepancies. Modern declarations remain explicitly unimplemented. This does
+not change the control packet layouts or claim crafting/registry simulation.

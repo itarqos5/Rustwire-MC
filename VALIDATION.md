@@ -918,3 +918,41 @@ mutation tests passed again in a copy without `research/protocols` or network.
 The [wire audit](docs/recipe-control-wire-audit.md) gives reproducible commands,
 source-level caveats and exact exclusions. MSRV execution belongs to CI; no new
 release-API, live-server or receiving-client acceptance evidence is claimed.
+
+## Legacy recipe declarations and protocol-766 slot correction
+
+The legacy increment adds 12 focused Rust tests in `legacy_recipes` and
+`legacy_recipes_typed`: all 23 audited kinds at each protocol 763–767, 144 original
+independent Python fixture rows, 131 accepted bodies and all 14,337 strict
+truncation prefixes of those accepted bodies. Coverage includes rectangular and
+zero-area grids, ordered/duplicate/empty ingredients, classic named/anonymous
+NBT, modern components and result count300; malformed lengths/UTF-8/identifiers/
+booleans/categories/slots; unknown serializer/component full-packet raw fallback;
+aggregate collection/NBT/depth/string/packet limits; state/direction scope; and
+explicit 768+ declaration exclusion. The existing inventory boundary test now
+checks count128 and count300 as VarInts in both 766 and 767.
+
+`tools/check_legacy_recipe_fixtures.py` audits all five complete hash-pinned
+declaration layouts and direct aliases, including the recorded schema
+discrepancies. Eight isolated Python verifier regressions construct synthetic
+schemas; they require no downloaded schema cache or network. The real pinned
+audit remains a separate command. See the
+[wire audit](docs/legacy-recipe-wire-audit.md) for reproduction and evidence limits.
+
+Final staging verification: the complete no-default suite passed 445 tests,
+the default-feature suite passed 449, and the all-feature suite passed
+484. All commands used `--locked --offline`. Strict all-target/all-feature
+Clippy, strict all-feature rustdoc, formatting, the five-schema legacy audit,
+the existing item-component generation/coverage checks and all 41 Python
+regressions passed. The Python suite also passed from an isolated copy containing
+only tools and committed fixtures, without `research/protocols` or network.
+The twelve focused legacy tests include the unknown-name and hard-depth-ceiling
+regressions. MSRV remains CI; no live game/server or official release-API result
+is claimed by these staging checks.
+
+Integrated verification after the separate protocol-766 correction passed 511
+all-feature and 472 no-default Rust tests, strict Clippy/rustdoc/formatting,
+and the five-family declaration audit. A clean copy without downloaded schemas
+passed all 49 root-tool and 105 existing Paper-validation Python tests. The
+official 1.20.6 static registry cross-check is recorded in the wire audit; it is
+not an executed serializer or live-server test.
