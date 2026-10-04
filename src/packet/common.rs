@@ -126,7 +126,7 @@ impl StoredCookie {
         Ok(Self { key, value })
     }
 }
-pub use super::server_metadata::{CustomReportDetails, ReportDetail};
+pub use super::server_metadata::{CustomReportDetails, ReportDetail, ResetChat};
 // Preserve the original public paths while the complete codecs live separately.
 pub use super::tags::{RegistryTag, TaggedRegistry, UpdateTags};
 #[derive(Debug, Clone, PartialEq)]
@@ -141,6 +141,7 @@ pub struct ServerLink {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum CommonPacket {
+    ResetChat(ResetChat),
     CustomReportDetails(CustomReportDetails),
     ResourcePack(ResourcePackOffer),
     RemoveResourcePack(Option<[u8; 16]>),
@@ -162,6 +163,7 @@ impl CommonPacket {
         limits: Limits,
     ) -> Result<Option<Self>> {
         let packet = match name {
+            "reset_chat" => Self::ResetChat(ResetChat::decode(bytes, version, limits)?),
             "custom_report_details" => {
                 Self::CustomReportDetails(CustomReportDetails::decode(bytes, version, limits)?)
             }

@@ -345,3 +345,9 @@ executed. The [wire audit](docs/dialog-wire-audit.md) documents the corrected
 length-framed TAG_End optional payload, exact state/ID gates, conservative depth
 policy and receiver-allocation limitations, with per-family source pins and
 read-only official 26.2 class-binding evidence.
+
+### Configuration chat-reset notifications
+
+Configuration chat-reset notifications from 1.20.5 onward are available as
+`ResetChat` and typed common events. Parsing has no chat-cache or network side
+effects; see the [versioned envelope audit](docs/reset-chat-wire-audit.md).

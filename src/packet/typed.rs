@@ -180,6 +180,11 @@ impl DecodedPacket {
         {
             return Ok(Some(Self::Dialog(dialog)));
         }
+        // Unlike the shared common packets, reset_chat exists only during
+        // configuration. Never interpret an arbitrary play name as this signal.
+        if name == "reset_chat" && state != State::Configuration {
+            return Ok(None);
+        }
         if let Some(common) = CommonPacket::decode(name, bytes, version, limits)? {
             return Ok(Some(Self::Common(common)));
         }

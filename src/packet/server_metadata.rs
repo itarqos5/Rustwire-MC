@@ -339,3 +339,24 @@ ping_body!(PingResponse);
 ping_body!(PingRequest);
 play_packet!(PingResponse, "ping_response", Clientbound);
 play_packet!(PingRequest, "ping_request", Serverbound);
+
+/// Configuration-only request to reset chat state from protocol 766.
+/// This is a notification envelope: parsing does not clear application chat,
+/// signature caches, acknowledgements, or authentication state.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ResetChat;
+impl ResetChat {
+    fn read_body(_r: &mut Reader<'_>, _version: Version) -> Result<Self> {
+        Ok(Self)
+    }
+    fn write_body(&self, _w: &mut Writer, _version: Version, _limits: Limits) -> Result<()> {
+        Ok(())
+    }
+    pub fn packet(&self, version: Version, limits: Limits) -> Result<RawPacket> {
+        Ok(RawPacket::new(
+            version.packet_id(State::Configuration, Direction::Clientbound, "reset_chat")?,
+            self.encode(version, limits)?,
+        ))
+    }
+}
+body_codec!(ResetChat, 766);
