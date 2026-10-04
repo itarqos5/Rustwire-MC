@@ -111,6 +111,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Advancement(super::advancements::AdvancementPacket),
     WorldControl(super::world_control::WorldControlPacket),
     Hud(super::hud::HudPacket),
     Map(super::map::MapData),
@@ -169,6 +170,9 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "advancements" | "select_advancement_tab" => Self::Advancement(
+                super::advancements::AdvancementPacket::decode(name, bytes, version, limits)?,
+            ),
             "block_break_animation"
             | "block_action"
             | "open_sign_entity"

@@ -1,4 +1,5 @@
 //! Typed codecs for connection control and common play operations.
+pub mod advancements;
 pub mod blocks;
 pub mod chat;
 pub mod chunk_updates;

@@ -1,10 +1,10 @@
 # Validation
 
-Date: 2026-10-02. The results distinguish fixture/mock evidence from actual server interoperability.
+Updated: 2026-10-04. Historical sections retain their original source commits. The results distinguish fixture/mock evidence from actual server interoperability.
 
 ## Automated checks
 
-- 461 core tests with all features; 422 applicable core tests without default features
+- 478 core tests with all features; 439 applicable core tests without default features
 - Golden VarInt/position/NBT/palette fixtures, signed SHA-1 examples, an independent OpenSSL AES-CFB8 fixture and RSA response decryption checks
 - Truncation, malformed-data, deterministic fuzz-style input, compression-bomb size checks, frame fragmentation, stream cipher continuity and resource-budget regressions
 - Loopback mock-server login/control traffic for all 14 protocol families
@@ -835,3 +835,34 @@ The integrated world-control snapshot passed 461 stable all-feature tests,
 strict all-target Clippy/rustdoc and formatting. A formerly unimplemented-packet
 test now correctly expects malformed `collect`/`face_player` bodies to fail;
 truly unknown names retain raw fallback. Rust 1.88 is checked by CI.
+
+## Advancement packet slice (2026-10-03)
+
+The isolated advancement staging tree passed these checks with the already
+available Rust 1.99.0 toolchain, offline and locked, with incremental compilation
+and dev/test debug information disabled:
+
+- `cargo fmt --all -- --check`
+- `cargo test --offline --locked --no-default-features`: 405 tests passed
+- `cargo test --offline --locked`: 409 tests passed
+- `cargo test --offline --locked --all-features`: 444 tests passed
+- `cargo clippy --offline --locked --all-targets --all-features -- -D warnings`
+- `RUSTDOCFLAGS='-D warnings' cargo doc --offline --locked --all-features --no-deps`
+- `python3 tools/verify_advancement_schemas.py`: all 42 layouts from fourteen
+  SHA-256-checked protocol inputs matched
+- Regenerating `tests/fixtures/advancements.tsv` produced an identical SHA-256
+
+The advancement-specific suite contains 17 tests and 84 original fixture rows.
+It also passed separately with no default features, default features and all
+features. Coverage includes release boundaries, all fixture truncations and
+trailing bytes, exact IDs/state/direction, aggregate nested resource exhaustion,
+transactional errors and full-raw fallback on unknown unframed icon components.
+Tests were not run against a vanilla runtime, and no live-server interoperability
+claim is made. The declared Rust 1.88 MSRV remains an exact-commit CI obligation;
+these Rust 1.99 results do not establish it. The integrating commit must rerun
+checks after any integration changes.
+
+The integrated advancement snapshot passed 478 stable all-feature tests,
+439 no-default tests, all 42 schema-layout checks, exact regeneration of the
+84 fixture rows, strict all-target Clippy/rustdoc and formatting. Rust 1.88
+and all three supported CI operating systems are checked on the exact commit.

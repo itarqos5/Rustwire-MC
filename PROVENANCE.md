@@ -450,3 +450,15 @@ linked in the audit. No external implementation code is copied.
 The 198 original Python-encoded fixture rows are synthetic, independent of the
 Rust encoder: 184 valid bodies plus 14 unknown-anchor cases. No new Minecraft
 release-API execution or live-server validation is claimed for this increment.
+
+## Advancement wire codecs
+
+Advancement update/progress/removal and tab packets are audited against all
+fourteen SHA-256-pinned schema inputs by `tools/verify_advancement_schemas.py`.
+Independent clarification sources are MCProtocolLib
+`39fa9e822670d6cadd826e4760835b46a17d092a` and Minestom
+`9c20510def19ba151153c9a20aff8417753a0367`, linked precisely in
+`docs/advancements-wire-audit.md`. These establish frame ordinals, flags,
+progress timestamp units and template icon ordering, not a vanilla release
+oracle. Original fixtures are independently assembled Python bytes; no upstream
+implementation code, game binary or packet capture is copied.

@@ -83,6 +83,7 @@ world height. Standalone block-entity and view/simulation controls need no conte
 - Entity spawn, relative movement/look, velocity, teleports/synchronization, removal, status, health and abilities
 - Passenger lists, entity attachments, head rotation, camera, animation, damage events and hurt animation, with raw entity/registry references and exact-version packet IDs
 - Player-list actions/removal, equipment, attributes/modifiers and status-effect additions/removals with exact version boundaries
+- Advancement definitions/removals/progress and tab notifications with shared text/icon budgets and exact item-template boundaries
 - Command-tree graphs with semantic argument parsers, suggestion providers/tooltips, and suggestion request/response packets
 - Scoreboard objectives/display/scores/reset/teams, boss-bar operations and player-list headers/footers, with release-specific wire boundaries
 - Map-data decorations/pixel patches and statistics envelopes, with unresolved registry IDs, shared resource budgets and opt-in canvas validation
