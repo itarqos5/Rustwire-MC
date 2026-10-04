@@ -1,0 +1,70 @@
+{
+  "sources": [
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientDebugSampleSubscription.java",
+      "sha256": "c65d99244f6d2998cb0f7391c048e3a31b2b1d2f1502df24734ad1c156ef29e0"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientDebugSubscriptionRequest.java",
+      "sha256": "bdc72d34366e58dc2bf3b34a96efc58f0369c4ed5d556716d1ce1a48d453bc35"
+    },
+    {
+      "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerDebugSample.java",
+      "sha256": "ad7ebb5b2675ee848f39b9a2c4b06577d5cab13f0a5e4a0bcf54587ccff12bdb"
+    }
+  ],
+  "artifacts": [
+    {
+      "version": "1.20.6",
+      "url": "https://piston-data.mojang.com/v1/objects/145ff0858209bcfc164859ba735d4199aafa1eea/server.jar",
+      "bundler_sha256": "c6d01d018ca782e506f0ec60652d47fd565078be9122b625c1681bc86c29c7ec",
+      "inner_path": "META-INF/versions/1.20.6/server-1.20.6.jar",
+      "inner_sha256": "bb610daa96b3784645b78fd7c0b887291414c9605cd913fc79cf985f523f4f5b",
+      "classes": [
+        {
+          "name": "adj.class",
+          "sha256": "5b7ffa82c4a51f4f2f1645ec1232f85e8009eb9c220ab1f387a3ba816b49e60f"
+        },
+        {
+          "name": "aho.class",
+          "sha256": "2c0c6f25dd035ec01e736de8300f35cd17b83f64d61118f9cdd33be0a4f9b7ae"
+        },
+        {
+          "name": "blx.class",
+          "sha256": "b70ba4603a4e632b94791bf4775b908f4840c058e9379ecdd47dfa6cadcd62ce"
+        }
+      ],
+      "mapping_url": "https://piston-data.mojang.com/v1/objects/9e96100f573a46ef44caab3e716d5eb974594bb7/server.txt",
+      "mapping_sha256": "4e5068e40a89c673b5541192ad7eab96289f6dcae704f577f8992bdf7c984aa3"
+    },
+    {
+      "version": "26.2",
+      "url": "https://piston-data.mojang.com/v1/objects/823e2250d24b3ddac457a60c92a6a941943fcd6a/server.jar",
+      "bundler_sha256": "cdacdfb25898de5e4b4b0e5ddcc2722f77067e46605709c2d886c000ebb63ec5",
+      "inner_path": "META-INF/versions/26.2/server-26.2.jar",
+      "inner_sha256": "183c0499c5f855570ee487dd38e141a53f0121f83a0b07a3bac2d8b6698823e8",
+      "classes": [
+        {
+          "name": "net/minecraft/network/protocol/game/ClientboundDebugSamplePacket.class",
+          "sha256": "8a825350dd7cf0fcf208095dc60d0b6df0ed9b08ad76b651974bfce1bf3d4afb"
+        },
+        {
+          "name": "net/minecraft/network/protocol/game/ServerboundDebugSubscriptionRequestPacket.class",
+          "sha256": "83a0b5d472a7113dc0447e43352853dc7484f9b26c9efc6be2c02ed395129734"
+        },
+        {
+          "name": "net/minecraft/util/debugchart/RemoteDebugSampleType.class",
+          "sha256": "321ec12103ab2242e7128915070867ddb665fd025e55b4f5afddc4942f777251"
+        }
+      ]
+    }
+  ],
+  "facts": [
+    "Official 1.20.6 and 26.2 samples carry a long array then enum TickTime at ordinal zero.",
+    "Legacy subscription is one enum ordinal; pinned presence is 766\u2013772.",
+    "Modern request carries registry IDs; official 26.2 uses a Set collection capped at 32.",
+    "Registry references require application resolution and are not automatically subscribed.",
+    "PacketEvents legacy subscription version annotation is incomplete; official 1.20.6 establishes earlier presence."
+  ],
+  "evidence": "Static official release inspection and independent implementation source facts; no game runtime or release serializer execution."
+}

@@ -7,6 +7,7 @@ pub mod client_control;
 pub mod commands;
 pub mod common;
 pub mod custom_payload;
+pub mod debug;
 pub mod dialog;
 pub mod editing;
 pub mod entity;

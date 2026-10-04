@@ -113,6 +113,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    DebugSample(super::debug::DebugSample),
     CustomPayload(super::custom_payload::CustomPayload),
     Dialog(super::dialog::DialogPacket),
     GameRules(super::game_rules::GameRuleValues),
@@ -199,6 +200,9 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "debug_sample" => {
+                Self::DebugSample(super::debug::DebugSample::decode(bytes, version, limits)?)
+            }
             "game_rule_values" => Self::GameRules(super::game_rules::GameRuleValues::decode(
                 bytes, version, limits,
             )?),

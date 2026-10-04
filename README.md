@@ -365,3 +365,10 @@ explains exact state/version limits and channel-specific interpretation boundari
 Standalone common-packet dispatch can use `CommonPacket::decode_in_state` for
 exact release/state validation. Typed connection dispatch uses the same gate;
 see the [common-state regression audit](docs/common-state-wire-audit.md).
+
+### Debug sample and subscription envelopes
+
+`packet::debug` adds signed sample arrays and the versioned legacy/modern
+subscription requests. Incoming samples become typed events without subscribing
+or responding. Modern registry references remain unresolved; see the
+[wire audit](docs/debug-samples-wire-audit.md) for exact limits and exclusions.
