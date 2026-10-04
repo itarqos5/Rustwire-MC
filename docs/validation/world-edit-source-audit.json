@@ -1,0 +1,50 @@
+{
+  "method": "Immutable implementation sources; separately documented official static/release-note evidence; no game execution",
+  "sources": [
+    {
+      "name": "GenerateStructure",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientGenerateStructure.java",
+      "sha256": "10e103c68212d2fd59f1e8758816df2532915a8d83273fe76ead1447ad042116"
+    },
+    {
+      "name": "SetStructureBlock",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientSetStructureBlock.java",
+      "sha256": "fc1ec4c9dd3418cd6e32be74df18f5bfbebc1db214ab5e57a16acddb1dcef6a0"
+    },
+    {
+      "name": "UpdateCommandBlock",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientUpdateCommandBlock.java",
+      "sha256": "62ca48f9a7772ffed7fb1ebde194db37e2a4cee08db00b89385cfa057aaabef8"
+    },
+    {
+      "name": "UpdateCommandBlockMinecart",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientUpdateCommandBlockMinecart.java",
+      "sha256": "ff2081e82b25832dd616a8152bc0a5c240b42f2dbff9c69b1ed963d7cef7035b"
+    },
+    {
+      "name": "UpdateJigsawBlock",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/client/WrapperPlayClientUpdateJigsawBlock.java",
+      "sha256": "0af61ec088dd2b364fb85e0741d43ae4655d1732b736c7e67f4dff3c833fa794"
+    },
+    {
+      "name": "StructureMirror",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/StructureMirror.java",
+      "sha256": "a69155750341e00970294f048bc2efd14deb0973cad3f62b78b8a15e9ff6bdb6"
+    },
+    {
+      "name": "StructureRotation",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/StructureRotation.java",
+      "sha256": "b5d99928c9295390feaf3be58f33bd5bb64ed2dcd539f3114945943ef5c15533"
+    },
+    {
+      "name": "MCProtocolLib protocol 763 structure seed",
+      "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/packet/ingame/serverbound/inventory/ServerboundSetStructureBlockPacket.java",
+      "sha256": "16744382f58795ad63b7a7878c2b339061d969f9da5876b3605a104e524e920a"
+    },
+    {
+      "name": "MCProtocolLib exact 763 version declaration",
+      "url": "https://raw.githubusercontent.com/GeyserMC/MCProtocolLib/caa35c7be4ff6dea3a8b9bc05558cd0bc18b2c3c/src/main/java/com/github/steveice10/mc/protocol/codec/MinecraftCodec.java",
+      "sha256": "04d8802168b25b79653d9e5bea2e55174a3ce86eaa386aced9a40bbf3914ef22"
+    }
+  ]
+}

@@ -594,3 +594,11 @@ families and all earlier absences, independent immutable source hashes and a
 narrow official static map-codec binding. Fourteen original Python fixtures are
 synthetic and contain no captured game/account state. Rule values stay textual;
 receiver registry resolution and map replacement semantics are not simulated.
+
+## World-edit request codecs
+
+The [world-edit audit](docs/world-edit-wire-audit.md) preserves the pinned schemas
+while correcting their structure-seed width and flags interpretation using
+immutable independent sources and official static endpoint evidence. Its 196
+original Python fixtures include full signed 64-bit seeds and raw flag bytes;
+no commands, structure generators or live world edits are executed.

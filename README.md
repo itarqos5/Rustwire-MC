@@ -327,3 +327,11 @@ preserve the original packet. No rendering or tracking state is simulated.
 for 26.1–26.2, plus the empty low-disk notification. Values and duplicate wire
 entries remain explicit; no game-rule parsing, application or permission decision
 is made. [Wire audit](docs/game-rule-wire-audit.md).
+
+### World-edit request envelopes
+
+`packet::world_edit` adds command-block/minecart, jigsaw and structure requests
+across all fourteen families. It preserves 64-bit VarLong structure seeds, raw
+flags/coordinates and exact jigsaw priority boundaries. Commands and block-state
+expressions remain data; no world edits or permission decisions are performed.
+[Wire audit](docs/world-edit-wire-audit.md).

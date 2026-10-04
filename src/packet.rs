@@ -32,6 +32,7 @@ pub mod typed;
 pub mod waypoint;
 mod world;
 pub mod world_control;
+pub mod world_edit;
 pub mod world_effects;
 pub mod world_state;
 use crate::{

@@ -1114,3 +1114,17 @@ strict Clippy/rustdoc/formatting and the complete schema/fixture audit. All
 85 root-tool and 105 existing Paper-validator Python tests passed in a clean
 copy without downloaded schemas. MSRV and cross-platform execution remain
 separate exact-commit CI gates. No live settings or disk state were changed.
+
+## World-edit requests
+
+Five Rust regressions cover 196 independent fixtures, all 7,912 strict prefixes,
+exact packet IDs/bytes, full-width seeds, raw flags/signed bytes/float bits,
+versioned jigsaw priorities, strict enums and identifier/string/byte limits,
+transactional I/O and bounded mutations. Four isolated Python tests exercise
+schema/hash/alias/mapping drift. [Evidence and commands](docs/world-edit-wire-audit.md).
+
+The integrated suite passed 562 all-feature and 523 no-default Rust tests,
+strict Clippy/rustdoc/formatting and the complete world-edit schema/fixture audit.
+All 89 root-tool and 105 existing Paper-validator Python tests passed from a
+clean copy without downloaded schemas. MSRV and operating-system checks are
+separate exact-commit CI gates; no live commands or world edits were executed.
