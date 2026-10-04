@@ -4,7 +4,7 @@ use crate::{
     codec::{Reader, Writer},
     frame::RawPacket,
     packet::{chat::ChatComponent, named},
-    version::State,
+    version::{Direction, State},
     Error, Limits, Result, Version,
 };
 fn reader(bytes: &[u8], limits: Limits) -> Result<Reader<'_>> {
@@ -156,6 +156,46 @@ pub enum CommonPacket {
     BundleDelimiter,
 }
 impl CommonPacket {
+    /// Decode only a catalogued clientbound configuration/play tuple.
+    /// Unsupported states, versions and names return `None` without parsing.
+    pub fn decode_in_state(
+        state: State,
+        name: &str,
+        bytes: &[u8],
+        version: Version,
+        limits: Limits,
+    ) -> Result<Option<Self>> {
+        // Avoid a name-to-ID catalog scan for unrelated high-volume play packets.
+        if !matches!(
+            name,
+            "reset_chat"
+                | "custom_report_details"
+                | "resource_pack_send"
+                | "add_resource_pack"
+                | "remove_resource_pack"
+                | "transfer"
+                | "store_cookie"
+                | "tags"
+                | "feature_flags"
+                | "code_of_conduct"
+                | "server_links"
+                | "chunk_batch_start"
+                | "chunk_batch_finished"
+                | "bundle_delimiter"
+        ) {
+            return Ok(None);
+        }
+        if !matches!(state, State::Configuration | State::Play)
+            || version
+                .packet_id(state, Direction::Clientbound, name)
+                .is_err()
+        {
+            return Ok(None);
+        }
+        Self::decode(name, bytes, version, limits)
+    }
+    /// Name-only body helper; the caller supplies the packet's state context.
+    /// Prefer `decode_in_state` when dispatching arbitrary named packets.
     pub fn decode(
         name: &str,
         bytes: &[u8],
@@ -227,6 +267,9 @@ impl CommonPacket {
                 Self::ServerLinks(links)
             }
             "chunk_batch_start" | "bundle_delimiter" => {
+                if name == "chunk_batch_start" && version.protocol() < 764 {
+                    return Err(Error::Unsupported("chunk batches before 1.20.2"));
+                }
                 reader(bytes, limits)?.finish()?;
                 if name == "chunk_batch_start" {
                     Self::ChunkBatchStarted
@@ -235,6 +278,9 @@ impl CommonPacket {
                 }
             }
             "chunk_batch_finished" => {
+                if version.protocol() < 764 {
+                    return Err(Error::Unsupported("chunk batches before 1.20.2"));
+                }
                 let mut r = reader(bytes, limits)?;
                 let count = r.var_i32()?;
                 if count < 0 {

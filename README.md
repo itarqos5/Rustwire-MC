@@ -360,3 +360,7 @@ in both directions for play and configuration. Incoming typed events retain
 opaque channel bytes without running handlers or responding. Encoding preflights
 channel and payload budgets before allocation; the [wire audit](docs/custom-payload-wire-audit.md)
 explains exact state/version limits and channel-specific interpretation boundaries.
+
+Standalone common-packet dispatch can use `CommonPacket::decode_in_state` for
+exact release/state validation. Typed connection dispatch uses the same gate;
+see the [common-state regression audit](docs/common-state-wire-audit.md).
