@@ -113,6 +113,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    RecipeControl(super::recipe::RecipeControlPacket),
     ServerData(super::server_metadata::ServerData),
     PingResponse(super::server_metadata::PingResponse),
     Advancement(super::advancements::AdvancementPacket),
@@ -174,6 +175,14 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "unlock_recipes" | "recipe_book_settings" | "recipe_book_remove" => {
+                Self::RecipeControl(super::recipe::RecipeControlPacket::decode(
+                    name, bytes, version, limits,
+                )?)
+            }
+            "craft_recipe_response" if version.protocol() < 768 => Self::RecipeControl(
+                super::recipe::RecipeControlPacket::decode(name, bytes, version, limits)?,
+            ),
             "server_data" => Self::ServerData(super::server_metadata::ServerData::decode(
                 bytes, version, limits,
             )?),

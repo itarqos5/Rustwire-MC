@@ -483,3 +483,18 @@ static inspection commands. This primary evidence corrects the stale pinned
 schema's `i8`: component-slot counts are VarInts already at protocol 766.
 Original count-128/300 fixtures distinguish the encodings; earlier small-count
 live checks did not. This increment executes no game serializer or server.
+
+## Recipe-book control schema and source evidence
+
+The [recipe-control audit](docs/recipe-control-wire-audit.md) checks 79 complete
+outer layouts across fourteen hash-pinned families, of which 70 have implemented
+typed bodies. Nine modern ghost-response envelopes are audited only to establish
+the excluded RecipeDisplay boundary. The independent original Python encoder
+produces 306 synthetic fixture rows, including 19 unsupported-enum cases.
+Pinned MCProtocolLib and PacketEvents source inspection corroborates wire widths
+and modern signed VarInts but exposes a legacy byte-signedness disagreement.
+The API retains raw legacy bytes; it does not label that disagreement a proven
+vanilla schema bug. Immutable URLs and inspected-source hashes are recorded in
+[the source manifest](docs/validation/recipe-control-source-audit.json).
+No external implementation code is copied and no new game/runtime oracle or
+live-server interoperability claim is made.

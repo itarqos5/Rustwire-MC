@@ -239,3 +239,12 @@ and skips impossible out-of-range checks for direct/full-domain palettes. On the
 recorded Linux host, a synthetic 24-section chunk decode changed from 124.75µs to
 51.69µs; this is an allocation-inclusive microbenchmark, not network throughput.
 [Workloads, controls, source hashes and all runs](VALIDATION.md#packed-palette-validation-benchmark).
+
+### Recipe-book control envelopes
+
+Bounded serverbound craft requests, book-setting changes and seen-recipe notices
+cover all fourteen families. Clientbound legacy unlock/ghost responses and
+modern settings/removal packets have typed dispatch. Registry keys and modern
+display IDs are explicitly versioned; legacy window bytes are retained losslessly.
+Recipe declarations, modern displays/additions and crafting execution remain
+outside this slice. [Exact boundaries and schema/source evidence](docs/recipe-control-wire-audit.md).

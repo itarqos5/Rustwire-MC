@@ -900,3 +900,21 @@ tests, all 310 fixture checks, strict all-target Clippy/rustdoc and formatting.
 All 137 Python verifier regressions also passed in a clean copy with no
 downloaded schemas; real upstream schema validation remains a separate audit.
 Rust 1.88 and platform coverage are checked by exact-commit CI.
+
+## Recipe-book control envelopes
+
+Eleven focused Rust tests passed with no default features and all features.
+The 306 original Python-encoded fixture rows cover fourteen families, exact
+packet IDs/directions, all 2,955 strict prefixes, both legacy raw byte views,
+modern signed VarInts, explicit registry-key/display-ID boundaries, settings,
+legacy initialization lists, strict malformed inputs and encode/decode budgets.
+In-memory connection tests distinguish unknown-action raw fallback from malformed
+known bodies and explicitly unimplemented modern display/add/declaration packets.
+
+The complete integrated suite passed 499 all-feature and 460 no-default tests.
+Strict all-target/all-feature Clippy, all-feature rustdoc and formatting passed.
+The real pinned-schema audit matched 79 outer layouts; nine self-contained Python
+mutation tests passed again in a copy without `research/protocols` or network.
+The [wire audit](docs/recipe-control-wire-audit.md) gives reproducible commands,
+source-level caveats and exact exclusions. MSRV execution belongs to CI; no new
+release-API, live-server or receiving-client acceptance evidence is claimed.
