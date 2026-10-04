@@ -170,3 +170,11 @@ A dash means the packet is absent, not an alias to a neighboring version.
 | 774 | 0x05 | 0x07 | 0x3a | 0x79 | 0x7a | 0x37 | 0x45 | 0x47 | 0x85 | 0x7d | 0x7e |
 | 775 | 0x05 | 0x07 | 0x3c | 0x7b | 0x7c | 0x39 | 0x47 | 0x49 | 0x87 | 0x7f | 0x80 |
 | 776 | 0x05 | 0x07 | 0x3c | 0x7b | 0x7c | 0x39 | 0x47 | 0x49 | 0x87 | 0x7f | 0x80 |
+
+### Clean-checkout verifier regressions
+
+The unit regression suite uses minimal synthetic schemas and the committed
+fixture IDs, so CI needs no downloaded research files or network access. Those
+negative controls test the verifier itself; they do not replace the separate
+`check_world_control_fixtures.py` audit of the real hash-pinned upstream inputs.
+Fixture-byte regeneration is checked against the committed table in either path.
