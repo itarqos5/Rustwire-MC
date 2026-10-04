@@ -34,6 +34,19 @@ DIRECTIONS = [('toClient', 'Clientbound'), ('toServer', 'Serverbound')]
 def corrected_mapping(protocol, state, direction, mapping):
     """Preserve pinned source bytes; apply independently verified wire corrections."""
     mapping = {int(wire_id, 0): name for wire_id, name in mapping.items()}
+    if 767 <= protocol <= 770 and (state, direction) == ('configuration', 'toServer'):
+        # Four release-specific MCProtocolLib registries and PacketEvents'
+        # 766–770 mapper agree: report details/links are clientbound only.
+        # The immutable input schemas accidentally append them serverbound.
+        expected = {
+            0: 'settings', 1: 'cookie_response', 2: 'custom_payload',
+            3: 'finish_configuration', 4: 'keep_alive', 5: 'pong',
+            6: 'resource_pack_receive', 7: 'select_known_packs',
+            8: 'custom_report_details', 9: 'server_links',
+        }
+        if mapping != expected:
+            raise SystemExit('Review the 767–770 configuration metadata correction for new schema inputs')
+        mapping = {i: n for i, n in mapping.items() if i < 8}
     if (protocol, state, direction) == (776, 'play', 'toServer'):
         # Official 26.2 client + Paper GameProtocols both register 69 packets.
         # The pinned schema misorders spectator_action and omits UUID spectate.

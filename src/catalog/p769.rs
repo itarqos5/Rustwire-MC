@@ -254,18 +254,6 @@ pub(crate) static P769: &[PacketInfo] = &[
         name: "select_known_packs",
     },
     PacketInfo {
-        state: State::Configuration,
-        direction: Direction::Serverbound,
-        id: 8,
-        name: "custom_report_details",
-    },
-    PacketInfo {
-        state: State::Configuration,
-        direction: Direction::Serverbound,
-        id: 9,
-        name: "server_links",
-    },
-    PacketInfo {
         state: State::Play,
         direction: Direction::Clientbound,
         id: 0,
@@ -1432,7 +1420,7 @@ pub(crate) static P769_RANGES: [(usize, usize); 10] = [
     (6, 12),
     (12, 17),
     (17, 34),
-    (34, 44),
-    (44, 175),
-    (175, 237),
+    (34, 42),
+    (42, 173),
+    (173, 235),
 ];

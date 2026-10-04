@@ -254,18 +254,6 @@ pub(crate) static P767: &[PacketInfo] = &[
         name: "select_known_packs",
     },
     PacketInfo {
-        state: State::Configuration,
-        direction: Direction::Serverbound,
-        id: 8,
-        name: "custom_report_details",
-    },
-    PacketInfo {
-        state: State::Configuration,
-        direction: Direction::Serverbound,
-        id: 9,
-        name: "server_links",
-    },
-    PacketInfo {
         state: State::Play,
         direction: Direction::Clientbound,
         id: 0,
@@ -1366,7 +1354,7 @@ pub(crate) static P767_RANGES: [(usize, usize); 10] = [
     (6, 12),
     (12, 17),
     (17, 34),
-    (34, 44),
-    (44, 168),
-    (168, 226),
+    (34, 42),
+    (42, 166),
+    (166, 224),
 ];

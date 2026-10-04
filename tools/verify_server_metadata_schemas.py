@@ -36,8 +36,9 @@ def expected(protocol):
             result[("play", direction, name)] = ("packet_" + name, container(("id", "i64")))
     if protocol >= 767:
         details = container(("details", ["array", {"countType": "varint", "type": container(("key", "string"), ("value", "string"))}]))
-        # Schema also advertises serverbound configuration metadata. Verify the
-        # fact, but do not present it as an implemented outbound packet helper.
+        # Raw schemas erroneously advertise serverbound configuration metadata.
+        # Verify the pinned anomaly here; generate_catalog removes those entries
+        # using independently audited release registries, not a new wire helper.
         states = [("configuration", "toClient"), ("play", "toClient")]
         if protocol < 771:
             states.append(("configuration", "toServer"))

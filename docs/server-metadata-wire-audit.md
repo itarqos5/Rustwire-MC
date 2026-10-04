@@ -26,11 +26,13 @@ that unsigned chat is permitted. Existing explicit unsigned-chat policy remains
 unchanged.
 
 The common report layout is a schema-global type referenced by both supported
-clientbound states. The pinned catalogs additionally advertise serverbound
-configuration `custom_report_details` at protocols 767–770, removing that entry
-from 771. The audit verifies this boundary, but this increment deliberately
-provides only the clientbound report wrapper and dispatch. That outbound catalog
-entry remains raw-only. There is no global catalog modification.
+clientbound states. The pinned raw schemas erroneously advertise serverbound
+configuration `custom_report_details` and `server_links` at protocols 767–770.
+Independent release-labelled implementations show that these are clientbound
+only. The generator now removes those two phantom outbound entries with an
+exact-input guard; the raw schemas/hashes remain unchanged. This verifier still
+checks the historical raw-schema anomaly, not support for sending those packets.
+See the [catalog correction audit](configuration-catalog-wire-audit.md).
 
 The play ping pair is distinct from status ping and the configuration/play
 fixed-i32 `ping`/`pong` connection-control pair. Identifiers preserve the full i64

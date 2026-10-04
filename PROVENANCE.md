@@ -615,3 +615,12 @@ custom-click packet-ID correction is retained. The
 [source facts](docs/validation/dialog-wire-facts.json) record immutable Git blob
 hashes and official class hashes without implementation text. The 102 original
 Python fixtures are synthetic, not captures or executed serializer output.
+
+## Configuration metadata catalog direction correction
+
+The [configuration catalog audit](docs/configuration-catalog-wire-audit.md)
+records a guarded removal of two phantom serverbound metadata entries in the
+767–770 input schemas. Four release-labelled MCProtocolLib registries and an
+independent PacketEvents version mapper agree on the eight actual serverbound
+configuration entries. Raw schema hashes stay unchanged; generated IDs in all
+other groups and the existing protocol-776 correction are preserved.

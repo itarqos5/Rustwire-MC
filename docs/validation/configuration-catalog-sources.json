@@ -1,0 +1,70 @@
+[
+  {
+    "protocol": 767,
+    "url": "https://github.com/GeyserMC/MCProtocolLib/blob/e71d7df8c127b7196fd81dd392034d7d97acbb4e/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+    "sha256": "e84c9095bb50bf8b40588607eba12f94892b707a390e5b8e82e088f76d9e6a8b",
+    "serverbound_registry_classes": [
+      "ServerboundClientInformationPacket",
+      "ServerboundCookieResponsePacket",
+      "ServerboundCustomPayloadPacket",
+      "ServerboundFinishConfigurationPacket",
+      "ServerboundKeepAlivePacket",
+      "ServerboundPongPacket",
+      "ServerboundResourcePackPacket",
+      "ServerboundSelectKnownPacks"
+    ]
+  },
+  {
+    "protocol": 768,
+    "url": "https://github.com/GeyserMC/MCProtocolLib/blob/667e02d38cd4a79d46640312cd599123609633ac/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+    "sha256": "93ae69a2e3698c61a799427449e97d4d527deafbe44f9e655282a4f896664434",
+    "serverbound_registry_classes": [
+      "ServerboundClientInformationPacket",
+      "ServerboundCookieResponsePacket",
+      "ServerboundCustomPayloadPacket",
+      "ServerboundFinishConfigurationPacket",
+      "ServerboundKeepAlivePacket",
+      "ServerboundPongPacket",
+      "ServerboundResourcePackPacket",
+      "ServerboundSelectKnownPacks"
+    ]
+  },
+  {
+    "protocol": 769,
+    "url": "https://github.com/GeyserMC/MCProtocolLib/blob/7cc247026c6bff700c644d545942f7733ebb6ad0/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+    "sha256": "eda2f5113352461ed6d72b5065e1ea433818037e76701fb805e90e65c4b6aac5",
+    "serverbound_registry_classes": [
+      "ServerboundClientInformationPacket",
+      "ServerboundCookieResponsePacket",
+      "ServerboundCustomPayloadPacket",
+      "ServerboundFinishConfigurationPacket",
+      "ServerboundKeepAlivePacket",
+      "ServerboundPongPacket",
+      "ServerboundResourcePackPacket",
+      "ServerboundSelectKnownPacks"
+    ]
+  },
+  {
+    "protocol": 770,
+    "url": "https://github.com/GeyserMC/MCProtocolLib/blob/f4004310698f9e3793e6619a6db89ae0a7784a4d/protocol/src/main/java/org/geysermc/mcprotocollib/protocol/codec/MinecraftCodec.java",
+    "sha256": "c72f2321a7d5f92f772e86e2e7262c39c8cc4faa086194e328b0e1226d33a23d",
+    "serverbound_registry_classes": [
+      "ServerboundClientInformationPacket",
+      "ServerboundCookieResponsePacket",
+      "ServerboundCustomPayloadPacket",
+      "ServerboundFinishConfigurationPacket",
+      "ServerboundKeepAlivePacket",
+      "ServerboundPongPacket",
+      "ServerboundResourcePackPacket",
+      "ServerboundSelectKnownPacks"
+    ]
+  },
+  {
+    "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/packettype/PacketType.java",
+    "sha256": "a3ecfde03009183cfbfb8a8fe90433d51313f2370b0f360106ed065eabdeca19"
+  },
+  {
+    "url": "https://github.com/retrooper/packetevents/blob/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/packettype/config/serverbound/ServerboundConfigPacketType_1_20_5.java",
+    "sha256": "87bbac80a0243b9fe0ef551003d7191294e8fca5ef5ad2726c1419a5674060c3"
+  }
+]
