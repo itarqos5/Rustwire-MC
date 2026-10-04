@@ -578,3 +578,11 @@ for 107 supported packet/family combinations. Immutable independent wrapper
 sources and narrow official static checks establish scalar widths, optional
 markers and bundle-index validity. The 362 Python-generated fixtures are original
 synthetic data, not captured traffic or executed upstream serializers.
+
+## Tracked waypoint envelopes
+
+The [waypoint audit](docs/waypoint-wire-audit.md) checks six present/eight absent
+hash-pinned layouts, immutable independent implementations and narrow official
+26.2 static class bindings. Its 306 original Python fixtures cover all operation,
+identity, icon-color and location combinations plus float bit patterns. No game
+runtime, live capture or renderer acceptance result is claimed.

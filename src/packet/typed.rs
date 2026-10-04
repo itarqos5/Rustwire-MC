@@ -113,6 +113,7 @@ pub enum OverlayPacket {
 }
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
+    Waypoint(super::waypoint::TrackedWaypoint),
     LegacyRecipes(super::recipe_declarations::LegacyDeclareRecipes),
     ModernRecipes(super::recipe_properties::ModernDeclareRecipes),
     RecipeControl(super::recipe::RecipeControlPacket),
@@ -178,6 +179,9 @@ impl DecodedPacket {
             return Ok(None);
         }
         let packet = match name {
+            "tracked_waypoint" => Self::Waypoint(super::waypoint::TrackedWaypoint::decode(
+                bytes, version, limits,
+            )?),
             "declare_recipes" if version.protocol() < 768 => Self::LegacyRecipes(
                 super::recipe_declarations::LegacyDeclareRecipes::decode(bytes, version, limits)?,
             ),

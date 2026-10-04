@@ -312,3 +312,11 @@ state, difficulty/game-mode requests and explicit UUID/entity/optional-entity
 spectator forms. Version gates preserve historical packet identities and the
 existing corrected 26.2 catalog. These helpers serialize intent without making
 permission or game-state decisions. [Wire audit](docs/client-control-wire-audit.md).
+
+### Tracked waypoints
+
+`packet::waypoint` adds track/untrack/update envelopes for 1.21.6–26.2, with
+UUID/named identities, optional RGB icons, full signed coordinates and raw
+azimuth bits. Even removal retains the full wire body; unknown location payloads
+preserve the original packet. No rendering or tracking state is simulated.
+[Wire audit](docs/waypoint-wire-audit.md).

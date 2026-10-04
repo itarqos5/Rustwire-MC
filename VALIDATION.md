@@ -1085,3 +1085,18 @@ strict Clippy/rustdoc/formatting and the complete pinned-schema fixture check.
 All 77 root-tool and 105 existing Paper-validator Python tests passed from a
 clean copy without downloaded schemas. Exact-commit CI is the separate MSRV
 and cross-platform gate. No new live game-state changes were exercised.
+
+## Tracked waypoints
+
+Six Rust regressions exercise 306 original waypoint fixtures and all 12,582
+strict prefixes, exact packet IDs/bytes, full removal bodies, string/byte limits,
+float bit preservation, version/state gates, transactional I/O and in-memory
+Connection raw/error boundaries. Four self-contained Python regressions audit
+schema mutation/hash/mapping behavior without downloaded inputs. See the
+[wire audit](docs/waypoint-wire-audit.md) for sources and reproducible commands.
+
+The integrated suite passed 553 all-feature and 514 no-default Rust tests,
+strict Clippy/rustdoc/formatting and the complete waypoint schema/fixture audit.
+All 81 root-tool and 105 existing Paper-validator Python tests passed in a clean
+copy without downloaded schemas. Exact-commit CI separately verifies MSRV and
+operating systems; no live rendering or tracking behavior was tested.

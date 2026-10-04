@@ -28,6 +28,7 @@ pub mod server_metadata;
 pub mod statistics;
 pub mod tags;
 pub mod typed;
+pub mod waypoint;
 mod world;
 pub mod world_control;
 pub mod world_effects;

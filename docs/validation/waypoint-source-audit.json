@@ -1,0 +1,55 @@
+{
+  "method": "Independent implementation source inspection; static official 26.2 cross-checks documented separately; no upstream execution",
+  "sources": [
+    {
+      "name": "TrackedWaypoint",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/TrackedWaypoint.java",
+      "sha256": "c7d37cfa4efa4527fdda9ac4235e458474f494cf1e6cffcd247fd321b34f3da5"
+    },
+    {
+      "name": "WaypointIcon",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/WaypointIcon.java",
+      "sha256": "4fcdc466906204263410647b0293464185629514282a49cf747bd62b2d7505e8"
+    },
+    {
+      "name": "WaypointInfo",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/WaypointInfo.java",
+      "sha256": "1d5fe8c7f3b1fff1de9edb8d279b5838ed5418c11c1f4366401249e69ca1b778"
+    },
+    {
+      "name": "Vec3iWaypointInfo",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/Vec3iWaypointInfo.java",
+      "sha256": "46c6f07cc539b5822745ade6e5a92cd8de350999aedf470c1cde8d73ef88c876"
+    },
+    {
+      "name": "ChunkWaypointInfo",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/ChunkWaypointInfo.java",
+      "sha256": "466817931209058f629a6d70649a0235e9a73722ba36281554ed4fe4f941e769"
+    },
+    {
+      "name": "AzimuthWaypointInfo",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/AzimuthWaypointInfo.java",
+      "sha256": "2638d1e7095fcbda70e8184cd4dd41f2793e5611c5cd70704f7c8ce327b4a1b7"
+    },
+    {
+      "name": "EmptyWaypointInfo",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/world/waypoint/EmptyWaypointInfo.java",
+      "sha256": "d060dbd1563b06fa1d1715c7af0ad834bddd79ba988299bd67e4f072810c5ee3"
+    },
+    {
+      "name": "Waypoint packet wrapper",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/wrapper/play/server/WrapperPlayServerWaypoint.java",
+      "sha256": "9791ff9d22a1bf4a23ed367923cbec3136d86eb24d91b91ae32e6232c73d317d"
+    },
+    {
+      "name": "Vector3i",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/util/Vector3i.java",
+      "sha256": "fd22f64ca8e29758256fdb224939f389372feabae303bf8c733bfba54bd83edc"
+    },
+    {
+      "name": "RGB Color",
+      "url": "https://raw.githubusercontent.com/retrooper/packetevents/1063d4e71cff72b9fe022f37b51faad9536815b7/api/src/main/java/com/github/retrooper/packetevents/protocol/color/Color.java",
+      "sha256": "e7de21ea712640cbbb88efc08a47b21d7d47e953a1010bcbcd4cb4d0a81e8422"
+    }
+  ]
+}
