@@ -169,3 +169,11 @@ for protocols 763–767. Its [separate audit](legacy-recipe-wire-audit.md) cover
 23 vanilla kinds, shared bounded slots and the serializer-ID/766-slot-count
 discrepancies. Modern declarations remain explicitly unimplemented. This does
 not change the control packet layouts or claim crafting/registry simulation.
+
+## Subsequent modern recipe envelopes
+
+Modern ghost responses/additions now use the separate
+[display codecs](recipe-display-wire-audit.md), and modern declarations use
+[recipe property/stonecutter codecs](recipe-properties-wire-audit.md). Earlier
+exclusion notes describe the historical control-only scope. Legacy and modern
+public control representations remain distinct and unchanged.

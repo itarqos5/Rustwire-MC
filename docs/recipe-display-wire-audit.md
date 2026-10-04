@@ -10,7 +10,8 @@ public types and legacy response are preserved. Modern typed dispatch uses
 
 These models describe wire payloads only. They do not register or execute
 recipes, resolve item/tag/component/display IDs, validate crafting grids, or
-apply book state. Modern `declare_recipes` is **not implemented by this slice**.
+apply book state. Modern `declare_recipes` is implemented separately by
+[`packet::recipe_properties`](recipe-properties-wire-audit.md).
 
 Evidence is deliberately separated:
 

@@ -8,7 +8,8 @@ clientbound Play `declare_recipes` packet in **protocols 763–767 only**
 kinds**, with ingredient alternatives, result item stacks, classic NBT and
 component patches. It does not register recipes, resolve item IDs, execute
 crafting, simulate a menu, or maintain a recipe book. Modern declaration packets
-at **768+ remain unsupported whole packets**, with no inferred modern framing.
+at **768+ use a separate [modern codec](recipe-properties-wire-audit.md)**;
+this legacy type rejects those versions rather than inferring modern framing.
 
 Evidence is deliberately separated:
 

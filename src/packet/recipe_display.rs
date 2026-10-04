@@ -389,7 +389,12 @@ fn write_pattern(
         }
     }
 }
-fn read_slot(r: &mut Reader<'_>, v: Version, b: &mut Budget, d: usize) -> Result<SlotDisplay> {
+pub(crate) fn read_slot(
+    r: &mut Reader<'_>,
+    v: Version,
+    b: &mut Budget,
+    d: usize,
+) -> Result<SlotDisplay> {
     depth(b, d)?;
     b.charge(1)?;
     let id = r.var_i32()?;
@@ -437,7 +442,7 @@ fn read_slot(r: &mut Reader<'_>, v: Version, b: &mut Budget, d: usize) -> Result
         _ => unreachable!(),
     })
 }
-fn write_slot(
+pub(crate) fn write_slot(
     value: &SlotDisplay,
     w: &mut Writer,
     v: Version,
@@ -651,7 +656,11 @@ fn write_display(value: &RecipeDisplay, w: &mut Writer, v: Version, b: &mut Budg
     Ok(())
 }
 
-fn read_ingredient(r: &mut Reader<'_>, v: Version, b: &mut Budget) -> Result<DisplayIngredient> {
+pub(crate) fn read_ingredient(
+    r: &mut Reader<'_>,
+    v: Version,
+    b: &mut Budget,
+) -> Result<DisplayIngredient> {
     let marker = nonnegative(r.var_i32()?)?;
     if marker == 0 {
         return Ok(DisplayIngredient::Tag(read_key(r, v)?));
@@ -667,7 +676,7 @@ fn read_ingredient(r: &mut Reader<'_>, v: Version, b: &mut Budget) -> Result<Dis
     }
     Ok(DisplayIngredient::Ids(ids))
 }
-fn write_ingredient(
+pub(crate) fn write_ingredient(
     value: &DisplayIngredient,
     w: &mut Writer,
     v: Version,

@@ -114,6 +114,7 @@ pub enum OverlayPacket {
 #[derive(Debug, Clone, PartialEq)]
 pub enum DecodedPacket {
     LegacyRecipes(super::recipe_declarations::LegacyDeclareRecipes),
+    ModernRecipes(super::recipe_properties::ModernDeclareRecipes),
     RecipeControl(super::recipe::RecipeControlPacket),
     RecipeDisplay(Box<super::recipe_display::RecipeDisplayPacket>),
     ServerData(super::server_metadata::ServerData),
@@ -179,6 +180,9 @@ impl DecodedPacket {
         let packet = match name {
             "declare_recipes" if version.protocol() < 768 => Self::LegacyRecipes(
                 super::recipe_declarations::LegacyDeclareRecipes::decode(bytes, version, limits)?,
+            ),
+            "declare_recipes" => Self::ModernRecipes(
+                super::recipe_properties::ModernDeclareRecipes::decode(bytes, version, limits)?,
             ),
             "unlock_recipes" | "recipe_book_settings" | "recipe_book_remove" => {
                 Self::RecipeControl(super::recipe::RecipeControlPacket::decode(

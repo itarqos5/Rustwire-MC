@@ -4,7 +4,7 @@ use rustwire_mc::{
     frame::{FrameCodec, RawPacket},
     packet::typed::DecodedPacket,
     version::{Direction, State},
-    Limits, Version,
+    Error, Limits, Version,
 };
 use std::io::{Cursor, Read, Write};
 struct Memory {
@@ -78,64 +78,54 @@ fn connection(v: Version, packet: RawPacket) -> Connection<Memory> {
     }
     c
 }
+#[path = "support/recipe_property_fixtures.rs"]
+mod support;
 #[test]
-fn connection_keeps_unknown_unframed_display_or_component_body_intact() {
-    for &v in Version::ALL.iter().filter(|v| v.protocol() >= 768) {
-        for (body, reason) in [
-            (vec![0, 5, 99, 88], "recipe display kind"),
-            (vec![0, 3, 127, 99, 88], "slot display kind"),
-            (
-                if v.protocol() >= 775 {
-                    vec![0, 3, 5, 1, 1, 1, 0, 255, 255, 255, 255, 7, 99, 88]
-                } else {
-                    vec![0, 3, 3, 1, 1, 1, 0, 255, 255, 255, 255, 7, 99, 88]
-                },
-                "unknown component ID",
+fn connection_decodes_all_modern_declaration_fixtures() {
+    for f in support::fixtures() {
+        let raw = RawPacket::new(f.packet_id, f.bytes.clone());
+        match connection(f.version, raw).next_typed_event().unwrap() {
+            TypedEvent::Decoded(DecodedPacket::ModernRecipes(value)) => assert_eq!(
+                value.encode(f.version, Limits::default()).unwrap(),
+                f.bytes,
+                "{} {}",
+                f.version.protocol(),
+                f.case
             ),
-        ] {
-            let raw = RawPacket::new(
-                v.packet_id(State::Play, Direction::Clientbound, "craft_recipe_response")
-                    .unwrap(),
-                body,
-            );
-            let event = connection(v, raw.clone()).next_typed_event().unwrap();
-            match event {
-                TypedEvent::Raw {
-                    packet,
-                    unsupported: Some(actual),
-                    ..
-                } => {
-                    assert_eq!(packet, raw);
-                    if reason != "unknown component ID" {
-                        assert_eq!(actual, reason);
-                    }
-                }
-                _ => panic!("not raw fallback: {event:?}"),
-            }
-        }
-        for body in [vec![0], vec![0, 3, 0], vec![0, 3, 0, 0, 0, 0]] {
-            let raw = RawPacket::new(
-                v.packet_id(State::Play, Direction::Clientbound, "craft_recipe_response")
-                    .unwrap(),
-                body,
-            );
-            assert!(connection(v, raw).next_typed_event().is_err());
+            event => panic!("wrong event: {event:?}"),
         }
     }
 }
 #[test]
-fn modern_declarations_have_separate_typed_dispatch() {
+fn unknown_nested_layout_keeps_entire_original_packet_and_known_malformed_errors() {
     for &v in Version::ALL.iter().filter(|v| v.protocol() >= 768) {
-        assert!(matches!(
-            DecodedPacket::decode(
-                State::Play,
-                "declare_recipes",
-                &[0, 0],
-                v,
-                Limits::default()
-            )
-            .unwrap(),
-            Some(DecodedPacket::ModernRecipes(_))
-        ));
+        let id = v
+            .packet_id(State::Play, Direction::Clientbound, "declare_recipes")
+            .unwrap();
+        // Empty property list; one explicit-empty input; an unknown display.
+        let raw = RawPacket::new(id, vec![0, 1, 1, 127, 99, 88]);
+        assert!(
+            matches!(connection(v,raw.clone()).next_typed_event().unwrap(),TypedEvent::Raw { name:Some("declare_recipes"),packet,unsupported:Some("slot display kind"),.. } if packet==raw)
+        );
+        let kind = if v.protocol() >= 775 { 5 } else { 3 };
+        let raw = RawPacket::new(
+            id,
+            vec![0, 1, 1, kind, 1, 1, 1, 0, 255, 255, 255, 255, 7, 99, 88],
+        );
+        assert!(
+            matches!(connection(v,raw.clone()).next_typed_event().unwrap(),TypedEvent::Raw { packet,unsupported:Some("unknown item component ID"),.. } if packet==raw)
+        );
+        for malformed in [
+            vec![255],
+            vec![0],
+            vec![0, 1, 1],
+            vec![0, 0, 0],
+            vec![1, 1, 255, 0, 0],
+        ] {
+            assert!(matches!(
+                connection(v, RawPacket::new(id, malformed)).next_typed_event(),
+                Err(Error::Eof | Error::Invalid(_))
+            ));
+        }
     }
 }

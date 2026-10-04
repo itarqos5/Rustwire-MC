@@ -256,8 +256,8 @@ outside this slice. [Exact boundaries and schema/source evidence](docs/recipe-co
 serializer kinds, ingredient alternatives, outputs and shared bounded item/NBT/
 component payloads. Its separate `DecodedPacket::LegacyRecipes` branch is
 Play-only. Unknown unframed serializers/components preserve the whole raw packet;
-known malformed bodies remain errors. Modern declarations (768+) remain raw and
-unimplemented. This extends the earlier recipe-control scope; it does not
+known malformed bodies remain errors. Modern declarations (768+) use the
+separate `packet::recipe_properties::ModernDeclareRecipes` type. This extends the earlier recipe-control scope; it does not
 execute crafting or maintain a recipe registry.
 
 The [legacy wire audit](docs/legacy-recipe-wire-audit.md) documents two checked
@@ -275,8 +275,8 @@ dispatch family preserving legacy control APIs. It supports recursive composites
 versioned smithing patterns, shifted groups, holder-set requirements, and the
 775–776 item-template boundary. The pinned 776 Slot leaf is explicitly corrected
 from independent and static official-release evidence. Unknown unframed kinds or
-components preserve the full raw packet. Modern recipe declarations remain a
-separate unsupported slice. See [the wire audit](docs/recipe-display-wire-audit.md).
+components preserve the full raw packet. Modern recipe declarations are provided
+separately by `packet::recipe_properties`. See [the wire audit](docs/recipe-display-wire-audit.md).
 
 ### Serverbound editing and queries
 
@@ -286,3 +286,13 @@ versioned; modern creative updates explicitly retain length-framed component
 bytes rather than guessing their payload semantics. These are bounded request
 codecs, with no implicit editing, permission grants or game-state simulation.
 [Layouts, source evidence and limits](docs/editing-wire-audit.md).
+
+### Modern recipe properties and stonecutter declarations (768–776)
+
+`packet::recipe_properties::ModernDeclareRecipes` adds the modern
+`declare_recipes` envelope: named property-set item lists and stonecutter
+holder-set/SlotDisplay pairs. `DecodedPacket::ModernRecipes` uses shared whole-
+packet collection/NBT budgets and the existing versioned display codecs, while
+legacy serializer declarations stay separate. This closes the modern declaration
+wire boundary previously left open above; recipe execution and registry resolution
+remain application responsibilities. See [the audit](docs/recipe-properties-wire-audit.md).

@@ -1025,3 +1025,32 @@ strict Clippy, rustdoc and formatting, plus the full pinned fixture audit. All
 copy without downloaded schemas. MSRV and operating-system coverage remain
 separate exact-commit CI gates. No runtime game serializer or live editing
 acceptance test was performed.
+
+## Modern recipe properties (protocols 768–776)
+
+Nine complete declaration bodies and their nested display/holder aliases are
+checked against the immutable schema pins. The 345 original synthetic fixtures
+exercise all known slot-display kinds inside modern declarations, with 31,954
+strict truncation prefixes, exact/undersized byte caps and trailing-byte rejection.
+Additional tests cover aggregate collections and NBT roots across entries,
+depth-64/depth-65 paths, malformed identifiers/counts/IDs, state/version boundaries,
+all-fixture Connection dispatch and whole-raw unknown-nested fallback.
+
+```sh
+python3 tools/check_recipe_property_fixtures.py
+python3 -m unittest discover -s tools -p 'test_check_recipe_property_fixtures.py'
+cargo test --locked --offline --no-default-features --test recipe_properties --test recipe_properties_typed
+cargo test --locked --offline --all-features --test recipe_properties --test recipe_properties_typed
+```
+
+The verifier's six unit tests use synthetic schemas and committed fixture IDs;
+they run in a clean copy without ignored research inputs or network. The first
+command is the separate actual pinned-schema audit. Evidence labels and the
+continued limits on recipe execution/registry resolution are in
+[the wire audit](docs/recipe-properties-wire-audit.md).
+
+Integrated with the editing/query increment, the final suite passed 538
+all-feature and 499 no-default Rust tests, strict Clippy/rustdoc/formatting and
+the nine-family declaration audit. All 67 root-tool and 105 existing Paper
+validation Python tests passed in a clean copy without downloaded schemas.
+MSRV and cross-platform execution remain separate exact-commit CI gates.

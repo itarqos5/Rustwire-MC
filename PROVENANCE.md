@@ -547,3 +547,16 @@ creative component framing, and a signedness disagreement resolved by narrow
 official static class inspection. Its 217 original Python fixtures are synthetic,
 not captures or executed game serializers. Original code and factual source
 metadata are published; official binaries/mappings/disassembly are not vendored.
+
+## Modern recipe property/declaration envelope
+
+All nine existing 768–776 pinned schemas are checked by
+`tools/check_recipe_property_fixtures.py`. Exact MCProtocolLib 1.21.2-1 and
+PacketEvents v2.13.0 sources independently corroborate property sets followed by
+stonecutter holder-set/display pairs. Static official 26.2 codec-composition
+inspection confirms that options contain no recipe ID or serializer. Original
+Python fixtures, source URLs/hashes and protocol facts are included; upstream
+source, game artifacts and class dumps are not. This is source/static evidence
+and synthetic validation, not executed release-API output or live gameplay.
+See [the audit](docs/recipe-properties-wire-audit.md) and
+[source manifest](docs/validation/recipe-properties-source-audit.json).

@@ -21,6 +21,7 @@ pub mod player;
 pub mod recipe;
 pub mod recipe_declarations;
 pub mod recipe_display;
+pub mod recipe_properties;
 pub mod scoreboard;
 pub mod server_metadata;
 pub mod statistics;

@@ -142,25 +142,21 @@ fn every_fixture_is_clientbound_play_only_and_unknown_preserves_the_whole_packet
     }
 }
 #[test]
-fn modern_declarations_remain_unimplemented_raw_without_body_validation() {
+fn modern_declarations_reject_malformed_bodies_instead_of_opaque_fallback() {
     for &v in Version::ALL.iter().filter(|v| v.protocol() >= 768) {
-        assert!(DecodedPacket::decode(
-            State::Play,
-            "declare_recipes",
-            &[255],
-            v,
-            Limits::default()
-        )
-        .unwrap()
-        .is_none());
+        assert!(matches!(
+            DecodedPacket::decode(State::Play, "declare_recipes", &[255], v, Limits::default()),
+            Err(Error::Eof)
+        ));
         let raw = RawPacket::new(
             v.packet_id(State::Play, Direction::Clientbound, "declare_recipes")
                 .unwrap(),
             vec![255],
         );
-        assert!(
-            matches!(connection(v, raw.clone()).next_typed_event().unwrap(), TypedEvent::Raw { packet, name: Some("declare_recipes"), unsupported: None, .. } if packet == raw)
-        );
+        assert!(matches!(
+            connection(v, raw).next_typed_event(),
+            Err(Error::Eof)
+        ));
     }
 }
 #[test]

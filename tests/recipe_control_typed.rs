@@ -59,24 +59,8 @@ fn clientbound_dispatch_is_direction_and_state_scoped() {
     }
 }
 #[test]
-fn modern_recipe_declarations_remain_unimplemented() {
+fn legacy_and_modern_recipe_controls_have_exact_availability() {
     for &v in Version::ALL {
-        let names = if v.protocol() < 768 {
-            vec![]
-        } else {
-            vec!["declare_recipes"]
-        };
-        for name in names {
-            v.packet_id(State::Play, Direction::Clientbound, name)
-                .unwrap();
-            // Unsupported whole packets remain raw; this is not validation of
-            // their arbitrary bodies or a claim that the supplied bytes are valid.
-            assert!(
-                DecodedPacket::decode(State::Play, name, &[255], v, Limits::default())
-                    .unwrap()
-                    .is_none()
-            );
-        }
         let missing = if v.protocol() < 768 {
             "recipe_book_settings"
         } else {
@@ -182,7 +166,7 @@ fn connection_preserves_unknown_enum_raw_and_rejects_malformed_known_bodies() {
     }
 }
 #[test]
-fn connection_retains_unimplemented_modern_declarations_without_claiming_validation() {
+fn connection_rejects_malformed_modern_declarations() {
     for &v in Version::ALL.iter().filter(|v| v.protocol() >= 768) {
         {
             let name = "declare_recipes";
@@ -191,9 +175,10 @@ fn connection_retains_unimplemented_modern_declarations_without_claiming_validat
                     .unwrap(),
                 vec![255],
             );
-            assert!(
-                matches!(connection(v, original.clone()).next_typed_event().unwrap(), TypedEvent::Raw { name: Some(actual), packet, unsupported: None, .. } if actual == name && packet == original)
-            );
+            assert!(matches!(
+                connection(v, original).next_typed_event(),
+                Err(Error::Eof)
+            ));
         }
         let id = v
             .packet_id(State::Play, Direction::Clientbound, "recipe_book_remove")
