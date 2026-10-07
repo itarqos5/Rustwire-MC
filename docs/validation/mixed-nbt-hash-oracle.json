@@ -1,0 +1,210 @@
+{
+  "status": "local tested fix; unpublished; no live inventory-click replay performed",
+  "base_commit": "d7bfeedc0d99942192e0e0ceb60d6cce0a3b1166",
+  "method": "Original anonymous-NBT binary fixtures read by public NbtIo APIs, logical NbtOps converted through HashOps, and both DataComponents.CUSTOM_DATA/BUCKET_ENTITY_DATA public CODECs executed. No game implementation copied.",
+  "source_reference": "https://www.minecraft.net/en-us/article/minecraft-java-edition-1-21-5",
+  "oracle_source": "tools/paper/MixedNbtHashOracle.java",
+  "oracle_source_sha256": "2768ec286875de8bbe711846ae6db5b14c1177bbd1d556405e3994e886a2949c",
+  "fixtures": "tests/fixtures/mixed-nbt-hash.tsv",
+  "fixtures_sha256": "325043f25678980cbcb003a647c146b0c0da8f5cc5f252cde16f4338e7b0d365",
+  "releases_executed": [
+    {
+      "version": "1.21.5",
+      "jar_sha256": "eab0c36191936eea32e154e4f7fc047fc30bc34654f760e1effd2b5f72f3d04b",
+      "hashes": {
+        "ordinary": 1092700564,
+        "root_empty_key": 885674573,
+        "field_empty_key": 1768536823,
+        "ordinary_compound_list": 751177314,
+        "single_wrapper": -1752708208,
+        "mixed_wrappers": 220565617,
+        "escaped_real_empty_key": 1333509698,
+        "empty_plus_other": 145285784,
+        "duplicate_empty_key": 1297601398,
+        "nested_mixed_list": 1843509894,
+        "duplicate_empty_plus_other": 2044399989,
+        "empty_compound_list": 2035221027,
+        "nested_field_empty_key": -1927290985,
+        "byte_list_control": 1804330533
+      },
+      "both_component_codecs_match": true,
+      "oracle_stdout_stderr_sha256": "8949e60d81109bbb2d167b7e9ca22c426c6ad2f8650bbdafaf0f0f3dbef06df4"
+    },
+    {
+      "version": "26.1.2",
+      "jar_sha256": "bfdb3db598e2d9b066f65e7e1a3be1acc8b11b3fa38360593375e8dd1d060dac",
+      "hashes": {
+        "ordinary": 1092700564,
+        "root_empty_key": 885674573,
+        "field_empty_key": 1768536823,
+        "ordinary_compound_list": 751177314,
+        "single_wrapper": -1752708208,
+        "mixed_wrappers": 220565617,
+        "escaped_real_empty_key": 1333509698,
+        "empty_plus_other": 145285784,
+        "duplicate_empty_key": 1297601398,
+        "nested_mixed_list": 1843509894,
+        "duplicate_empty_plus_other": 2044399989,
+        "empty_compound_list": 2035221027,
+        "nested_field_empty_key": -1927290985,
+        "byte_list_control": 1804330533
+      },
+      "both_component_codecs_match": true,
+      "oracle_stdout_stderr_sha256": "7975fcc31e823b858f0d1e32e28e9940a19d406de2e90f68aa23cc134d7efe14"
+    },
+    {
+      "version": "26.2",
+      "jar_sha256": "09622eeea2dc90b37a5dc8c94d275da910c9a46a4bf6570d8535189334205bff",
+      "hashes": {
+        "ordinary": 1092700564,
+        "root_empty_key": 885674573,
+        "field_empty_key": 1768536823,
+        "ordinary_compound_list": 751177314,
+        "single_wrapper": -1752708208,
+        "mixed_wrappers": 220565617,
+        "escaped_real_empty_key": 1333509698,
+        "empty_plus_other": 145285784,
+        "duplicate_empty_key": 1297601398,
+        "nested_mixed_list": 1843509894,
+        "duplicate_empty_plus_other": 2044399989,
+        "empty_compound_list": 2035221027,
+        "nested_field_empty_key": -1927290985,
+        "byte_list_control": 1804330533
+      },
+      "both_component_codecs_match": true,
+      "oracle_stdout_stderr_sha256": "ca2a548b4185bca6ab443d9866d9f687149d449eda40df3fd55d71f9192f2b90"
+    }
+  ],
+  "pre_fix_mismatches": {
+    "single_wrapper": {
+      "rustwire_before": 1333509698,
+      "official": -1752708208
+    },
+    "mixed_wrappers": {
+      "rustwire_before": 1940058576,
+      "official": 220565617
+    },
+    "escaped_real_empty_key": {
+      "rustwire_before": 119946046,
+      "official": 1333509698
+    },
+    "duplicate_empty_key": {
+      "rustwire_before": 1070052334,
+      "official": 1297601398
+    },
+    "nested_mixed_list": {
+      "rustwire_before": -1774217219,
+      "official": 1843509894
+    },
+    "nested_field_empty_key": {
+      "rustwire_before": 856360467,
+      "official": -1927290985
+    }
+  },
+  "cases": {
+    "ordinary": {
+      "wire": "0a0100016101030001620000000200",
+      "expected_hash": 1092700564
+    },
+    "root_empty_key": {
+      "wire": "0a0100000100",
+      "expected_hash": 885674573
+    },
+    "field_empty_key": {
+      "wire": "0a0a000178010000010000",
+      "expected_hash": 1768536823
+    },
+    "ordinary_compound_list": {
+      "wire": "0a090001780a0000000101000161010000",
+      "expected_hash": 751177314
+    },
+    "single_wrapper": {
+      "wire": "0a090001780a00000001010000010000",
+      "expected_hash": -1752708208
+    },
+    "mixed_wrappers": {
+      "wire": "0a090001780a0000000201000001000800000001610000",
+      "expected_hash": 220565617
+    },
+    "escaped_real_empty_key": {
+      "wire": "0a090001780a000000010a000001000001000000",
+      "expected_hash": 1333509698
+    },
+    "empty_plus_other": {
+      "wire": "0a090001780a00000001010000010300017a000000020000",
+      "expected_hash": 145285784
+    },
+    "duplicate_empty_key": {
+      "wire": "0a090001780a00000001010000010800000001610000",
+      "expected_hash": 1297601398
+    },
+    "nested_mixed_list": {
+      "wire": "0a090001780a000000010900000a000000020300000000000300080000000162000000",
+      "expected_hash": 1843509894
+    },
+    "duplicate_empty_plus_other": {
+      "wire": "0a090001780a00000001010000010300017a00000002010000030000",
+      "expected_hash": 2044399989
+    },
+    "empty_compound_list": {
+      "wire": "0a090001780a000000010000",
+      "expected_hash": 2035221027
+    },
+    "nested_field_empty_key": {
+      "wire": "0a090001780a000000010a00000a0001710100000400000000",
+      "expected_hash": -1927290985
+    },
+    "byte_list_control": {
+      "wire": "0a090001780100000002010200",
+      "expected_hash": 1804330533
+    }
+  },
+  "scope_limits": [
+    "Executed release APIs cover 1.21.5, 26.1.2 and 26.2; other 770\u2013776 families use the same golden-value regressions but were not newly executed as release APIs",
+    "Raw NBT wire codecs and roundtrip representation unchanged",
+    "No real-server click or Microsoft account authentication was performed for this fix"
+  ],
+  "focused_cases": {
+    "count": 14,
+    "strict_prefixes": 267
+  },
+  "local_validation": {
+    "minimal": {
+      "passed": 603,
+      "log_sha256": "114b8bf3468aa0bffcdfb5a0ffb357bd3556a859b6f1ef0475e677ac4350dbad"
+    },
+    "default": {
+      "passed": 607,
+      "log_sha256": "08b0b768a6d9b170c11a326c1a8f1510d052521b57c2dce453bfeae993eb4c97"
+    },
+    "all_features": {
+      "passed": 642,
+      "log_sha256": "3aaf142684e18d286e2c356ad0f384d05f955c4b9f8a0d36cc720fedeada6176"
+    },
+    "msrv_focused": {
+      "passed": 19,
+      "log_sha256": "a82762a8c7e5095c0cf823eacb2abfb2cee2420bb60b1606a7b1ac9e8d7bc557"
+    },
+    "examples_all_features": {
+      "passed": 20,
+      "log_sha256": "a160172a7f094503c6ccb06e946407640f2df306b89374c8cb9c3b97b88c1c79"
+    },
+    "examples_minimal": {
+      "passed": 20,
+      "log_sha256": "9d296c2459342b31f709748593bd99f765949de91ccb15509d08db85cceb80e7"
+    },
+    "clippy": {
+      "passed": true,
+      "log_sha256": "acdb0b61a76f5debd754fa4444bdc5c123fefd9682f3430593bc455b6d9380d7"
+    },
+    "rustdoc": {
+      "passed": true,
+      "log_sha256": "dfecbef74061bf965ed23a2ceae25f1cb41b5cef33e9017742ba1431221c598d"
+    },
+    "format": {
+      "passed": true,
+      "command": "cargo fmt --all -- --check"
+    }
+  },
+  "validation_limit": "Linux local gates only; this unpublished fix has no GitHub CI or new live-server inventory-click result"
+}

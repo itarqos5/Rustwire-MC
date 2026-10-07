@@ -141,7 +141,21 @@ fn nbt_hash(tag: &Tag) -> u32 {
             h.byte(19);
             h.finish()
         }
-        Tag::List { elements, .. } => list(elements.iter().map(nbt_hash)),
+        Tag::List { elements, .. } => list(elements.iter().map(|item| {
+            // Modern ListTag loading unwraps one empty-key compound at each
+            // list-entry boundary. Duplicate keys collapse before that check,
+            // so a nonempty compound containing only empty keys uses its last
+            // value. Empty compounds and compounds with another key stay maps.
+            // Do not recursively unwrap here: a real empty-key compound is
+            // double-wrapped on the wire and must retain its inner map.
+            let logical = match item {
+                Tag::Compound(entries) if entries.iter().all(|(key, _)| key.0.is_empty()) => {
+                    entries.last().map_or(item, |(_, value)| value)
+                }
+                _ => item,
+            };
+            nbt_hash(logical)
+        })),
         Tag::Compound(entries) => {
             // NBT decoding into Java CompoundTag retains the last value of duplicate keys.
             let normalized: BTreeMap<&NbtString, &Tag> =
@@ -154,7 +168,9 @@ fn nbt_hash(tag: &Tag) -> u32 {
     }
 }
 /// Hash an NBT value using the exact primitive widths, UTF-16 strings, arrays,
-/// sorted maps and ordered lists consumed by `HashOps`. The root name is ignored.
+/// sorted maps and ordered lists consumed by modern `HashOps`. The root name is ignored.
+/// Network-NBT mixed-list wrappers are normalized to the logical values seen
+/// by modern `NbtOps`; raw NBT decoding and re-encoding remain lossless.
 /// This is appropriate for `custom_data`; other component codecs can normalize
 /// their values differently and must not automatically use this function.
 pub fn hash_nbt(value: &Nbt, limits: Limits) -> Result<i32> {
