@@ -1,0 +1,164 @@
+{
+  "created_utc": "2026-10-07T19:03:38.428054+00:00",
+  "status": "local validation snapshot recorded before publication; no live inventory-click replay",
+  "restored_fix_commit": "601bd5663549a3e785181ff2fdde50de76001da6",
+  "verified_public_main": "d7bfeedc0d99942192e0e0ceb60d6cce0a3b1166",
+  "scope": {
+    "typed_inventory_to_click_cases": 196,
+    "framed_connection_cases": 14,
+    "strict_incoming_prefixes": 6090,
+    "protocols": [
+      770,
+      771,
+      772,
+      773,
+      774,
+      775,
+      776
+    ],
+    "components": [
+      "custom_data",
+      "bucket_entity_data"
+    ],
+    "synthetic_menu_fixture": true,
+    "official_api_fixtures_newly_executed": false,
+    "live_server_click_replay": false,
+    "github_writes_performed_at_checkpoint_creation": false
+  },
+  "negative_control": {
+    "base": "d7bfeedc0d99942192e0e0ceb60d6cce0a3b1166",
+    "test": "item_hash_mixed_nbt_wire",
+    "expected_failed_tests": 2,
+    "passed_tests": 1,
+    "log_sha256": "59e11dcacfcb54e461d3297d68748a4c4f35e741ed638260d384f9d4fd6db5e5"
+  },
+  "validation": {
+    "rust_version": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "msrv_version": "rustc 1.88.0 (6b00bc388 2025-06-23)",
+    "test_counts": {
+      "minimal": 607,
+      "default": 611,
+      "all": 646,
+      "examples-minimal": 20,
+      "examples-all": 20,
+      "msrv": 23
+    },
+    "strict_clippy": true,
+    "strict_rustdoc": true,
+    "format": true,
+    "generated_components_metadata_coverage_checks": true,
+    "python_harness_tests": 131
+  },
+  "sources_sha256": {
+    "src/packet/item_hash.rs": "942f3312a854fb5f410169c52d50f6fabd7b78ee8f3208a71ea87b105f20d893",
+    "tests/item_hash_mixed_nbt.rs": "88e8a2be85207a615784dbb8f5627b0f7b7388a35e159d580e41362775d18d5d",
+    "tests/item_hash_mixed_nbt_wire.rs": "f003afce41bf9454d05c99584f6143bf65d76f5beaf4d602e642b04dd61a96b7",
+    "tests/fixtures/mixed-nbt-hash.tsv": "325043f25678980cbcb003a647c146b0c0da8f5cc5f252cde16f4338e7b0d365",
+    "Cargo.lock": "fe984cd82b655cff880add1b1f123a5841b9710bc7a6a441d36bdddd8085fa72",
+    "Cargo.toml": "0e0cbe7cf940d344f98178b29f9f6b15f919d680339c0e8672e72d1c4d97d859"
+  },
+  "schemas": [
+    {
+      "protocol": 770,
+      "releases": [
+        "1.21.5"
+      ],
+      "schema": "1.21.5",
+      "sha256": "96434702de4e203d84baf092aa500c7ba4ca2af95edfc6f339a982b61cbb0777"
+    },
+    {
+      "protocol": 771,
+      "releases": [
+        "1.21.6"
+      ],
+      "schema": "1.21.6",
+      "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7"
+    },
+    {
+      "protocol": 772,
+      "releases": [
+        "1.21.7",
+        "1.21.8"
+      ],
+      "schema": "1.21.8",
+      "sha256": "a827d83d762738020f16aca81aad48ea3bb8690181a96425ed15590453d35fd7"
+    },
+    {
+      "protocol": 773,
+      "releases": [
+        "1.21.9",
+        "1.21.10"
+      ],
+      "schema": "1.21.9",
+      "sha256": "f8ab7f079607267e5cbdd166d943fcf1ea77b87fa494cbc39737665a8d90aeb6"
+    },
+    {
+      "protocol": 774,
+      "releases": [
+        "1.21.11"
+      ],
+      "schema": "1.21.11",
+      "sha256": "34d280120eef9090c66abc502d43d5305ffa2f592c1d2b0eb7a96b71048b81f7"
+    },
+    {
+      "protocol": 775,
+      "releases": [
+        "26.1",
+        "26.1.1",
+        "26.1.2"
+      ],
+      "schema": "26.1",
+      "sha256": "a5fda872e2d425d1f35a8ab7e042148f4944ac1a7f0c3c5380b64b06d383bc0d"
+    },
+    {
+      "protocol": 776,
+      "releases": [
+        "26.2"
+      ],
+      "schema": "26.2",
+      "sha256": "fef8c96e9a25905f692b8e1129ab1d331922f4ce41909a56537a4331fff30430"
+    }
+  ],
+  "logs": {
+    "final-all.log": {
+      "sha256": "f02cd61f8690e39c27af0be7d18f2d1a85be7381be7f57bf9ccc9a8e15343945",
+      "bytes": 62041
+    },
+    "final-clippy.log": {
+      "sha256": "84c0d55f5722bcdd5499543206a04c821a4de785abc8fbc8810c7594cbf5436f",
+      "bytes": 170
+    },
+    "final-default.log": {
+      "sha256": "bb07a9d80a8a63b76fb186085ebdde04e862a6356fe826651922b99d2ab319a6",
+      "bytes": 59371
+    },
+    "final-examples-all.log": {
+      "sha256": "5460b396032f0462f7c56eadb2d090506a14776ac4380ed92827542dacdaa166",
+      "bytes": 3662
+    },
+    "final-examples-minimal.log": {
+      "sha256": "3c57f46cd29a2bb84db61acd0f299b04213d2c224ae9762cda1641223d40e19d",
+      "bytes": 3447
+    },
+    "final-fmt.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "final-metadata-python.log": {
+      "sha256": "a0c43fccf5a9ddaf3490119d32d5aa80d667e0f9c6f236bec7f8424b749065bb",
+      "bytes": 776
+    },
+    "final-minimal.log": {
+      "sha256": "b2ebd05610b25fad8c2a20db0bdd12a79dc03fc668502433fad8b4eb762a7acb",
+      "bytes": 59154
+    },
+    "final-msrv.log": {
+      "sha256": "743532008835578c1baaeb55460f88d2e430ffa5ed2a401a3f6991dd6ba6d8c0",
+      "bytes": 2537
+    },
+    "final-rustdoc.log": {
+      "sha256": "8bd598433f8e16796206142ce66d4339dfa58f4828c1ff8d5f3f022f70a16226",
+      "bytes": 281
+    }
+  }
+}

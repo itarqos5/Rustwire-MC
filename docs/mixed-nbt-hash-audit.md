@@ -1,6 +1,6 @@
 # Modern mixed-list NBT component hashes
 
-Status: local tested fix, not published. No live inventory-click replay is claimed.
+Status: tested component-hash correction. No live inventory-click replay is claimed.
 
 ## Defect and correction
 
@@ -61,10 +61,53 @@ The Rust check is:
 cargo test --locked --test item_hash_mixed_nbt
 ```
 
-## Local validation status
+## Original local validation status, 2026-10-05
 
 The final local tree passes 603 no-default, 607 default and 642 all-feature Rust
 tests, 20 example tests in each of the no-default/all-feature modes, strict
 Clippy/rustdoc/formatting, and 19 focused hash tests on Rust 1.88. The machine
-report retains log hashes. These are local Linux results; no GitHub CI run or
-live server click result exists for this unpublished fix.
+report retains log hashes. These were local Linux results; no GitHub CI run or live server click
+result was included in the original checkpoint.
+
+## Recovery and network-path regression checkpoint, 2026-10-07
+
+The original local fix (`601bd5663549a3e785181ff2fdde50de76001da6`) was restored
+from its checksum-verified backup. Public main was independently checked
+and remained at `d7bfeedc0d99942192e0e0ceb60d6cce0a3b1166`. This checkpoint
+contains only the NBT correction and its regression evidence.
+
+`tests/item_hash_mixed_nbt_wire.rs` extends coverage from standalone NBT values
+to the inventory network path:
+
+- 196 cases cover all 14 official-API NBT fixtures, both supported components,
+  and protocols 770–776. Independently assembled incoming `set_slot` bytes pass
+  through typed dispatch, retain their raw representation, and produce the exact
+  expected hashed click payload and release-specific packet ID
+- Fourteen in-memory framed `Connection` flows exercise login/configuration,
+  incoming inventory dispatch, and sending the prediction. Each send must emit
+  exactly one expected frame, including 26.2's login-session UUID boundary
+- All 6,090 strict incoming-packet prefixes, trailing-byte variants, and tested
+  byte/node over-budget cases fail as malformed/limited input, never unsupported
+  raw fallback. A malformed known frame is also checked through `Connection`
+- Discarded duplicate-empty-key values still consume raw string, depth and node
+  budgets before last-write-wins normalization, through all three hash APIs and
+  both component types. These are new relational regressions, not additional
+  executed official API fixtures
+
+The packet/component IDs and envelope layouts were independently checked
+against all seven checksum-pinned research schemas. Expected NBT hashes retain
+the original three-release API provenance. The window-130, slot-36/45 packet is
+a synthetic swap-shaped wire fixture; no valid server menu operation, gameplay
+acceptance, or live server replay is claimed.
+
+As a negative control, the same wire tests were run against public main without
+the fix. Both the typed prediction and framed-send regressions failed on the
+incorrect hashes; the malformed-input test passed. All three pass with the fix.
+
+Fresh Linux validation passes 607 no-default, 611 default and 646 all-feature
+Rust tests; 20 example tests in each of the no-default/all-feature modes; all
+23 focused hash tests on Rust 1.88; strict Clippy, rustdoc and formatting; all
+three generated metadata checks; and 131 Python validation-harness tests.
+The [machine-readable checkpoint](validation/mixed-nbt-wire-checkpoint-20261007.json)
+records source, schema and log digests from the local checkpoint before
+publication. Live inventory-click replay remains unperformed.

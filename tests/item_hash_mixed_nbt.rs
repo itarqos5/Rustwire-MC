@@ -146,3 +146,90 @@ fn binary_fixture_prefixes_remain_rejected() {
         }
     }
 }
+
+#[test]
+fn overwritten_wrapper_values_still_count_against_raw_limits() {
+    let limits_and_discarded = [
+        (
+            Limits {
+                max_string_chars: 1,
+                ..Limits::default()
+            },
+            Tag::String("too long".into()),
+        ),
+        (
+            Limits {
+                max_nbt_depth: 3,
+                ..Limits::default()
+            },
+            Tag::Compound(vec![(
+                "a".into(),
+                Tag::Compound(vec![("b".into(), Tag::Byte(2))]),
+            )]),
+        ),
+        (
+            Limits {
+                max_nbt_nodes: 5,
+                ..Limits::default()
+            },
+            Tag::Compound(vec![("a".into(), Tag::Byte(2)), ("b".into(), Tag::Byte(3))]),
+        ),
+    ];
+    let expected = fixtures()
+        .into_iter()
+        .find(|row| row.0 == "single_wrapper")
+        .unwrap()
+        .2;
+    for (limits, discarded) in limits_and_discarded {
+        // Last-write-wins makes the first value semantically invisible. It is
+        // still present on the wire and must be charged before normalization.
+        let nbt = Nbt::anonymous(Tag::Compound(vec![(
+            "x".into(),
+            Tag::List {
+                element_type: TagType::Compound,
+                elements: vec![Tag::Compound(vec![
+                    ("".into(), discarded),
+                    ("".into(), Tag::Byte(1)),
+                ])],
+            },
+        )]));
+        assert_eq!(hash_nbt(&nbt, Limits::default()).unwrap(), expected);
+        assert!(matches!(hash_nbt(&nbt, limits), Err(Error::Limit(_))));
+        let raw = nbt
+            .encode(RootFormat::Anonymous, Limits::default())
+            .unwrap();
+        assert!(matches!(
+            Nbt::decode(&raw, RootFormat::Anonymous, limits),
+            Err(Error::Limit(_))
+        ));
+        for protocol in 770..=776 {
+            let version = Version::from_protocol(protocol).unwrap();
+            for name in ["custom_data", "bucket_entity_data"] {
+                let component = Component {
+                    name,
+                    value: ComponentValue::Nbt(nbt.clone()),
+                };
+                assert_eq!(
+                    hash_component(&component, version, Limits::default()).unwrap(),
+                    expected
+                );
+                assert!(matches!(
+                    hash_component(&component, version, limits),
+                    Err(Error::Limit(_))
+                ));
+                let slot = Slot::Item(ItemStack {
+                    item_id: 1,
+                    count: 1,
+                    data: ItemData::Components(ComponentPatch {
+                        added: vec![component],
+                        removed: vec![],
+                    }),
+                });
+                assert!(matches!(
+                    HashedItemStack::from_slot(&slot, version, limits),
+                    Err(Error::Limit(_))
+                ));
+            }
+        }
+    }
+}
