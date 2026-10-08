@@ -53,7 +53,12 @@ fn fixtures() -> Vec<(&'static str, &'static str, Vec<u8>, i32)> {
         .map(|line| {
             let fields: Vec<_> = line.split('|').collect();
             assert_eq!(fields.len(), 4);
-            (fields[0], fields[1], hex(fields[2]), fields[3].parse().unwrap())
+            (
+                fields[0],
+                fields[1],
+                hex(fields[2]),
+                fields[3].parse().unwrap(),
+            )
         })
         .collect()
 }
@@ -242,10 +247,7 @@ fn discarded_duplicate_values_still_consume_raw_budgets() {
                 max_nbt_nodes: 4,
                 ..Limits::default()
             },
-            Tag::Compound(vec![
-                ("a".into(), literal("x")),
-                ("b".into(), literal("y")),
-            ]),
+            Tag::Compound(vec![("a".into(), literal("x")), ("b".into(), literal("y"))]),
         ),
     ] {
         let value = component(compound_list(vec![Tag::Compound(vec![
