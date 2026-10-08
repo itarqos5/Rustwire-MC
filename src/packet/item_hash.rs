@@ -108,6 +108,20 @@ fn map(mut entries: Vec<(u32, u32)>) -> u32 {
 fn fields(entries: Vec<(&str, u32)>) -> u32 {
     map(entries.into_iter().map(|(k, v)| (string(k), v)).collect())
 }
+fn list_entry(item: &Tag) -> &Tag {
+    // Modern ListTag loading unwraps one empty-key compound at each
+    // list-entry boundary. Duplicate keys collapse before that check,
+    // so a nonempty compound containing only empty keys uses its last
+    // value. Empty compounds and compounds with another key stay maps.
+    // Do not recursively unwrap here: a real empty-key compound is
+    // double-wrapped on the wire and must retain its inner map.
+    match item {
+        Tag::Compound(entries) if entries.iter().all(|(key, _)| key.0.is_empty()) => {
+            entries.last().map_or(item, |(_, value)| value)
+        }
+        _ => item,
+    }
+}
 fn nbt_hash(tag: &Tag) -> u32 {
     match tag {
         Tag::Byte(v) => primitive(6, &v.to_le_bytes()),
@@ -141,21 +155,7 @@ fn nbt_hash(tag: &Tag) -> u32 {
             h.byte(19);
             h.finish()
         }
-        Tag::List { elements, .. } => list(elements.iter().map(|item| {
-            // Modern ListTag loading unwraps one empty-key compound at each
-            // list-entry boundary. Duplicate keys collapse before that check,
-            // so a nonempty compound containing only empty keys uses its last
-            // value. Empty compounds and compounds with another key stay maps.
-            // Do not recursively unwrap here: a real empty-key compound is
-            // double-wrapped on the wire and must retain its inner map.
-            let logical = match item {
-                Tag::Compound(entries) if entries.iter().all(|(key, _)| key.0.is_empty()) => {
-                    entries.last().map_or(item, |(_, value)| value)
-                }
-                _ => item,
-            };
-            nbt_hash(logical)
-        })),
+        Tag::List { elements, .. } => list(elements.iter().map(|item| nbt_hash(list_entry(item)))),
         Tag::Compound(entries) => {
             // NBT decoding into Java CompoundTag retains the last value of duplicate keys.
             let normalized: BTreeMap<&NbtString, &Tag> =

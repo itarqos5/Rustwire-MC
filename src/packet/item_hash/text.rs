@@ -63,9 +63,9 @@ fn parse(tag: &Tag) -> Result<Text<'_>> {
             let (first, rest) = elements
                 .split_first()
                 .ok_or(Error::Invalid("empty text list"))?;
-            let mut out = parse(first)?;
+            let mut out = parse(list_entry(first))?;
             for child in rest {
-                out.extra.push(parse(child)?);
+                out.extra.push(parse(list_entry(child))?);
             }
             Ok(out)
         }
@@ -122,7 +122,7 @@ fn parse(tag: &Tag) -> Result<Text<'_>> {
                             return Err(Error::Invalid("empty text extra"));
                         }
                         for child in elements {
-                            out.extra.push(parse(child)?);
+                            out.extra.push(parse(list_entry(child))?);
                         }
                     }
                     _ => return Err(Error::Unsupported("text component content or style hash")),

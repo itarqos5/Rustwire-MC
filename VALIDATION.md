@@ -1230,3 +1230,13 @@ coverage supplements the original fixture-only HUD/world-control audits; it does
 not establish all fourteen families, book opening, enter/end combat, entity-target
 facing, relative rotation, vehicle/projectile simulation, rendering, general
 physics, new Grim results or live Microsoft account authentication.
+
+## Mixed literal-text component hashes (2026-10-08)
+
+Eight focused regressions cover 35 supported official-API fixtures in 245
+synthetic Slot envelopes across protocols 770–776, 84 invalid/out-of-subset
+controls, 13,118 strict prefixes, trailing bytes, duplicate wrapper semantics
+and raw budgets. The same suite fails three tests against the preceding
+published NBT branch and passes all eight after the list-entry-only correction.
+See the [audit](docs/mixed-text-hash-audit.md) for three-release oracle provenance,
+reproduction, unchanged fail-closed boundaries, and local/CI verification limits.

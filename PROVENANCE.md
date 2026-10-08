@@ -646,3 +646,12 @@ layout; modern vehicle vectors remain three f64s. The [wire audit](docs/vehicle-
 records exact primary-source links and artifact hashes. The 108 original Python
 fixtures include both directions; no game implementation or disassembly is
 distributed, and no release API or server was executed for this increment.
+
+## Modern literal-text mixed NBT lists
+
+The [mixed-text hash audit](docs/mixed-text-hash-audit.md) records 47 public
+component-stream/persistent-codec cases executed on each pinned Paper 1.21.5,
+26.1.2 and 26.2 runtime. JSON-serialized bytes and independently authored raw
+wire inputs are identified separately; logical SNBT is diagnostic only. All
+three release results agree. No new live-server or account-authentication
+result is claimed. Unknown text/style fields remain deliberately unsupported.
